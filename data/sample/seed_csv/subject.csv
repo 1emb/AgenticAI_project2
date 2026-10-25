@@ -1,0 +1,57 @@
+code,name,department_id,id
+ANSC,Animal Science,1,1
+RGSC,Range Science,1,2
+AGRO,Agronomy,2,3
+HORT,Horticulture,2,4
+SOIL,Soil Science,2,5
+AEEC,Agricultural Economics,3,6
+FCSC,Family and Consumer Sciences,4,7
+FWCE,"Fish, Wildlife and Conservation Ecology",5,8
+HRTM,"Hotel, Restaurant and Tourism Management",6,9
+BIOL,Biology,7,10
+CHEM,Chemistry,8,11
+CS,Computer Science,9,12
+MATH,Mathematics,10,13
+STAT,Statistics,10,14
+PHYS,Physics,11,15
+ASTR,Astronomy,11,16
+ENGL,English,12,17
+HIST,History,13,18
+PSY,Psychology,14,19
+SOC,Sociology,15,20
+GOVT,Government,16,21
+COMM,Communication Studies,17,22
+JOUR,Journalism,18,23
+ARTS,Art,19,24
+MUS,Music,20,25
+THTR,Theatre,21,26
+SPAN,Spanish,22,27
+LING,Linguistics,22,28
+ANTH,Anthropology,23,29
+GEOL,Geology,24,30
+CJUS,Criminal Justice,25,31
+PHIL,Philosophy,26,32
+GEOG,Geography,27,33
+ACCT,Accounting,28,34
+ECON,Economics,29,35
+AST,Applied Statistics,29,36
+FIN,Finance,30,37
+MGMT,Management,31,38
+MKTG,Marketing,32,39
+BCIS,Business Computer Information Systems,33,40
+CHME,Chemical Engineering,34,41
+CE,Civil Engineering,35,42
+EE,Electrical and Computer Engineering,36,43
+ME,Mechanical Engineering,37,44
+AE,Aerospace Engineering,37,45
+IE,Industrial Engineering,38,46
+ET,Engineering Technology,39,47
+SUR,Surveying Engineering,39,48
+NURS,Nursing,40,49
+PHLS,Public Health Sciences,41,50
+KIN,Kinesiology,42,51
+SWK,Social Work,43,52
+EDUC,Education,44,53
+CEP,Counseling and Educational Psychology,45,54
+CD,Communication Disorders,46,55
+HON,Honors,47,56

@@ -1,0 +1,53 @@
+student_id,term_id,purpose,recipient_name,recipient_contact,enrollment_load,status,requested_at,issued_at,issued_by_person_id,id
+15,16,immigration,NM Higher Education Department,,full_time,fulfilled,2026-08-18 16:14:00+00:00,2026-08-20 16:14:00+00:00,1,1
+27,16,loan_deferment,NM Higher Education Department,,three_quarter_time,fulfilled,2026-08-14 11:49:00+00:00,2026-08-14 11:49:00+00:00,3,2
+134,16,scholarship,Navient,,full_time,fulfilled,2026-08-06 14:04:00+00:00,2026-08-09 14:04:00+00:00,3,3
+171,16,scholarship,Nelnet,,full_time,fulfilled,2026-09-29 13:39:00+00:00,2026-09-29 13:39:00+00:00,3,4
+173,16,immigration,NM Higher Education Department,,three_quarter_time,fulfilled,2026-09-08 14:58:00+00:00,2026-09-11 14:58:00+00:00,3,5
+193,16,insurance,Navient,,full_time,fulfilled,2026-09-11 11:24:00+00:00,2026-09-12 11:24:00+00:00,2,6
+209,16,housing,Nelnet,,full_time,fulfilled,2026-09-01 10:18:00+00:00,2026-09-02 10:18:00+00:00,2,7
+226,16,scholarship,NM Higher Education Department,,full_time,fulfilled,2026-08-08 14:06:00+00:00,2026-08-10 14:06:00+00:00,3,8
+249,16,loan_deferment,Blue Cross Blue Shield,,three_quarter_time,fulfilled,2026-08-14 15:03:00+00:00,2026-08-17 15:03:00+00:00,2,9
+269,16,insurance,Nelnet,,full_time,fulfilled,2026-08-12 18:21:00+00:00,2026-08-14 18:21:00+00:00,3,10
+359,16,immigration,Blue Cross Blue Shield,,full_time,fulfilled,2026-09-01 07:27:00+00:00,2026-09-03 07:27:00+00:00,3,11
+375,16,scholarship,Nelnet,,full_time,fulfilled,2026-08-12 16:02:00+00:00,2026-08-12 16:02:00+00:00,3,12
+387,16,housing,USCIS,,full_time,fulfilled,2026-08-08 18:42:00+00:00,2026-08-09 18:42:00+00:00,1,13
+420,16,employment,Blue Cross Blue Shield,,full_time,fulfilled,2026-10-01 19:21:00+00:00,2026-10-04 19:21:00+00:00,2,14
+429,16,insurance,USAA,,full_time,fulfilled,2026-10-17 18:07:00+00:00,2026-10-18 18:07:00+00:00,3,15
+451,16,immigration,NM Higher Education Department,,full_time,fulfilled,2026-08-13 10:47:00+00:00,2026-08-13 10:47:00+00:00,3,16
+459,16,insurance,Parent employer,,full_time,submitted,2026-08-26 16:59:00+00:00,,,17
+474,16,insurance,Blue Cross Blue Shield,,full_time,fulfilled,2026-08-29 15:38:00+00:00,2026-08-29 15:38:00+00:00,2,18
+531,16,scholarship,NM Higher Education Department,,full_time,fulfilled,2026-10-03 15:10:00+00:00,2026-10-03 15:10:00+00:00,3,19
+552,16,housing,Nelnet,,full_time,fulfilled,2026-08-08 15:14:00+00:00,2026-08-08 15:14:00+00:00,3,20
+594,16,insurance,Parent employer,,full_time,fulfilled,2026-10-15 12:26:00+00:00,2026-10-15 12:26:00+00:00,1,21
+658,16,immigration,USCIS,,full_time,fulfilled,2026-09-15 08:36:00+00:00,2026-09-15 08:36:00+00:00,1,22
+678,16,scholarship,Nelnet,,full_time,fulfilled,2026-08-03 13:38:00+00:00,2026-08-05 13:38:00+00:00,1,23
+682,16,insurance,Parent employer,,full_time,fulfilled,2026-09-25 16:40:00+00:00,2026-09-25 16:40:00+00:00,1,24
+683,16,immigration,Blue Cross Blue Shield,,full_time,fulfilled,2026-08-19 13:18:00+00:00,2026-08-20 13:18:00+00:00,1,25
+685,16,scholarship,Nelnet,,full_time,fulfilled,2026-09-21 07:50:00+00:00,2026-09-22 07:50:00+00:00,2,26
+694,16,housing,Navient,,full_time,fulfilled,2026-10-01 09:25:00+00:00,2026-10-04 09:25:00+00:00,1,27
+700,16,insurance,NM Higher Education Department,,full_time,fulfilled,2026-10-02 09:17:00+00:00,2026-10-03 09:17:00+00:00,3,28
+702,16,housing,Parent employer,,full_time,fulfilled,2026-08-20 15:04:00+00:00,2026-08-23 15:04:00+00:00,1,29
+731,16,housing,Nelnet,,three_quarter_time,fulfilled,2026-09-02 15:58:00+00:00,2026-09-04 15:58:00+00:00,2,30
+736,16,housing,Blue Cross Blue Shield,,full_time,fulfilled,2026-09-29 07:29:00+00:00,2026-09-29 07:29:00+00:00,3,31
+756,16,immigration,NM Higher Education Department,,half_time,fulfilled,2026-09-22 16:35:00+00:00,2026-09-25 16:35:00+00:00,1,32
+772,16,scholarship,NM Higher Education Department,,full_time,submitted,2026-08-25 19:55:00+00:00,,,33
+783,16,scholarship,Nelnet,,full_time,fulfilled,2026-10-07 09:35:00+00:00,2026-10-09 09:35:00+00:00,3,34
+785,16,loan_deferment,USCIS,,full_time,fulfilled,2026-10-18 18:25:00+00:00,2026-10-20 18:25:00+00:00,1,35
+792,16,scholarship,USAA,,three_quarter_time,fulfilled,2026-08-23 13:17:00+00:00,2026-08-23 13:17:00+00:00,2,36
+813,16,housing,Blue Cross Blue Shield,,full_time,fulfilled,2026-09-24 07:24:00+00:00,2026-09-27 07:24:00+00:00,1,37
+820,16,immigration,Navient,,full_time,fulfilled,2026-08-16 20:18:00+00:00,2026-08-18 20:18:00+00:00,2,38
+826,16,scholarship,Navient,,three_quarter_time,fulfilled,2026-09-03 17:12:00+00:00,2026-09-04 17:12:00+00:00,2,39
+831,16,insurance,Blue Cross Blue Shield,,full_time,fulfilled,2026-08-29 16:20:00+00:00,2026-09-01 16:20:00+00:00,3,40
+872,16,immigration,Nelnet,,full_time,fulfilled,2026-10-02 09:49:00+00:00,2026-10-03 09:49:00+00:00,3,41
+886,16,employment,Nelnet,,full_time,fulfilled,2026-08-05 13:44:00+00:00,2026-08-08 13:44:00+00:00,2,42
+894,16,immigration,Navient,,full_time,fulfilled,2026-08-16 07:25:00+00:00,2026-08-19 07:25:00+00:00,2,43
+895,16,scholarship,USAA,,full_time,fulfilled,2026-10-03 08:18:00+00:00,2026-10-03 08:18:00+00:00,2,44
+903,16,insurance,Parent employer,,full_time,fulfilled,2026-09-30 14:42:00+00:00,2026-10-02 14:42:00+00:00,2,45
+908,16,employment,USCIS,,full_time,fulfilled,2026-09-09 15:12:00+00:00,2026-09-12 15:12:00+00:00,2,46
+924,16,loan_deferment,NM Higher Education Department,,full_time,fulfilled,2026-08-05 08:44:00+00:00,2026-08-07 08:44:00+00:00,3,47
+925,16,insurance,Parent employer,,full_time,fulfilled,2026-08-11 18:17:00+00:00,2026-08-14 18:17:00+00:00,1,48
+962,16,insurance,Navient,,full_time,fulfilled,2026-10-18 12:13:00+00:00,2026-10-19 12:13:00+00:00,2,49
+963,16,immigration,Nelnet,,full_time,fulfilled,2026-10-10 10:39:00+00:00,2026-10-11 10:39:00+00:00,2,50
+984,16,scholarship,USAA,,full_time,fulfilled,2026-09-21 19:12:00+00:00,2026-09-24 19:12:00+00:00,2,51
+995,16,scholarship,NM Higher Education Department,,full_time,fulfilled,2026-07-31 08:46:00+00:00,2026-08-02 08:46:00+00:00,2,52

@@ -1,0 +1,1754 @@
+person_id,address_type,line1,line2,city,state,postal_code,country,is_primary,effective_from,effective_to,id
+1,permanent,79402 Peterson Drives Apt. 511,,Anthony,NM,50298,US,True,2016-04-29,,1
+2,permanent,Cerrada Campos 475 Interior 255,,Rio Rancho,NM,41928,US,True,2017-11-14,,2
+3,permanent,7242 Julie Plain Suite 969,,Las Cruces,NM,52851,US,True,2020-11-29,,3
+4,permanent,784 Erin Crescent Suite 514,,Las Cruces,NM,57486,US,True,2021-03-25,,4
+5,permanent,4303 Christopher Oval,,Anthony,NM,09572,US,True,2018-06-11,,5
+6,permanent,"Ampliación México 301 Edif. 031 , Depto. 051",,Lubbock,TX,47382,US,True,2017-01-12,,6
+7,permanent,33387 Robert Harbors Suite 317,,El Paso,TX,72633,US,True,2014-06-06,,7
+8,permanent,4687 James Forge Apt. 980,,Phoenix,AZ,98539,US,True,2019-07-05,,8
+9,permanent,"Eje vial Vergara 854 Edif. 353 , Depto. 462",,Artesia,NM,75107-9911,US,True,2014-05-09,,9
+10,permanent,82449 Jennifer Ford,,Las Cruces,NM,90612,US,True,2019-04-27,,10
+11,permanent,"Avenida Córdova 059 Edif. 826 , Depto. 204",,Las Cruces,NM,05331-5869,US,True,2014-12-28,,11
+12,permanent,30365 Lin Trail Suite 586,,Deming,NM,89566,US,True,2018-07-16,,12
+13,permanent,608 Michael Cliff,,El Paso,TX,87563,US,True,2014-12-15,,13
+14,permanent,Privada Sur Maestas 369 Interior 957,,Las Cruces,NM,73872-1489,US,True,2016-04-26,,14
+15,permanent,3201 Robinson Unions Suite 083,,El Paso,TX,16407,US,True,2013-12-11,,15
+16,permanent,45581 Edward Lights Apt. 316,,Las Cruces,NM,53925,US,True,2018-03-08,,16
+17,permanent,6889 Tracy Groves Suite 706,,Gallup,NM,44558,US,True,2016-05-30,,17
+18,permanent,Continuación Norte Ojeda 641 Interior 708,,Albuquerque,NM,53100,US,True,2017-05-11,,18
+19,permanent,41904 Sanders Stravenue,,El Paso,TX,26496,US,True,2017-11-20,,19
+20,permanent,5726 Jessica Run,,Las Cruces,NM,35901,US,True,2017-06-29,,20
+21,permanent,73545 Beard Squares Suite 808,,El Paso,TX,25543,US,True,2018-05-11,,21
+22,permanent,7444 David Fields Suite 182,,Alamogordo,NM,25606,US,True,2014-03-14,,22
+23,permanent,"Privada Loya 271 Edif. 094 , Depto. 777",,Las Cruces,NM,20471-1671,US,True,2014-06-11,,23
+24,permanent,9649 Chelsea Streets Apt. 334,,Las Cruces,NM,87064,US,True,2017-10-10,,24
+25,permanent,324 Charles Expressway,,Santa Fe,NM,40820,US,True,2017-05-31,,25
+26,permanent,Ampliación Colima 990 490,,Las Cruces,NM,78742,US,True,2021-02-22,,26
+27,permanent,087 Brown Path Suite 977,,Phoenix,AZ,07265,US,True,2015-09-07,,27
+28,permanent,Viaducto Corrales 484 Interior 677,,Las Cruces,NM,78263,US,True,2017-01-22,,28
+29,permanent,3396 Melissa Loop Apt. 576,,Gallup,NM,51105,US,True,2013-10-08,,29
+30,permanent,4596 Melissa Walk,,Las Cruces,NM,88890,US,True,2018-05-11,,30
+31,permanent,50455 Thomas Pines,,Alamogordo,NM,54509,US,True,2019-01-28,,31
+32,permanent,"Prolongación Oaxaca 647 Edif. 436 , Depto. 713",,Las Cruces,NM,95944-0640,US,True,2016-07-27,,32
+33,permanent,5623 Kristin Wells,,Las Cruces,NM,48454,US,True,2015-08-13,,33
+34,permanent,5496 Rodriguez Fort,,Rio Rancho,NM,62298,US,True,2016-01-19,,34
+35,permanent,8692 Pena Village Suite 964,,Clovis,NM,04789,US,True,2017-01-21,,35
+36,permanent,29318 Brenda Via Apt. 529,,Albuquerque,NM,00872,US,True,2019-01-11,,36
+37,permanent,5891 Gordon Ridges Apt. 847,,Phoenix,AZ,84824,US,True,2017-04-03,,37
+38,permanent,9847 Garcia Squares Apt. 836,,Santa Fe,NM,59687,US,True,2019-09-09,,38
+39,permanent,5604 Bell Ports,,Sunland Park,NM,67008,US,True,2019-08-04,,39
+40,permanent,Circunvalación Querétaro 022 Interior 961,,Albuquerque,NM,01836,US,True,2014-05-12,,40
+41,permanent,9764 Kari Crescent Suite 614,,Dallas,TX,89396,US,True,2017-03-26,,41
+42,permanent,1076 David Place Apt. 885,,Las Vegas,NM,09948,US,True,2013-06-03,,42
+43,permanent,516 John Radial Suite 816,,Alamogordo,NM,41169,US,True,2017-06-11,,43
+44,permanent,77997 Lin Road,,Farmington,NM,41937,US,True,2017-11-05,,44
+45,permanent,"Prolongación Sur Rascón 359 Edif. 782 , Depto. 071",,Lubbock,TX,18203-7788,US,True,2019-10-12,,45
+46,permanent,4629 Kyle Lane,,Las Cruces,NM,84844,US,True,2015-01-01,,46
+47,permanent,1888 Ebony Wells,,Albuquerque,NM,81507,US,True,2017-04-25,,47
+48,permanent,8862 Laurie Dam Suite 075,,Clovis,NM,73185,US,True,2020-03-19,,48
+49,permanent,53051 Moody Dam Apt. 472,,El Paso,TX,92977,US,True,2020-10-19,,49
+50,permanent,971 Mary Parks Apt. 893,,Las Cruces,NM,94682,US,True,2013-10-27,,50
+51,permanent,Corredor Barreto 319 Interior 520,,Rio Rancho,NM,85277-2217,US,True,2015-01-14,,51
+52,permanent,Diagonal Norte Escobar 758 Interior 416,,Rio Rancho,NM,69284,US,True,2015-01-12,,52
+53,permanent,97021 Kimberly Lakes,,Roswell,NM,47968,US,True,2017-11-13,,53
+54,permanent,"Circuito Hurtado 739 Edif. 473 , Depto. 121",,Tucson,AZ,27155-1884,US,True,2015-11-03,,54
+55,permanent,"Circunvalación Otero 786 Edif. 691 , Depto. 251",,Las Cruces,NM,78528-9226,US,True,2018-02-09,,55
+56,permanent,99590 Christopher Row,,Carlsbad,NM,76099,US,True,2017-11-26,,56
+57,permanent,59255 Hester Curve Suite 881,,Alamogordo,NM,42328,US,True,2018-01-07,,57
+58,permanent,8774 Johnson Lock,,Las Cruces,NM,66750,US,True,2014-02-17,,58
+59,permanent,5650 Williams Points,,Las Cruces,NM,26014,US,True,2018-10-30,,59
+60,permanent,02578 Hernandez Passage,,Las Cruces,NM,18822,US,True,2017-09-17,,60
+61,permanent,097 Alexandria Stravenue,,Rio Rancho,NM,81731,US,True,2016-08-21,,61
+62,permanent,385 Fox Island,,El Paso,TX,23200,US,True,2016-07-21,,62
+63,permanent,Privada Nayarit 198 Interior 665,,El Paso,TX,40415,US,True,2016-02-06,,63
+64,permanent,7120 Richard Wells Suite 734,,Las Cruces,NM,42597,US,True,2020-09-15,,64
+65,permanent,4788 Small Dale,,Los Lunas,NM,66589,US,True,2016-05-01,,65
+66,permanent,Diagonal Cadena 275 304,,Rio Rancho,NM,37454-9904,US,True,2021-06-25,,66
+67,permanent,Calle Norte Zelaya 687 Interior 833,,Las Vegas,NM,87851,US,True,2017-07-30,,67
+68,permanent,"Calle Norte Reyes 087 Edif. 406 , Depto. 403",,Las Cruces,NM,06518,US,True,2018-01-07,,68
+69,permanent,"Boulevard Guerrero 682 Edif. 300 , Depto. 478",,Anthony,NM,86337-5243,US,True,2019-03-20,,69
+70,permanent,Calle Santacruz 395 Interior 995,,Lubbock,TX,42836,US,True,2014-10-09,,70
+71,permanent,6287 Melissa Hills,,El Paso,TX,93244,US,True,2020-06-07,,71
+72,permanent,9901 Linda Radial Apt. 735,,Tucson,AZ,40240,US,True,2021-01-17,,72
+73,permanent,Boulevard Norte Maya 556 093,,Santa Fe,NM,04899,US,True,2019-10-15,,73
+74,permanent,00623 Jasmine Branch,,El Paso,TX,29169,US,True,2018-07-31,,74
+75,permanent,18233 Ochoa Grove,,Las Cruces,NM,52523,US,True,2017-08-23,,75
+76,permanent,Avenida Omán 591 Interior 803,,Tucson,AZ,97401,US,True,2018-09-03,,76
+77,permanent,218 Brown Mews Apt. 159,,Lubbock,TX,80961,US,True,2019-01-10,,77
+78,permanent,62655 Christopher Inlet Suite 541,,Albuquerque,NM,17868,US,True,2018-07-25,,78
+79,permanent,Prolongación Paraguay 622 444,,Artesia,NM,21264-6471,US,True,2018-11-20,,79
+80,permanent,9245 Timothy Fall Suite 547,,Carlsbad,NM,75982,US,True,2015-10-14,,80
+81,permanent,43426 Jones Rapid Suite 968,,El Paso,TX,66903,US,True,2014-05-09,,81
+82,permanent,Eje vial Chiapas 143 888,,Los Angeles,CA,75679,US,True,2015-11-23,,82
+83,permanent,Pasaje Regalado 140 Interior 105,,Albuquerque,NM,23828,US,True,2015-07-04,,83
+84,permanent,Calzada Flórez 191 Interior 825,,El Paso,TX,37147-8596,US,True,2019-04-15,,84
+85,permanent,Cerrada Magaña 252 866,,Hobbs,NM,96627,US,True,2019-03-19,,85
+86,permanent,"Eje vial Norte Pelayo 772 Edif. 190 , Depto. 340",,Las Cruces,NM,38427-9788,US,True,2018-06-16,,86
+87,permanent,Retorno Tamaulipas 923 309,,Albuquerque,NM,84982-5449,US,True,2014-07-04,,87
+88,permanent,Calle Norte Pedroza 711 Interior 684,,Las Cruces,NM,77590-1751,US,True,2016-04-28,,88
+89,permanent,12770 Harris Spurs Apt. 424,,Albuquerque,NM,12735,US,True,2013-09-08,,89
+90,permanent,"Prolongación Estonia 700 Edif. 516 , Depto. 271",,Las Cruces,NM,61115,US,True,2013-07-23,,90
+91,permanent,656 Moody Gateway,,Sunland Park,NM,36803,US,True,2014-01-25,,91
+92,permanent,37918 Valerie Island Apt. 696,,Alamogordo,NM,48396,US,True,2021-02-08,,92
+93,permanent,618 Joshua Inlet Apt. 832,,Las Cruces,NM,70806,US,True,2014-06-26,,93
+94,permanent,20275 Jackson Crossroad,,El Paso,TX,98775,US,True,2013-09-18,,94
+95,permanent,41913 Bradley Wall Apt. 307,,Las Cruces,NM,48208,US,True,2017-08-11,,95
+96,permanent,Cerrada Papua Nueva Guinea 617 445,,Alamogordo,NM,87053,US,True,2017-08-15,,96
+97,permanent,83670 Jennifer Course,,Rio Rancho,NM,06255,US,True,2019-07-24,,97
+98,permanent,Circunvalación Georgia 655 Interior 743,,Truth or Consequences,NM,32912,US,True,2018-04-05,,98
+99,permanent,Cerrada Moya 804 Interior 420,,Las Cruces,NM,78831-7121,US,True,2014-04-16,,99
+100,permanent,Boulevard Baja California Sur 029 Interior 667,,El Paso,TX,66253,US,True,2015-02-06,,100
+101,permanent,838 Veronica Tunnel,,Farmington,NM,94003,US,True,2017-12-12,,101
+102,permanent,039 Kelly Villages Apt. 239,,Farmington,NM,42182,US,True,2015-05-05,,102
+103,permanent,705 Lindsay Junctions,,Carlsbad,NM,94471,US,True,2017-08-28,,103
+104,permanent,26752 Walker Radial Apt. 644,,Las Cruces,NM,17192,US,True,2017-02-09,,104
+105,permanent,"Continuación Guanajuato 157 Edif. 043 , Depto. 315",,Los Angeles,CA,10067-6267,US,True,2020-12-17,,105
+106,permanent,18159 Bush Meadows Apt. 962,,Las Cruces,NM,07520,US,True,2016-01-02,,106
+107,permanent,Avenida Norte Zapata 310 Interior 324,,El Paso,TX,71467,US,True,2013-08-16,,107
+108,permanent,"Boulevard Bhután 586 Edif. 938 , Depto. 068",,Las Cruces,NM,87937-4160,US,True,2015-04-23,,108
+109,permanent,Continuación Coahuila de Zaragoza 686 854,,Las Cruces,NM,09986-1622,US,True,2014-08-04,,109
+110,permanent,Callejón Leal 299 Interior 606,,El Paso,TX,30745-0544,US,True,2014-07-30,,110
+111,permanent,48628 Glenn Wells,,Santa Fe,NM,26810,US,True,2014-09-05,,111
+112,permanent,140 Williams Walk Apt. 333,,El Paso,TX,35770,US,True,2017-07-15,,112
+113,permanent,896 Adrian Shore Suite 899,,Albuquerque,NM,37552,US,True,2017-02-18,,113
+114,permanent,Ampliación Sudán 446 Interior 660,,Albuquerque,NM,53875,US,True,2017-03-12,,114
+115,permanent,70999 Thomas Fields Apt. 684,,Roswell,NM,54647,US,True,2021-01-06,,115
+116,permanent,96666 Reyes Camp,,Albuquerque,NM,70464,US,True,2019-06-22,,116
+117,permanent,Callejón Coahuila de Zaragoza 447 898,,Las Cruces,NM,62575-3260,US,True,2018-11-10,,117
+118,permanent,16761 Wells Drives,,Rio Rancho,NM,27435,US,True,2014-07-14,,118
+119,permanent,356 Martin Plaza Suite 375,,Roswell,NM,31238,US,True,2017-02-13,,119
+120,permanent,7012 Melissa Lake Suite 611,,San Antonio,TX,99880,US,True,2013-07-15,,120
+121,permanent,Eje vial Sur Carreón 021 697,,Las Cruces,NM,29659-0277,US,True,2015-09-29,,121
+122,permanent,"Peatonal Jamaica 628 Edif. 900 , Depto. 287",,Las Cruces,NM,21753-5408,US,True,2015-11-28,,122
+123,permanent,016 Johnson Plaza Apt. 199,,Las Cruces,NM,84064,US,True,2017-04-17,,123
+124,permanent,Cerrada Acevedo 548 Interior 851,,Albuquerque,NM,27261,US,True,2017-12-29,,124
+125,permanent,Periférico Sur Véliz 216 995,,Las Cruces,NM,69346-5472,US,True,2017-03-17,,125
+127,permanent,Corredor Valenzuela 996 Interior 846,,Las Cruces,NM,81062,US,True,2016-01-20,,126
+128,permanent,347 Tonya Club,,Phoenix,AZ,25008,US,True,2017-04-17,,127
+128,local,816 Roy Point,,Las Cruces,NM,88005,US,False,2021-08-20,,128
+129,permanent,55543 Barajas View,,Albuquerque,NM,99084,US,True,2019-05-03,,129
+130,permanent,613 Lucas Cliffs,,Clovis,NM,98397,US,True,2016-12-29,,130
+131,permanent,7660 Moore Forges,,Farmington,NM,18376,US,True,2014-01-31,,131
+131,local,424 Bernard Branch Apt. 100,,Las Cruces,NM,88001,US,False,2021-08-20,,132
+132,permanent,9135 Hayes Ridges,,Las Cruces,NM,86932,US,True,2019-05-21,,133
+133,permanent,"Prolongación Sur Arce 488 Edif. 725 , Depto. 639",,Houston,TX,27881-6580,US,True,2020-03-18,,134
+134,permanent,9184 Kaufman Fork Suite 557,,Las Cruces,NM,63692,US,True,2015-09-04,,135
+135,permanent,202 Nielsen Path,,Phoenix,AZ,53644,US,True,2018-10-30,,136
+135,local,413 Obrien Mountains,,Las Cruces,NM,88001,US,False,2021-08-20,,137
+136,permanent,"Avenida Rosario 298 Edif. 068 , Depto. 650",,Rio Rancho,NM,37659-9162,US,True,2016-08-13,,138
+137,permanent,"Corredor República de Macedonia del Norte 744 Edif. 956 , Depto. 213",,Chicago,IL,21386-5890,US,True,2017-02-11,,139
+138,permanent,"Retorno Croacia 053 Edif. 021 , Depto. 465",,Las Cruces,NM,69380-1184,US,True,2015-06-22,,140
+139,permanent,Circuito Barreto 335 Interior 658,,El Paso,TX,43416,US,True,2018-12-07,,141
+139,local,82755 Patricia Grove Apt. 373,,Las Cruces,NM,88005,US,False,2021-08-20,,142
+140,permanent,Periférico Piña 808 Interior 562,,Carlsbad,NM,18750-0369,US,True,2016-08-10,,143
+141,permanent,27026 Taylor Vista,,Albuquerque,NM,83161,US,True,2016-03-23,,144
+142,permanent,225 Welch Ports Suite 112,,Las Cruces,NM,45540,US,True,2018-03-27,,145
+143,permanent,Avenida Sudán 433 Interior 472,,El Paso,TX,82005,US,True,2018-07-09,,146
+143,local,7848 Taylor Square Apt. 997,,Las Cruces,NM,88012,US,False,2021-08-20,,147
+144,permanent,Cerrada Sur Orellana 341 Interior 638,,Las Cruces,NM,48463-1224,US,True,2014-03-08,,148
+145,permanent,Avenida Norte Durán 460 136,,El Paso,TX,30371-8376,US,True,2014-11-30,,149
+146,permanent,27195 Brian Rue,,Albuquerque,NM,20675,US,True,2019-09-10,,150
+146,local,73585 Quinn Brooks,,Las Cruces,NM,88005,US,False,2021-08-20,,151
+147,permanent,863 Cannon Drives,,Truth or Consequences,NM,80853,US,True,2016-02-26,,152
+148,permanent,650 Rice Street Apt. 413,,Phoenix,AZ,68590,US,True,2021-01-10,,153
+149,permanent,"Eje vial Tamaulipas 593 Edif. 983 , Depto. 684",,Los Angeles,CA,77600-4908,US,True,2021-02-01,,154
+149,local,0433 Smith View,,Las Cruces,NM,88012,US,False,2021-08-20,,155
+150,permanent,Andador Mesa 661 Interior 390,,Albuquerque,NM,04805-8925,US,True,2017-01-31,,156
+150,local,06799 Jeffrey Highway,,Las Cruces,NM,88005,US,False,2021-08-20,,157
+151,permanent,5904 Vanessa Ridges,,Gallup,NM,58462,US,True,2020-07-18,,158
+151,local,0335 Katherine Walk,,Las Cruces,NM,88012,US,False,2021-08-20,,159
+152,permanent,Pasaje Aguilera 645 104,,Las Cruces,NM,36815-7981,US,True,2019-11-05,,160
+153,permanent,264 Cole Curve,,El Paso,TX,27601,US,True,2014-10-29,,161
+153,local,832 Barker Pine,,Las Cruces,NM,88001,US,False,2021-08-20,,162
+154,permanent,Periférico Samoa 526 Interior 772,,Chicago,IL,33060,US,True,2016-10-03,,163
+155,permanent,4472 Phillips Center Apt. 771,,Las Cruces,NM,95219,US,True,2018-05-17,,164
+156,permanent,25922 Harold Station Apt. 644,,Hobbs,NM,96204,US,True,2016-07-19,,165
+156,local,2123 Cindy Glen Apt. 777,,Las Cruces,NM,88001,US,False,2021-08-20,,166
+157,permanent,14556 Katherine Ville Apt. 472,,Santa Fe,NM,16494,US,True,2021-02-19,,167
+157,local,8683 Cheryl Coves Apt. 794,,Las Cruces,NM,88005,US,False,2021-08-20,,168
+158,permanent,Boulevard Merino 699 Interior 023,,Las Cruces,NM,57702-7278,US,True,2016-02-14,,169
+159,permanent,3842 Neil Camp Apt. 178,,Las Cruces,NM,03769,US,True,2018-02-11,,170
+160,permanent,Pasaje Chihuahua 224 Interior 109,,Las Cruces,NM,38585,US,True,2020-07-07,,171
+161,permanent,74773 Douglas Ridges Suite 562,,El Paso,TX,92200,US,True,2019-12-24,,172
+161,local,7701 Rodriguez Neck Suite 245,,Las Cruces,NM,88001,US,False,2021-08-20,,173
+162,permanent,"Avenida Vietman 971 Edif. 997 , Depto. 581",,Las Cruces,NM,24619-1965,US,True,2013-09-21,,174
+163,permanent,Privada Muñoz 403 696,,Las Cruces,NM,66668-3272,US,True,2018-03-01,,175
+164,permanent,846 Johnson Camp,,Las Cruces,NM,74969,US,True,2017-03-11,,176
+165,permanent,"Andador Yucatán 290 Edif. 490 , Depto. 471",,El Paso,TX,81442,US,True,2016-11-08,,177
+165,local,4019 Renee Streets Apt. 752,,Las Cruces,NM,88012,US,False,2021-08-20,,178
+166,permanent,Periférico Mauricio 476 580,,Las Cruces,NM,85694,US,True,2015-12-06,,179
+167,permanent,111 Nicholas Track,,Silver City,NM,85423,US,True,2015-02-15,,180
+168,permanent,Circuito Sur Aragón 194 707,,Chicago,IL,00642,US,True,2013-07-06,,181
+168,local,9087 Graham Vista Apt. 830,,Las Cruces,NM,88001,US,False,2021-08-20,,182
+169,permanent,30937 Brown Plains,,El Paso,TX,84833,US,True,2018-01-16,,183
+170,permanent,"Boulevard Salinas 931 Edif. 365 , Depto. 651",,Roswell,NM,53092,US,True,2020-03-10,,184
+170,local,14262 Tran Mill Apt. 902,,Las Cruces,NM,88011,US,False,2021-08-20,,185
+171,permanent,195 Steven Road,,Las Cruces,NM,86920,US,True,2013-10-11,,186
+172,permanent,53153 Joel Loop Apt. 631,,Anthony,NM,62234,US,True,2015-11-11,,187
+173,permanent,"Avenida Malasia 739 Edif. 774 , Depto. 063",,Las Cruces,NM,56939,US,True,2019-07-24,,188
+174,permanent,Viaducto Batista 580 Interior 464,,Las Cruces,NM,19508,US,True,2017-04-17,,189
+175,permanent,"Periférico Sur Rodrígez 884 Edif. 795 , Depto. 137",,Alamogordo,NM,16241,US,True,2018-09-24,,190
+175,local,41272 Abigail Road,,Las Cruces,NM,88003,US,False,2021-08-20,,191
+176,permanent,4729 Jennifer Heights,,Las Cruces,NM,24392,US,True,2015-04-01,,192
+177,permanent,"Peatonal Nuevo León 297 Edif. 517 , Depto. 028",,Las Cruces,NM,40693,US,True,2016-03-18,,193
+178,permanent,"Callejón Tamaulipas 629 Edif. 912 , Depto. 347",,Las Cruces,NM,19610-6462,US,True,2020-07-27,,194
+179,permanent,"Retorno Nájera 796 Edif. 471 , Depto. 589",,El Paso,TX,42902,US,True,2016-04-20,,195
+180,permanent,Boulevard España 833 898,,Rio Rancho,NM,67112,US,True,2017-12-19,,196
+180,local,5452 Preston Ranch,,Las Cruces,NM,88005,US,False,2021-08-20,,197
+181,permanent,Corredor Argelia 249 552,,Albuquerque,NM,89119,US,True,2016-08-21,,198
+181,local,334 Rachel Plain,,Las Cruces,NM,88003,US,False,2021-08-20,,199
+182,permanent,Cerrada Norte López 317 Interior 520,,Las Cruces,NM,16781-1266,US,True,2015-04-02,,200
+183,permanent,Retorno Norte Corral 991 Interior 187,,Las Cruces,NM,34778-4858,US,True,2013-10-21,,201
+184,permanent,695 Flores Burgs Apt. 255,,Alamogordo,NM,97763,US,True,2014-12-12,,202
+185,permanent,Prolongación Chiapas 135 Interior 785,,Las Cruces,NM,94563,US,True,2015-08-27,,203
+186,permanent,820 Barbara Forest Suite 489,,El Paso,TX,57350,US,True,2014-06-20,,204
+186,local,357 John Summit,,Las Cruces,NM,88005,US,False,2021-08-20,,205
+187,permanent,700 Lee Hills,,Las Cruces,NM,08834,US,True,2017-10-21,,206
+188,permanent,Continuación Trejo 734 Interior 257,,San Antonio,TX,40900-3486,US,True,2014-11-08,,207
+189,permanent,Pasaje Baja California 272 063,,Las Cruces,NM,59112-3829,US,True,2017-01-04,,208
+190,permanent,Ampliación Sotelo 771 Interior 333,,Las Cruces,NM,47626-3934,US,True,2020-11-20,,209
+191,permanent,964 Lambert Curve Apt. 924,,Denver,CO,22765,US,True,2016-10-26,,210
+191,local,7215 Thomas Crescent Suite 027,,Las Cruces,NM,88012,US,False,2021-08-20,,211
+192,permanent,Calle Castañeda 134 Interior 228,,Dallas,TX,99390-8926,US,True,2015-06-23,,212
+192,local,71504 Phillip Ramp,,Las Cruces,NM,88011,US,False,2021-08-20,,213
+193,permanent,Avenida Sur Frías 664 214,,Las Cruces,NM,64925-1583,US,True,2015-12-30,,214
+194,permanent,"Prolongación Campeche 108 Edif. 186 , Depto. 617",,Las Cruces,NM,54918-0172,US,True,2019-02-19,,215
+195,permanent,Calle Cervántez 310 303,,El Paso,TX,23683-1472,US,True,2017-03-01,,216
+196,permanent,Periférico Almaraz 958 Interior 146,,El Paso,TX,17957-6024,US,True,2016-09-10,,217
+196,local,5738 Briana Spur,,Las Cruces,NM,88012,US,False,2021-08-20,,218
+197,permanent,6193 Anna Oval,,Farmington,NM,34294,US,True,2016-03-05,,219
+198,permanent,Calle Chihuahua 760 375,,Santa Fe,NM,82145-6532,US,True,2019-08-11,,220
+199,permanent,Diagonal Norte Martínez 048 Interior 926,,Las Cruces,NM,38997-5634,US,True,2016-03-13,,221
+200,permanent,"Continuación Sur Verdugo 893 Edif. 544 , Depto. 926",,Las Cruces,NM,15893,US,True,2017-06-08,,222
+201,permanent,285 Carolyn Lodge,,Hobbs,NM,14962,US,True,2018-05-24,,223
+201,local,9408 David Inlet,,Las Cruces,NM,88012,US,False,2021-08-20,,224
+202,permanent,"Calle Norte Burgos 966 Edif. 365 , Depto. 807",,Las Cruces,NM,12094-8181,US,True,2019-07-11,,225
+203,permanent,"Boulevard Camacho 242 Edif. 241 , Depto. 246",,Las Cruces,NM,09520,US,True,2013-09-22,,226
+204,permanent,8238 Ali Point,,Port Cynthiaborough,,,IR,True,2014-08-30,,227
+204,local,07942 Brian Orchard Suite 946,,Las Cruces,NM,88011,US,False,2021-08-20,,228
+205,permanent,8118 Patricia Via Suite 156,,Las Cruces,NM,79316,US,True,2019-04-24,,229
+206,permanent,999 Cameron Crossroad,,Albuquerque,NM,98277,US,True,2014-02-24,,230
+206,local,49384 Melanie Brooks,,Las Cruces,NM,88003,US,False,2021-08-20,,231
+207,permanent,Eje vial Belice 325 411,,El Paso,TX,76095,US,True,2020-05-13,,232
+208,permanent,6619 Hall Rapid,,Las Cruces,NM,86972,US,True,2019-10-23,,233
+209,permanent,00249 Palmer Run,,Clovis,NM,99378,US,True,2017-11-11,,234
+210,permanent,03379 John Street Suite 636,,Las Cruces,NM,24650,US,True,2017-10-22,,235
+211,permanent,3552 Johns Circles Apt. 223,,Las Cruces,NM,25625,US,True,2014-02-16,,236
+212,permanent,587 Wells Prairie Suite 903,,Hobbs,NM,29274,US,True,2015-08-21,,237
+212,local,3634 Oneal Ports,,Las Cruces,NM,88001,US,False,2021-08-20,,238
+213,permanent,11508 Matthew Spring,,Albuquerque,NM,43655,US,True,2014-08-24,,239
+213,local,4392 Smith Hills Suite 566,,Las Cruces,NM,88011,US,False,2021-08-20,,240
+214,permanent,"Prolongación Baja California 022 Edif. 599 , Depto. 996",,Tucson,AZ,36186-3715,US,True,2019-04-19,,241
+214,local,412 Emily Fall Apt. 970,,Las Cruces,NM,88012,US,False,2021-08-20,,242
+215,permanent,"Peatonal Sur Zayas 493 Edif. 874 , Depto. 302",,Albuquerque,NM,16938-5977,US,True,2017-06-30,,243
+215,local,014 Reed Ville Suite 692,,Las Cruces,NM,88001,US,False,2021-08-20,,244
+216,permanent,76563 Johnson Glen,,El Paso,TX,15532,US,True,2013-11-08,,245
+217,permanent,"Viaducto Solorzano 164 Edif. 709 , Depto. 006",,Albuquerque,NM,35331,US,True,2014-11-09,,246
+217,local,0053 Jeffrey Court,,Las Cruces,NM,88005,US,False,2021-08-20,,247
+218,permanent,"Circunvalación Norte Canales 892 Edif. 419 , Depto. 562",,Sunland Park,NM,25715-0997,US,True,2021-03-03,,248
+218,local,389 Jesse Ridges Apt. 436,,Las Cruces,NM,88012,US,False,2021-08-20,,249
+219,permanent,017 Stephanie Center Apt. 321,,Santa Fe,NM,23265,US,True,2020-08-31,,250
+219,local,81674 Jennifer Gardens,,Las Cruces,NM,88001,US,False,2021-08-20,,251
+220,permanent,"Avenida Norte Chacón 732 Edif. 300 , Depto. 857",,Rio Rancho,NM,66567-4916,US,True,2015-04-05,,252
+220,local,69236 Wise Terrace,,Las Cruces,NM,88001,US,False,2021-08-20,,253
+221,permanent,461 Daisy Trail Suite 243,,Las Cruces,NM,98580,US,True,2016-11-29,,254
+222,permanent,Viaducto Sur de la Crúz 416 141,,Deming,NM,09377-1004,US,True,2016-09-07,,255
+223,permanent,7978 Keller Alley,,El Paso,TX,84134,US,True,2020-12-10,,256
+223,local,50573 Ross Ridge Apt. 567,,Las Cruces,NM,88005,US,False,2021-08-20,,257
+224,permanent,Circuito Suiza 128 Interior 715,,Hobbs,NM,99156,US,True,2015-02-16,,258
+224,local,863 Jonathon Highway Apt. 115,,Las Cruces,NM,88011,US,False,2021-08-20,,259
+225,permanent,420 Parker Spurs,,El Paso,TX,16683,US,True,2014-09-08,,260
+226,permanent,"Pasaje Guanajuato 277 Edif. 423 , Depto. 330",,Alamogordo,NM,91266-2015,US,True,2015-10-18,,261
+226,local,01859 Booker Road Suite 301,,Las Cruces,NM,88001,US,False,2021-08-20,,262
+227,permanent,"Ampliación Norte Valadez 871 Edif. 898 , Depto. 131",,Las Cruces,NM,92087,US,True,2015-12-03,,263
+228,permanent,Andador Granado 324 329,,Las Cruces,NM,95429,US,True,2018-08-22,,264
+229,permanent,2340 Nicholas Forges Suite 112,,Albuquerque,NM,69507,US,True,2014-01-28,,265
+229,local,718 Graves Way Suite 849,,Las Cruces,NM,88001,US,False,2021-08-20,,266
+230,permanent,Continuación Sur Bétancourt 312 901,,Anthony,NM,87068-2778,US,True,2015-10-28,,267
+230,local,0930 Park Summit,,Las Cruces,NM,88012,US,False,2021-08-20,,268
+231,permanent,963 Hickman Row,,Santa Fe,NM,68072,US,True,2013-09-23,,269
+232,permanent,Diagonal Norte Luna 628 Interior 417,,Santa Fe,NM,22560-5313,US,True,2020-06-18,,270
+232,local,26650 Elizabeth Neck Suite 167,,Las Cruces,NM,88001,US,False,2021-08-20,,271
+233,permanent,Cerrada Tamaulipas 718 923,,Las Cruces,NM,31260,US,True,2017-10-01,,272
+234,permanent,534 Ramirez Rest,,El Paso,TX,13708,US,True,2018-12-20,,273
+234,local,47554 Collin Bridge Apt. 555,,Las Cruces,NM,88003,US,False,2021-08-20,,274
+235,permanent,68485 West Stravenue,,Las Cruces,NM,15892,US,True,2016-10-07,,275
+236,permanent,844 Kenneth Grove Apt. 230,,Las Cruces,NM,70436,US,True,2013-09-29,,276
+237,permanent,Cerrada Norte Jiménez 962 736,,Las Cruces,NM,27172-7223,US,True,2019-10-20,,277
+238,permanent,"Circuito Collazo 900 Edif. 185 , Depto. 132",,Silver City,NM,97245-7230,US,True,2019-10-05,,278
+238,local,810 Curtis Hill Apt. 862,,Las Cruces,NM,88001,US,False,2021-08-20,,279
+239,permanent,Corredor Norte Bermúdez 225 267,,Albuquerque,NM,11964-2152,US,True,2017-06-04,,280
+239,local,5576 Steele Loop,,Las Cruces,NM,88003,US,False,2021-08-20,,281
+240,permanent,Calzada Estonia 212 606,,Phoenix,AZ,01917-9202,US,True,2019-01-18,,282
+241,permanent,2418 Spence Crossroad,,Clovis,NM,97905,US,True,2020-02-17,,283
+242,permanent,"Circunvalación Escobedo 303 Edif. 419 , Depto. 909",,Las Cruces,NM,00514-0546,US,True,2020-10-11,,284
+243,permanent,Diagonal Griego 991 297,,Las Vegas,NM,02481,US,True,2019-11-19,,285
+244,permanent,1687 Rich Springs Apt. 903,,Santa Fe,NM,92218,US,True,2016-01-16,,286
+244,local,14629 Nash Fork,,Las Cruces,NM,88012,US,False,2021-08-20,,287
+245,permanent,Andador Norte Posada 303 Interior 064,,Deming,NM,21214-6147,US,True,2020-05-05,,288
+245,local,342 Christopher Meadow Suite 423,,Las Cruces,NM,88003,US,False,2021-08-20,,289
+246,permanent,910 Julie Field Suite 829,,Silver City,NM,49988,US,True,2013-07-27,,290
+247,permanent,09617 Cynthia Parkway,,Albuquerque,NM,76684,US,True,2017-09-09,,291
+248,permanent,"Calzada Norte Ávalos 626 Edif. 265 , Depto. 826",,Las Cruces,NM,12819,US,True,2015-12-20,,292
+249,permanent,091 Stephen Ranch,,Las Cruces,NM,16581,US,True,2018-09-29,,293
+250,permanent,"Callejón Solorio 413 Edif. 908 , Depto. 088",,Las Cruces,NM,35130,US,True,2020-10-31,,294
+251,permanent,663 Brooks Roads,,El Paso,TX,08924,US,True,2016-07-14,,295
+251,local,08496 Munoz Wells Suite 601,,Las Cruces,NM,88003,US,False,2021-08-20,,296
+252,permanent,3307 Williams Harbor Suite 117,,Las Cruces,NM,22932,US,True,2014-03-25,,297
+253,permanent,7715 Anthony Causeway Apt. 215,,Albuquerque,NM,90625,US,True,2015-08-23,,298
+253,local,21358 Sarah Ways Apt. 401,,Las Cruces,NM,88001,US,False,2021-08-20,,299
+254,permanent,30376 Tony Junctions Apt. 988,,Las Cruces,NM,41573,US,True,2019-07-03,,300
+255,permanent,0787 Baker Plaza,,Houston,TX,11519,US,True,2015-07-03,,301
+255,local,3268 Romero Center Suite 451,,Las Cruces,NM,88003,US,False,2021-08-20,,302
+256,permanent,"Calzada Jamaica 494 Edif. 012 , Depto. 897",,Vieja Nueva Zelandia,,,MX,True,2013-06-09,,303
+256,local,325 Garrett Isle Suite 207,,Las Cruces,NM,88012,US,False,2021-08-20,,304
+257,permanent,Pasaje Aguascalientes 458 Interior 971,,Albuquerque,NM,80263-2570,US,True,2014-11-03,,305
+257,local,653 James Lane,,Las Cruces,NM,88011,US,False,2021-08-20,,306
+258,permanent,0703 Petersen Crossing,,Artesia,NM,07473,US,True,2013-12-11,,307
+258,local,0650 John Keys Suite 882,,Las Cruces,NM,88012,US,False,2021-08-20,,308
+259,permanent,"Prolongación Veracruz de Ignacio de la Llave 266 Edif. 128 , Depto. 758",,Las Cruces,NM,75676-6708,US,True,2018-04-15,,309
+260,permanent,Calzada Sevilla 872 324,,Albuquerque,NM,07931-1029,US,True,2015-05-19,,310
+261,permanent,1975 Myers Square Apt. 766,,Las Vegas,NM,19921,US,True,2017-10-12,,311
+262,permanent,Avenida Norte Ocampo 929 Interior 884,,Las Cruces,NM,59959,US,True,2014-10-10,,312
+263,permanent,7433 Ryan Pines Apt. 190,,El Paso,TX,82960,US,True,2017-05-24,,313
+264,permanent,17309 Johnson View Suite 465,,Las Cruces,NM,09407,US,True,2014-04-04,,314
+265,permanent,1990 Zavala Mall,,Las Cruces,NM,78901,US,True,2021-02-27,,315
+266,permanent,217 Penny Land Suite 356,,Anthony,NM,08093,US,True,2014-04-28,,316
+266,local,19036 Vicki Bridge,,Las Cruces,NM,88003,US,False,2021-08-20,,317
+267,permanent,9741 Rhonda Ville Apt. 483,,Alamogordo,NM,16589,US,True,2016-06-15,,318
+268,permanent,Circuito Jalisco 596 601,,Albuquerque,NM,48769-9842,US,True,2013-09-18,,319
+268,local,3204 Miller Gateway Suite 596,,Las Cruces,NM,88011,US,False,2021-08-20,,320
+269,permanent,Viaducto Cuba 903 102,,Las Cruces,NM,95083-0440,US,True,2015-12-06,,321
+270,permanent,Corredor Austria 290 Interior 193,,Las Cruces,NM,88953-6902,US,True,2021-05-31,,322
+271,permanent,376 Ashley Views Apt. 836,,Albuquerque,NM,88857,US,True,2014-12-12,,323
+272,permanent,9991 Charles Knoll Suite 676,,Anthony,NM,38418,US,True,2018-08-20,,324
+273,permanent,2144 Gonzales Extension Suite 491,,Las Cruces,NM,30867,US,True,2020-03-10,,325
+274,permanent,315 William Harbor,,Los Lunas,NM,59937,US,True,2019-05-10,,326
+274,local,506 Sarah Underpass,,Las Cruces,NM,88005,US,False,2021-08-20,,327
+275,permanent,Periférico Sur Macías 477 695,,Las Cruces,NM,41314-6753,US,True,2015-10-05,,328
+276,permanent,952 Stephanie Brooks,,Hobbs,NM,50201,US,True,2016-04-19,,329
+276,local,558 Diana Path,,Las Cruces,NM,88011,US,False,2021-08-20,,330
+277,permanent,"Boulevard Sinaloa 624 Edif. 111 , Depto. 860",,Houston,TX,89219,US,True,2014-03-04,,331
+277,local,94568 Kevin Mount Apt. 149,,Las Cruces,NM,88012,US,False,2021-08-20,,332
+278,permanent,930 King Inlet Suite 205,,Farmington,NM,90809,US,True,2020-09-17,,333
+279,permanent,0416 Cortez Springs Suite 859,,Farmington,NM,49211,US,True,2020-04-13,,334
+280,permanent,Viaducto México 034 Interior 469,,Las Cruces,NM,59648-8319,US,True,2016-08-28,,335
+281,permanent,Continuación Norte Sanches 386 667,,Los Lunas,NM,48581-9324,US,True,2018-05-17,,336
+281,local,8774 Angela Mews,,Las Cruces,NM,88011,US,False,2022-01-17,,337
+282,permanent,Callejón Norte Trejo 050 922,,Farmington,NM,16107,US,True,2017-03-21,,338
+283,permanent,Prolongación Sur Valles 111 Interior 212,,Las Cruces,NM,90203-5713,US,True,2018-12-14,,339
+284,permanent,936 Brewer Springs,,Silver City,NM,38340,US,True,2017-11-15,,340
+284,local,8841 Jonathan Mountain,,Las Cruces,NM,88011,US,False,2022-01-17,,341
+285,permanent,"Cerrada Norte Niño 576 Edif. 403 , Depto. 816",,Anthony,NM,49690-2824,US,True,2020-05-04,,342
+285,local,225 Tara Inlet,,Las Cruces,NM,88001,US,False,2022-01-17,,343
+286,permanent,Continuación Chad 546 Interior 968,,Las Cruces,NM,57903,US,True,2021-06-03,,344
+287,permanent,Viaducto Palacios 252 986,,Vieja Bhután,,,EG,True,2018-10-05,,345
+287,local,76604 Green Roads Apt. 978,,Las Cruces,NM,88003,US,False,2022-01-17,,346
+288,permanent,Ampliación Nayarit 456 075,,El Paso,TX,09150-8632,US,True,2021-12-09,,347
+288,local,122 Jordan Harbor,,Las Cruces,NM,88011,US,False,2022-01-17,,348
+289,permanent,4248 Cassandra Falls,,Las Cruces,NM,89395,US,True,2017-02-13,,349
+290,permanent,646 Donna Ports,,Los Angeles,CA,10804,US,True,2018-05-15,,350
+291,permanent,"Calzada Burkina Faso 422 Edif. 686 , Depto. 536",,Hobbs,NM,55158-8863,US,True,2016-06-12,,351
+292,permanent,"Pasaje Kiribati 327 Edif. 352 , Depto. 410",,San Antonio,TX,97739,US,True,2021-05-06,,352
+293,permanent,49125 Douglas Divide,,Los Lunas,NM,32360,US,True,2017-08-02,,353
+293,local,41517 Goodwin Throughway Suite 547,,Las Cruces,NM,88001,US,False,2022-01-17,,354
+294,permanent,"Peatonal Sur Montañez 298 Edif. 585 , Depto. 672",,Gallup,NM,27601-5343,US,True,2019-12-26,,355
+294,local,49135 Stevens Route,,Las Cruces,NM,88001,US,False,2022-01-17,,356
+295,permanent,Calle Solorzano 033 Interior 399,,Las Cruces,NM,71805-1371,US,True,2018-07-16,,357
+296,permanent,444 Matthew Springs Suite 712,,Las Vegas,NM,64409,US,True,2022-01-10,,358
+297,permanent,"Periférico Yucatán 964 Edif. 347 , Depto. 452",,Albuquerque,NM,55574-6966,US,True,2019-01-24,,359
+298,permanent,"Circuito San Marino 601 Edif. 054 , Depto. 857",,Las Cruces,NM,17215-6229,US,True,2021-09-09,,360
+299,permanent,Ampliación Tamaulipas 858 749,,San Bernardo los altos,,,JP,True,2021-08-23,,361
+299,local,119 Terri Tunnel Apt. 828,,Las Cruces,NM,88011,US,False,2022-08-20,,362
+300,permanent,Calzada Chipre 421 089,,Phoenix,AZ,28515,US,True,2015-01-08,,363
+301,permanent,"Boulevard Noruega 955 Edif. 633 , Depto. 185",,Farmington,NM,48170-0666,US,True,2017-04-03,,364
+301,local,5416 Perez Squares,,Las Cruces,NM,88001,US,False,2022-08-20,,365
+302,permanent,5495 Krista Isle Apt. 702,,Alamogordo,NM,53933,US,True,2015-12-30,,366
+303,permanent,Periférico Canadá 311 649,,Las Cruces,NM,33424,US,True,2014-09-27,,367
+304,permanent,Continuación Guerrero 578 Interior 715,,El Paso,TX,15608-2137,US,True,2020-11-26,,368
+304,local,84254 Graham Corner,,Las Cruces,NM,88001,US,False,2022-08-20,,369
+305,permanent,Calle Oaxaca 148 439,,Las Cruces,NM,06227,US,True,2019-08-25,,370
+306,permanent,64176 Nancy Square Suite 438,,Port Reneemouth,,,MX,True,2017-04-20,,371
+307,permanent,"Prolongación Calvillo 113 Edif. 599 , Depto. 660",,Silver City,NM,77980-6603,US,True,2018-10-31,,372
+307,local,51460 Atkinson Glen,,Las Cruces,NM,88003,US,False,2022-08-20,,373
+308,permanent,Peatonal Quintana Roo 752 Interior 250,,Albuquerque,NM,39488,US,True,2021-08-18,,374
+308,local,826 James Course Suite 425,,Las Cruces,NM,88003,US,False,2022-08-20,,375
+309,permanent,"Viaducto Norte Ibarra 546 Edif. 553 , Depto. 585",,Alamogordo,NM,25389,US,True,2020-09-06,,376
+309,local,87851 Jennifer Stravenue,,Las Cruces,NM,88005,US,False,2022-08-20,,377
+310,permanent,"Privada Tayikistán 509 Edif. 059 , Depto. 119",,Carlsbad,NM,86233,US,True,2018-01-04,,378
+310,local,07151 Sophia Ports,,Las Cruces,NM,88001,US,False,2022-08-20,,379
+311,permanent,Corredor Cadena 080 056,,Las Cruces,NM,09951-2397,US,True,2018-02-23,,380
+312,permanent,Continuación Gurule 237 Interior 360,,Houston,TX,07918-1589,US,True,2019-02-22,,381
+313,permanent,Privada Amaya 463 580,,Las Cruces,NM,88285-0317,US,True,2020-01-31,,382
+314,permanent,Viaducto Venezuela 606 Interior 664,,Farmington,NM,74906,US,True,2018-10-09,,383
+314,local,723 Dana Crescent,,Las Cruces,NM,88012,US,False,2022-08-20,,384
+315,permanent,Diagonal Enríquez 136 957,,Tucson,AZ,79083,US,True,2017-10-16,,385
+316,permanent,Privada Iraq 116 880,,Los Angeles,CA,55021,US,True,2022-01-15,,386
+316,local,60906 Melody Track,,Las Cruces,NM,88003,US,False,2022-08-20,,387
+317,permanent,Eje vial Macías 076 836,,Albuquerque,NM,53666,US,True,2020-06-03,,388
+317,local,776 Cox Islands Suite 283,,Las Cruces,NM,88001,US,False,2022-08-20,,389
+318,permanent,"Prolongación Sur Laboy 926 Edif. 932 , Depto. 657",,Las Cruces,NM,27599,US,True,2018-12-06,,390
+319,permanent,27102 Kennedy Neck,,Las Cruces,NM,22843,US,True,2020-06-06,,391
+320,permanent,Corredor Gabón 848 075,,Phoenix,AZ,03447,US,True,2016-07-08,,392
+320,local,0471 Arnold Curve Apt. 904,,Las Cruces,NM,88005,US,False,2022-08-20,,393
+321,permanent,059 Eric Road,,Gallup,NM,60894,US,True,2021-04-30,,394
+322,permanent,931 Jacob Vista,,Carlsbad,NM,42628,US,True,2020-07-27,,395
+322,local,69496 Robinson Glen,,Las Cruces,NM,88003,US,False,2022-08-20,,396
+323,permanent,"Circunvalación Norte Marroquín 339 Edif. 205 , Depto. 677",,Las Cruces,NM,67772-2660,US,True,2016-12-02,,397
+324,permanent,Boulevard Coahuila de Zaragoza 794 Interior 238,,Las Cruces,NM,36704-2549,US,True,2016-11-25,,398
+325,permanent,162 Miller Overpass Suite 941,,Las Cruces,NM,59415,US,True,2014-07-12,,399
+326,permanent,Circunvalación Ibarra 240 061,,Las Cruces,NM,72768-2975,US,True,2020-01-23,,400
+327,permanent,12218 Shelby Freeway Apt. 555,,El Paso,TX,11138,US,True,2018-08-03,,401
+328,permanent,Periférico Longoria 068 Interior 103,,Lubbock,TX,33970,US,True,2014-12-06,,402
+328,local,195 Randy Drive Apt. 944,,Las Cruces,NM,88003,US,False,2022-08-20,,403
+329,permanent,0325 Victor Stravenue,,Hobbs,NM,51431,US,True,2017-01-12,,404
+329,local,6927 Hoffman Heights Apt. 191,,Las Cruces,NM,88012,US,False,2022-08-20,,405
+330,permanent,01137 Nelson Squares Suite 123,,Rio Rancho,NM,09041,US,True,2017-05-05,,406
+330,local,600 Reynolds Mountain Suite 209,,Las Cruces,NM,88001,US,False,2022-08-20,,407
+331,permanent,"Corredor Norte Cordero 786 Edif. 561 , Depto. 942",,Las Cruces,NM,57782-0582,US,True,2015-12-10,,408
+332,permanent,Viaducto Somalia 230 Interior 817,,Deming,NM,14364,US,True,2019-04-28,,409
+332,local,130 Anthony Crest,,Las Cruces,NM,88005,US,False,2022-08-20,,410
+333,permanent,0717 Stephens Corner,,Las Vegas,NM,32664,US,True,2019-01-15,,411
+333,local,6539 Johnson Inlet,,Las Cruces,NM,88003,US,False,2022-08-20,,412
+334,permanent,Calle Bermúdez 773 062,,Albuquerque,NM,04235-9737,US,True,2020-04-11,,413
+335,permanent,21923 Keller Plains,,Las Cruces,NM,49432,US,True,2016-09-04,,414
+336,permanent,"Callejón Oquendo 812 Edif. 282 , Depto. 178",,Gallup,NM,92365,US,True,2020-04-21,,415
+336,local,6060 Norman Burgs,,Las Cruces,NM,88005,US,False,2022-08-20,,416
+337,permanent,Peatonal Zacatecas 989 Interior 992,,San Antonio,TX,51758-8914,US,True,2020-06-10,,417
+337,local,4983 Mcintosh Islands Apt. 935,,Las Cruces,NM,88003,US,False,2022-08-20,,418
+338,permanent,"Calle Morelos 141 Edif. 686 , Depto. 013",,Las Vegas,NM,77894-8963,US,True,2017-08-21,,419
+338,local,67917 Hughes Crest Apt. 215,,Las Cruces,NM,88005,US,False,2022-08-20,,420
+339,permanent,Cerrada Guanajuato 389 Interior 021,,Santa Fe,NM,71136-3379,US,True,2018-11-20,,421
+339,local,34103 Graham Wall,,Las Cruces,NM,88012,US,False,2022-08-20,,422
+340,permanent,55643 Roach Light,,Las Cruces,NM,79201,US,True,2015-07-12,,423
+341,permanent,Diagonal Nava 312 198,,Rio Rancho,NM,41847,US,True,2019-02-02,,424
+342,permanent,52480 Phillip Expressway,,Las Cruces,NM,06837,US,True,2018-07-21,,425
+343,permanent,720 Charles Land,,Albuquerque,NM,39618,US,True,2021-04-19,,426
+343,local,666 Brooks Island,,Las Cruces,NM,88005,US,False,2022-08-20,,427
+344,permanent,8870 Jones Isle Apt. 482,,Phoenix,AZ,01950,US,True,2020-01-02,,428
+345,permanent,"Calzada Bosnia y Herzegovina 646 Edif. 300 , Depto. 402",,Las Cruces,NM,69362,US,True,2019-05-16,,429
+346,permanent,06745 Porter Stream,,Albuquerque,NM,53547,US,True,2016-05-08,,430
+347,permanent,Peatonal Noruega 936 Interior 634,,Hobbs,NM,92529,US,True,2020-10-17,,431
+347,local,611 Christopher Street Apt. 286,,Las Cruces,NM,88001,US,False,2022-08-20,,432
+348,permanent,Pasaje Zelaya 281 Interior 793,,Denver,CO,06527-7584,US,True,2016-07-21,,433
+349,permanent,63510 Maureen Unions Suite 627,,Santa Fe,NM,61253,US,True,2019-01-08,,434
+349,local,572 Mcgee Station Suite 592,,Las Cruces,NM,88001,US,False,2022-08-20,,435
+350,permanent,079 Ryan Throughway Suite 045,,Albuquerque,NM,02849,US,True,2016-08-18,,436
+350,local,176 Sloan Rest Apt. 593,,Las Cruces,NM,88012,US,False,2022-08-20,,437
+351,permanent,68528 Alexis Meadow,,El Paso,TX,10944,US,True,2020-12-05,,438
+351,local,370 David Summit Suite 244,,Las Cruces,NM,88012,US,False,2022-08-20,,439
+352,permanent,112 Matthew Pike,,Clovis,NM,90879,US,True,2018-06-02,,440
+352,local,5056 Garcia Passage,,Las Cruces,NM,88011,US,False,2022-08-20,,441
+353,permanent,"Peatonal Nueva Zelandia 851 Edif. 905 , Depto. 348",,Sunland Park,NM,40104-2462,US,True,2018-05-16,,442
+353,local,6185 Tyrone Streets Suite 600,,Las Cruces,NM,88005,US,False,2022-08-20,,443
+354,permanent,021 Stacy Radial Apt. 170,,Denver,CO,62003,US,True,2014-07-05,,444
+355,permanent,Diagonal Rumania 944 Interior 391,,Los Lunas,NM,49701-6934,US,True,2021-11-21,,445
+355,local,291 David Canyon,,Las Cruces,NM,88003,US,False,2022-08-20,,446
+356,permanent,Circuito Norte Arroyo 067 Interior 200,,Los Lunas,NM,84361-4244,US,True,2021-10-07,,447
+356,local,0781 Bailey Row,,Las Cruces,NM,88005,US,False,2022-08-20,,448
+357,permanent,Circunvalación Gabón 899 827,,Las Cruces,NM,20586,US,True,2020-03-22,,449
+358,permanent,Prolongación Chapa 603 768,,Alamogordo,NM,18723,US,True,2016-11-10,,450
+358,local,51040 Martinez Harbors,,Las Cruces,NM,88011,US,False,2022-08-20,,451
+359,permanent,"Privada Sur Amador 190 Edif. 432 , Depto. 230",,Hobbs,NM,33324,US,True,2021-07-01,,452
+359,local,73920 Jessica Stream Apt. 546,,Las Cruces,NM,88003,US,False,2022-08-20,,453
+360,permanent,9303 Phillips Trail Suite 191,,Las Cruces,NM,91532,US,True,2017-04-19,,454
+361,permanent,716 Joan Islands,,Las Cruces,NM,60911,US,True,2017-05-15,,455
+362,permanent,Peatonal Coahuila de Zaragoza 248 905,,Albuquerque,NM,70867-0090,US,True,2020-04-16,,456
+362,local,436 Fields Corners,,Las Cruces,NM,88003,US,False,2022-08-20,,457
+363,permanent,822 Bruce Unions,,Las Cruces,NM,06659,US,True,2019-11-15,,458
+364,permanent,Circunvalación Sur Alonso 625 863,,Alamogordo,NM,44170,US,True,2017-11-30,,459
+364,local,6255 Cline Canyon Apt. 635,,Las Cruces,NM,88012,US,False,2022-08-20,,460
+365,permanent,53849 Stephenson Crossing,,Las Cruces,NM,52237,US,True,2016-05-31,,461
+366,permanent,Privada Sur Alarcón 300 915,,San Antonio,TX,18298-0365,US,True,2017-08-18,,462
+367,permanent,4556 Christopher Camp,,Santa Fe,NM,91650,US,True,2021-06-20,,463
+368,permanent,71531 Katrina Glens Suite 506,,Clovis,NM,67226,US,True,2018-04-23,,464
+369,permanent,"Andador Canales 570 Edif. 908 , Depto. 599",,Albuquerque,NM,44920,US,True,2020-01-10,,465
+370,permanent,Boulevard Dominicana 426 698,,Las Cruces,NM,69087,US,True,2015-03-05,,466
+371,permanent,269 Stephens Drive,,Clovis,NM,57405,US,True,2015-06-16,,467
+371,local,86965 Mccoy Village Apt. 087,,Las Cruces,NM,88003,US,False,2022-08-20,,468
+372,permanent,Diagonal Santacruz 113 950,,Las Vegas,NM,16809,US,True,2020-05-25,,469
+372,local,49150 Russell Fall Apt. 976,,Las Cruces,NM,88012,US,False,2022-08-20,,470
+373,permanent,"Ampliación Sonora 841 Edif. 333 , Depto. 731",,Denver,CO,55235,US,True,2022-03-24,,471
+374,permanent,Privada Lucio 490 Interior 295,,Carlsbad,NM,26480,US,True,2020-02-14,,472
+374,local,4403 Harris Glen,,Las Cruces,NM,88011,US,False,2022-08-20,,473
+375,permanent,"Eje vial Federación de Rusia 318 Edif. 285 , Depto. 605",,Santa Fe,NM,97079,US,True,2014-09-08,,474
+375,local,1770 Valencia Parks Apt. 682,,Las Cruces,NM,88003,US,False,2022-08-20,,475
+376,permanent,984 Stephanie Crossroad Apt. 509,,Las Cruces,NM,91175,US,True,2021-12-20,,476
+377,permanent,Retorno Razo 619 Interior 177,,Las Cruces,NM,68299-6872,US,True,2017-07-23,,477
+378,permanent,86796 Donald Views Suite 232,,Rio Rancho,NM,90092,US,True,2022-01-17,,478
+379,permanent,"Periférico Norte Olvera 509 Edif. 574 , Depto. 430",,Las Cruces,NM,49189,US,True,2014-08-06,,479
+380,permanent,813 West Island Apt. 094,,Albuquerque,NM,20120,US,True,2021-01-26,,480
+380,local,1052 Reyes Pines,,Las Cruces,NM,88005,US,False,2022-08-20,,481
+381,permanent,965 Cobb Ville Suite 282,,Albuquerque,NM,40417,US,True,2020-08-02,,482
+381,local,65020 Brad Unions,,Las Cruces,NM,88012,US,False,2022-08-20,,483
+382,permanent,"Cerrada Norte Rangel 746 Edif. 202 , Depto. 582",,El Paso,TX,43183-2812,US,True,2017-02-27,,484
+383,permanent,4584 Taylor Drives Apt. 529,,Las Vegas,NM,12328,US,True,2018-05-11,,485
+383,local,8316 Andrea Falls Suite 172,,Las Cruces,NM,88003,US,False,2022-08-20,,486
+384,permanent,6177 Robinson Valley Suite 430,,Las Cruces,NM,75348,US,True,2020-02-17,,487
+385,permanent,125 Daniel Stream,,Tucson,AZ,07616,US,True,2016-10-26,,488
+385,local,00487 Stone Parkways,,Las Cruces,NM,88001,US,False,2022-08-20,,489
+386,permanent,Calzada Yucatán 830 Interior 930,,Alamogordo,NM,71397-1912,US,True,2018-04-03,,490
+386,local,22132 Michelle Squares Suite 672,,Las Cruces,NM,88012,US,False,2022-08-20,,491
+387,permanent,42114 Kristine Springs,,El Paso,TX,52246,US,True,2020-09-12,,492
+387,local,0952 Caitlyn Lane,,Las Cruces,NM,88012,US,False,2022-08-20,,493
+388,permanent,0615 Timothy Point,,El Paso,TX,65362,US,True,2021-12-25,,494
+388,local,29907 Ryan Wall Apt. 632,,Las Cruces,NM,88005,US,False,2022-08-20,,495
+389,permanent,Boulevard Serrano 030 683,,Las Vegas,NM,76417,US,True,2020-03-03,,496
+389,local,8080 Lisa Skyway,,Las Cruces,NM,88003,US,False,2022-08-20,,497
+390,permanent,Eje vial Norte Ybarra 703 Interior 180,,Albuquerque,NM,33962-7466,US,True,2018-02-03,,498
+390,local,15918 Mariah Squares Suite 000,,Las Cruces,NM,88001,US,False,2022-08-20,,499
+391,permanent,Viaducto Zacatecas 987 Interior 313,,San Paulina los altos,,,TR,True,2018-12-14,,500
+391,local,716 Morrison Summit Suite 166,,Las Cruces,NM,88001,US,False,2022-08-20,,501
+392,permanent,Viaducto Huerta 813 599,,Roswell,NM,21170-8894,US,True,2018-02-20,,502
+392,local,86448 Eugene Crest,,Las Cruces,NM,88001,US,False,2022-08-20,,503
+393,permanent,688 Steven Terrace,,Las Cruces,NM,51894,US,True,2021-08-15,,504
+394,permanent,096 Conley Lane Suite 834,,Las Cruces,NM,80691,US,True,2014-11-14,,505
+395,permanent,46728 Guzman Cliff Suite 091,,El Paso,TX,12190,US,True,2017-01-08,,506
+396,permanent,Circunvalación Zacatecas 419 165,,Denver,CO,34409,US,True,2017-08-22,,507
+397,permanent,"Privada Tamaulipas 893 Edif. 969 , Depto. 874",,El Paso,TX,94155-9450,US,True,2014-11-23,,508
+397,local,92920 Vang Gateway,,Las Cruces,NM,88011,US,False,2022-08-20,,509
+398,permanent,46648 Reynolds Loop,,Las Cruces,NM,07054,US,True,2014-07-31,,510
+399,permanent,62212 Kelly Track,,Deming,NM,59735,US,True,2020-08-20,,511
+399,local,7462 Austin Loaf Apt. 112,,Las Cruces,NM,88001,US,False,2022-08-20,,512
+400,permanent,Callejón Avilés 843 753,,Las Vegas,NM,59680-7852,US,True,2019-01-13,,513
+400,local,8242 Emily Square Apt. 854,,Las Cruces,NM,88005,US,False,2022-08-20,,514
+401,permanent,Cerrada Suiza 272 Interior 038,,Las Cruces,NM,21750-8019,US,True,2020-07-25,,515
+402,permanent,"Eje vial Campeche 385 Edif. 179 , Depto. 937",,Las Cruces,NM,05391,US,True,2021-06-19,,516
+403,permanent,Prolongación Brunei Darussalam 187 062,,Vieja Costa Rica,,,IN,True,2017-04-01,,517
+404,permanent,Calzada San Luis Potosí 140 Interior 384,,Albuquerque,NM,31980-7468,US,True,2016-09-15,,518
+405,permanent,654 Jenna Squares,,Las Cruces,NM,29965,US,True,2022-07-07,,519
+406,permanent,791 Johnson Unions Suite 257,,Las Cruces,NM,10663,US,True,2022-07-02,,520
+407,permanent,Peatonal Haití 921 Interior 188,,El Paso,TX,41996,US,True,2020-10-29,,521
+408,permanent,"Prolongación Almanza 016 Edif. 356 , Depto. 407",,Las Cruces,NM,32472,US,True,2017-05-23,,522
+409,permanent,2610 Perez Viaduct,,Las Cruces,NM,58249,US,True,2015-04-03,,523
+410,permanent,61982 Harris Inlet Apt. 310,,Roswell,NM,34293,US,True,2021-06-12,,524
+410,local,25896 Gabrielle Cliff Suite 435,,Las Cruces,NM,88011,US,False,2022-08-20,,525
+411,permanent,Continuación Campeche 740 Interior 657,,Carlsbad,NM,51562-3920,US,True,2015-10-07,,526
+412,permanent,4120 Elizabeth Falls,,Las Cruces,NM,57876,US,True,2017-11-24,,527
+413,permanent,9503 Brandon Lock,,Alamogordo,NM,38229,US,True,2017-07-20,,528
+414,permanent,"Eje vial Ruiz 900 Edif. 696 , Depto. 801",,Las Cruces,NM,77403-7842,US,True,2017-08-18,,529
+415,permanent,Pasaje Terrazas 290 Interior 292,,Las Cruces,NM,34511,US,True,2018-07-28,,530
+416,permanent,Callejón Sonora 336 202,,San Antonio,TX,55821-4770,US,True,2021-03-16,,531
+417,permanent,Privada Kuwait 881 Interior 959,,Lubbock,TX,72168-8005,US,True,2016-06-01,,532
+417,local,8931 Franklin Drives,,Las Cruces,NM,88012,US,False,2022-08-20,,533
+418,permanent,202 Cynthia Causeway,,Las Cruces,NM,36807,US,True,2020-10-13,,534
+419,permanent,Avenida Norte Lugo 902 Interior 983,,Silver City,NM,04384,US,True,2017-08-14,,535
+419,local,662 Ashley Unions,,Las Cruces,NM,88005,US,False,2022-08-20,,536
+420,permanent,650 Holland Lane,,Carlsbad,NM,22426,US,True,2022-02-28,,537
+420,local,22626 Christopher Drive Suite 362,,Las Cruces,NM,88001,US,False,2022-08-20,,538
+421,permanent,Cerrada Bernal 587 605,,Alamogordo,NM,57694-7576,US,True,2014-12-07,,539
+422,permanent,9664 White Walk Apt. 074,,Las Cruces,NM,18419,US,True,2019-12-12,,540
+423,permanent,00817 Gillespie Divide,,Las Cruces,NM,16262,US,True,2016-03-09,,541
+424,permanent,3370 Joshua Circle Apt. 527,,Hobbs,NM,70887,US,True,2016-02-27,,542
+424,local,55800 Samantha Orchard,,Las Cruces,NM,88003,US,False,2022-08-20,,543
+425,permanent,Calzada Michoacán de Ocampo 227 393,,Las Cruces,NM,04573,US,True,2019-12-03,,544
+426,permanent,"Peatonal Puga 484 Edif. 673 , Depto. 574",,Denver,CO,23322,US,True,2021-10-21,,545
+427,permanent,85201 Kim Extensions Suite 084,,Jermaineside,,,IN,True,2020-08-23,,546
+427,local,97561 Cross Turnpike Suite 055,,Las Cruces,NM,88001,US,False,2022-08-20,,547
+428,permanent,Boulevard Sur Burgos 413 936,,Las Cruces,NM,78976-0987,US,True,2018-08-14,,548
+429,permanent,0576 Kaiser Port,,Anthony,NM,84398,US,True,2018-02-27,,549
+429,local,7000 Robert Points Suite 644,,Las Cruces,NM,88012,US,False,2022-08-20,,550
+430,permanent,"Pasaje Sur Carmona 952 Edif. 963 , Depto. 530",,Las Cruces,NM,97025-5128,US,True,2018-07-19,,551
+431,permanent,743 Wiley Greens Apt. 882,,Alamogordo,NM,19651,US,True,2015-11-07,,552
+431,local,95862 Cummings Forge,,Las Cruces,NM,88012,US,False,2022-08-20,,553
+432,permanent,Diagonal Coahuila de Zaragoza 939 002,,Alamogordo,NM,12137-5658,US,True,2017-12-06,,554
+433,permanent,20334 Carter Greens Suite 310,,Albuquerque,NM,39987,US,True,2018-07-29,,555
+434,permanent,89466 White Terrace,,Albuquerque,NM,44642,US,True,2015-04-17,,556
+435,permanent,Ampliación Tlaxcala 279 Interior 955,,Las Cruces,NM,02453,US,True,2016-02-21,,557
+436,permanent,"Andador Tlaxcala 648 Edif. 717 , Depto. 754",,Tucson,AZ,19924-0658,US,True,2017-10-01,,558
+437,permanent,"Andador Casares 780 Edif. 358 , Depto. 690",,Albuquerque,NM,70740,US,True,2016-12-24,,559
+437,local,251 Benson Fall,,Las Cruces,NM,88012,US,False,2022-08-20,,560
+438,permanent,995 Joseph Brooks Apt. 059,,El Paso,TX,90038,US,True,2018-03-17,,561
+438,local,519 Lopez Springs Suite 749,,Las Cruces,NM,88012,US,False,2022-08-20,,562
+439,permanent,6302 Stewart Shores,,Las Cruces,NM,92399,US,True,2016-12-25,,563
+440,permanent,"Circuito Vela 321 Edif. 122 , Depto. 121",,Roswell,NM,48158-2686,US,True,2021-05-01,,564
+440,local,4019 Alyssa Greens Apt. 644,,Las Cruces,NM,88005,US,False,2022-08-20,,565
+441,permanent,Avenida Baja California Sur 294 Interior 831,,Houston,TX,78911-7972,US,True,2016-01-21,,566
+441,local,999 Johnston Pine Apt. 283,,Las Cruces,NM,88001,US,False,2022-08-20,,567
+442,permanent,Privada Guanajuato 929 Interior 900,,Las Vegas,NM,68627-6332,US,True,2014-10-04,,568
+442,local,963 Lisa Lodge,,Las Cruces,NM,88001,US,False,2022-08-20,,569
+443,permanent,Periférico Romero 067 Interior 761,,Los Angeles,CA,65920,US,True,2018-02-12,,570
+444,permanent,125 Harris Ridges Apt. 553,,El Paso,TX,79451,US,True,2017-04-17,,571
+445,permanent,Boulevard Tabasco 347 Interior 853,,El Paso,TX,98816-4980,US,True,2017-04-29,,572
+445,local,5092 Liu Islands Apt. 102,,Las Cruces,NM,88012,US,False,2022-08-20,,573
+446,permanent,5000 Brandon Key,,Las Cruces,NM,94899,US,True,2019-11-01,,574
+447,permanent,Circuito Haití 429 Interior 906,,Truth or Consequences,NM,45686-5240,US,True,2019-04-07,,575
+448,permanent,350 Rivas Dam,,El Paso,TX,38180,US,True,2021-06-08,,576
+449,permanent,51618 Burns Ridges Apt. 710,,Las Cruces,NM,44539,US,True,2017-03-18,,577
+450,permanent,8803 David Forge,,El Paso,TX,55719,US,True,2017-04-13,,578
+450,local,33892 Mayer Passage,,Las Cruces,NM,88003,US,False,2023-01-17,,579
+451,permanent,915 Jennings Field,,El Paso,TX,38844,US,True,2019-11-24,,580
+451,local,7177 Mahoney Ramp Suite 914,,Las Cruces,NM,88001,US,False,2023-01-17,,581
+452,permanent,"Circunvalación Guanajuato 464 Edif. 884 , Depto. 997",,El Paso,TX,72857-5958,US,True,2015-04-11,,582
+453,permanent,Periférico Sur Borrego 303 885,,Farmington,NM,81193-9781,US,True,2020-11-10,,583
+453,local,9009 Martha Mills Suite 905,,Las Cruces,NM,88001,US,False,2023-01-17,,584
+454,permanent,1360 Hannah Islands Apt. 810,,Carlsbad,NM,37647,US,True,2021-12-17,,585
+455,permanent,Cerrada Sur Mesa 639 Interior 792,,Las Cruces,NM,51164-3690,US,True,2018-12-05,,586
+456,permanent,880 Tracy Forest,,Tabithaton,,,GH,True,2022-03-15,,587
+457,permanent,Continuación Quintana Roo 358 727,,Rio Rancho,NM,74306,US,True,2019-09-02,,588
+458,permanent,Ampliación Samoa 915 386,,Las Cruces,NM,28262,US,True,2021-03-30,,589
+459,permanent,Boulevard Durango 487 098,,Clovis,NM,26496-3225,US,True,2017-09-18,,590
+460,permanent,Viaducto Sur Badillo 009 536,,Las Cruces,NM,21953-6890,US,True,2021-02-18,,591
+461,permanent,Callejón Cabo Verde 454 617,,Sunland Park,NM,92817,US,True,2022-03-14,,592
+462,permanent,5513 Thomas Common,,Farmington,NM,85900,US,True,2016-10-21,,593
+463,permanent,Calle Sur Rivas 008 Interior 844,,Las Cruces,NM,40837-8191,US,True,2015-11-25,,594
+464,permanent,Ampliación Croacia 237 205,,Farmington,NM,03300-0088,US,True,2020-07-15,,595
+464,local,46739 Cheryl Alley Apt. 141,,Las Cruces,NM,88003,US,False,2023-01-17,,596
+465,permanent,Boulevard Guevara 118 Interior 151,,El Paso,TX,45829-4203,US,True,2015-11-04,,597
+465,local,015 Mario Garden Suite 660,,Las Cruces,NM,88005,US,False,2023-01-17,,598
+466,permanent,527 Kristine Knolls Apt. 642,,Las Cruces,NM,29634,US,True,2022-01-25,,599
+467,permanent,12838 Stephen Burgs,,El Paso,TX,12262,US,True,2021-11-17,,600
+468,permanent,Ampliación Kirguistán 347 Interior 243,,El Paso,TX,86176-8225,US,True,2021-09-09,,601
+468,local,272 Chavez Alley,,Las Cruces,NM,88003,US,False,2023-08-20,,602
+469,permanent,Continuación Grecia 404 668,,Rio Rancho,NM,12156,US,True,2017-10-10,,603
+469,local,525 Andrews Extensions Apt. 644,,Las Cruces,NM,88003,US,False,2023-08-20,,604
+470,permanent,Callejón Gutiérrez 160 498,,Roswell,NM,03721-8600,US,True,2020-09-23,,605
+470,local,03197 Christopher Valley,,Las Cruces,NM,88005,US,False,2023-08-20,,606
+471,permanent,"Peatonal de la Crúz 878 Edif. 072 , Depto. 790",,Roswell,NM,71616,US,True,2021-02-15,,607
+471,local,819 Daugherty Drives,,Las Cruces,NM,88001,US,False,2023-08-20,,608
+472,permanent,069 Arnold Vista Suite 467,,Las Cruces,NM,03112,US,True,2018-06-18,,609
+473,permanent,198 Becky Heights,,El Paso,TX,71519,US,True,2018-08-14,,610
+473,local,130 Kevin Coves Suite 910,,Las Cruces,NM,88005,US,False,2023-08-20,,611
+474,permanent,Continuación Rodríquez 855 128,,El Paso,TX,77512,US,True,2018-02-17,,612
+475,permanent,Boulevard Sur Rincón 087 156,,Las Cruces,NM,78370-3175,US,True,2015-12-01,,613
+476,permanent,632 Dougherty Wall Apt. 538,,Las Cruces,NM,53046,US,True,2018-09-25,,614
+477,permanent,0535 Cole Street Suite 897,,Las Cruces,NM,66012,US,True,2022-11-05,,615
+478,permanent,Callejón San Luis Potosí 448 698,,Phoenix,AZ,05216,US,True,2021-07-16,,616
+478,local,92202 Cooley Port,,Las Cruces,NM,88003,US,False,2023-08-20,,617
+479,permanent,7244 Lane Walk,,El Paso,TX,15329,US,True,2017-09-18,,618
+479,local,94763 Amber Port Apt. 654,,Las Cruces,NM,88011,US,False,2023-08-20,,619
+480,permanent,Retorno San Luis Potosí 708 864,,Las Cruces,NM,67560,US,True,2021-09-03,,620
+481,permanent,51025 Cooper Circle,,Hobbs,NM,15380,US,True,2022-04-09,,621
+482,permanent,29075 Edwards Well Apt. 012,,Alamogordo,NM,32315,US,True,2023-02-26,,622
+482,local,3177 Chapman Harbors Apt. 106,,Las Cruces,NM,88001,US,False,2023-08-20,,623
+483,permanent,096 Shane Trafficway,,Albuquerque,NM,30459,US,True,2019-10-25,,624
+483,local,99284 Baxter Groves,,Las Cruces,NM,88005,US,False,2023-08-20,,625
+484,permanent,"Privada Chihuahua 204 Edif. 877 , Depto. 067",,Las Cruces,NM,93332-9986,US,True,2019-07-03,,626
+485,permanent,"Corredor Colima 628 Edif. 222 , Depto. 501",,Las Cruces,NM,56247,US,True,2019-06-23,,627
+486,permanent,21740 Jennifer Ridges Apt. 019,,Albuquerque,NM,29285,US,True,2022-10-03,,628
+486,local,3892 Ethan Villages,,Las Cruces,NM,88001,US,False,2023-08-20,,629
+487,permanent,"Avenida Norte Pizarro 231 Edif. 336 , Depto. 109",,Rio Rancho,NM,41642-3165,US,True,2023-05-07,,630
+487,local,1372 Harrison Loaf Suite 760,,Las Cruces,NM,88001,US,False,2023-08-20,,631
+488,permanent,Cerrada Granada 653 Interior 869,,Alamogordo,NM,79025-4853,US,True,2015-09-23,,632
+488,local,68904 Thompson Path Suite 410,,Las Cruces,NM,88003,US,False,2023-08-20,,633
+489,permanent,"Privada Razo 564 Edif. 672 , Depto. 636",,Las Cruces,NM,54185,US,True,2022-08-30,,634
+490,permanent,Calzada Arabia Saudita 773 Interior 067,,Denver,CO,82226,US,True,2018-08-27,,635
+490,local,9419 Kellie Mission Suite 538,,Las Cruces,NM,88012,US,False,2023-08-20,,636
+491,permanent,3201 Hines Ports Apt. 739,,Rio Rancho,NM,76700,US,True,2021-01-06,,637
+491,local,919 Tracy Points,,Las Cruces,NM,88003,US,False,2023-08-20,,638
+492,permanent,Avenida Santo Tomé y Príncipe 873 Interior 054,,Farmington,NM,43884,US,True,2016-04-26,,639
+493,permanent,Pasaje Arriaga 088 081,,Las Cruces,NM,26282-9682,US,True,2015-07-23,,640
+494,permanent,"Pasaje Báez 263 Edif. 444 , Depto. 359",,Albuquerque,NM,24587-0120,US,True,2016-07-03,,641
+494,local,242 Lewis Ranch Apt. 912,,Las Cruces,NM,88003,US,False,2023-08-20,,642
+495,permanent,488 David Well Suite 738,,Las Cruces,NM,48924,US,True,2022-02-10,,643
+496,permanent,6617 Thompson Key,,Albuquerque,NM,49909,US,True,2019-07-18,,644
+497,permanent,Retorno Bhután 260 001,,Carlsbad,NM,40762-9143,US,True,2017-08-02,,645
+498,permanent,"Cerrada Baja California 766 Edif. 919 , Depto. 489",,Rio Rancho,NM,29805-6820,US,True,2023-05-12,,646
+499,permanent,5036 Katherine Track,,Gonzalezburgh,,,VN,True,2023-01-21,,647
+499,local,25999 Brittany Path,,Las Cruces,NM,88005,US,False,2023-08-20,,648
+500,permanent,"Avenida Yucatán 328 Edif. 951 , Depto. 456",,Las Cruces,NM,40918,US,True,2019-03-22,,649
+501,permanent,822 Linda Burg,,Denver,CO,89757,US,True,2018-02-21,,650
+502,permanent,Periférico Sarabia 670 898,,Farmington,NM,09201-9918,US,True,2021-09-27,,651
+503,permanent,0823 Scott Circles Suite 619,,Phoenix,AZ,75512,US,True,2017-10-14,,652
+503,local,394 Walter Oval Suite 626,,Las Cruces,NM,88012,US,False,2023-08-20,,653
+504,permanent,Viaducto Portillo 098 Interior 910,,Carlsbad,NM,90912,US,True,2016-09-12,,654
+504,local,302 Taylor Rest,,Las Cruces,NM,88001,US,False,2023-08-20,,655
+505,permanent,Privada Yáñez 558 Interior 344,,Las Cruces,NM,66229-5217,US,True,2020-09-17,,656
+506,permanent,Cerrada Sur Piña 156 Interior 058,,Deming,NM,90522-4413,US,True,2015-06-09,,657
+507,permanent,8057 Kelsey Gardens Suite 718,,Dallas,TX,35282,US,True,2023-04-07,,658
+508,permanent,7699 Jonathan Mill,,Los Lunas,NM,62550,US,True,2021-05-14,,659
+508,local,238 Pearson Cape,,Las Cruces,NM,88005,US,False,2023-08-20,,660
+509,permanent,Pasaje Mejía 999 Interior 138,,Las Cruces,NM,10064,US,True,2019-01-05,,661
+510,permanent,0675 Ronnie Manor Apt. 590,,Gallup,NM,56822,US,True,2015-12-04,,662
+511,permanent,"Ampliación Nuevo León 326 Edif. 643 , Depto. 223",,Las Cruces,NM,61212-8981,US,True,2018-12-17,,663
+512,permanent,8061 Heidi Glens,,Hobbs,NM,75937,US,True,2018-07-10,,664
+513,permanent,261 Morales Avenue,,El Paso,TX,13471,US,True,2015-10-23,,665
+514,permanent,66545 Eric Glens Suite 418,,Denver,CO,77666,US,True,2023-02-14,,666
+514,local,0233 Barr Meadow Apt. 835,,Las Cruces,NM,88003,US,False,2023-08-20,,667
+515,permanent,Retorno Norte Velásquez 245 Interior 284,,Las Cruces,NM,35694,US,True,2020-11-11,,668
+516,permanent,073 Hernandez Forks Apt. 977,,Albuquerque,NM,62257,US,True,2016-07-25,,669
+517,permanent,Peatonal Norte Sevilla 173 066,,Albuquerque,NM,93151,US,True,2020-01-02,,670
+518,permanent,79006 Holloway Well,,Santa Fe,NM,94147,US,True,2016-12-27,,671
+519,permanent,7908 Wood Rest,,Artesia,NM,93851,US,True,2019-08-24,,672
+519,local,68384 Jenkins Pine Apt. 207,,Las Cruces,NM,88005,US,False,2023-08-20,,673
+520,permanent,8933 Whitehead Pass,,Las Cruces,NM,87369,US,True,2022-05-21,,674
+521,permanent,"Corredor Cavazos 187 Edif. 993 , Depto. 844",,Farmington,NM,04588-3114,US,True,2022-01-14,,675
+522,permanent,"Cerrada Piña 640 Edif. 163 , Depto. 295",,El Paso,TX,37831-5975,US,True,2020-08-20,,676
+522,local,292 Hall Pass Suite 830,,Las Cruces,NM,88001,US,False,2023-08-20,,677
+523,permanent,"Viaducto Colima 749 Edif. 161 , Depto. 705",,Phoenix,AZ,22181,US,True,2023-02-11,,678
+523,local,814 Jeremy Track Suite 476,,Las Cruces,NM,88001,US,False,2023-08-20,,679
+524,permanent,Continuación Zambia 342 Interior 022,,Deming,NM,34998,US,True,2017-06-11,,680
+524,local,37683 Freeman River,,Las Cruces,NM,88012,US,False,2023-08-20,,681
+525,permanent,9227 Bennett Greens Apt. 490,,Las Cruces,NM,03951,US,True,2017-05-16,,682
+526,permanent,14978 Lawrence Island Apt. 120,,Las Cruces,NM,38448,US,True,2021-10-07,,683
+527,permanent,Viaducto Brunei Darussalam 781 871,,Roswell,NM,96856,US,True,2017-09-27,,684
+527,local,57068 Douglas Meadow Apt. 315,,Las Cruces,NM,88005,US,False,2023-08-20,,685
+528,permanent,Boulevard Mascareñas 459 920,,Las Cruces,NM,66338,US,True,2020-09-17,,686
+529,permanent,Boulevard Sur Covarrubias 945 645,,Lubbock,TX,34286,US,True,2018-11-20,,687
+530,permanent,Diagonal Sur Negrón 809 664,,Tucson,AZ,47533,US,True,2023-05-06,,688
+530,local,524 Waters Groves Suite 653,,Las Cruces,NM,88011,US,False,2023-08-20,,689
+531,permanent,793 Robert Knoll Apt. 811,,South Jessicaberg,,,MX,True,2017-05-25,,690
+532,permanent,6254 Kaitlyn Village Apt. 645,,Las Cruces,NM,98890,US,True,2017-01-08,,691
+533,permanent,16125 Daniel Trail,,Lubbock,TX,94665,US,True,2023-05-13,,692
+534,permanent,49910 Melinda Shoal Apt. 028,,El Paso,TX,74140,US,True,2018-05-30,,693
+534,local,1680 Nancy Rapids Apt. 342,,Las Cruces,NM,88011,US,False,2023-08-20,,694
+535,permanent,19402 Escobar Skyway,,Phoenix,AZ,01065,US,True,2019-11-17,,695
+535,local,814 David Ville,,Las Cruces,NM,88012,US,False,2023-08-20,,696
+536,permanent,0696 Paul Lodge,,Farmington,NM,72311,US,True,2017-08-17,,697
+536,local,5252 Singh Club Apt. 254,,Las Cruces,NM,88005,US,False,2023-08-20,,698
+537,permanent,0460 Johnson Canyon Apt. 441,,Denver,CO,29662,US,True,2018-06-29,,699
+537,local,8624 Kristin Passage,,Las Cruces,NM,88005,US,False,2023-08-20,,700
+538,permanent,9994 Aaron Course,,Phoenix,AZ,05614,US,True,2023-01-13,,701
+538,local,9135 Janet Gateway Suite 053,,Las Cruces,NM,88003,US,False,2023-08-20,,702
+539,permanent,528 Sarah Greens,,San Antonio,TX,38238,US,True,2018-02-13,,703
+540,permanent,Continuación Puebla 759 Interior 940,,Albuquerque,NM,29069-6904,US,True,2019-03-25,,704
+540,local,89860 Jones Causeway Suite 567,,Las Cruces,NM,88003,US,False,2023-08-20,,705
+541,permanent,Circuito Oaxaca 725 Interior 084,,Las Cruces,NM,32423,US,True,2016-05-31,,706
+542,permanent,Cerrada Gallardo 295 945,,Houston,TX,31582,US,True,2021-07-01,,707
+542,local,04029 Long Spurs Apt. 721,,Las Cruces,NM,88012,US,False,2023-08-20,,708
+543,permanent,Ampliación Guerrero 061 901,,Albuquerque,NM,33593,US,True,2018-12-24,,709
+544,permanent,Diagonal Nuevo León 437 Interior 019,,San Luz de la Montaña,,,IN,True,2021-12-09,,710
+545,permanent,31167 Johnson Roads,,El Paso,TX,63130,US,True,2020-11-05,,711
+545,local,53223 Martinez Knolls Apt. 126,,Las Cruces,NM,88003,US,False,2023-08-20,,712
+546,permanent,866 David Neck Suite 178,,Las Cruces,NM,26938,US,True,2019-07-06,,713
+547,permanent,Continuación Norte Rodarte 487 Interior 849,,Las Cruces,NM,22494-5104,US,True,2016-05-08,,714
+548,permanent,146 Santana Ferry,,Las Cruces,NM,19813,US,True,2020-02-22,,715
+549,permanent,1676 Smith Flat Suite 328,,Albuquerque,NM,56382,US,True,2017-11-27,,716
+550,permanent,"Retorno Sur Alva 564 Edif. 901 , Depto. 324",,Albuquerque,NM,19350-0115,US,True,2021-11-28,,717
+551,permanent,90168 James Mission,,Santa Fe,NM,14917,US,True,2017-01-11,,718
+551,local,8401 Eric Mountain Apt. 698,,Las Cruces,NM,88012,US,False,2023-08-20,,719
+552,permanent,Eje vial Puebla 285 Interior 353,,Carlsbad,NM,99824,US,True,2018-02-25,,720
+553,permanent,"Viaducto Nevárez 025 Edif. 285 , Depto. 461",,Las Cruces,NM,08730,US,True,2022-04-05,,721
+554,permanent,"Calzada Haití 473 Edif. 057 , Depto. 771",,Deming,NM,19971-6596,US,True,2017-02-26,,722
+555,permanent,"Circunvalación Yucatán 360 Edif. 157 , Depto. 911",,El Paso,TX,01016-2600,US,True,2019-08-07,,723
+555,local,65893 Kirk Junction,,Las Cruces,NM,88011,US,False,2023-08-20,,724
+556,permanent,Calle Norte Piña 282 Interior 468,,Las Cruces,NM,49272-4000,US,True,2016-12-23,,725
+557,permanent,09089 Cameron Mills,,Albuquerque,NM,68794,US,True,2017-04-05,,726
+557,local,048 Glenn Row,,Las Cruces,NM,88012,US,False,2023-08-20,,727
+558,permanent,Circuito Norte Acosta 311 Interior 058,,El Paso,TX,30967,US,True,2016-03-29,,728
+558,local,798 Irwin Court,,Las Cruces,NM,88012,US,False,2023-08-20,,729
+559,permanent,226 Graham Passage,,Las Cruces,NM,91088,US,True,2021-09-20,,730
+560,permanent,14171 Rivera Plaza Apt. 912,,El Paso,TX,77863,US,True,2016-10-28,,731
+560,local,5188 Miller Crescent Suite 860,,Las Cruces,NM,88003,US,False,2023-08-20,,732
+561,permanent,Viaducto Norte Córdova 233 693,,Farmington,NM,80620,US,True,2017-02-15,,733
+561,local,3024 Rebecca Run,,Las Cruces,NM,88003,US,False,2023-08-20,,734
+562,permanent,Avenida Nayarit 688 Interior 658,,Las Cruces,NM,48348,US,True,2020-03-13,,735
+563,permanent,"Corredor Alva 450 Edif. 509 , Depto. 284",,Las Cruces,NM,72007-3429,US,True,2015-12-11,,736
+564,permanent,Cerrada México 953 Interior 111,,Nueva Chile,,,MX,True,2021-08-02,,737
+564,local,59042 Howard Mount,,Las Cruces,NM,88001,US,False,2023-08-20,,738
+565,permanent,2728 Robert Flats,,Lake Shawn,,,IN,True,2016-06-22,,739
+565,local,4612 Elizabeth Village,,Las Cruces,NM,88003,US,False,2023-08-20,,740
+566,permanent,Andador Norte Meza 599 822,,Las Cruces,NM,73123-4388,US,True,2020-08-14,,741
+567,permanent,9044 Paula Pike Apt. 436,,Dallas,TX,81115,US,True,2017-11-12,,742
+567,local,10297 Wilson Row Apt. 506,,Las Cruces,NM,88003,US,False,2023-08-20,,743
+568,permanent,7105 Annette Springs Suite 707,,Las Cruces,NM,84841,US,True,2016-04-21,,744
+569,permanent,182 Kristina Plains Apt. 013,,Las Cruces,NM,72519,US,True,2018-04-09,,745
+570,permanent,Eje vial Alemania 891 736,,Hobbs,NM,78947,US,True,2021-11-05,,746
+571,permanent,Continuación Sinaloa 927 671,,San Horacio los altos,,,MX,True,2021-03-30,,747
+571,local,7188 Brady Vista,,Las Cruces,NM,88011,US,False,2023-08-20,,748
+572,permanent,30411 Butler Court Suite 215,,Alamogordo,NM,24823,US,True,2019-01-08,,749
+572,local,319 Mooney Street Suite 364,,Las Cruces,NM,88012,US,False,2023-08-20,,750
+573,permanent,0629 Christopher Mission,,Rio Rancho,NM,22827,US,True,2021-04-30,,751
+574,permanent,981 Ryan Park,,Vanessastad,,,PK,True,2017-12-07,,752
+575,permanent,Periférico Sur Arreola 307 167,,El Paso,TX,32163-3613,US,True,2015-10-06,,753
+576,permanent,1925 Crystal Ville Suite 762,,Alamogordo,NM,14433,US,True,2020-03-29,,754
+576,local,360 Heather Locks,,Las Cruces,NM,88012,US,False,2023-08-20,,755
+577,permanent,089 Jacqueline Mount Suite 351,,Las Cruces,NM,55359,US,True,2020-09-09,,756
+578,permanent,"Privada Camarillo 444 Edif. 248 , Depto. 420",,Las Cruces,NM,43509,US,True,2022-09-20,,757
+579,permanent,Ampliación Feliciano 659 Interior 429,,Albuquerque,NM,02376,US,True,2019-05-26,,758
+580,permanent,"Circunvalación Swazilandia 893 Edif. 343 , Depto. 751",,Anthony,NM,69408-6542,US,True,2020-02-15,,759
+581,permanent,0471 Adam Track Suite 428,,Las Cruces,NM,67171,US,True,2016-01-14,,760
+582,permanent,Boulevard Norte Orosco 566 Interior 505,,El Paso,TX,88601,US,True,2020-08-06,,761
+582,local,4492 Justin Fords Suite 969,,Las Cruces,NM,88003,US,False,2023-08-20,,762
+583,permanent,Eje vial Sur Ocampo 816 Interior 384,,Tucson,AZ,68063,US,True,2021-08-06,,763
+583,local,530 Andrew Common Apt. 789,,Las Cruces,NM,88012,US,False,2023-08-20,,764
+584,permanent,81233 Gonzales Manor,,Los Lunas,NM,12137,US,True,2016-06-11,,765
+585,permanent,76768 Campbell Greens,,Las Cruces,NM,20200,US,True,2016-08-05,,766
+586,permanent,52326 Riggs Roads Apt. 047,,El Paso,TX,04289,US,True,2018-04-30,,767
+586,local,03495 Miller Rapid,,Las Cruces,NM,88003,US,False,2023-08-20,,768
+587,permanent,9950 Joshua Expressway Apt. 302,,Las Cruces,NM,75769,US,True,2021-06-27,,769
+588,permanent,Privada Rumania 478 524,,El Paso,TX,44203-5944,US,True,2019-12-16,,770
+589,permanent,"Privada Norte Montalvo 909 Edif. 841 , Depto. 286",,San Sessa de la Montaña,,,DE,True,2022-09-11,,771
+589,local,8167 Chang Fall Apt. 831,,Las Cruces,NM,88011,US,False,2023-08-20,,772
+590,permanent,"Avenida Lucero 613 Edif. 315 , Depto. 553",,Tucson,AZ,15303,US,True,2020-07-31,,773
+591,permanent,"Eje vial Maldonado 191 Edif. 061 , Depto. 669",,Las Cruces,NM,00822,US,True,2017-05-20,,774
+592,permanent,"Calle Sur Ureña 703 Edif. 220 , Depto. 074",,Las Cruces,NM,97243-8712,US,True,2022-08-02,,775
+593,permanent,"Viaducto Sandoval 985 Edif. 664 , Depto. 301",,El Paso,TX,55623-8878,US,True,2017-11-01,,776
+594,permanent,48953 Stephanie Port Suite 419,,El Paso,TX,93732,US,True,2020-12-04,,777
+595,permanent,8228 Jennifer Alley,,Las Cruces,NM,15021,US,True,2019-03-27,,778
+596,permanent,"Continuación Norte Mendoza 289 Edif. 748 , Depto. 741",,Las Cruces,NM,48626,US,True,2017-10-20,,779
+597,permanent,"Prolongación Yucatán 224 Edif. 228 , Depto. 483",,Las Cruces,NM,92766-8098,US,True,2018-06-01,,780
+598,permanent,Retorno Quesada 462 Interior 720,,El Paso,TX,36499-1192,US,True,2021-01-22,,781
+598,local,7285 George Corner Suite 538,,Las Cruces,NM,88012,US,False,2023-08-20,,782
+599,permanent,5129 Evans Underpass Suite 925,,El Paso,TX,27502,US,True,2015-10-12,,783
+600,permanent,490 Sullivan Square,,Truth or Consequences,NM,32088,US,True,2017-01-18,,784
+600,local,53597 Martinez Center Apt. 115,,Las Cruces,NM,88011,US,False,2023-08-20,,785
+601,permanent,"Corredor Baja California 957 Edif. 947 , Depto. 581",,Las Cruces,NM,60284-1362,US,True,2018-11-16,,786
+602,permanent,Ampliación Sur Oquendo 017 590,,Las Cruces,NM,17067,US,True,2016-01-13,,787
+603,permanent,88341 Jerry Key,,El Paso,TX,14456,US,True,2019-05-17,,788
+604,permanent,"Diagonal Arabia Saudita 252 Edif. 637 , Depto. 941",,El Paso,TX,88669,US,True,2017-08-08,,789
+605,permanent,Diagonal Mónaco 805 203,,Silver City,NM,93768,US,True,2021-12-28,,790
+605,local,84714 Lambert Expressway Apt. 148,,Las Cruces,NM,88012,US,False,2023-08-20,,791
+606,permanent,17204 Hoffman Shoals Suite 186,,Albuquerque,NM,75776,US,True,2017-08-16,,792
+607,permanent,018 Jo Landing Apt. 368,,Las Cruces,NM,19139,US,True,2021-05-14,,793
+608,permanent,"Calzada Kiribati 384 Edif. 391 , Depto. 065",,Albuquerque,NM,35174-5469,US,True,2022-03-27,,794
+608,local,510 Jessica Hollow,,Las Cruces,NM,88012,US,False,2023-08-20,,795
+609,permanent,Continuación Cabán 483 Interior 895,,Denver,CO,37684,US,True,2017-09-13,,796
+609,local,767 Glenn Mews,,Las Cruces,NM,88005,US,False,2023-08-20,,797
+610,permanent,81560 Bruce Estates,,Hobbs,NM,63893,US,True,2017-03-10,,798
+610,local,9959 Lang Loop,,Las Cruces,NM,88003,US,False,2023-08-20,,799
+611,permanent,"Ampliación Norte Ojeda 992 Edif. 613 , Depto. 826",,Las Cruces,NM,09777-7957,US,True,2022-12-01,,800
+612,permanent,"Calle Galván 934 Edif. 460 , Depto. 606",,Las Cruces,NM,30695-2357,US,True,2017-04-03,,801
+613,permanent,053 Ortiz Hollow,,Las Cruces,NM,17804,US,True,2022-10-14,,802
+614,permanent,"Eje vial Guerrero 179 Edif. 644 , Depto. 160",,Roswell,NM,32888,US,True,2015-09-16,,803
+615,permanent,"Calle Norte Maya 015 Edif. 269 , Depto. 744",,Las Cruces,NM,03607,US,True,2017-01-10,,804
+616,permanent,Retorno Rincón 150 196,,Las Cruces,NM,97209-2519,US,True,2017-02-24,,805
+617,permanent,4142 Hoffman Mountain Apt. 962,,Alamogordo,NM,51026,US,True,2017-12-12,,806
+617,local,9188 Heather Fall,,Las Cruces,NM,88011,US,False,2023-08-20,,807
+618,permanent,Viaducto Lucio 479 600,,Las Cruces,NM,94091,US,True,2017-11-14,,808
+619,permanent,5690 Cynthia Pike Suite 293,,Tucson,AZ,28999,US,True,2016-02-20,,809
+619,local,847 Martin Ports Apt. 596,,Las Cruces,NM,88003,US,False,2023-08-20,,810
+620,permanent,Continuación Iraq 042 Interior 316,,Los Lunas,NM,92067-5493,US,True,2017-06-17,,811
+621,permanent,36412 Kelly Mountains,,Las Cruces,NM,33727,US,True,2019-08-15,,812
+622,permanent,4119 Nathan Landing Apt. 253,,Artesia,NM,67438,US,True,2016-07-18,,813
+623,permanent,85635 Albert Tunnel,,Las Cruces,NM,00602,US,True,2018-10-21,,814
+624,permanent,Andador Guinea 163 Interior 881,,Las Cruces,NM,87851-8569,US,True,2017-02-14,,815
+625,permanent,8308 Brandon Locks,,Las Cruces,NM,79623,US,True,2016-07-21,,816
+626,permanent,3431 Sabrina Shoal Suite 392,,Deming,NM,02631,US,True,2021-12-27,,817
+627,permanent,080 Ashley Park Suite 738,,Denver,CO,67347,US,True,2023-07-17,,818
+627,local,46163 James Underpass Suite 383,,Las Cruces,NM,88012,US,False,2024-01-17,,819
+628,permanent,Continuación Norte Badillo 223 023,,Las Cruces,NM,05677-1251,US,True,2021-12-21,,820
+629,permanent,"Peatonal Libia 584 Edif. 442 , Depto. 022",,Las Cruces,NM,82488-6313,US,True,2017-07-22,,821
+630,permanent,8834 Tanya Forges Suite 141,,Roswell,NM,26453,US,True,2022-01-11,,822
+631,permanent,Avenida Antigua y Barbuda 145 645,,Las Cruces,NM,22757-9407,US,True,2022-04-11,,823
+632,permanent,Andador Bonilla 896 546,,El Paso,TX,25360,US,True,2020-08-03,,824
+632,local,0047 Sampson Locks Suite 948,,Las Cruces,NM,88001,US,False,2024-01-17,,825
+633,permanent,600 Jensen Extension,,Las Cruces,NM,12667,US,True,2017-04-11,,826
+634,permanent,Diagonal Serbia 536 Interior 197,,Albuquerque,NM,31739-4624,US,True,2023-05-13,,827
+634,local,238 Singleton Lane Suite 392,,Las Cruces,NM,88011,US,False,2024-01-17,,828
+635,permanent,Diagonal Oaxaca 398 Interior 970,,Las Cruces,NM,45570,US,True,2018-10-05,,829
+636,permanent,Retorno Colima 130 088,,Las Cruces,NM,38469,US,True,2023-08-02,,830
+637,permanent,Peatonal Olivo 302 364,,Anthony,NM,69368,US,True,2020-02-25,,831
+637,local,9916 Hamilton Bridge,,Las Cruces,NM,88001,US,False,2024-01-17,,832
+638,permanent,4843 Wang Stream Suite 811,,Las Cruces,NM,10250,US,True,2023-09-05,,833
+639,permanent,35841 Gregory Island,,Las Cruces,NM,45681,US,True,2023-06-17,,834
+640,permanent,Callejón Jalisco 008 056,,Rio Rancho,NM,08292,US,True,2023-07-17,,835
+640,local,828 Walker Villages Apt. 107,,Las Cruces,NM,88001,US,False,2024-08-20,,836
+641,permanent,555 Gabrielle Brook,,Las Cruces,NM,02902,US,True,2016-10-10,,837
+642,permanent,5391 Saunders Divide,,Albuquerque,NM,73934,US,True,2021-10-10,,838
+642,local,166 David Ville,,Las Cruces,NM,88011,US,False,2024-08-20,,839
+643,permanent,Prolongación Ceballos 115 Interior 050,,Las Cruces,NM,99613-1525,US,True,2024-02-23,,840
+644,permanent,Diagonal Australia 174 890,,Albuquerque,NM,04588,US,True,2023-10-16,,841
+644,local,971 Jones Vista,,Las Cruces,NM,88012,US,False,2024-08-20,,842
+645,permanent,Periférico Veracruz de Ignacio de la Llave 152 213,,Las Cruces,NM,68960,US,True,2016-10-19,,843
+646,permanent,898 Hunt Cove Suite 397,,Rio Rancho,NM,52395,US,True,2016-11-30,,844
+646,local,90073 Matthews Ridges,,Las Cruces,NM,88003,US,False,2024-08-20,,845
+647,permanent,9965 Cole Throughway,,Rio Rancho,NM,29725,US,True,2020-03-13,,846
+648,permanent,"Calzada El Salvador 854 Edif. 033 , Depto. 699",,El Paso,TX,28502-3126,US,True,2021-05-06,,847
+648,local,27355 Justin Mission Apt. 490,,Las Cruces,NM,88005,US,False,2024-08-20,,848
+649,permanent,"Boulevard República Checa 391 Edif. 270 , Depto. 650",,Las Cruces,NM,61222-8305,US,True,2021-04-05,,849
+650,permanent,9626 Isaiah Spur,,Las Cruces,NM,24586,US,True,2018-08-26,,850
+651,permanent,921 Melissa Fork Apt. 712,,Las Cruces,NM,23220,US,True,2020-08-25,,851
+652,permanent,6658 Taylor Groves Suite 609,,Rio Rancho,NM,55152,US,True,2018-08-12,,852
+652,local,647 Heather Glens,,Las Cruces,NM,88011,US,False,2024-08-20,,853
+653,permanent,"Retorno Chacón 261 Edif. 641 , Depto. 700",,Phoenix,AZ,37186-0566,US,True,2017-01-25,,854
+653,local,16647 Fields Divide,,Las Cruces,NM,88003,US,False,2024-08-20,,855
+654,permanent,52077 Jenny Centers Suite 404,,Phoenix,AZ,30134,US,True,2022-02-14,,856
+655,permanent,Callejón Sur del Río 102 975,,Las Cruces,NM,47539-6597,US,True,2019-08-29,,857
+656,permanent,74905 Gilbert Lock Apt. 449,,El Paso,TX,80753,US,True,2024-04-11,,858
+656,local,035 Jackson Street,,Las Cruces,NM,88001,US,False,2024-08-20,,859
+657,permanent,Periférico Fuentes 734 800,,Clovis,NM,26425,US,True,2021-05-23,,860
+658,permanent,Prolongación Francia 178 Interior 472,,Las Cruces,NM,46172,US,True,2016-09-12,,861
+659,permanent,"Eje vial Afganistán 596 Edif. 275 , Depto. 193",,Las Cruces,NM,63890-1248,US,True,2020-04-14,,862
+660,permanent,Viaducto Norte Guardado 037 271,,Silver City,NM,24475-6311,US,True,2016-12-31,,863
+660,local,138 Travis Vista,,Las Cruces,NM,88005,US,False,2024-08-20,,864
+661,permanent,"Prolongación Sur Mata 469 Edif. 984 , Depto. 288",,Dallas,TX,84705,US,True,2018-03-05,,865
+661,local,31329 Davis Street,,Las Cruces,NM,88011,US,False,2024-08-20,,866
+662,permanent,83345 Castillo Junctions Suite 232,,El Paso,TX,59865,US,True,2022-03-25,,867
+663,permanent,Pasaje Sur Lozada 167 881,,Sunland Park,NM,96467-3865,US,True,2016-06-26,,868
+663,local,044 Reese Meadows Suite 332,,Las Cruces,NM,88003,US,False,2024-08-20,,869
+664,permanent,Cerrada Santana 162 Interior 833,,Albuquerque,NM,68905-8108,US,True,2016-07-06,,870
+664,local,53374 Mark Mount,,Las Cruces,NM,88005,US,False,2024-08-20,,871
+665,permanent,"Avenida México 525 Edif. 252 , Depto. 078",,El Paso,TX,16511,US,True,2018-02-11,,872
+665,local,45744 Hernandez Unions,,Las Cruces,NM,88003,US,False,2024-08-20,,873
+666,permanent,052 Mendoza Island,,Anthony,NM,76915,US,True,2017-11-25,,874
+667,permanent,Privada Norte Brito 734 211,,El Paso,TX,02913,US,True,2018-10-03,,875
+667,local,01494 Francisco Pine,,Las Cruces,NM,88012,US,False,2024-08-20,,876
+668,permanent,50133 Andrew Gateway Suite 495,,Hobbs,NM,56843,US,True,2019-05-06,,877
+668,local,1487 Cooper Views,,Las Cruces,NM,88003,US,False,2024-08-20,,878
+669,permanent,Retorno Sur Chapa 370 071,,Albuquerque,NM,80097-1408,US,True,2023-09-23,,879
+670,permanent,"Retorno Burundi 603 Edif. 482 , Depto. 367",,Albuquerque,NM,87369,US,True,2018-08-03,,880
+671,permanent,Callejón Tlaxcala 601 Interior 458,,Deming,NM,08114-4157,US,True,2019-12-26,,881
+671,local,143 Snow Cliffs,,Las Cruces,NM,88012,US,False,2024-08-20,,882
+672,permanent,"Continuación Quintana Roo 660 Edif. 030 , Depto. 119",,Lubbock,TX,22723-8697,US,True,2018-10-02,,883
+672,local,217 Peter Pines Apt. 850,,Las Cruces,NM,88012,US,False,2024-08-20,,884
+673,permanent,Peatonal República Democrática Popular Lao 951 Interior 429,,Los Angeles,CA,44966-9542,US,True,2022-03-10,,885
+673,local,756 Thomas Extension,,Las Cruces,NM,88011,US,False,2024-08-20,,886
+674,permanent,8129 Fields Junction,,Las Cruces,NM,59283,US,True,2018-12-11,,887
+675,permanent,8821 Moyer Spring,,El Paso,TX,68886,US,True,2024-01-31,,888
+676,permanent,7487 Smith Mountains,,Silver City,NM,73942,US,True,2017-02-26,,889
+676,local,253 Matthew Court,,Las Cruces,NM,88012,US,False,2024-08-20,,890
+677,permanent,"Andador Sur Saavedra 088 Edif. 669 , Depto. 320",,Albuquerque,NM,09834-8492,US,True,2017-11-05,,891
+678,permanent,2202 Proctor Locks Apt. 032,,Carlsbad,NM,97912,US,True,2018-03-03,,892
+678,local,452 Farley Fork Apt. 090,,Las Cruces,NM,88005,US,False,2024-08-20,,893
+679,permanent,34228 Terry Estate Apt. 723,,Las Cruces,NM,65682,US,True,2018-01-04,,894
+680,permanent,"Calle Murillo 780 Edif. 473 , Depto. 719",,Albuquerque,NM,17696-8064,US,True,2023-11-02,,895
+681,permanent,"Calzada Benin 503 Edif. 219 , Depto. 859",,San Pilar los altos,,,IN,True,2017-10-29,,896
+681,local,5102 Smith Mews Suite 860,,Las Cruces,NM,88005,US,False,2024-08-20,,897
+682,permanent,Pasaje Haití 963 994,,Las Cruces,NM,94038-9554,US,True,2022-01-02,,898
+683,permanent,6019 Arthur Branch,,Los Lunas,NM,40132,US,True,2023-05-05,,899
+683,local,0732 Collins Throughway Suite 893,,Las Cruces,NM,88003,US,False,2024-08-20,,900
+684,permanent,"Calle Baja California 566 Edif. 518 , Depto. 378",,Houston,TX,77198-8837,US,True,2023-04-05,,901
+685,permanent,Boulevard Dominicana 560 387,,Las Cruces,NM,08803,US,True,2017-03-30,,902
+686,permanent,35286 Smith Via,,Albuquerque,NM,29785,US,True,2019-01-22,,903
+686,local,0029 Floyd Orchard Apt. 801,,Las Cruces,NM,88005,US,False,2024-08-20,,904
+687,permanent,"Retorno Eritrea 285 Edif. 071 , Depto. 961",,Las Cruces,NM,93321,US,True,2020-04-07,,905
+688,permanent,Diagonal Villarreal 165 Interior 712,,El Paso,TX,18601,US,True,2023-03-09,,906
+688,local,23993 Brian Islands,,Las Cruces,NM,88003,US,False,2024-08-20,,907
+689,permanent,Circuito Sur Valdés 446 081,,El Paso,TX,14083-4695,US,True,2024-05-29,,908
+689,local,9506 Brittany Valleys Suite 806,,Las Cruces,NM,88012,US,False,2024-08-20,,909
+690,permanent,Retorno Montaño 016 472,,Las Cruces,NM,17468-5902,US,True,2019-08-18,,910
+691,permanent,2423 Hernandez Views,,Albuquerque,NM,97857,US,True,2019-02-19,,911
+692,permanent,"Boulevard Albania 129 Edif. 443 , Depto. 141",,Los Angeles,CA,08783-4377,US,True,2020-12-01,,912
+692,local,402 Sarah Meadow,,Las Cruces,NM,88003,US,False,2024-08-20,,913
+693,permanent,725 Phillips Ferry,,Las Cruces,NM,17312,US,True,2023-11-28,,914
+694,permanent,13685 Curtis Trail Apt. 621,,Las Cruces,NM,86571,US,True,2022-01-02,,915
+695,permanent,533 Paige Turnpike,,Deming,NM,76605,US,True,2018-03-17,,916
+695,local,96970 Anthony Cape Apt. 434,,Las Cruces,NM,88012,US,False,2024-08-20,,917
+696,permanent,Callejón de la Fuente 395 480,,Las Cruces,NM,04731-4836,US,True,2024-04-01,,918
+697,permanent,3933 Rebecca Stravenue Suite 969,,Albuquerque,NM,22272,US,True,2017-03-09,,919
+698,permanent,4811 Barber Prairie,,Albuquerque,NM,46325,US,True,2021-01-25,,920
+698,local,859 Jackson Road Apt. 793,,Las Cruces,NM,88005,US,False,2024-08-20,,921
+699,permanent,"Calle Sur Fernández 907 Edif. 615 , Depto. 001",,Vieja Dinamarca,,,IN,True,2017-06-12,,922
+700,permanent,9967 Paul Falls Apt. 961,,Las Cruces,NM,06406,US,True,2022-11-26,,923
+701,permanent,568 Webster Bypass Suite 973,,Las Cruces,NM,45952,US,True,2018-01-13,,924
+702,permanent,"Corredor Moreno 347 Edif. 450 , Depto. 240",,El Paso,TX,37729-0848,US,True,2017-02-15,,925
+703,permanent,Circunvalación Sur Lebrón 737 304,,Las Cruces,NM,50632,US,True,2024-05-09,,926
+704,permanent,"Boulevard Querétaro 209 Edif. 410 , Depto. 102",,Tucson,AZ,60781-9516,US,True,2021-01-26,,927
+704,local,497 Knight Mountains Apt. 833,,Las Cruces,NM,88003,US,False,2024-08-20,,928
+705,permanent,Diagonal Botswana 912 377,,Las Cruces,NM,59984-1337,US,True,2023-02-08,,929
+706,permanent,9272 Christina Field Apt. 788,,Clovis,NM,32595,US,True,2020-04-02,,930
+706,local,3167 Reese Parkway Suite 440,,Las Cruces,NM,88011,US,False,2024-08-20,,931
+707,permanent,9915 Trujillo Ville,,Lubbock,TX,08381,US,True,2020-07-16,,932
+707,local,732 David Way,,Las Cruces,NM,88005,US,False,2024-08-20,,933
+708,permanent,"Peatonal Norte Flores 824 Edif. 553 , Depto. 815",,Las Cruces,NM,82723,US,True,2023-01-19,,934
+709,permanent,"Continuación Angulo 924 Edif. 464 , Depto. 035",,San Antonio,TX,76955,US,True,2021-12-24,,935
+710,permanent,Ampliación Salcido 455 948,,Albuquerque,NM,96741-6623,US,True,2017-07-22,,936
+710,local,7125 Willis Junctions Apt. 276,,Las Cruces,NM,88005,US,False,2024-08-20,,937
+711,permanent,"Eje vial Valdez 335 Edif. 766 , Depto. 808",,Las Cruces,NM,04910-8604,US,True,2020-06-15,,938
+712,permanent,Avenida Cardenas 320 Interior 264,,Phoenix,AZ,09333,US,True,2021-04-27,,939
+712,local,79020 Amy Roads Suite 821,,Las Cruces,NM,88001,US,False,2024-08-20,,940
+713,permanent,"Cerrada Norte Villegas 581 Edif. 877 , Depto. 449",,Las Cruces,NM,46871,US,True,2017-01-30,,941
+714,permanent,24687 Jacob Center,,El Paso,TX,30196,US,True,2020-02-05,,942
+714,local,37840 Lowe Circles Apt. 867,,Las Cruces,NM,88001,US,False,2024-08-20,,943
+715,permanent,1465 Nicole Union Suite 200,,Las Cruces,NM,38752,US,True,2022-12-20,,944
+716,permanent,Prolongación Sur Leiva 338 106,,Albuquerque,NM,89170,US,True,2017-03-15,,945
+716,local,2291 Bailey Villages,,Las Cruces,NM,88011,US,False,2024-08-20,,946
+717,permanent,Avenida Sur Yáñez 216 897,,Las Cruces,NM,53714-7320,US,True,2021-09-08,,947
+718,permanent,56870 Riley Island,,Las Cruces,NM,61103,US,True,2023-10-27,,948
+719,permanent,83024 Randy Greens,,El Paso,TX,54537,US,True,2020-09-20,,949
+719,local,519 Douglas Bypass Suite 115,,Las Cruces,NM,88011,US,False,2024-08-20,,950
+720,permanent,Boulevard Enríquez 928 Interior 339,,Las Cruces,NM,17856-8176,US,True,2017-11-26,,951
+721,permanent,Prolongación Hidalgo 707 Interior 650,,Gallup,NM,62078-5622,US,True,2017-12-30,,952
+721,local,92602 French Viaduct Apt. 186,,Las Cruces,NM,88005,US,False,2024-08-20,,953
+722,permanent,211 Simmons Shoal Suite 460,,Las Cruces,NM,64838,US,True,2017-10-20,,954
+723,permanent,Peatonal Salgado 874 Interior 779,,El Paso,TX,59958,US,True,2018-06-21,,955
+723,local,83569 Walton Fall Suite 201,,Las Cruces,NM,88011,US,False,2024-08-20,,956
+724,permanent,2620 Carmen Harbor Suite 478,,Tucson,AZ,16739,US,True,2024-03-30,,957
+725,permanent,45353 Casey Isle Suite 509,,Albuquerque,NM,18945,US,True,2019-04-27,,958
+725,local,09480 Oscar Squares Suite 756,,Las Cruces,NM,88011,US,False,2024-08-20,,959
+726,permanent,210 Melissa Union Apt. 889,,Las Cruces,NM,54982,US,True,2024-01-05,,960
+727,permanent,02135 Mcguire Road Apt. 239,,Las Cruces,NM,37789,US,True,2018-03-28,,961
+728,permanent,Callejón de Jesús 175 Interior 616,,Las Cruces,NM,95641,US,True,2024-06-24,,962
+729,permanent,Viaducto Leyva 999 481,,Nueva Bhután,,,IR,True,2021-07-27,,963
+730,permanent,481 Steven Union Apt. 367,,Albuquerque,NM,88060,US,True,2022-05-29,,964
+731,permanent,Viaducto Guerra 025 342,,Las Cruces,NM,86707,US,True,2016-12-31,,965
+732,permanent,Eje vial Jamaica 168 Interior 939,,Santa Fe,NM,76398,US,True,2021-08-07,,966
+733,permanent,69921 Lucas Inlet,,Albuquerque,NM,93183,US,True,2021-02-22,,967
+734,permanent,Circuito Guanajuato 595 513,,Las Cruces,NM,05915,US,True,2017-09-09,,968
+735,permanent,Andador Sur de León 812 817,,Deming,NM,89935,US,True,2016-09-20,,969
+736,permanent,Cerrada Perales 851 Interior 002,,Silver City,NM,82414,US,True,2021-04-30,,970
+736,local,170 April Manors,,Las Cruces,NM,88011,US,False,2024-08-20,,971
+737,permanent,Andador Alonso 601 Interior 041,,Las Cruces,NM,13555,US,True,2018-03-20,,972
+738,permanent,"Retorno Mongolia 204 Edif. 873 , Depto. 045",,Las Cruces,NM,94558,US,True,2021-09-30,,973
+739,permanent,Circuito Baja California 385 Interior 670,,Las Cruces,NM,07153,US,True,2023-05-31,,974
+740,permanent,Avenida Sur Delgadillo 617 Interior 578,,Las Cruces,NM,41048,US,True,2022-08-31,,975
+741,permanent,430 Sanchez Inlet Suite 689,,Las Cruces,NM,80922,US,True,2022-06-11,,976
+742,permanent,Corredor Sinaloa 181 Interior 275,,Lubbock,TX,70034,US,True,2018-12-17,,977
+743,permanent,"Cerrada Padilla 930 Edif. 052 , Depto. 214",,Phoenix,AZ,26735-3842,US,True,2017-05-03,,978
+743,local,1161 Barnett Road Suite 426,,Las Cruces,NM,88011,US,False,2024-08-20,,979
+744,permanent,"Andador Zacatecas 819 Edif. 735 , Depto. 442",,Dallas,TX,24777-7444,US,True,2022-04-23,,980
+744,local,9304 Campbell Center Apt. 606,,Las Cruces,NM,88003,US,False,2024-08-20,,981
+745,permanent,"Andador Sur Cisneros 470 Edif. 792 , Depto. 625",,Denver,CO,74316,US,True,2023-04-21,,982
+746,permanent,"Circunvalación Sur Quiñones 183 Edif. 224 , Depto. 023",,Rio Rancho,NM,62761,US,True,2024-04-09,,983
+747,permanent,Prolongación Quintana Roo 827 677,,Albuquerque,NM,23935-4337,US,True,2017-08-12,,984
+747,local,278 Cathy Trail,,Las Cruces,NM,88001,US,False,2024-08-20,,985
+748,permanent,Privada Rendón 095 079,,El Paso,TX,37731,US,True,2023-07-22,,986
+748,local,734 Judy Path,,Las Cruces,NM,88012,US,False,2024-08-20,,987
+749,permanent,33159 Shah Crescent,,Las Cruces,NM,60826,US,True,2023-01-30,,988
+750,permanent,Continuación Querétaro 959 145,,Gallup,NM,49723,US,True,2022-12-03,,989
+751,permanent,Circunvalación Samoa 941 667,,Farmington,NM,07886-9858,US,True,2023-06-06,,990
+752,permanent,Circunvalación Arenas 936 Interior 518,,Las Cruces,NM,56926-9203,US,True,2023-10-18,,991
+753,permanent,"Prolongación Tirado 057 Edif. 836 , Depto. 903",,Santa Fe,NM,34136,US,True,2023-11-30,,992
+753,local,329 Hamilton Plain Suite 997,,Las Cruces,NM,88012,US,False,2024-08-20,,993
+754,permanent,7740 Scott Landing,,Albuquerque,NM,66245,US,True,2019-06-13,,994
+754,local,1824 Parker Harbor Apt. 785,,Las Cruces,NM,88012,US,False,2024-08-20,,995
+755,permanent,484 Barnes Underpass Suite 154,,Houston,TX,14979,US,True,2021-01-14,,996
+755,local,660 Stewart Plaza Apt. 911,,Las Cruces,NM,88001,US,False,2024-08-20,,997
+756,permanent,75442 Adam Club Suite 069,,El Paso,TX,22805,US,True,2022-10-10,,998
+756,local,386 Johnson Light Suite 246,,Las Cruces,NM,88003,US,False,2024-08-20,,999
+757,permanent,Boulevard Norte Benavídez 369 Interior 745,,Roswell,NM,83517-9838,US,True,2019-07-30,,1000
+758,permanent,Eje vial Perú 179 Interior 736,,Clovis,NM,99010-2719,US,True,2024-01-15,,1001
+758,local,952 Jacob Shore,,Las Cruces,NM,88005,US,False,2024-08-20,,1002
+759,permanent,"Continuación Filipinas 814 Edif. 030 , Depto. 755",,Las Cruces,NM,14202-4843,US,True,2016-10-14,,1003
+760,permanent,Continuación Morelos 617 Interior 275,,Deming,NM,35548-1471,US,True,2021-06-20,,1004
+760,local,6615 Betty Union,,Las Cruces,NM,88003,US,False,2024-08-20,,1005
+761,permanent,91275 Ashley Turnpike Suite 571,,Las Cruces,NM,38226,US,True,2019-12-12,,1006
+762,permanent,6835 Steven Causeway,,El Paso,TX,82709,US,True,2020-06-23,,1007
+762,local,571 Carolyn Forge Apt. 853,,Las Cruces,NM,88005,US,False,2024-08-20,,1008
+763,permanent,"Viaducto Tabasco 415 Edif. 463 , Depto. 517",,Las Vegas,NM,73518-5176,US,True,2017-11-09,,1009
+764,permanent,537 Jerry Locks Suite 041,,El Paso,TX,37822,US,True,2023-04-22,,1010
+764,local,4302 Williams Club,,Las Cruces,NM,88011,US,False,2024-08-20,,1011
+765,permanent,087 Donna Shoals,,El Paso,TX,39043,US,True,2018-03-17,,1012
+765,local,7900 Wagner Inlet Suite 666,,Las Cruces,NM,88001,US,False,2024-08-20,,1013
+766,permanent,0472 Kimberly Springs,,Las Vegas,NM,32084,US,True,2018-10-03,,1014
+766,local,466 Garcia Knoll Apt. 496,,Las Cruces,NM,88005,US,False,2024-08-20,,1015
+767,permanent,347 Richards Unions Apt. 377,,El Paso,TX,79467,US,True,2016-10-09,,1016
+768,permanent,Callejón Rubio 231 896,,Las Cruces,NM,20129-5903,US,True,2021-10-17,,1017
+769,permanent,Calle Rosas 820 400,,Alamogordo,NM,80834,US,True,2022-08-29,,1018
+770,permanent,67011 Griffin Creek,,Las Cruces,NM,15304,US,True,2018-05-12,,1019
+771,permanent,Continuación Amaya 550 Interior 848,,El Paso,TX,28467-7037,US,True,2016-09-29,,1020
+771,local,7970 Angie Stream Apt. 076,,Las Cruces,NM,88001,US,False,2024-08-20,,1021
+772,permanent,Diagonal Portugal 199 050,,Las Cruces,NM,40651,US,True,2019-08-24,,1022
+773,permanent,Continuación Tabasco 677 Interior 619,,Santa Fe,NM,24960-1709,US,True,2022-09-25,,1023
+774,permanent,933 Haynes Spur,,Alamogordo,NM,82685,US,True,2018-04-02,,1024
+775,permanent,Cerrada Norte Gastélum 406 201,,El Paso,TX,63340-1421,US,True,2017-07-17,,1025
+776,permanent,18842 Gray Parkways Apt. 512,,Las Cruces,NM,82295,US,True,2017-05-04,,1026
+777,permanent,Cerrada Azerbaiyán 782 Interior 453,,Denver,CO,08124,US,True,2021-01-14,,1027
+777,local,3786 Kyle Summit Apt. 146,,Las Cruces,NM,88011,US,False,2024-08-20,,1028
+778,permanent,40272 Mccormick Wall,,Artesia,NM,67536,US,True,2022-09-18,,1029
+778,local,212 Angela Common,,Las Cruces,NM,88012,US,False,2024-08-20,,1030
+779,permanent,Corredor Véliz 285 Interior 994,,Las Cruces,NM,57637-9829,US,True,2020-03-18,,1031
+780,permanent,Eje vial Sur Perea 547 607,,Las Cruces,NM,12101-8426,US,True,2016-11-26,,1032
+781,permanent,Continuación Belice 258 467,,Anthony,NM,17522,US,True,2022-01-12,,1033
+781,local,294 Murphy Estates Apt. 967,,Las Cruces,NM,88011,US,False,2024-08-20,,1034
+782,permanent,Eje vial Zambia 040 852,,San Delia de la Montaña,,,MX,True,2022-12-17,,1035
+782,local,3346 Casey Rapid,,Las Cruces,NM,88011,US,False,2024-08-20,,1036
+783,permanent,Andador Vera 676 777,,El Paso,TX,36576-4554,US,True,2018-05-30,,1037
+783,local,034 Christina Valley Suite 351,,Las Cruces,NM,88011,US,False,2024-08-20,,1038
+784,permanent,4151 Torres Parkways Suite 621,,Albuquerque,NM,55559,US,True,2017-07-30,,1039
+784,local,342 Terry Village Suite 302,,Las Cruces,NM,88012,US,False,2024-08-20,,1040
+785,permanent,Eje vial Morelos 239 Interior 004,,San Zeferino los bajos,,,MX,True,2024-07-10,,1041
+786,permanent,280 Lauren Inlet,,Las Cruces,NM,87799,US,True,2020-07-18,,1042
+787,permanent,Diagonal Sur Montenegro 715 Interior 566,,Deming,NM,66894,US,True,2023-03-04,,1043
+787,local,363 King Route,,Las Cruces,NM,88001,US,False,2024-08-20,,1044
+788,permanent,"Prolongación Norte Marrero 697 Edif. 848 , Depto. 798",,Las Cruces,NM,31963-0527,US,True,2018-10-29,,1045
+789,permanent,Cerrada Sinaloa 622 306,,Rio Rancho,NM,56735,US,True,2020-09-12,,1046
+789,local,5694 Katie Pike Suite 104,,Las Cruces,NM,88003,US,False,2024-08-20,,1047
+790,permanent,11128 Steven Underpass Apt. 366,,Lubbock,TX,50955,US,True,2019-09-07,,1048
+791,permanent,Eje vial Tlaxcala 950 305,,Albuquerque,NM,87807-1265,US,True,2019-11-26,,1049
+792,permanent,7652 Susan Squares Suite 195,,Las Cruces,NM,86556,US,True,2018-02-04,,1050
+793,permanent,94127 Robert Coves,,Albuquerque,NM,74153,US,True,2023-02-27,,1051
+793,local,360 Nichols Mill Apt. 020,,Las Cruces,NM,88005,US,False,2024-08-20,,1052
+794,permanent,"Ampliación Norte Campos 056 Edif. 574 , Depto. 396",,Deming,NM,70546-7393,US,True,2017-08-17,,1053
+795,permanent,7800 Black Inlet Apt. 146,,Phoenix,AZ,16511,US,True,2022-04-07,,1054
+796,permanent,Periférico Gaona 130 542,,Las Cruces,NM,25111-9035,US,True,2022-01-24,,1055
+797,permanent,4308 William Lodge Apt. 293,,Carlsbad,NM,83553,US,True,2018-10-06,,1056
+797,local,026 Allen Expressway Apt. 715,,Las Cruces,NM,88001,US,False,2024-08-20,,1057
+798,permanent,0589 John Villages Apt. 360,,Las Cruces,NM,50055,US,True,2018-09-09,,1058
+799,permanent,69901 Vaughan Track Apt. 156,,Los Angeles,CA,62933,US,True,2019-01-28,,1059
+799,local,85157 Mitchell Manor,,Las Cruces,NM,88011,US,False,2024-08-20,,1060
+800,permanent,0515 Sharp Walk Apt. 638,,Las Cruces,NM,71793,US,True,2019-12-01,,1061
+801,permanent,Retorno Correa 941 232,,Albuquerque,NM,62539,US,True,2018-11-16,,1062
+801,local,185 Peterson Harbors Apt. 892,,Las Cruces,NM,88012,US,False,2025-01-17,,1063
+802,permanent,"Eje vial Santacruz 621 Edif. 325 , Depto. 086",,El Paso,TX,86856,US,True,2024-08-28,,1064
+802,local,347 Williams Springs Apt. 309,,Las Cruces,NM,88003,US,False,2025-01-17,,1065
+803,permanent,"Circuito Sudáfrica 303 Edif. 101 , Depto. 663",,Alamogordo,NM,62284-5541,US,True,2018-01-21,,1066
+804,permanent,Circunvalación Guinea 066 788,,Las Cruces,NM,57321-6502,US,True,2020-11-13,,1067
+805,permanent,Prolongación Norte Munguía 129 Interior 824,,Gallup,NM,20288,US,True,2019-07-22,,1068
+805,local,2089 Taylor Vista,,Las Cruces,NM,88005,US,False,2025-01-17,,1069
+806,permanent,Cerrada República de Macedonia del Norte 844 037,,Rio Rancho,NM,54399-9428,US,True,2020-07-08,,1070
+807,permanent,Pasaje Nigeria 109 074,,Truth or Consequences,NM,47939-1171,US,True,2024-08-28,,1071
+807,local,0034 Foster Springs Suite 865,,Las Cruces,NM,88001,US,False,2025-01-17,,1072
+808,permanent,Prolongación Francia 160 Interior 269,,Albuquerque,NM,77526-6848,US,True,2017-02-04,,1073
+808,local,16367 Steve Drive,,Las Cruces,NM,88005,US,False,2025-01-17,,1074
+809,permanent,Pasaje Querétaro 737 Interior 704,,Las Cruces,NM,96781,US,True,2020-01-30,,1075
+810,permanent,Peatonal Cuellar 887 716,,Tucson,AZ,65872,US,True,2019-12-04,,1076
+810,local,3411 Joseph Walks,,Las Cruces,NM,88012,US,False,2025-01-17,,1077
+811,permanent,437 Harris Pines,,Las Cruces,NM,42557,US,True,2024-11-30,,1078
+812,permanent,228 Curry Inlet Apt. 734,,Anthony,NM,34399,US,True,2024-06-04,,1079
+812,local,925 Laura Row Suite 366,,Las Cruces,NM,88012,US,False,2025-01-17,,1080
+813,permanent,Circunvalación Casárez 166 775,,El Paso,TX,70712,US,True,2022-02-21,,1081
+813,local,717 Lewis Islands Apt. 642,,Las Cruces,NM,88001,US,False,2025-01-17,,1082
+814,permanent,Continuación Maldivas 467 820,,Las Cruces,NM,69061,US,True,2023-02-22,,1083
+815,permanent,"Callejón Países Bajos 617 Edif. 805 , Depto. 813",,Las Cruces,NM,57321,US,True,2024-07-08,,1084
+816,permanent,"Calzada Italia 998 Edif. 962 , Depto. 586",,Las Cruces,NM,63560,US,True,2020-06-04,,1085
+817,permanent,4615 Sheena Unions,,Carlsbad,NM,57062,US,True,2022-06-19,,1086
+817,local,22247 Judith Pass Apt. 014,,Las Cruces,NM,88003,US,False,2025-08-20,,1087
+818,permanent,140 Jay Station,,Las Cruces,NM,03799,US,True,2022-05-11,,1088
+819,permanent,"Corredor República de Moldova 362 Edif. 074 , Depto. 988",,Las Cruces,NM,95912-6092,US,True,2022-03-07,,1089
+820,permanent,629 Lee Curve,,Artesia,NM,17157,US,True,2024-02-04,,1090
+821,permanent,"Calle Yucatán 859 Edif. 881 , Depto. 920",,Las Cruces,NM,96569-3259,US,True,2021-04-30,,1091
+822,permanent,"Calle Olvera 944 Edif. 735 , Depto. 341",,Santa Fe,NM,39103-2318,US,True,2023-05-24,,1092
+823,permanent,"Continuación Eslovenia 392 Edif. 242 , Depto. 577",,Albuquerque,NM,27745-7502,US,True,2019-09-27,,1093
+823,local,885 Christopher Haven,,Las Cruces,NM,88012,US,False,2025-08-20,,1094
+824,permanent,025 Russell Walk,,Las Vegas,NM,55510,US,True,2019-05-01,,1095
+824,local,467 Fox Underpass Apt. 898,,Las Cruces,NM,88011,US,False,2025-08-20,,1096
+825,permanent,977 Jean Plaza Apt. 200,,Las Cruces,NM,72609,US,True,2023-06-15,,1097
+826,permanent,"Ampliación Jaimes 587 Edif. 242 , Depto. 274",,Las Cruces,NM,65294-8305,US,True,2023-03-02,,1098
+827,permanent,Peatonal Romero 280 619,,Las Cruces,NM,74666,US,True,2023-04-03,,1099
+828,permanent,Viaducto Rwanda 764 Interior 612,,Lubbock,TX,14993-6319,US,True,2018-09-27,,1100
+828,local,75644 Betty Track Apt. 951,,Las Cruces,NM,88011,US,False,2025-08-20,,1101
+829,permanent,Prolongación Sonora 770 Interior 554,,Rio Rancho,NM,71299,US,True,2023-03-31,,1102
+830,permanent,76558 Eric Square Suite 528,,El Paso,TX,42858,US,True,2023-06-21,,1103
+830,local,063 Kristen Drive Apt. 829,,Las Cruces,NM,88001,US,False,2025-08-20,,1104
+831,permanent,Continuación Norte Marín 058 Interior 105,,Los Angeles,CA,10886,US,True,2019-02-17,,1105
+831,local,744 Graham Radial Apt. 788,,Las Cruces,NM,88001,US,False,2025-08-20,,1106
+832,permanent,Continuación de Anda 940 504,,San Óscar los bajos,,,IN,True,2021-12-24,,1107
+832,local,60979 Martin Club Suite 597,,Las Cruces,NM,88001,US,False,2025-08-20,,1108
+833,permanent,961 Sanchez Port Suite 257,,Santa Fe,NM,33396,US,True,2019-07-17,,1109
+834,permanent,65854 Marcus Port Apt. 934,,Albuquerque,NM,40204,US,True,2023-03-06,,1110
+834,local,6271 Jacob Fort,,Las Cruces,NM,88012,US,False,2025-08-20,,1111
+835,permanent,"Prolongación Somalia 366 Edif. 609 , Depto. 797",,Albuquerque,NM,50044-5072,US,True,2021-05-17,,1112
+835,local,90107 Jennifer Spurs Apt. 652,,Las Cruces,NM,88011,US,False,2025-08-20,,1113
+836,permanent,"Continuación Hidalgo 805 Edif. 365 , Depto. 972",,Albuquerque,NM,83950-7051,US,True,2021-05-07,,1114
+836,local,69672 Kimberly Place,,Las Cruces,NM,88003,US,False,2025-08-20,,1115
+837,permanent,167 James Locks Suite 560,,Las Cruces,NM,52810,US,True,2025-06-15,,1116
+838,permanent,Andador Perú 241 041,,Las Cruces,NM,07493-1660,US,True,2022-10-13,,1117
+839,permanent,Circunvalación Norte Guardado 658 Interior 036,,Los Lunas,NM,83647,US,True,2020-02-24,,1118
+839,local,45581 Johnson Stream,,Las Cruces,NM,88005,US,False,2025-08-20,,1119
+840,permanent,Avenida Omán 981 668,,Las Cruces,NM,30384,US,True,2021-01-23,,1120
+841,permanent,0809 Wilson Fort Apt. 157,,Chicago,IL,12828,US,True,2019-05-19,,1121
+842,permanent,Ampliación Samoa 837 396,,Las Cruces,NM,24276-0741,US,True,2025-05-23,,1122
+843,permanent,Calle San Luis Potosí 750 568,,Las Cruces,NM,84820,US,True,2018-02-21,,1123
+844,permanent,Circunvalación Sur Velasco 499 Interior 313,,Los Angeles,CA,75726-6849,US,True,2023-03-24,,1124
+845,permanent,016 Ramirez Viaduct,,Roswell,NM,01986,US,True,2019-06-03,,1125
+846,permanent,Corredor Sur Longoria 026 Interior 224,,El Paso,TX,89225-1826,US,True,2023-12-10,,1126
+847,permanent,8665 Tina Forest,,Los Angeles,CA,55387,US,True,2024-08-15,,1127
+847,local,8214 Scott Fork,,Las Cruces,NM,88005,US,False,2025-08-20,,1128
+848,permanent,73815 Elijah Tunnel,,Las Cruces,NM,27660,US,True,2022-07-05,,1129
+849,permanent,"Calzada Norte Partida 837 Edif. 555 , Depto. 045",,Carlsbad,NM,87500,US,True,2019-08-27,,1130
+849,local,709 Jessica Crescent Suite 211,,Las Cruces,NM,88005,US,False,2025-08-20,,1131
+850,permanent,16140 James Avenue,,El Paso,TX,08864,US,True,2023-12-14,,1132
+850,local,71994 Marshall Streets Suite 051,,Las Cruces,NM,88012,US,False,2025-08-20,,1133
+851,permanent,Diagonal Pedroza 602 Interior 492,,Gallup,NM,57774,US,True,2024-03-14,,1134
+852,permanent,8454 Gonzales Club,,Las Cruces,NM,88685,US,True,2024-06-10,,1135
+853,permanent,Periférico Brito 203 Interior 579,,Houston,TX,56400-1915,US,True,2022-11-16,,1136
+853,local,60782 Jones Manor Suite 342,,Las Cruces,NM,88005,US,False,2025-08-20,,1137
+854,permanent,5217 Coleman Islands Apt. 316,,Las Cruces,NM,99075,US,True,2025-02-23,,1138
+855,permanent,447 Monroe Garden Apt. 435,,Roswell,NM,86273,US,True,2019-04-14,,1139
+855,local,69701 Shaw Lake Apt. 531,,Las Cruces,NM,88012,US,False,2025-08-20,,1140
+856,permanent,6806 Joyce Rest,,El Paso,TX,79878,US,True,2020-02-23,,1141
+857,permanent,2503 Hahn Meadow Apt. 627,,Alamogordo,NM,92160,US,True,2017-07-14,,1142
+858,permanent,"Prolongación Distrito Federal 530 Edif. 955 , Depto. 877",,San Hugo los bajos,,,CN,True,2021-09-23,,1143
+859,permanent,"Calzada San Luis Potosí 024 Edif. 694 , Depto. 841",,Las Cruces,NM,32223,US,True,2019-12-05,,1144
+860,permanent,"Avenida Norte Carbajal 317 Edif. 844 , Depto. 988",,Dallas,TX,80374,US,True,2021-08-04,,1145
+860,local,381 Jeffrey Fords Suite 049,,Las Cruces,NM,88001,US,False,2025-08-20,,1146
+861,permanent,"Periférico Zacatecas 537 Edif. 156 , Depto. 415",,Albuquerque,NM,30706,US,True,2022-10-21,,1147
+862,permanent,Ampliación Malawi 892 004,,Silver City,NM,82072-1624,US,True,2021-06-15,,1148
+862,local,424 Hansen Neck Apt. 255,,Las Cruces,NM,88011,US,False,2025-08-20,,1149
+863,permanent,"Eje vial Puebla 781 Edif. 744 , Depto. 205",,El Paso,TX,05155-6740,US,True,2025-01-12,,1150
+863,local,16759 Austin Burg,,Las Cruces,NM,88001,US,False,2025-08-20,,1151
+864,permanent,6048 Michele Locks,,Santa Fe,NM,56206,US,True,2022-01-08,,1152
+865,permanent,"Viaducto Prieto 477 Edif. 631 , Depto. 032",,Albuquerque,NM,19767,US,True,2018-10-24,,1153
+866,permanent,448 Smith Avenue,,El Paso,TX,75793,US,True,2017-11-27,,1154
+867,permanent,"Boulevard Norte Castro 974 Edif. 767 , Depto. 666",,El Paso,TX,91919,US,True,2023-06-23,,1155
+867,local,2642 Ray Run,,Las Cruces,NM,88001,US,False,2025-08-20,,1156
+868,permanent,Ampliación Colima 544 Interior 940,,Rio Rancho,NM,75256-3744,US,True,2024-02-15,,1157
+869,permanent,"Eje vial Mali 802 Edif. 764 , Depto. 482",,Roswell,NM,35007-9616,US,True,2020-06-19,,1158
+869,local,77784 Joshua Coves Suite 491,,Las Cruces,NM,88003,US,False,2025-08-20,,1159
+870,permanent,26924 Davis Alley Apt. 695,,El Paso,TX,80559,US,True,2018-08-04,,1160
+871,permanent,Viaducto Norte Corrales 943 837,,San Antonio,TX,42884-6377,US,True,2019-06-24,,1161
+871,local,8503 Lisa Street,,Las Cruces,NM,88001,US,False,2025-08-20,,1162
+872,permanent,2877 Jimenez Plain Suite 910,,Las Cruces,NM,39110,US,True,2020-10-16,,1163
+873,permanent,9635 Johnson Prairie,,Las Cruces,NM,27962,US,True,2022-03-10,,1164
+874,permanent,Pasaje Eslovenia 970 101,,San Antonio,TX,92621-8922,US,True,2020-09-07,,1165
+874,local,06138 Cook Vista Suite 602,,Las Cruces,NM,88011,US,False,2025-08-20,,1166
+875,permanent,4856 Logan Keys,,Las Cruces,NM,01579,US,True,2020-10-22,,1167
+876,permanent,0826 Rojas Light Suite 044,,Houston,TX,96723,US,True,2023-12-06,,1168
+876,local,44294 Kaitlyn Park Apt. 880,,Las Cruces,NM,88005,US,False,2025-08-20,,1169
+877,permanent,39766 Felicia Island Suite 171,,El Paso,TX,42764,US,True,2024-05-17,,1170
+877,local,76017 Todd Creek,,Las Cruces,NM,88012,US,False,2025-08-20,,1171
+878,permanent,Boulevard Kenya 725 978,,El Paso,TX,36740,US,True,2024-11-25,,1172
+878,local,05994 Watts Road,,Las Cruces,NM,88011,US,False,2025-08-20,,1173
+879,permanent,Boulevard Sonora 616 Interior 629,,Santa Fe,NM,58636-0253,US,True,2018-10-04,,1174
+879,local,732 Christine Fall Suite 450,,Las Cruces,NM,88003,US,False,2025-08-20,,1175
+880,permanent,35608 Clay Lights Suite 937,,Las Cruces,NM,49386,US,True,2019-08-07,,1176
+881,permanent,4062 Walter Tunnel,,Silver City,NM,00850,US,True,2024-05-10,,1177
+881,local,55320 Steele Plain Suite 155,,Las Cruces,NM,88012,US,False,2025-08-20,,1178
+882,permanent,933 Thomas Squares Apt. 689,,Phoenix,AZ,77035,US,True,2019-11-01,,1179
+883,permanent,9436 Clark Meadow Suite 314,,Roswell,NM,97394,US,True,2025-06-05,,1180
+883,local,945 Arnold Crest Suite 089,,Las Cruces,NM,88005,US,False,2025-08-20,,1181
+884,permanent,"Circunvalación Guillen 666 Edif. 847 , Depto. 072",,Las Cruces,NM,02757-8966,US,True,2023-11-04,,1182
+885,permanent,"Boulevard Afganistán 863 Edif. 678 , Depto. 281",,Farmington,NM,89600-6688,US,True,2022-02-15,,1183
+886,permanent,083 Hansen Avenue,,Las Cruces,NM,81477,US,True,2023-12-14,,1184
+887,permanent,"Viaducto Norte Garibay 087 Edif. 803 , Depto. 782",,Santa Fe,NM,37126-8870,US,True,2018-01-06,,1185
+888,permanent,Pasaje Soliz 640 Interior 157,,Hobbs,NM,46621-9978,US,True,2022-03-07,,1186
+889,permanent,"Privada Sur Granado 238 Edif. 986 , Depto. 225",,Artesia,NM,68629-6610,US,True,2023-08-14,,1187
+890,permanent,Prolongación Botello 091 665,,Las Cruces,NM,45430-0178,US,True,2023-02-12,,1188
+891,permanent,Ampliación Palomo 227 Interior 643,,Las Cruces,NM,94652-6505,US,True,2022-02-25,,1189
+892,permanent,Circuito Norte Loera 329 457,,Gallup,NM,74047-7246,US,True,2023-03-26,,1190
+893,permanent,"Callejón Linares 910 Edif. 557 , Depto. 999",,Albuquerque,NM,58434,US,True,2025-03-18,,1191
+894,permanent,Periférico Costa Rica 112 642,,Las Cruces,NM,81544,US,True,2024-06-06,,1192
+895,permanent,9877 Martin Run,,El Paso,TX,25511,US,True,2022-01-28,,1193
+895,local,69184 Hill Coves Apt. 857,,Las Cruces,NM,88012,US,False,2025-08-20,,1194
+896,permanent,Boulevard Norte Ojeda 021 Interior 000,,Sunland Park,NM,78649,US,True,2023-04-26,,1195
+897,permanent,975 Christopher Summit Suite 243,,Las Cruces,NM,71156,US,True,2018-10-28,,1196
+898,permanent,685 Deborah Circle,,Santa Fe,NM,42508,US,True,2019-01-03,,1197
+899,permanent,Circuito Gollum 010 Interior 265,,El Paso,TX,76475-6657,US,True,2018-03-31,,1198
+899,local,297 Mccann Corner,,Las Cruces,NM,88011,US,False,2025-08-20,,1199
+900,permanent,"Andador República Dominicana 615 Edif. 071 , Depto. 066",,Las Cruces,NM,69036,US,True,2023-05-23,,1200
+901,permanent,Retorno Palau 087 884,,Las Cruces,NM,79888-2437,US,True,2019-05-23,,1201
+902,permanent,"Diagonal Oaxaca 137 Edif. 165 , Depto. 094",,Las Cruces,NM,31596,US,True,2018-07-07,,1202
+903,permanent,268 Andrew Parkway,,El Paso,TX,56331,US,True,2024-11-05,,1203
+904,permanent,03031 Brown Turnpike Suite 175,,Farmington,NM,77765,US,True,2021-08-30,,1204
+904,local,24947 Baker Courts Suite 958,,Las Cruces,NM,88001,US,False,2025-08-20,,1205
+905,permanent,Circuito Guerrero 380 115,,Las Cruces,NM,76941-5139,US,True,2019-10-29,,1206
+906,permanent,Privada Albania 335 Interior 006,,Denver,CO,55804-8294,US,True,2022-06-04,,1207
+907,permanent,3270 Mary Trafficway,,Las Cruces,NM,13012,US,True,2023-11-10,,1208
+908,permanent,"Boulevard Guanajuato 562 Edif. 220 , Depto. 834",,Las Cruces,NM,44299-6138,US,True,2021-08-14,,1209
+909,permanent,0969 Jones Forest,,Clovis,NM,42326,US,True,2024-06-03,,1210
+910,permanent,Calle Sur Farías 677 638,,Las Cruces,NM,19180,US,True,2025-01-05,,1211
+911,permanent,"Andador Canadá 312 Edif. 178 , Depto. 170",,Clovis,NM,23275-8881,US,True,2023-11-18,,1212
+911,local,592 Robert Burg,,Las Cruces,NM,88012,US,False,2025-08-20,,1213
+912,permanent,"Callejón Anguiano 819 Edif. 401 , Depto. 469",,Clovis,NM,13607-7272,US,True,2024-10-16,,1214
+912,local,450 Ryan Ville,,Las Cruces,NM,88012,US,False,2025-08-20,,1215
+913,permanent,Ampliación Yucatán 135 Interior 966,,Artesia,NM,33903-6385,US,True,2020-05-28,,1216
+914,permanent,Boulevard Sandoval 902 320,,Las Cruces,NM,65198,US,True,2018-09-27,,1217
+915,permanent,Ampliación China 487 103,,Las Cruces,NM,53476-4144,US,True,2021-09-13,,1218
+916,permanent,"Viaducto Sur Archuleta 098 Edif. 245 , Depto. 081",,Las Cruces,NM,64702-3607,US,True,2021-09-13,,1219
+917,permanent,"Pasaje Escobedo 339 Edif. 691 , Depto. 082",,Las Cruces,NM,56120-6464,US,True,2019-01-09,,1220
+918,permanent,82552 John Spring Suite 591,,Carlsbad,NM,70850,US,True,2017-10-16,,1221
+918,local,805 Alyssa Ford,,Las Cruces,NM,88003,US,False,2025-08-20,,1222
+919,permanent,4454 Melissa Ramp Apt. 438,,Artesia,NM,60086,US,True,2022-06-14,,1223
+920,permanent,"Circuito Barajas 343 Edif. 076 , Depto. 832",,Alamogordo,NM,68160-5191,US,True,2017-11-25,,1224
+921,permanent,Callejón Sur Rael 478 735,,Las Cruces,NM,14556-4731,US,True,2024-09-05,,1225
+922,permanent,Circunvalación Guinea Bissau 288 Interior 261,,Las Cruces,NM,34608-7363,US,True,2024-08-02,,1226
+923,permanent,"Calzada González 722 Edif. 781 , Depto. 815",,Las Cruces,NM,39258-8302,US,True,2019-03-21,,1227
+924,permanent,"Callejón Tamez 379 Edif. 398 , Depto. 593",,Artesia,NM,82278,US,True,2019-03-14,,1228
+924,local,6953 Sanchez Trail,,Las Cruces,NM,88003,US,False,2025-08-20,,1229
+925,permanent,7120 Katherine Crossroad Suite 874,,Albuquerque,NM,66533,US,True,2025-01-03,,1230
+926,permanent,3375 Norman Wall Suite 535,,Artesia,NM,63658,US,True,2022-02-18,,1231
+927,permanent,17829 Clarke Radial,,Roswell,NM,73297,US,True,2019-11-27,,1232
+927,local,1037 Clark Estates,,Las Cruces,NM,88011,US,False,2025-08-20,,1233
+928,permanent,27594 Michael Canyon Apt. 657,,Rio Rancho,NM,48269,US,True,2024-06-26,,1234
+928,local,7486 Cynthia Point Apt. 070,,Las Cruces,NM,88003,US,False,2025-08-20,,1235
+929,permanent,Pasaje Querétaro 460 Interior 683,,Deming,NM,26053-3882,US,True,2025-06-18,,1236
+929,local,969 Bennett Causeway Apt. 875,,Las Cruces,NM,88003,US,False,2025-08-20,,1237
+930,permanent,Circuito Tuvalu 579 Interior 990,,Clovis,NM,72566,US,True,2021-03-15,,1238
+931,permanent,1967 Murphy Mission,,Albuquerque,NM,76866,US,True,2021-05-18,,1239
+932,permanent,359 Julie Road,,Las Cruces,NM,37896,US,True,2021-03-25,,1240
+933,permanent,035 Mills Rapid,,Albuquerque,NM,80364,US,True,2017-11-29,,1241
+933,local,085 Castillo Alley,,Las Cruces,NM,88001,US,False,2025-08-20,,1242
+934,permanent,Ampliación El Salvador 624 986,,Las Cruces,NM,09466-5497,US,True,2020-03-15,,1243
+935,permanent,5686 George Camp,,Las Cruces,NM,10938,US,True,2018-12-19,,1244
+936,permanent,64103 Amanda Circles Suite 326,,Albuquerque,NM,48814,US,True,2019-09-04,,1245
+937,permanent,Privada Suriname 078 Interior 138,,Los Lunas,NM,75134-0749,US,True,2022-10-17,,1246
+938,permanent,Retorno Gabón 280 Interior 540,,Albuquerque,NM,92319,US,True,2021-07-24,,1247
+938,local,78730 Cohen Prairie Apt. 034,,Las Cruces,NM,88012,US,False,2025-08-20,,1248
+939,permanent,8782 Erika Port Suite 728,,El Paso,TX,32253,US,True,2020-01-15,,1249
+939,local,301 Cervantes Roads Suite 607,,Las Cruces,NM,88001,US,False,2025-08-20,,1250
+940,permanent,477 Christina Canyon Apt. 444,,Clovis,NM,02208,US,True,2022-09-01,,1251
+940,local,19718 David Falls Apt. 367,,Las Cruces,NM,88005,US,False,2025-08-20,,1252
+941,permanent,Avenida Olvera 832 152,,Las Cruces,NM,07416,US,True,2021-01-16,,1253
+942,permanent,"Circuito Casillas 100 Edif. 729 , Depto. 084",,Las Cruces,NM,98011-7056,US,True,2020-09-25,,1254
+943,permanent,34304 Anthony Mountain Apt. 002,,Las Cruces,NM,51966,US,True,2025-01-02,,1255
+944,permanent,Avenida Sur de la Crúz 804 Interior 430,,El Paso,TX,57721-1271,US,True,2025-05-12,,1256
+944,local,109 Tamara Vista Suite 663,,Las Cruces,NM,88001,US,False,2025-08-20,,1257
+945,permanent,2525 Wallace Light Suite 739,,El Paso,TX,49512,US,True,2025-01-08,,1258
+946,permanent,"Continuación Ucrania 611 Edif. 595 , Depto. 338",,Albuquerque,NM,16290-6288,US,True,2022-12-21,,1259
+947,permanent,Peatonal Durango 416 Interior 762,,Farmington,NM,87430,US,True,2023-12-29,,1260
+947,local,7429 Donald Pines Apt. 487,,Las Cruces,NM,88003,US,False,2025-08-20,,1261
+948,permanent,Circuito Albania 197 Interior 447,,Phoenix,AZ,52246-9685,US,True,2018-11-18,,1262
+949,permanent,"Cerrada Trejo 312 Edif. 760 , Depto. 783",,El Paso,TX,59482,US,True,2018-05-02,,1263
+949,local,5248 Paul Bridge,,Las Cruces,NM,88012,US,False,2025-08-20,,1264
+950,permanent,156 Lee Village Apt. 917,,Las Cruces,NM,37435,US,True,2019-05-20,,1265
+951,permanent,Calle Sur de la Garza 865 626,,Albuquerque,NM,08059,US,True,2024-02-25,,1266
+952,permanent,6215 Jones Vista Apt. 980,,Las Cruces,NM,58872,US,True,2023-06-19,,1267
+953,permanent,6389 Paige Common,,El Paso,TX,87350,US,True,2019-12-02,,1268
+953,local,5875 Andrew Roads,,Las Cruces,NM,88001,US,False,2025-08-20,,1269
+954,permanent,Circuito Norte Arias 926 288,,Sunland Park,NM,58072-0080,US,True,2023-06-23,,1270
+954,local,0197 Shields Track Suite 752,,Las Cruces,NM,88001,US,False,2025-08-20,,1271
+955,permanent,067 Kyle Grove,,Tucson,AZ,56202,US,True,2022-11-29,,1272
+956,permanent,59757 Jason Trail,,Albuquerque,NM,57218,US,True,2019-03-19,,1273
+957,permanent,3347 Taylor Greens Suite 470,,Artesia,NM,38072,US,True,2020-12-19,,1274
+957,local,450 Estrada Lights,,Las Cruces,NM,88012,US,False,2025-08-20,,1275
+958,permanent,Avenida Veracruz de Ignacio de la Llave 118 Interior 016,,El Paso,TX,74360-4890,US,True,2024-09-01,,1276
+958,local,271 Walker Mall Suite 749,,Las Cruces,NM,88005,US,False,2025-08-20,,1277
+959,permanent,Calle Perea 557 402,,Las Cruces,NM,59587-6955,US,True,2022-06-11,,1278
+960,permanent,1492 Harris Park,,Las Cruces,NM,92360,US,True,2018-04-16,,1279
+961,permanent,"Boulevard Kenya 143 Edif. 517 , Depto. 236",,Las Cruces,NM,04485-2602,US,True,2021-05-27,,1280
+962,permanent,5638 Lawrence Circles Apt. 843,,Rio Rancho,NM,80785,US,True,2022-01-05,,1281
+963,permanent,990 Morris Locks Suite 223,,Anthony,NM,22683,US,True,2021-08-13,,1282
+963,local,04300 Allen Circles Apt. 069,,Las Cruces,NM,88005,US,False,2025-08-20,,1283
+964,permanent,Ampliación Colombia 200 013,,Anthony,NM,78928,US,True,2025-07-03,,1284
+965,permanent,Ampliación Hidalgo 709 063,,Las Cruces,NM,60273,US,True,2017-11-27,,1285
+966,permanent,83381 Vincent Islands,,Las Cruces,NM,23648,US,True,2018-04-17,,1286
+967,permanent,3583 Jennifer Mission,,Clovis,NM,67146,US,True,2021-08-28,,1287
+967,local,190 Allen Bypass Suite 587,,Las Cruces,NM,88012,US,False,2025-08-20,,1288
+968,permanent,Ampliación Sur Mercado 541 105,,El Paso,TX,62412-6676,US,True,2022-06-14,,1289
+968,local,940 Carroll Hollow,,Las Cruces,NM,88011,US,False,2025-08-20,,1290
+969,permanent,225 Joan Trail,,Las Cruces,NM,53172,US,True,2020-06-13,,1291
+970,permanent,Prolongación Baja California 449 100,,El Paso,TX,23149-2049,US,True,2023-09-26,,1292
+970,local,64041 Charles Mount,,Las Cruces,NM,88001,US,False,2025-08-20,,1293
+971,permanent,2770 Calvin Tunnel,,Albuquerque,NM,30691,US,True,2020-10-25,,1294
+972,permanent,073 Mosley Ferry,,Albuquerque,NM,19588,US,True,2023-10-08,,1295
+973,permanent,"Callejón Razo 192 Edif. 288 , Depto. 741",,Albuquerque,NM,94925-4345,US,True,2018-11-29,,1296
+974,permanent,Ampliación Salcido 824 089,,Las Cruces,NM,51331,US,True,2020-05-12,,1297
+975,permanent,Viaducto Suriname 673 Interior 608,,Las Cruces,NM,33399-5066,US,True,2018-11-07,,1298
+976,permanent,941 Jose Mall,,El Paso,TX,09129,US,True,2020-09-26,,1299
+977,permanent,5500 Lopez Park Suite 315,,Los Lunas,NM,58929,US,True,2017-08-29,,1300
+977,local,229 Williams Plain Apt. 860,,Las Cruces,NM,88011,US,False,2025-08-20,,1301
+978,permanent,78101 John Divide,,Deming,NM,01224,US,True,2023-03-29,,1302
+979,permanent,61054 Gary Light Apt. 284,,Silver City,NM,54537,US,True,2019-02-08,,1303
+980,permanent,Avenida Norte Madrigal 337 Interior 360,,Dallas,TX,85753,US,True,2019-02-26,,1304
+981,permanent,978 Janice Curve Suite 658,,Rio Rancho,NM,17644,US,True,2022-02-05,,1305
+981,local,540 Bowen Road,,Las Cruces,NM,88005,US,False,2026-01-17,,1306
+982,permanent,048 Black Brooks,,Silver City,NM,10423,US,True,2019-04-27,,1307
+983,permanent,Cerrada Distrito Federal 395 007,,El Paso,TX,77550-0535,US,True,2017-12-15,,1308
+984,permanent,Pasaje Suárez 757 730,,Las Cruces,NM,14601-7419,US,True,2018-09-13,,1309
+985,permanent,"Circuito Sur Cavazos 265 Edif. 652 , Depto. 936",,Albuquerque,NM,56275-4540,US,True,2025-07-18,,1310
+985,local,9893 Ward Knolls,,Las Cruces,NM,88003,US,False,2026-01-17,,1311
+986,permanent,Viaducto Nayarit 029 973,,Vieja Togo,,,IN,True,2018-12-28,,1312
+987,permanent,156 Mary Lodge Apt. 173,,Albuquerque,NM,50057,US,True,2024-03-29,,1313
+987,local,38731 Smith Route Apt. 191,,Las Cruces,NM,88012,US,False,2026-01-17,,1314
+988,permanent,257 Holt Fields Suite 298,,Las Cruces,NM,07731,US,True,2024-08-06,,1315
+989,permanent,336 Martin Islands,,Las Cruces,NM,01564,US,True,2025-11-02,,1316
+990,permanent,Avenida Jáquez 545 636,,Los Lunas,NM,98836-8636,US,True,2018-04-03,,1317
+990,local,449 Anthony Lodge Apt. 267,,Las Cruces,NM,88003,US,False,2026-01-17,,1318
+991,permanent,12038 Jennifer Ridges,,Las Cruces,NM,66729,US,True,2019-04-09,,1319
+992,permanent,43360 Snyder Flat,,El Paso,TX,24849,US,True,2023-10-10,,1320
+992,local,115 Andrews River,,Las Cruces,NM,88012,US,False,2026-01-17,,1321
+993,permanent,360 Carter Rest Suite 534,,Las Cruces,NM,80161,US,True,2019-10-06,,1322
+994,permanent,Callejón Ucrania 057 Interior 411,,Denver,CO,53910,US,True,2024-09-26,,1323
+995,permanent,398 James Burg Apt. 773,,Los Angeles,CA,99004,US,True,2021-08-12,,1324
+996,permanent,Avenida Norte Aponte 048 541,,Houston,TX,34810,US,True,2025-07-16,,1325
+996,local,525 Henson Squares Suite 255,,Las Cruces,NM,88012,US,False,2026-01-17,,1326
+997,permanent,21669 Black Squares Apt. 011,,Las Cruces,NM,22088,US,True,2019-09-20,,1327
+998,permanent,"Continuación Feliciano 905 Edif. 950 , Depto. 942",,Las Cruces,NM,68362,US,True,2026-07-11,,1328
+999,permanent,Calle Botswana 328 Interior 424,,Las Cruces,NM,29802-0291,US,True,2023-11-04,,1329
+1000,permanent,Callejón Colima 377 Interior 805,,Las Cruces,NM,92277-0260,US,True,2021-10-07,,1330
+1001,permanent,Pasaje Carreón 947 505,,Rio Rancho,NM,20112,US,True,2025-03-31,,1331
+1001,local,42259 Joe Stravenue Apt. 381,,Las Cruces,NM,88005,US,False,2026-08-20,,1332
+1002,permanent,Periférico Sonora 264 236,,Vieja Cabo Verde,,,MX,True,2024-06-10,,1333
+1002,local,458 Dawson Streets,,Las Cruces,NM,88001,US,False,2026-08-20,,1334
+1003,permanent,"Circunvalación Mares 671 Edif. 188 , Depto. 161",,Las Cruces,NM,77347,US,True,2022-11-13,,1335
+1004,permanent,Avenida Rubio 141 272,,Los Lunas,NM,92129-8567,US,True,2025-03-28,,1336
+1005,permanent,72652 Stephanie Wells Apt. 487,,El Paso,TX,55469,US,True,2024-06-02,,1337
+1005,local,673 Jackson Bypass,,Las Cruces,NM,88005,US,False,2026-08-20,,1338
+1006,permanent,Boulevard Amador 208 967,,Chicago,IL,04062-3215,US,True,2024-05-09,,1339
+1006,local,751 Kennedy Turnpike,,Las Cruces,NM,88005,US,False,2026-08-20,,1340
+1007,permanent,7873 David Circles Apt. 052,,Albuquerque,NM,90552,US,True,2022-07-07,,1341
+1007,local,83522 Steven Isle,,Las Cruces,NM,88011,US,False,2026-08-20,,1342
+1008,permanent,14616 Larry Skyway,,Roswell,NM,50315,US,True,2019-07-25,,1343
+1008,local,29654 Miller Summit,,Las Cruces,NM,88012,US,False,2026-08-20,,1344
+1009,permanent,322 Washington Cliffs Apt. 178,,Las Cruces,NM,44644,US,True,2020-08-20,,1345
+1010,permanent,"Ampliación Norte Vigil 334 Edif. 083 , Depto. 378",,Los Angeles,CA,61592,US,True,2021-03-19,,1346
+1010,local,8668 Amber Brooks Suite 956,,Las Cruces,NM,88011,US,False,2026-08-20,,1347
+1011,permanent,Pasaje Guerrero 939 Interior 226,,Alamogordo,NM,95427-6293,US,True,2024-03-15,,1348
+1012,permanent,Retorno Morelos 673 272,,El Paso,TX,21553,US,True,2022-05-23,,1349
+1012,local,0169 Kimberly Ferry,,Las Cruces,NM,88012,US,False,2026-08-20,,1350
+1013,permanent,"Circunvalación Norte Barraza 181 Edif. 320 , Depto. 723",,Las Cruces,NM,91846,US,True,2021-05-20,,1351
+1014,permanent,"Circunvalación Quintana Roo 143 Edif. 704 , Depto. 342",,Las Cruces,NM,91626-3177,US,True,2024-10-04,,1352
+1015,permanent,332 Garcia Hills,,Albuquerque,NM,41667,US,True,2026-05-21,,1353
+1015,local,513 Santos Street,,Las Cruces,NM,88001,US,False,2026-08-20,,1354
+1016,permanent,Continuación Baja California Sur 845 718,,Albuquerque,NM,91981-6254,US,True,2025-09-18,,1355
+1017,permanent,17894 Elizabeth Loaf,,Roswell,NM,82000,US,True,2022-02-07,,1356
+1018,permanent,6161 Mccarthy Plains,,El Paso,TX,96600,US,True,2018-09-24,,1357
+1018,local,39726 Rogers Key Suite 690,,Las Cruces,NM,88001,US,False,2026-08-20,,1358
+1019,permanent,3858 Padilla Shoals Apt. 254,,Deming,NM,30199,US,True,2022-06-09,,1359
+1020,permanent,972 Nguyen Road,,El Paso,TX,36770,US,True,2020-07-21,,1360
+1021,permanent,Calzada Negrete 766 Interior 307,,Las Cruces,NM,99751-0906,US,True,2022-04-19,,1361
+1022,permanent,501 Kevin Glens,,El Paso,TX,88901,US,True,2018-06-18,,1362
+1023,permanent,Prolongación Arias 483 082,,Las Cruces,NM,13016-0644,US,True,2018-12-05,,1363
+1024,permanent,836 Browning Trail,,Las Cruces,NM,89072,US,True,2021-03-03,,1364
+1025,permanent,591 Flores Rest Apt. 903,,Roswell,NM,82040,US,True,2023-01-25,,1365
+1025,local,2869 Christina Freeway Apt. 067,,Las Cruces,NM,88005,US,False,2026-08-20,,1366
+1026,permanent,Boulevard Veracruz de Ignacio de la Llave 322 177,,Albuquerque,NM,99025-4983,US,True,2018-08-19,,1367
+1026,local,32041 Jerome Oval,,Las Cruces,NM,88005,US,False,2026-08-20,,1368
+1027,permanent,Callejón Sáenz 621 Interior 334,,Las Cruces,NM,95829-5656,US,True,2022-01-05,,1369
+1028,permanent,650 Marshall Stream,,El Paso,TX,76663,US,True,2025-07-17,,1370
+1029,permanent,Eje vial Collado 502 Interior 092,,Albuquerque,NM,52123,US,True,2026-05-11,,1371
+1029,local,94462 Gray Islands,,Las Cruces,NM,88005,US,False,2026-08-20,,1372
+1030,permanent,Prolongación Armendáriz 817 497,,Las Cruces,NM,11149,US,True,2020-07-24,,1373
+1031,permanent,82865 Hudson Village Suite 872,,Tucson,AZ,43024,US,True,2024-09-10,,1374
+1031,local,54151 Audrey Mount Suite 770,,Las Cruces,NM,88011,US,False,2026-08-20,,1375
+1032,permanent,6949 Ryan Brooks,,Las Cruces,NM,69145,US,True,2022-08-23,,1376
+1033,permanent,870 Ann Corners Apt. 133,,Lake Amber,,,KR,True,2025-05-17,,1377
+1034,permanent,Calzada de León 082 204,,Las Cruces,NM,84351-9788,US,True,2025-07-29,,1378
+1035,permanent,"Prolongación Sur Mercado 173 Edif. 335 , Depto. 813",,Las Cruces,NM,82201-5297,US,True,2021-07-12,,1379
+1036,permanent,"Prolongación Centeno 184 Edif. 899 , Depto. 454",,San María los altos,,,MX,True,2022-08-06,,1380
+1036,local,972 Phillips Ville Apt. 047,,Las Cruces,NM,88012,US,False,2026-08-20,,1381
+1037,permanent,Ampliación México 431 784,,Roswell,NM,13913,US,True,2025-11-02,,1382
+1037,local,997 Green Forges Apt. 777,,Las Cruces,NM,88012,US,False,2026-08-20,,1383
+1038,permanent,Calzada Yucatán 063 239,,Farmington,NM,73352-1085,US,True,2022-05-18,,1384
+1039,permanent,955 Lisa Flat,,Rio Rancho,NM,25088,US,True,2023-06-29,,1385
+1039,local,719 Anderson Bridge Suite 093,,Las Cruces,NM,88001,US,False,2026-08-20,,1386
+1040,permanent,57989 Michael Club,,Albuquerque,NM,07034,US,True,2024-04-18,,1387
+1041,permanent,7601 Jeffrey Loaf,,Silver City,NM,18538,US,True,2023-03-24,,1388
+1041,local,5100 Jason Wall Suite 857,,Las Cruces,NM,88001,US,False,2026-08-20,,1389
+1042,permanent,Calle Sur Quintana 506 748,,Las Vegas,NM,52292,US,True,2024-05-17,,1390
+1042,local,6547 Walker Club Suite 914,,Las Cruces,NM,88003,US,False,2026-08-20,,1391
+1043,permanent,Callejón Durango 205 Interior 964,,Farmington,NM,54978,US,True,2024-10-23,,1392
+1044,permanent,0437 Jane Mall,,Roswell,NM,72336,US,True,2024-12-27,,1393
+1044,local,835 Stafford Parkway,,Las Cruces,NM,88001,US,False,2026-08-20,,1394
+1045,permanent,Continuación Federación de Rusia 815 808,,El Paso,TX,78945-1193,US,True,2025-03-05,,1395
+1046,permanent,30144 Hill Coves Suite 294,,Albuquerque,NM,09804,US,True,2024-04-04,,1396
+1047,permanent,9275 Tracy Loop,,South Javier,,,NG,True,2023-08-08,,1397
+1047,local,00697 Carter Alley,,Las Cruces,NM,88005,US,False,2026-08-20,,1398
+1048,permanent,"Boulevard Bermúdez 169 Edif. 349 , Depto. 106",,El Paso,TX,69871-0149,US,True,2024-04-17,,1399
+1049,permanent,"Andador Guanajuato 421 Edif. 825 , Depto. 480",,Los Angeles,CA,75950-2424,US,True,2026-06-25,,1400
+1050,permanent,9630 Butler Way,,Las Cruces,NM,59367,US,True,2021-06-09,,1401
+1051,permanent,3427 Cynthia Extensions,,Las Cruces,NM,68805,US,True,2022-10-12,,1402
+1052,permanent,Calzada Guerrero 234 533,,Santa Fe,NM,66822-8965,US,True,2019-08-03,,1403
+1052,local,549 Elizabeth Turnpike Apt. 980,,Las Cruces,NM,88005,US,False,2026-08-20,,1404
+1053,permanent,765 Barbara Circles Suite 397,,Las Cruces,NM,84070,US,True,2021-01-08,,1405
+1054,permanent,"Privada Alemania 826 Edif. 326 , Depto. 763",,Las Cruces,NM,14310,US,True,2024-07-26,,1406
+1055,permanent,89475 Laura Radial Suite 245,,Las Cruces,NM,80077,US,True,2018-09-02,,1407
+1056,permanent,Retorno Sur Galván 953 002,,Farmington,NM,53952-5637,US,True,2021-04-22,,1408
+1057,permanent,87871 Frederick Fort Suite 935,,Carlsbad,NM,91767,US,True,2020-10-02,,1409
+1058,permanent,"Cerrada Sonora 720 Edif. 975 , Depto. 066",,Sunland Park,NM,28568,US,True,2023-06-19,,1410
+1058,local,441 Mitchell Ports Apt. 311,,Las Cruces,NM,88011,US,False,2026-08-20,,1411
+1059,permanent,5613 Mary Street,,Farmington,NM,32017,US,True,2024-09-12,,1412
+1059,local,48454 Bradshaw Flat Apt. 074,,Las Cruces,NM,88012,US,False,2026-08-20,,1413
+1060,permanent,"Andador Norte Velásquez 508 Edif. 526 , Depto. 106",,El Paso,TX,55326-4741,US,True,2023-03-02,,1414
+1061,permanent,"Prolongación Seychelles 271 Edif. 918 , Depto. 993",,Las Cruces,NM,98792,US,True,2021-11-08,,1415
+1062,permanent,177 Chris Corner Suite 493,,Las Cruces,NM,15668,US,True,2019-10-18,,1416
+1063,permanent,Ampliación Hidalgo 460 749,,Santa Fe,NM,87574-4654,US,True,2021-06-06,,1417
+1063,local,218 Robinson Point Apt. 125,,Las Cruces,NM,88003,US,False,2026-08-20,,1418
+1064,permanent,65729 Fisher Light,,Las Vegas,NM,48563,US,True,2020-04-11,,1419
+1064,local,06703 Jason Lane Suite 774,,Las Cruces,NM,88011,US,False,2026-08-20,,1420
+1065,permanent,84788 Moran Row Suite 888,,Silver City,NM,40420,US,True,2020-05-05,,1421
+1066,permanent,Ampliación Antigua y Barbuda 265 030,,Las Cruces,NM,24114-2076,US,True,2025-05-24,,1422
+1067,permanent,7621 Matthew Roads Suite 614,,Santa Fe,NM,95037,US,True,2018-08-30,,1423
+1067,local,53834 Sanchez Circles,,Las Cruces,NM,88011,US,False,2026-08-20,,1424
+1068,permanent,Periférico Vega 621 Interior 779,,Albuquerque,NM,29210-1727,US,True,2021-12-05,,1425
+1069,permanent,868 Martin Trail Apt. 785,,El Paso,TX,91766,US,True,2025-03-18,,1426
+1069,local,1712 Barbara Ports Apt. 917,,Las Cruces,NM,88003,US,False,2026-08-20,,1427
+1070,permanent,Circuito Sur Domínguez 392 268,,Las Cruces,NM,87037-5578,US,True,2023-03-15,,1428
+1071,permanent,731 Carrillo Drive Suite 622,,Las Cruces,NM,86705,US,True,2019-09-05,,1429
+1072,permanent,Calzada Perú 688 Interior 386,,Las Cruces,NM,58173,US,True,2021-01-12,,1430
+1073,permanent,2995 Amber Mountain,,Las Cruces,NM,20681,US,True,2022-03-07,,1431
+1074,permanent,Circuito Chile 103 Interior 324,,Las Cruces,NM,73651-8849,US,True,2026-04-01,,1432
+1075,permanent,"Periférico Sri Lanka 580 Edif. 099 , Depto. 986",,Denver,CO,92450-5149,US,True,2019-12-03,,1433
+1075,local,8735 Brooks Fork,,Las Cruces,NM,88001,US,False,2026-08-20,,1434
+1076,permanent,9769 Melissa Square Apt. 514,,Santa Fe,NM,47470,US,True,2025-08-22,,1435
+1076,local,690 Sarah Path,,Las Cruces,NM,88012,US,False,2026-08-20,,1436
+1077,permanent,1399 Rios Mission Suite 993,,East Cody,,,MX,True,2022-01-07,,1437
+1078,permanent,45287 Taylor Ports,,Las Cruces,NM,31246,US,True,2023-07-05,,1438
+1079,permanent,Corredor Norte Rico 927 054,,Albuquerque,NM,48705-6623,US,True,2019-08-23,,1439
+1080,permanent,Prolongación Sur Vergara 947 437,,Las Cruces,NM,99035,US,True,2026-03-25,,1440
+1081,permanent,09831 Wood Estates,,Los Angeles,CA,33254,US,True,2022-08-23,,1441
+1081,local,034 Robinson Flat Apt. 874,,Las Cruces,NM,88011,US,False,2026-08-20,,1442
+1082,permanent,"Peatonal Rendón 491 Edif. 488 , Depto. 151",,Las Cruces,NM,46619-9541,US,True,2026-05-14,,1443
+1083,permanent,Diagonal Malta 849 Interior 186,,Las Cruces,NM,46288,US,True,2023-04-02,,1444
+1084,permanent,1968 Nicole Key Suite 843,,Las Cruces,NM,16245,US,True,2022-06-11,,1445
+1085,permanent,095 Cook Club,,El Paso,TX,77181,US,True,2022-11-07,,1446
+1085,local,1528 Young Plaza,,Las Cruces,NM,88012,US,False,2026-08-20,,1447
+1086,permanent,"Circuito Bélgica 781 Edif. 090 , Depto. 719",,El Paso,TX,71451-4951,US,True,2021-01-31,,1448
+1086,local,558 Amy Walks Apt. 680,,Las Cruces,NM,88011,US,False,2026-08-20,,1449
+1087,permanent,"Retorno Arreola 187 Edif. 330 , Depto. 027",,Sunland Park,NM,32722-3736,US,True,2022-12-25,,1450
+1088,permanent,2606 Jennifer Ridge Suite 274,,Las Cruces,NM,01952,US,True,2020-10-19,,1451
+1089,permanent,458 Eric Circles Suite 475,,Tucson,AZ,23561,US,True,2020-09-01,,1452
+1089,local,775 Diaz Cove Apt. 889,,Las Cruces,NM,88005,US,False,2026-08-20,,1453
+1090,permanent,835 Lowe Trace Suite 749,,Las Cruces,NM,66886,US,True,2021-04-09,,1454
+1091,permanent,08010 Lori Estates Apt. 123,,El Paso,TX,76801,US,True,2026-06-13,,1455
+1092,permanent,Boulevard Sonora 877 Interior 880,,Albuquerque,NM,15913,US,True,2023-09-12,,1456
+1092,local,8423 Jasmin Lock,,Las Cruces,NM,88011,US,False,2026-08-20,,1457
+1093,permanent,Retorno Tejeda 891 Interior 950,,Deming,NM,86796-9999,US,True,2026-07-08,,1458
+1093,local,819 Olivia Road,,Las Cruces,NM,88005,US,False,2026-08-20,,1459
+1094,permanent,11621 Jennifer Square Suite 514,,Phoenix,AZ,92352,US,True,2025-03-23,,1460
+1094,local,3965 Curry Common Apt. 557,,Las Cruces,NM,88012,US,False,2026-08-20,,1461
+1095,permanent,Calle Sur Sepúlveda 804 099,,Albuquerque,NM,51414,US,True,2023-10-21,,1462
+1095,local,0850 Jane Spring,,Las Cruces,NM,88001,US,False,2026-08-20,,1463
+1096,permanent,4425 Sarah Squares,,Gallup,NM,92488,US,True,2020-09-18,,1464
+1096,local,527 Gordon Fall Apt. 918,,Las Cruces,NM,88012,US,False,2026-08-20,,1465
+1097,permanent,37970 Williams Rue Apt. 775,,Las Cruces,NM,72635,US,True,2022-01-06,,1466
+1098,permanent,"Retorno Guyana 422 Edif. 663 , Depto. 154",,Albuquerque,NM,09903,US,True,2024-10-05,,1467
+1098,local,913 Michael Light Suite 366,,Las Cruces,NM,88011,US,False,2026-08-20,,1468
+1099,permanent,64123 Marcus Canyon Apt. 447,,Las Cruces,NM,66435,US,True,2024-05-11,,1469
+1100,permanent,Periférico Norte Prieto 467 Interior 269,,Farmington,NM,30133-3279,US,True,2024-07-03,,1470
+1101,permanent,228 Knight Station Suite 141,,Chicago,IL,99240,US,True,2026-06-11,,1471
+1102,permanent,207 Dylan Cape,,Las Cruces,NM,27325,US,True,2021-07-18,,1472
+1103,permanent,44486 Stevens Flat Apt. 620,,Las Cruces,NM,50586,US,True,2020-08-15,,1473
+1104,permanent,"Cerrada Sur Alonso 507 Edif. 495 , Depto. 044",,Las Cruces,NM,27192,US,True,2022-11-07,,1474
+1105,permanent,Eje vial Sur del Río 594 Interior 152,,El Paso,TX,83851-6357,US,True,2019-10-26,,1475
+1105,local,64466 Shaffer Coves,,Las Cruces,NM,88012,US,False,2026-08-20,,1476
+1106,permanent,Privada Carrera 356 316,,Albuquerque,NM,66027-1689,US,True,2021-12-12,,1477
+1107,permanent,430 Wolf Inlet,,San Antonio,TX,50543,US,True,2022-12-08,,1478
+1107,local,942 Hart Forges Suite 900,,Las Cruces,NM,88003,US,False,2026-08-20,,1479
+1108,permanent,Retorno Solorio 284 Interior 818,,Deming,NM,86969,US,True,2026-01-05,,1480
+1108,local,44405 Gonzales Vista,,Las Cruces,NM,88003,US,False,2026-08-20,,1481
+1109,permanent,"Boulevard Trinidad y Tabago 589 Edif. 358 , Depto. 404",,Anthony,NM,05712-6565,US,True,2023-05-20,,1482
+1109,local,416 Foster Manor Suite 157,,Las Cruces,NM,88012,US,False,2026-08-20,,1483
+1110,permanent,86830 Harris Drive Apt. 997,,Las Cruces,NM,71304,US,True,2020-01-26,,1484
+1111,permanent,Retorno Campeche 799 046,,Anthony,NM,69199,US,True,2022-06-21,,1485
+1111,local,386 Schmidt Plains,,Las Cruces,NM,88001,US,False,2026-08-20,,1486
+1112,permanent,Continuación Baja California Sur 624 Interior 481,,Silver City,NM,78950-1391,US,True,2019-11-11,,1487
+1113,permanent,"Cerrada Azerbaiyán 903 Edif. 454 , Depto. 468",,El Paso,TX,32109-5496,US,True,2024-07-27,,1488
+1114,permanent,Viaducto Yáñez 280 579,,Truth or Consequences,NM,50004-4415,US,True,2019-08-19,,1489
+1114,local,3057 Tyler Mews Apt. 202,,Las Cruces,NM,88012,US,False,2026-08-20,,1490
+1115,permanent,Peatonal Norte Núñez 853 Interior 241,,El Paso,TX,84268-9880,US,True,2021-11-09,,1491
+1116,permanent,41448 Ortega Mill Suite 763,,Phoenix,AZ,77072,US,True,2021-06-03,,1492
+1116,local,103 Alexandria Mill Apt. 779,,Las Cruces,NM,88001,US,False,2026-08-20,,1493
+1117,permanent,382 Hanson Place,,Las Cruces,NM,98638,US,True,2020-09-05,,1494
+1118,permanent,Continuación Burundi 832 Interior 022,,Las Cruces,NM,11318-0021,US,True,2026-02-08,,1495
+1119,permanent,Calle República Dominicana 584 Interior 562,,Santa Fe,NM,13702-4469,US,True,2024-08-14,,1496
+1120,permanent,"Pasaje India 390 Edif. 981 , Depto. 122",,Las Cruces,NM,21512,US,True,2025-09-28,,1497
+1121,permanent,Pasaje Norte Tapia 643 Interior 103,,Albuquerque,NM,33854,US,True,2023-05-23,,1498
+1122,permanent,Privada Sur Jaramillo 257 067,,Rio Rancho,NM,77924,US,True,2020-01-12,,1499
+1122,local,547 Valdez Mill Apt. 131,,Las Cruces,NM,88001,US,False,2026-08-20,,1500
+1123,permanent,Viaducto Sur Zelaya 642 102,,Alamogordo,NM,87288,US,True,2024-08-01,,1501
+1123,local,3664 Williams Run,,Las Cruces,NM,88012,US,False,2026-08-20,,1502
+1124,permanent,"Diagonal Campeche 980 Edif. 466 , Depto. 171",,Alamogordo,NM,14782,US,True,2025-11-25,,1503
+1125,permanent,705 Megan Harbor,,Las Vegas,NM,12037,US,True,2019-09-23,,1504
+1125,local,456 James Mall Suite 764,,Las Cruces,NM,88012,US,False,2026-08-20,,1505
+1126,permanent,23345 Darrell Harbor Apt. 776,,Albuquerque,NM,48876,US,True,2019-02-01,,1506
+1127,permanent,757 Murray Courts,,Las Cruces,NM,90888,US,True,2021-08-03,,1507
+1128,permanent,Avenida Arreola 536 Interior 054,,San Pablo de la Montaña,,,BD,True,2025-03-02,,1508
+1128,local,27931 Amanda Wells Suite 277,,Las Cruces,NM,88003,US,False,2026-08-20,,1509
+1129,permanent,753 Hannah Flat,,Annabury,,,IN,True,2018-11-29,,1510
+1129,local,9289 Hinton Court,,Las Cruces,NM,88012,US,False,2026-08-20,,1511
+1130,permanent,344 Jennifer Wall Apt. 885,,Albuquerque,NM,30976,US,True,2018-08-14,,1512
+1130,local,831 Scott Estates Suite 783,,Las Cruces,NM,88001,US,False,2026-08-20,,1513
+1131,permanent,Ampliación Bañuelos 013 302,,Las Cruces,NM,48904,US,True,2018-06-09,,1514
+1132,permanent,9747 Sarah Roads Apt. 487,,Las Cruces,NM,97773,US,True,2018-08-13,,1515
+1133,permanent,775 Henry Orchard Apt. 800,,Anthony,NM,61104,US,True,2023-08-24,,1516
+1133,local,68233 Young Fork Apt. 474,,Las Cruces,NM,88012,US,False,2026-08-20,,1517
+1134,permanent,295 Waters Ways,,Sunland Park,NM,66027,US,True,2020-12-12,,1518
+1134,local,308 Tyrone Spur Apt. 799,,Las Cruces,NM,88011,US,False,2026-08-20,,1519
+1135,permanent,Corredor Sur Henríquez 626 724,,El Paso,TX,89628,US,True,2022-06-21,,1520
+1136,permanent,"Boulevard República de Corea 605 Edif. 034 , Depto. 611",,Nueva Cuba,,,SA,True,2025-10-04,,1521
+1137,permanent,4352 Boone Alley Apt. 916,,Albuquerque,NM,48459,US,True,2024-01-18,,1522
+1138,permanent,465 Kimberly Ford,,Phoenix,AZ,19477,US,True,2020-02-22,,1523
+1138,local,00499 Michelle Meadow Suite 384,,Las Cruces,NM,88001,US,False,2026-08-20,,1524
+1139,permanent,Prolongación Chiapas 830 062,,Truth or Consequences,NM,81839,US,True,2018-08-30,,1525
+1140,permanent,56287 Jennifer Knoll Apt. 409,,Albuquerque,NM,33752,US,True,2024-11-04,,1526
+1140,local,7716 Amanda Ridge,,Las Cruces,NM,88012,US,False,2026-08-20,,1527
+1141,permanent,Periférico Sur Covarrubias 414 Interior 528,,El Paso,TX,84759-0447,US,True,2018-06-27,,1528
+1141,local,176 Lewis Grove Apt. 057,,Las Cruces,NM,88012,US,False,2026-08-20,,1529
+1142,permanent,50162 Anthony Fields Suite 714,,Phoenix,AZ,80799,US,True,2023-04-01,,1530
+1142,local,724 Silva Curve Suite 152,,Las Cruces,NM,88012,US,False,2026-08-20,,1531
+1143,permanent,51002 Timothy Points,,Roswell,NM,18351,US,True,2025-03-15,,1532
+1143,local,9988 Mason Ridge Suite 326,,Las Cruces,NM,88005,US,False,2026-08-20,,1533
+1144,permanent,Corredor Bravo 286 600,,San Antonio,TX,49411-7159,US,True,2024-03-29,,1534
+1144,local,64873 Martinez Key,,Las Cruces,NM,88005,US,False,2026-08-20,,1535
+1145,permanent,3363 Hanson Crescent,,New Lisaton,,,IN,True,2025-03-02,,1536
+1145,local,34051 Flores Stravenue Suite 631,,Las Cruces,NM,88003,US,False,2026-08-20,,1537
+1146,permanent,Calzada Raya 001 Interior 980,,Las Cruces,NM,10638,US,True,2023-05-23,,1538
+1147,permanent,"Corredor Morelos 930 Edif. 494 , Depto. 080",,Albuquerque,NM,00695,US,True,2024-12-14,,1539
+1147,local,819 Jacob Field Apt. 679,,Las Cruces,NM,88001,US,False,2026-08-20,,1540
+1148,permanent,5839 Christopher Lakes Suite 654,,Santa Fe,NM,74517,US,True,2018-11-29,,1541
+1148,local,7812 Holmes Passage,,Las Cruces,NM,88012,US,False,2026-08-20,,1542
+1149,permanent,Circunvalación Distrito Federal 676 Interior 004,,El Paso,TX,59765,US,True,2019-06-24,,1543
+1149,local,25445 Salinas Mill Suite 196,,Las Cruces,NM,88003,US,False,2026-08-20,,1544
+1150,permanent,15799 Smith Key,,Albuquerque,NM,73562,US,True,2023-12-08,,1545
+1150,local,24507 Pierce Mews,,Las Cruces,NM,88011,US,False,2026-08-20,,1546
+1151,permanent,Avenida Ureña 332 002,,Las Cruces,NM,30467-4071,US,True,2023-07-19,,1547
+1152,permanent,Diagonal Olivo 930 322,,Las Cruces,NM,68807,US,True,2021-11-05,,1548
+1153,permanent,Calle Norte Ferrer 711 Interior 712,,Tucson,AZ,34574,US,True,2024-12-04,,1549
+1154,permanent,930 Cain Meadow,,Las Cruces,NM,83148,US,True,2020-03-31,,1550
+1155,permanent,"Peatonal Timor-Leste 227 Edif. 839 , Depto. 290",,Alamogordo,NM,53244,US,True,2024-10-22,,1551
+1155,local,6965 Kennedy Locks,,Las Cruces,NM,88001,US,False,2026-08-20,,1552
+1156,permanent,485 Osborne Turnpike Suite 451,,El Paso,TX,92205,US,True,2024-07-27,,1553
+1156,local,15729 Jonathan Light Apt. 713,,Las Cruces,NM,88012,US,False,2026-08-20,,1554
+1157,permanent,97803 Jonathan Points,,Las Cruces,NM,52292,US,True,2019-08-26,,1555
+1158,permanent,6278 Foster Roads,,El Paso,TX,53844,US,True,2024-08-18,,1556
+1159,permanent,Calzada Berríos 059 308,,Las Cruces,NM,09222,US,True,2022-05-15,,1557
+1160,permanent,Calle Bustamante 553 012,,Houston,TX,34364-6693,US,True,2021-08-18,,1558
+1161,permanent,2288 Harrington Ports,,Las Vegas,NM,26623,US,True,2023-02-07,,1559
+1161,local,886 Wagner Pines,,Las Cruces,NM,88012,US,False,2026-08-20,,1560
+1162,permanent,Prolongación Sur Zarate 788 Interior 104,,Roswell,NM,91590-5424,US,True,2023-05-08,,1561
+1162,local,404 Katrina Parks Apt. 408,,Las Cruces,NM,88011,US,False,2026-08-20,,1562
+1163,permanent,76774 Ryan Garden Suite 466,,Santa Fe,NM,58272,US,True,2020-05-15,,1563
+1164,permanent,Peatonal Carvajal 874 Interior 782,,Alamogordo,NM,63432-5101,US,True,2014-03-28,,1564
+1165,permanent,7481 Parks Port Suite 194,,Las Cruces,NM,17469,US,True,2014-03-30,,1565
+1166,permanent,3642 Hill Springs Suite 702,,Santa Fe,NM,51117,US,True,2020-07-24,,1566
+1167,permanent,86334 Bell Prairie Suite 508,,Phoenix,AZ,23096,US,True,2016-03-31,,1567
+1168,permanent,684 Rodriguez Wells,,El Paso,TX,89436,US,True,2017-03-26,,1568
+1169,permanent,29780 Little Street,,Las Cruces,NM,72887,US,True,2021-01-10,,1569
+1170,permanent,Privada Jalisco 232 723,,Albuquerque,NM,42416-0838,US,True,2020-06-25,,1570
+1171,permanent,21337 Baldwin Springs Apt. 145,,Deming,NM,87272,US,True,2020-01-07,,1571
+1172,permanent,083 Larsen Vista Apt. 200,,El Paso,TX,52950,US,True,2019-04-21,,1572
+1173,permanent,"Continuación Estados Unidos de América 379 Edif. 023 , Depto. 894",,El Paso,TX,56947,US,True,2014-09-16,,1573
+1174,permanent,"Callejón Ghana 275 Edif. 617 , Depto. 372",,Las Cruces,NM,17011,US,True,2018-07-25,,1574
+1175,permanent,"Boulevard Norte Saavedra 788 Edif. 030 , Depto. 249",,Albuquerque,NM,30083,US,True,2015-03-21,,1575
+1176,permanent,Calzada Chiapas 731 295,,Hobbs,NM,48881,US,True,2016-10-12,,1576
+1177,permanent,91062 Joshua Meadow Suite 863,,Las Cruces,NM,05784,US,True,2015-09-11,,1577
+1178,permanent,Prolongación Coahuila de Zaragoza 851 015,,Las Cruces,NM,27255-7301,US,True,2017-02-24,,1578
+1179,permanent,"Callejón Zacatecas 231 Edif. 143 , Depto. 416",,San Antonio,TX,38267-7597,US,True,2014-11-14,,1579
+1180,permanent,0968 Jordan Rue Suite 987,,Santa Fe,NM,12801,US,True,2019-09-06,,1580
+1181,permanent,Privada Barela 000 778,,Rio Rancho,NM,18263,US,True,2015-07-28,,1581
+1182,permanent,227 Wong Well,,Roswell,NM,48886,US,True,2018-01-17,,1582
+1183,permanent,06137 Lynch Place Apt. 376,,El Paso,TX,11694,US,True,2018-11-04,,1583
+1184,permanent,Diagonal España 815 Interior 671,,Las Cruces,NM,26225,US,True,2015-07-05,,1584
+1185,permanent,Circuito Guillen 091 828,,El Paso,TX,24796,US,True,2021-04-09,,1585
+1186,permanent,8481 Doyle Cove Suite 799,,El Paso,TX,13564,US,True,2016-06-29,,1586
+1187,permanent,934 Shari Courts Apt. 752,,El Paso,TX,72433,US,True,2017-05-28,,1587
+1188,permanent,955 John Bridge Suite 958,,Albuquerque,NM,17869,US,True,2019-08-10,,1588
+1189,permanent,80662 Fischer Road Suite 099,,Gallup,NM,05541,US,True,2020-07-12,,1589
+1190,permanent,Diagonal Querétaro 584 841,,Albuquerque,NM,92283-5602,US,True,2019-08-27,,1590
+1191,permanent,0704 Matthew Square Apt. 759,,El Paso,TX,25596,US,True,2016-08-22,,1591
+1192,permanent,Continuación Puebla 799 788,,Rio Rancho,NM,66809,US,True,2020-05-15,,1592
+1193,permanent,785 Stewart Heights Suite 706,,Las Cruces,NM,05699,US,True,2018-03-16,,1593
+1194,permanent,56527 Williams Corner,,Carlsbad,NM,84706,US,True,2018-09-16,,1594
+1195,permanent,6493 John Isle,,Tucson,AZ,43616,US,True,2016-11-02,,1595
+1196,permanent,6653 Porter Mission,,Farmington,NM,91970,US,True,2016-03-16,,1596
+1197,permanent,Circuito Norte Vera 627 765,,Albuquerque,NM,29425,US,True,2020-06-10,,1597
+1198,permanent,338 Daniel Skyway,,Las Cruces,NM,06851,US,True,2016-08-12,,1598
+1199,permanent,23315 Joseph Parks,,Las Cruces,NM,49956,US,True,2013-10-26,,1599
+1200,permanent,"Periférico Sur Espinal 732 Edif. 786 , Depto. 028",,Las Cruces,NM,96355-5012,US,True,2021-02-05,,1600
+1201,permanent,Continuación Longoria 599 Interior 145,,Las Cruces,NM,10203,US,True,2021-02-07,,1601
+1202,permanent,Avenida Australia 848 654,,Las Cruces,NM,55686,US,True,2020-03-06,,1602
+1203,permanent,Prolongación Sur Rivero 648 723,,Albuquerque,NM,83895-1752,US,True,2017-08-07,,1603
+1204,permanent,Pasaje Uzbekistán 383 Interior 262,,Rio Rancho,NM,50634,US,True,2020-06-07,,1604
+1205,permanent,85203 Garcia Cape Apt. 044,,Las Cruces,NM,28862,US,True,2020-09-06,,1605
+1206,permanent,77685 Rogers Square Suite 442,,Alamogordo,NM,76695,US,True,2018-03-07,,1606
+1207,permanent,6095 James Turnpike,,Denver,CO,13911,US,True,2015-12-10,,1607
+1208,permanent,31755 Jeffery Mountain Apt. 477,,Tucson,AZ,85721,US,True,2021-07-12,,1608
+1209,permanent,037 Key Cove,,Artesia,NM,35672,US,True,2021-05-26,,1609
+1210,permanent,"Peatonal Luna 818 Edif. 869 , Depto. 611",,Tucson,AZ,88901-7187,US,True,2020-08-13,,1610
+1211,permanent,60511 Weber Orchard,,Silver City,NM,55218,US,True,2020-03-04,,1611
+1212,permanent,"Pasaje San Luis Potosí 212 Edif. 303 , Depto. 489",,Houston,TX,56431,US,True,2013-11-04,,1612
+1213,permanent,878 Michael Springs,,Tucson,AZ,42373,US,True,2015-10-26,,1613
+1214,permanent,Boulevard Michoacán de Ocampo 054 Interior 076,,Las Cruces,NM,71862-9436,US,True,2020-03-15,,1614
+1215,permanent,"Callejón México 760 Edif. 218 , Depto. 066",,El Paso,TX,25279-3444,US,True,2014-02-28,,1615
+1216,permanent,"Continuación México 542 Edif. 373 , Depto. 534",,Farmington,NM,24868-9832,US,True,2015-10-04,,1616
+1217,permanent,Peatonal Norte Cintrón 212 004,,Las Cruces,NM,23420,US,True,2018-04-19,,1617
+1218,permanent,436 Romero Street Suite 919,,Rio Rancho,NM,76129,US,True,2019-09-16,,1618
+1219,permanent,Privada Eslovaquia 888 616,,Las Cruces,NM,63342-8091,US,True,2013-09-05,,1619
+1220,permanent,Corredor Norte Salcido 512 Interior 674,,Las Cruces,NM,75351,US,True,2016-08-17,,1620
+1221,permanent,59676 Santiago Meadows Apt. 249,,Santa Fe,NM,72351,US,True,2017-03-13,,1621
+1222,permanent,3529 April Fork,,Las Cruces,NM,11516,US,True,2013-09-08,,1622
+1223,permanent,9441 Phillip Rapids,,Phoenix,AZ,65788,US,True,2017-11-07,,1623
+1224,permanent,Boulevard Rosales 261 Interior 422,,Albuquerque,NM,40451-2285,US,True,2014-02-11,,1624
+1225,permanent,9246 Mary Crest,,Las Cruces,NM,20253,US,True,2019-01-08,,1625
+1226,permanent,295 George Forest Suite 406,,Las Cruces,NM,36003,US,True,2020-06-08,,1626
+1227,permanent,12349 Johnson Rapids,,Alamogordo,NM,84803,US,True,2018-12-25,,1627
+1228,permanent,Continuación Rodarte 629 847,,Albuquerque,NM,48700-9646,US,True,2020-12-28,,1628
+1229,permanent,9753 Blake Row,,El Paso,TX,51716,US,True,2014-02-20,,1629
+1230,permanent,Periférico Sur Gamez 171 Interior 865,,Las Cruces,NM,74612,US,True,2015-02-02,,1630
+1231,permanent,Circunvalación Elizondo 037 998,,Phoenix,AZ,04879,US,True,2016-05-01,,1631
+1232,permanent,012 Brittany Springs Apt. 920,,Roswell,NM,09404,US,True,2017-11-25,,1632
+1233,permanent,69649 Amy Drive,,El Paso,TX,57208,US,True,2016-02-10,,1633
+1234,permanent,619 Mcclure Manor Apt. 581,,Albuquerque,NM,66708,US,True,2020-07-26,,1634
+1235,permanent,10898 Samantha Orchard,,Las Vegas,NM,21250,US,True,2016-06-16,,1635
+1236,permanent,Cerrada Zacatecas 249 Interior 417,,Rio Rancho,NM,84770-2392,US,True,2015-12-30,,1636
+1237,permanent,02425 Marc Spur Suite 310,,Hobbs,NM,49855,US,True,2017-07-29,,1637
+1238,permanent,8101 Brown Stravenue Apt. 825,,El Paso,TX,78135,US,True,2016-03-28,,1638
+1239,permanent,Corredor Lara 905 Interior 084,,Las Cruces,NM,17042-0473,US,True,2017-08-27,,1639
+1240,permanent,Avenida Bangladesh 770 023,,Chicago,IL,58235,US,True,2018-02-17,,1640
+1241,permanent,Diagonal Camarillo 354 Interior 349,,Santa Fe,NM,89245,US,True,2016-10-21,,1641
+1242,permanent,853 Smith Well Suite 292,,Alamogordo,NM,47775,US,True,2014-12-14,,1642
+1243,permanent,"Continuación Sonora 502 Edif. 208 , Depto. 053",,Albuquerque,NM,79279-5132,US,True,2020-03-29,,1643
+1244,permanent,77160 Jill Points,,Santa Fe,NM,95551,US,True,2014-07-25,,1644
+1245,permanent,Privada Lesotho 224 000,,Santa Fe,NM,59375,US,True,2019-03-18,,1645
+1246,permanent,842 Michael Road Apt. 264,,Las Cruces,NM,24257,US,True,2015-06-30,,1646
+1247,permanent,"Viaducto Norte Farías 205 Edif. 515 , Depto. 704",,Las Cruces,NM,33043-4948,US,True,2015-10-08,,1647
+1248,permanent,029 Jeremy Brooks Apt. 810,,Las Cruces,NM,29609,US,True,2021-03-26,,1648
+1249,permanent,8443 Matthew Hollow,,Las Cruces,NM,34679,US,True,2019-01-20,,1649
+1250,permanent,Cerrada Sur Rubio 463 554,,Rio Rancho,NM,84686,US,True,2016-07-13,,1650
+1251,permanent,4026 Cooper Islands,,Las Cruces,NM,81383,US,True,2021-03-22,,1651
+1252,permanent,"Cerrada Norte Jáquez 099 Edif. 447 , Depto. 181",,Los Angeles,CA,24062,US,True,2016-12-10,,1652
+1253,permanent,5634 Rachel Crescent Suite 771,,Silver City,NM,73677,US,True,2015-06-25,,1653
+1254,permanent,"Prolongación Abrego 274 Edif. 574 , Depto. 565",,Las Cruces,NM,50763,US,True,2015-10-31,,1654
+1255,permanent,"Retorno Méndez 304 Edif. 286 , Depto. 323",,Roswell,NM,02655,US,True,2020-07-24,,1655
+1256,permanent,28974 Christine Track Apt. 496,,Alamogordo,NM,37152,US,True,2015-06-19,,1656
+1257,permanent,13619 Robert Mill Apt. 221,,Los Angeles,CA,92503,US,True,2020-02-28,,1657
+1258,permanent,6979 Heather Dam,,Santa Fe,NM,60819,US,True,2014-10-16,,1658
+1259,permanent,56392 Daniel Motorway Apt. 626,,Tucson,AZ,84742,US,True,2019-11-10,,1659
+1260,permanent,Retorno Lozano 947 Interior 929,,El Paso,TX,61662,US,True,2015-08-06,,1660
+1261,permanent,52736 Andrew Unions Suite 550,,Denver,CO,34164,US,True,2019-03-17,,1661
+1262,permanent,988 Martinez Path Apt. 561,,Los Lunas,NM,54792,US,True,2014-04-09,,1662
+1263,permanent,1651 Hale Lake Suite 662,,Alamogordo,NM,53378,US,True,2018-05-02,,1663
+1264,permanent,857 Cantrell Hill Apt. 735,,Los Angeles,CA,74933,US,True,2014-03-17,,1664
+1265,permanent,5296 Love View Suite 718,,Los Lunas,NM,79693,US,True,2017-01-15,,1665
+1266,permanent,Callejón Andorra 364 238,,Las Cruces,NM,23552,US,True,2015-12-18,,1666
+1267,permanent,2551 Frank Island Suite 983,,Roswell,NM,55789,US,True,2017-03-28,,1667
+1268,permanent,994 Williams Shoals Apt. 699,,Las Cruces,NM,96068,US,True,2019-07-26,,1668
+1269,permanent,646 Nancy Lights,,Las Cruces,NM,93590,US,True,2018-03-31,,1669
+1270,permanent,Calzada Morelos 970 397,,Tucson,AZ,33800-4143,US,True,2016-08-31,,1670
+1271,permanent,"Cerrada Georgia 781 Edif. 934 , Depto. 211",,Las Cruces,NM,74675-7325,US,True,2015-04-16,,1671
+1272,permanent,617 Williams Islands Apt. 005,,Dallas,TX,50776,US,True,2015-07-04,,1672
+1273,permanent,"Calle Santo Tomé y Príncipe 309 Edif. 221 , Depto. 337",,Las Cruces,NM,45038,US,True,2020-04-19,,1673
+1274,permanent,Privada Vanuatu 586 Interior 793,,San Antonio,TX,60278,US,True,2019-10-10,,1674
+1275,permanent,11095 Christian Walks Apt. 566,,Las Cruces,NM,62359,US,True,2019-10-04,,1675
+1276,permanent,524 Harvey Island,,Las Cruces,NM,90796,US,True,2013-07-10,,1676
+1277,permanent,Retorno Oaxaca 060 Interior 269,,Roswell,NM,95940,US,True,2018-04-01,,1677
+1278,permanent,Callejón Venegas 336 770,,Clovis,NM,29792-5384,US,True,2013-08-23,,1678
+1279,permanent,Avenida Tamaulipas 742 212,,Gallup,NM,15444,US,True,2019-03-21,,1679
+1280,permanent,"Boulevard Oaxaca 607 Edif. 372 , Depto. 040",,Las Cruces,NM,24044,US,True,2017-10-22,,1680
+1281,permanent,"Avenida Congo 686 Edif. 677 , Depto. 564",,Las Cruces,NM,98363-3209,US,True,2020-11-04,,1681
+1282,permanent,702 Terry Forks,,Albuquerque,NM,81954,US,True,2020-02-15,,1682
+1283,permanent,647 Lewis Drive Apt. 724,,Anthony,NM,78014,US,True,2016-11-13,,1683
+1284,permanent,6958 Patrick Walks,,Gallup,NM,56794,US,True,2019-10-12,,1684
+1285,permanent,6044 Kenneth Grove Apt. 426,,Las Cruces,NM,41801,US,True,2017-02-07,,1685
+1286,permanent,39783 Campbell Lane,,Los Angeles,CA,50286,US,True,2018-02-09,,1686
+1287,permanent,24998 West Port Suite 819,,Clovis,NM,41347,US,True,2018-08-14,,1687
+1288,permanent,58684 Anthony Vista,,Clovis,NM,21435,US,True,2014-09-17,,1688
+1289,permanent,"Periférico Arabia Saudita 786 Edif. 477 , Depto. 016",,Las Cruces,NM,20233-6270,US,True,2015-07-12,,1689
+1290,permanent,1290 Howard Union,,Las Cruces,NM,74672,US,True,2018-10-24,,1690
+1291,permanent,243 Matthew Pine Apt. 225,,Denver,CO,64610,US,True,2016-05-22,,1691
+1292,permanent,917 Stephanie Lakes Suite 836,,Clovis,NM,11867,US,True,2020-06-22,,1692
+1293,permanent,6611 Mahoney Locks Apt. 609,,Las Cruces,NM,50687,US,True,2015-06-12,,1693
+1294,permanent,8027 Cross Squares Apt. 730,,Albuquerque,NM,15158,US,True,2019-02-20,,1694
+1295,permanent,"Cerrada Baja California 684 Edif. 145 , Depto. 795",,Las Cruces,NM,73815-6799,US,True,2018-02-20,,1695
+1296,permanent,97687 Richardson Lodge Suite 718,,Carlsbad,NM,11011,US,True,2014-03-06,,1696
+1297,permanent,4060 David Radial,,Las Cruces,NM,13778,US,True,2020-04-09,,1697
+1298,permanent,69812 Bradley Mountains Suite 267,,Las Cruces,NM,16307,US,True,2015-04-25,,1698
+1299,permanent,71500 Bowman Springs Suite 528,,Albuquerque,NM,43968,US,True,2020-07-11,,1699
+1300,permanent,977 May Hills Suite 201,,Clovis,NM,67033,US,True,2014-10-18,,1700
+1301,permanent,Boulevard Benin 712 Interior 304,,Santa Fe,NM,58365-9980,US,True,2018-10-10,,1701
+1302,permanent,30509 Greer Rapids,,Lubbock,TX,75686,US,True,2014-03-10,,1702
+1303,permanent,4175 Patterson Lights Apt. 962,,Las Cruces,NM,11977,US,True,2015-07-09,,1703
+1304,permanent,67051 Christine Vista Apt. 090,,Rio Rancho,NM,35967,US,True,2015-01-16,,1704
+1305,permanent,Corredor Crespo 311 Interior 876,,Las Cruces,NM,67224-1286,US,True,2018-01-04,,1705
+1306,permanent,4066 Melissa Ports Apt. 220,,Albuquerque,NM,77956,US,True,2019-04-13,,1706
+1307,permanent,45605 William Centers Apt. 861,,Albuquerque,NM,59730,US,True,2014-02-18,,1707
+1308,permanent,"Eje vial Kirguistán 592 Edif. 570 , Depto. 727",,Roswell,NM,90469,US,True,2019-03-11,,1708
+1309,permanent,0224 Benjamin Expressway,,Silver City,NM,55265,US,True,2017-04-08,,1709
+1310,permanent,"Cerrada Colima 189 Edif. 230 , Depto. 731",,Albuquerque,NM,97298,US,True,2020-03-31,,1710
+1311,permanent,796 Moore Mount Suite 097,,Clovis,NM,69952,US,True,2015-12-02,,1711
+1312,permanent,33440 Nathan Point Suite 510,,Truth or Consequences,NM,69381,US,True,2020-04-28,,1712
+1313,permanent,Continuación Gabón 775 Interior 388,,Las Cruces,NM,76835,US,True,2013-08-19,,1713
+1314,permanent,4919 Trevor Roads,,Albuquerque,NM,36009,US,True,2018-06-14,,1714
+1315,permanent,2467 Carol Circle,,Tucson,AZ,50665,US,True,2020-03-31,,1715
+1316,permanent,59513 Jeremy Stravenue Suite 954,,El Paso,TX,26240,US,True,2019-12-14,,1716
+1317,permanent,"Circunvalación Godínez 718 Edif. 884 , Depto. 271",,Las Cruces,NM,96564-5539,US,True,2017-09-07,,1717
+1318,permanent,8994 Matthew Estates Apt. 693,,Santa Fe,NM,01214,US,True,2021-03-25,,1718
+1319,permanent,"Corredor Porras 572 Edif. 386 , Depto. 160",,Albuquerque,NM,86191,US,True,2020-02-15,,1719
+1320,permanent,3503 William Pines Suite 974,,Sunland Park,NM,08883,US,True,2018-08-06,,1720
+1321,permanent,82891 Anthony Squares,,Rio Rancho,NM,42776,US,True,2014-09-22,,1721
+1322,permanent,8854 Jose Row Suite 458,,El Paso,TX,20894,US,True,2014-02-17,,1722
+1323,permanent,3012 Brittany Bridge,,Rio Rancho,NM,99069,US,True,2015-12-29,,1723
+1324,permanent,6370 Johnson Green Apt. 737,,Las Cruces,NM,92758,US,True,2013-10-03,,1724
+1325,permanent,97490 Deborah Light,,Albuquerque,NM,14639,US,True,2013-09-04,,1725
+1326,permanent,965 Smith Glen Suite 954,,Alamogordo,NM,88362,US,True,2016-03-16,,1726
+1327,permanent,0150 Jordan Ramp,,Carlsbad,NM,94640,US,True,2016-12-28,,1727
+1328,permanent,Avenida San Luis Potosí 787 Interior 341,,Las Cruces,NM,72307,US,True,2013-09-09,,1728
+1329,permanent,Continuación Portugal 355 Interior 995,,Alamogordo,NM,54143,US,True,2015-02-12,,1729
+1330,permanent,"Eje vial Irizarry 144 Edif. 250 , Depto. 969",,Gallup,NM,37579,US,True,2020-01-17,,1730
+1331,permanent,529 Cooper Orchard,,Albuquerque,NM,06519,US,True,2020-11-05,,1731
+1332,permanent,5547 David Harbor,,El Paso,TX,23754,US,True,2021-06-15,,1732
+1333,permanent,0653 Walters Forest Apt. 966,,Alamogordo,NM,57782,US,True,2013-06-27,,1733
+1334,permanent,Callejón Sur Espinoza 931 210,,Santa Fe,NM,10387,US,True,2019-02-12,,1734
+1335,permanent,Eje vial Mayorga 983 381,,Las Cruces,NM,72490,US,True,2016-03-27,,1735
+1336,permanent,8015 Elizabeth Land,,Las Cruces,NM,68816,US,True,2016-09-29,,1736
+1337,permanent,85555 Williams Court Apt. 761,,Las Cruces,NM,39936,US,True,2013-11-16,,1737
+1338,permanent,Prolongación Yucatán 895 Interior 642,,Las Cruces,NM,27531-7791,US,True,2019-12-02,,1738
+1339,permanent,01277 Conner Loaf Suite 259,,Chicago,IL,49057,US,True,2018-12-10,,1739
+1340,permanent,7161 Warren Hill,,Rio Rancho,NM,77594,US,True,2017-03-15,,1740
+1341,permanent,97333 Carrie Pike Suite 038,,Roswell,NM,21671,US,True,2020-12-11,,1741
+1342,permanent,131 Alexis Tunnel Suite 221,,El Paso,TX,82424,US,True,2016-09-02,,1742
+1343,permanent,Corredor Brasil 395 225,,Carlsbad,NM,94570-3176,US,True,2016-12-03,,1743
+1344,permanent,4545 Yolanda Mills Apt. 301,,Houston,TX,53778,US,True,2015-08-02,,1744
+1345,permanent,2136 Pamela Neck Apt. 472,,Las Cruces,NM,23248,US,True,2017-12-02,,1745
+1346,permanent,Periférico Venezuela 942 079,,Las Cruces,NM,19909-7989,US,True,2016-08-08,,1746
+1347,permanent,Eje vial Yucatán 986 678,,Alamogordo,NM,16820-3852,US,True,2018-12-12,,1747
+1348,permanent,"Boulevard Tórrez 116 Edif. 787 , Depto. 348",,El Paso,TX,85149,US,True,2013-06-14,,1748
+1349,permanent,Boulevard Sur Morales 001 Interior 684,,El Paso,TX,12240-2387,US,True,2016-07-15,,1749
+1350,permanent,"Corredor República Democrática del Congo 537 Edif. 621 , Depto. 098",,Las Cruces,NM,32727-2066,US,True,2013-10-20,,1750
+1351,permanent,Diagonal Valentín 948 170,,Las Cruces,NM,96729-4279,US,True,2014-07-01,,1751
+1352,permanent,Ampliación Norte Rolón 152 424,,El Paso,TX,31029-9321,US,True,2020-03-01,,1752
+1353,permanent,07148 Nicole Isle Suite 508,,Phoenix,AZ,17805,US,True,2015-10-06,,1753

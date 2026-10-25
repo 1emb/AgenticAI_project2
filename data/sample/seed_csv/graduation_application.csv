@@ -1,0 +1,156 @@
+student_id,program_id,intended_term_id,status,diploma_name,attending_commencement,submitted_at,reviewed_by_person_id,reviewed_at,review_notes,id
+3,58,16,approved,Angel Kelly Zimmerman,True,2026-09-06 17:23:00+00:00,2,2026-10-03 17:23:00+00:00,,1
+5,10,16,approved,Jason Jared Hayes,False,2026-06-21 11:16:00+00:00,3,2026-07-21 11:16:00+00:00,,2
+6,30,13,conferred,Connie Cheyenne Davenport,False,2025-06-14 10:52:00+00:00,1,2025-06-17 10:52:00+00:00,,3
+7,45,14,conferred,María del Carmen Ramírez,True,2026-01-05 15:31:00+00:00,2,2026-02-04 15:31:00+00:00,,4
+14,10,13,conferred,Rocío Aguayo,True,2025-06-18 08:10:00+00:00,2,2025-07-06 08:10:00+00:00,,5
+15,14,16,submitted,Jeff Paul Barnes,True,2026-07-04 08:12:00+00:00,,,,6
+20,40,13,conferred,Alexis Bauer,True,2025-08-12 15:27:00+00:00,2,2025-09-08 15:27:00+00:00,,7
+21,43,13,conferred,Nicholas Ronald Hill,True,2025-07-06 15:00:00+00:00,2,2025-08-01 15:00:00+00:00,,8
+23,23,13,conferred,Aurora de la Crúz,True,2025-06-06 07:53:00+00:00,3,2025-06-13 07:53:00+00:00,,9
+26,54,13,conferred,Ricardo Gregorio Solorzano,True,2025-09-07 17:05:00+00:00,3,2025-09-30 17:05:00+00:00,,10
+29,17,16,approved,James Kenneth Crosby,True,2026-06-25 07:38:00+00:00,1,2026-07-19 07:38:00+00:00,,11
+30,8,17,submitted,Erica Michelle Wong,True,2026-10-19 18:12:00+00:00,,,,12
+32,40,14,conferred,Abigail Aldonza Casanova,True,2025-10-19 14:35:00+00:00,3,2025-10-22 14:35:00+00:00,,13
+33,54,16,approved,Diana Johnson,False,2026-08-22 14:21:00+00:00,2,2026-09-02 14:21:00+00:00,,14
+36,52,13,conferred,Elvia Guerrero Ulibarri,False,2025-06-03 14:55:00+00:00,1,2025-06-20 14:55:00+00:00,,15
+37,40,13,conferred,Federico Jaime Flórez,True,2025-09-08 08:06:00+00:00,3,2025-09-25 08:06:00+00:00,,16
+38,49,11,conferred,Breanna Shaffer,False,2024-12-26 14:50:00+00:00,1,2025-01-02 14:50:00+00:00,,17
+40,22,14,conferred,Guillermo Amador Carrillo,True,2025-11-13 17:31:00+00:00,3,2025-11-18 17:31:00+00:00,,18
+42,53,13,conferred,Ángel Olivas Oquendo,True,2025-07-22 13:16:00+00:00,2,2025-08-07 13:16:00+00:00,,19
+43,56,13,conferred,Ryan Hodges,True,2025-07-07 16:12:00+00:00,1,2025-08-03 16:12:00+00:00,,20
+44,40,13,conferred,Pamela Anel Gonzales,True,2025-08-02 08:08:00+00:00,1,2025-08-13 08:08:00+00:00,,21
+51,9,10,conferred,Jorge Luis José Manuél Cordero,True,2024-08-07 09:38:00+00:00,3,2024-08-31 09:38:00+00:00,,22
+53,40,16,submitted,Rolando Francisco Javier Rivas,True,2026-09-18 16:39:00+00:00,,,,23
+56,14,13,conferred,Jacobo Castañeda Robledo,True,2025-06-26 17:24:00+00:00,1,2025-07-21 17:24:00+00:00,,24
+59,27,13,conferred,Iván Jonás Carrero,True,2025-07-13 13:44:00+00:00,1,2025-07-17 13:44:00+00:00,,25
+60,10,14,conferred,Leslie Lacey Nelson,True,2025-11-17 10:07:00+00:00,2,2025-11-21 10:07:00+00:00,,26
+62,15,16,approved,Graciela Paola Mendoza,True,2026-09-03 18:10:00+00:00,2,2026-09-16 18:10:00+00:00,,27
+65,47,17,under_review,Shelby Jennifer Mccann,True,2026-10-19 13:12:00+00:00,1,2026-11-06 13:12:00+00:00,,28
+66,21,13,conferred,Eduardo Ayala,False,2025-05-24 18:30:00+00:00,1,2025-06-19 18:30:00+00:00,,29
+68,55,13,conferred,Alfredo Jorge Serna,False,2025-05-24 20:38:00+00:00,1,2025-06-20 20:38:00+00:00,,30
+75,1,13,conferred,Kevin Stone,True,2025-06-04 19:33:00+00:00,3,2025-06-18 19:33:00+00:00,,31
+84,36,17,under_review,Javier Curtis Gonzalez,True,2026-10-19 17:42:00+00:00,1,2026-11-09 17:42:00+00:00,,32
+88,10,13,conferred,Cynthia Portillo,True,2025-08-10 17:09:00+00:00,2,2025-08-16 17:09:00+00:00,,33
+89,47,16,under_review,Helena Karina Partida,True,2026-09-02 13:42:00+00:00,2,2026-09-19 13:42:00+00:00,,34
+90,21,14,conferred,Terry Jenkins,True,2025-12-31 17:26:00+00:00,1,2026-01-14 17:26:00+00:00,,35
+94,14,13,conferred,Patricio Prieto,True,2025-07-24 07:24:00+00:00,3,2025-08-06 07:24:00+00:00,,36
+96,25,13,conferred,Ernesto Noriega Escamilla,True,2025-07-04 12:37:00+00:00,1,2025-07-31 12:37:00+00:00,,37
+99,31,17,approved,Patricia Taylor Salinas,True,2026-10-19 20:45:00+00:00,3,2026-11-02 20:45:00+00:00,,38
+101,50,14,conferred,Benito Óscar Casas,True,2025-12-14 08:02:00+00:00,3,2026-01-10 08:02:00+00:00,,39
+103,8,13,conferred,Jason Hernandez,True,2025-08-17 13:40:00+00:00,2,2025-08-26 13:40:00+00:00,,40
+105,33,17,approved,James Brooks,True,2026-10-19 10:31:00+00:00,3,2026-10-26 10:31:00+00:00,,41
+106,31,14,conferred,Bruno Óscar Prado,True,2026-01-10 20:43:00+00:00,2,2026-02-05 20:43:00+00:00,,42
+107,14,16,submitted,Lourdes Zambrano,False,2026-06-26 12:26:00+00:00,,,,43
+111,44,11,conferred,Antonia Estefanía Ulloa,True,2024-10-21 11:21:00+00:00,3,2024-11-05 11:21:00+00:00,,44
+114,42,16,submitted,Violeta Brito,False,2026-06-26 11:58:00+00:00,,,,45
+117,55,13,conferred,Florencia Catalina Cuellar,True,2025-08-30 15:34:00+00:00,2,2025-09-24 15:34:00+00:00,,46
+118,42,16,under_review,Matthew Caleb Taylor,True,2026-08-21 17:39:00+00:00,3,2026-09-12 17:39:00+00:00,,47
+119,19,17,submitted,Jaime Tomás Monroy,True,2026-10-19 10:33:00+00:00,,,,48
+121,49,16,submitted,Samantha Valerie Simmons,True,2026-06-14 10:56:00+00:00,,,,49
+122,56,17,under_review,Leonardo Francisco Javier Aguilar Noriega,True,2026-10-19 16:09:00+00:00,1,2026-11-18 16:09:00+00:00,,50
+126,54,11,conferred,Julie Pope,False,2024-12-27 07:58:00+00:00,1,2025-01-12 07:58:00+00:00,,51
+127,1,10,conferred,Andrew Joseph Ferguson,False,2024-08-03 19:20:00+00:00,3,2024-08-24 19:20:00+00:00,,52
+129,21,8,conferred,Cole Ramirez,True,2023-11-19 15:26:00+00:00,1,2023-12-11 15:26:00+00:00,,53
+131,55,11,conferred,Adán Humberto Valverde,True,2024-12-21 16:18:00+00:00,3,2025-01-07 16:18:00+00:00,,54
+134,47,17,submitted,Lorenzo Miguel Aguayo,True,2026-10-19 11:49:00+00:00,,,,55
+137,10,8,conferred,Antonio Andrew King,True,2023-11-11 20:51:00+00:00,1,2023-12-03 20:51:00+00:00,,56
+139,56,10,conferred,Taylor Martha Mercer,True,2024-06-07 12:44:00+00:00,3,2024-06-22 12:44:00+00:00,,57
+142,29,7,conferred,Benito Homero Balderas,True,2023-09-15 17:09:00+00:00,3,2023-10-02 17:09:00+00:00,,58
+143,39,10,conferred,María Elena Isabel Arce,True,2024-08-06 16:04:00+00:00,3,2024-08-23 16:04:00+00:00,,59
+144,52,11,conferred,Helena Jaqueline Vásquez,True,2025-01-05 07:10:00+00:00,3,2025-01-23 07:10:00+00:00,,60
+145,47,16,approved,Mary Meyer,True,2026-09-15 20:52:00+00:00,3,2026-10-07 20:52:00+00:00,,61
+146,56,10,conferred,Christopher Barnes,True,2024-08-10 18:32:00+00:00,3,2024-09-05 18:32:00+00:00,,62
+150,47,17,submitted,Amy Deborah Ingram,False,2026-10-19 13:25:00+00:00,,,,63
+151,14,11,conferred,Alta  Gracia Mitzy Almonte,False,2025-01-08 14:37:00+00:00,3,2025-02-05 14:37:00+00:00,,64
+152,40,13,conferred,Courtney Jennifer Hester,True,2025-06-06 19:40:00+00:00,3,2025-06-29 19:40:00+00:00,,65
+153,10,16,submitted,Jeffery Jones,True,2026-07-16 10:50:00+00:00,,,,66
+154,47,16,submitted,Guadalupe Peña,True,2026-08-17 14:32:00+00:00,,,,67
+155,24,10,conferred,Enrique Acevedo,True,2024-09-16 09:32:00+00:00,2,2024-09-29 09:32:00+00:00,,68
+168,14,11,conferred,Yolanda Ofelia Covarrubias,False,2024-12-28 20:58:00+00:00,3,2025-01-13 20:58:00+00:00,,69
+170,10,17,under_review,Michelle Maria Ramos,True,2026-10-19 09:56:00+00:00,2,2026-11-05 09:56:00+00:00,,70
+172,10,14,conferred,Helena Noemí Valdez,True,2025-11-05 13:03:00+00:00,2,2025-11-27 13:03:00+00:00,,71
+179,33,17,approved,Verónica Tamez de la Crúz,False,2026-10-19 08:21:00+00:00,2,2026-11-16 08:21:00+00:00,,72
+184,23,17,denied,Inés Anabel Romero Cordero,True,2026-10-19 09:45:00+00:00,1,2026-10-23 09:45:00+00:00,Missing: 3 credits upper-division electives.,73
+189,25,14,conferred,Clemente Ortega Ferrer,True,2026-01-26 19:55:00+00:00,3,2026-02-19 19:55:00+00:00,,74
+193,45,16,submitted,Heidi Blankenship,True,2026-08-17 12:54:00+00:00,,,,75
+194,19,17,submitted,Andrea Carla Díaz,True,2026-10-19 11:39:00+00:00,,,,76
+195,42,17,submitted,Diane Miller,True,2026-10-19 13:28:00+00:00,,,,77
+196,47,17,submitted,Anthony Frank Miller,True,2026-10-19 13:10:00+00:00,,,,78
+198,53,17,under_review,Ilse Alejandra Fajardo,True,2026-10-19 18:46:00+00:00,2,2026-11-08 18:46:00+00:00,,79
+204,14,14,conferred,Billy Butler,True,2026-02-01 09:14:00+00:00,1,2026-02-13 09:14:00+00:00,,80
+211,40,17,under_review,Augusto Prieto Zapata,False,2026-10-19 13:49:00+00:00,1,2026-10-24 13:49:00+00:00,,81
+212,6,17,submitted,Miguel Ramiro Verdugo,True,2026-10-19 17:22:00+00:00,,,,82
+214,12,17,under_review,Joshua Stephen Nelson,True,2026-10-19 12:56:00+00:00,2,2026-11-10 12:56:00+00:00,,83
+217,1,16,under_review,Victoria Taylor,True,2026-06-04 12:49:00+00:00,1,2026-06-25 12:49:00+00:00,,84
+228,33,16,submitted,Stephen White,False,2026-06-20 13:48:00+00:00,,,,85
+230,12,17,approved,Felix Diego Ramón Colón,True,2026-10-19 10:53:00+00:00,3,2026-11-14 10:53:00+00:00,,86
+232,21,17,approved,Bernardo Modesto Olivares,True,2026-10-19 13:24:00+00:00,3,2026-10-30 13:24:00+00:00,,87
+234,48,17,approved,Benjamin Jeffrey Perry,True,2026-10-19 09:54:00+00:00,1,2026-11-08 09:54:00+00:00,,88
+237,44,16,submitted,Roberto Glover,True,2026-08-29 16:06:00+00:00,,,,89
+238,54,14,conferred,Minerva Josefina Esquibel,True,2026-02-14 12:27:00+00:00,2,2026-02-18 12:27:00+00:00,,90
+244,24,16,submitted,Benjamín Ignacio Solorio,True,2026-06-25 16:38:00+00:00,,,,91
+247,46,17,approved,Lilia Perla Cedillo,True,2026-10-19 10:19:00+00:00,2,2026-10-26 10:19:00+00:00,,92
+253,33,17,under_review,Ernesto Julio Montalvo,False,2026-10-19 18:34:00+00:00,1,2026-11-08 18:34:00+00:00,,93
+256,47,17,denied,Miriam Figueroa,True,2026-10-19 12:18:00+00:00,3,2026-10-27 12:18:00+00:00,Missing: 3 credits upper-division electives.,94
+259,47,16,denied,Anthony Steven Wright,True,2026-06-22 15:21:00+00:00,1,2026-06-27 15:21:00+00:00,Missing: 3 credits upper-division electives.,95
+262,19,17,under_review,Tracy Wilson,True,2026-10-19 16:50:00+00:00,1,2026-11-16 16:50:00+00:00,,96
+267,30,17,under_review,Joshua Francisco Barnes,True,2026-10-19 16:55:00+00:00,2,2026-11-09 16:55:00+00:00,,97
+268,43,17,under_review,Andrew Lam,False,2026-10-19 08:55:00+00:00,1,2026-10-29 08:55:00+00:00,,98
+271,2,17,under_review,Nelly Colunga Calderón,True,2026-10-19 11:44:00+00:00,3,2026-11-16 11:44:00+00:00,,99
+274,1,17,submitted,Noemí Daniela Cavazos,False,2026-10-19 08:19:00+00:00,,,,100
+277,36,17,under_review,Óliver Daniel Véliz,True,2026-10-19 13:06:00+00:00,2,2026-11-17 13:06:00+00:00,,101
+279,12,17,submitted,Jacob Ochoa,True,2026-10-19 18:11:00+00:00,,,,102
+281,33,17,approved,Adalberto Rodolfo Madrid Berríos,True,2026-10-19 08:44:00+00:00,2,2026-11-14 08:44:00+00:00,,103
+284,29,14,conferred,Sherry Berry,False,2025-12-06 18:35:00+00:00,1,2025-12-16 18:35:00+00:00,,104
+289,44,16,submitted,José María Jerónimo Cortez Mesa,False,2026-09-15 14:30:00+00:00,,,,105
+290,38,11,conferred,Benjamín Olivo,True,2024-12-04 09:56:00+00:00,3,2024-12-17 09:56:00+00:00,,106
+292,21,16,submitted,Kimberly Sara Garrett,True,2026-09-16 18:41:00+00:00,,,,107
+293,36,14,conferred,Gilberto Federico Ortiz,False,2025-11-30 10:36:00+00:00,1,2025-12-25 10:36:00+00:00,,108
+294,55,13,conferred,Timothy Miller,False,2025-06-24 07:54:00+00:00,3,2025-06-30 07:54:00+00:00,,109
+300,24,17,submitted,Rebeca Mayte Salinas Casárez,False,2026-10-19 09:58:00+00:00,,,,110
+301,7,16,under_review,James Nicholson,True,2026-06-02 07:40:00+00:00,1,2026-06-05 07:40:00+00:00,,111
+304,40,17,under_review,Gonzalo Alejandro Menéndez,True,2026-10-19 18:21:00+00:00,3,2026-10-28 18:21:00+00:00,,112
+308,9,17,under_review,Maria Jessica Compton,True,2026-10-19 10:45:00+00:00,3,2026-10-27 10:45:00+00:00,,113
+311,24,17,submitted,Judith Orta,False,2026-10-19 14:18:00+00:00,,,,114
+312,39,14,conferred,Christopher Dylan Ward,True,2025-10-21 17:47:00+00:00,2,2025-11-15 17:47:00+00:00,,115
+313,8,14,conferred,Alicia Miller,False,2026-01-10 08:59:00+00:00,2,2026-02-06 08:59:00+00:00,,116
+314,5,11,conferred,Ángela Soledad Meza,True,2024-10-20 16:39:00+00:00,3,2024-10-25 16:39:00+00:00,,117
+315,54,16,under_review,Sandra Padilla,True,2026-05-22 14:29:00+00:00,2,2026-06-05 14:29:00+00:00,,118
+317,54,13,conferred,Elias Santiago,True,2025-05-30 15:26:00+00:00,2,2025-06-14 15:26:00+00:00,,119
+318,32,10,conferred,Tracy Sarah Barnes,True,2024-08-09 12:24:00+00:00,3,2024-08-29 12:24:00+00:00,,120
+319,52,16,submitted,Luz Vela Ortiz,True,2026-07-06 08:43:00+00:00,,,,121
+320,20,11,conferred,Aaron Wiley,True,2024-11-23 18:05:00+00:00,2,2024-11-27 18:05:00+00:00,,122
+322,18,13,conferred,David Matthew Frederick,True,2025-08-27 15:18:00+00:00,1,2025-09-19 15:18:00+00:00,,123
+324,1,13,conferred,Raymond Shane Evans,True,2025-09-05 11:43:00+00:00,1,2025-10-05 11:43:00+00:00,,124
+326,18,17,submitted,Beatriz Nadia Arriaga,True,2026-10-19 07:17:00+00:00,,,,125
+330,56,14,conferred,Christopher Miller,True,2025-11-20 16:59:00+00:00,2,2025-12-01 16:59:00+00:00,,126
+332,10,13,conferred,Delia Ulibarri,True,2025-06-21 19:46:00+00:00,3,2025-06-28 19:46:00+00:00,,127
+333,10,14,conferred,Antonio Andrés Almonte,False,2025-12-30 16:54:00+00:00,2,2026-01-03 16:54:00+00:00,,128
+334,53,17,submitted,Alfonso Espinoza,True,2026-10-19 11:51:00+00:00,,,,129
+336,40,13,conferred,Daniel Pedro Matthews,False,2025-08-20 15:47:00+00:00,2,2025-09-11 15:47:00+00:00,,130
+388,38,17,approved,Wendy Julie Jackson,True,2026-10-19 17:14:00+00:00,2,2026-10-31 17:14:00+00:00,,131
+391,3,17,submitted,Ramiro Ortiz Serrano,True,2026-10-19 12:52:00+00:00,,,,132
+463,45,14,conferred,Felix José Emilio Bustamante Figueroa,True,2026-01-24 17:27:00+00:00,2,2026-02-14 17:27:00+00:00,,133
+464,36,16,approved,Esperanza Virginia Cavazos,True,2026-06-20 12:40:00+00:00,1,2026-07-18 12:40:00+00:00,,134
+465,58,13,conferred,Lucas Genaro Preciado,True,2025-06-06 10:45:00+00:00,3,2025-06-18 10:45:00+00:00,,135
+467,14,17,submitted,Espartaco Luis Miguel Iglesias Alcántar,True,2026-10-19 15:17:00+00:00,,,,136
+468,1,16,under_review,Willie Sean Lloyd,True,2026-07-25 16:41:00+00:00,1,2026-08-24 16:41:00+00:00,,137
+471,54,13,conferred,José Carlos César Pulido Márquez,True,2025-07-24 20:15:00+00:00,1,2025-08-22 20:15:00+00:00,,138
+472,29,17,submitted,José Manuél Soto,False,2026-10-19 12:48:00+00:00,,,,139
+479,47,17,submitted,Ricardo Joaquín Vanegas Contreras,True,2026-10-19 12:15:00+00:00,,,,140
+482,8,16,approved,Darío Delgado,False,2026-06-30 17:13:00+00:00,3,2026-07-07 17:13:00+00:00,,141
+485,57,14,conferred,Catalina María Sepúlveda Vallejo,True,2025-11-25 15:55:00+00:00,3,2025-12-22 15:55:00+00:00,,142
+486,52,14,conferred,Caridad Linda Urrutia Zambrano,True,2025-12-19 18:36:00+00:00,1,2025-12-30 18:36:00+00:00,,143
+492,56,17,submitted,Minerva Saldivar de Anda,True,2026-10-19 18:06:00+00:00,,,,144
+493,54,17,submitted,Anthony Mitchell Hodges,True,2026-10-19 20:59:00+00:00,,,,145
+497,14,17,submitted,Luis Brian Baxter,False,2026-10-19 09:18:00+00:00,,,,146
+639,48,17,under_review,Stephanie Lambert,False,2026-10-19 19:55:00+00:00,2,2026-10-22 19:55:00+00:00,,147
+642,45,17,approved,Cristal Abril Angulo,True,2026-10-19 18:26:00+00:00,1,2026-11-04 18:26:00+00:00,,148
+643,20,17,denied,Mónica Dulce Griego Hinojosa,True,2026-10-19 10:56:00+00:00,2,2026-11-08 10:56:00+00:00,Missing: 3 credits upper-division electives.,149
+657,54,17,under_review,Germán Ángel Fierro Godoy,False,2026-10-19 09:57:00+00:00,2,2026-11-11 09:57:00+00:00,,150
+658,39,17,approved,Michael Tracy Lopez,True,2026-10-19 16:59:00+00:00,2,2026-11-04 16:59:00+00:00,,151
+659,52,16,submitted,Jaqueline Treviño,False,2026-09-19 12:36:00+00:00,,,,152
+666,54,17,approved,Terry Bryan Jones,True,2026-10-19 11:58:00+00:00,1,2026-11-18 11:58:00+00:00,,153
+668,44,17,under_review,Dulce María Quintero,True,2026-10-19 10:52:00+00:00,3,2026-10-31 10:52:00+00:00,,154
+680,33,17,under_review,Yeni Eugenia Chacón,True,2026-10-19 11:31:00+00:00,3,2026-10-24 11:31:00+00:00,,155

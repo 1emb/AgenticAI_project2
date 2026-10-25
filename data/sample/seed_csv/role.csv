@@ -1,0 +1,17 @@
+name,description,id
+student,Current or former student; self-service on own record,1
+instructor,Teaches sections; rosters and grade entry,2
+advisor,Academic advisor; advisee records and advising holds,3
+department_chair,Department leadership; scheduling and curriculum proposals,4
+dean,College leadership; policy exceptions and appeals,5
+registrar_staff,Registrar office staff; record maintenance and request processing,6
+registrar_admin,"Registrar leadership; overrides, policy, and configuration",7
+admissions,Admissions office; creates student records,8
+bursar,Bursar office; financial holds,9
+financial_aid,Financial aid office; enrollment status for aid,10
+student_affairs,Dean of Students; conduct holds,11
+international_office,International programs; SEVIS status,12
+institutional_research,Reporting; aggregate read access,13
+auditor,Read-only access with full audit trail,14
+external_verifier,Third-party degree and enrollment verification,15
+agent,Automated registrar agent acting on behalf of the office,16

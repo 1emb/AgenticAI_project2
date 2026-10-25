@@ -1,0 +1,5 @@
+grade_id,old_grade,new_grade,reason,requested_by_person_id,approved_by_person_id,requested_at,applied_at,id
+12163,C+,B-,Grade appeal upheld,56,3,2026-02-04 17:00:00+00:00,2026-02-08 17:00:00+00:00,1
+11047,C+,B+,Late work accepted per policy,1258,1,2025-07-12 16:00:00+00:00,2025-07-24 16:00:00+00:00,2
+12994,B+,A-,Late work accepted per policy,69,3,2026-02-22 16:00:00+00:00,2026-02-25 16:00:00+00:00,3
+10013,C+,B+,Calculation error,80,3,2025-07-23 09:00:00+00:00,2025-07-24 09:00:00+00:00,4

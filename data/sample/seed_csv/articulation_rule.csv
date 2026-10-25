@@ -1,0 +1,2089 @@
+institution_id,external_course_code,external_course_title,external_credits,equivalent_course_id,effective_term_id,expires_term_id,id
+8,ENGL 2892,English and Society,3,342,1,,1
+8,HIST 2057,United States History II,3,39,1,,2
+8,PHYS 2039,Calculus-Based Physics I,4,27,1,,3
+8,BIOL 1095,General Biology II,4,18,1,,4
+8,ENGL 2649,Professional and Technical Communication,3,2,1,,5
+8,MATH 2151,Introduction to Linear Algebra,3,14,1,,6
+8,ANSC 1036,History of Animal Science,3,79,1,,7
+8,AGRO 1833,Principles of Agronomy II,3,109,1,,8
+8,KIN 1544,Survey of Kinesiology,3,919,1,,9
+8,ENGL 1863,Introduction to Creative Writing,3,43,1,,10
+8,CJUS 2470,Criminal Justice Methods,3,574,1,,11
+8,CHEM 2584,General Chemistry I,4,22,1,,12
+1,FIN 2335,Finance and Society,3,664,1,,13
+1,PHYS 1660,Calculus-Based Physics I,4,27,1,,14
+1,MKTG 2624,Explorations in Marketing,1,699,1,,15
+1,FIN 2501,Introduction to Finance,3,662,1,,16
+1,MATH 1438,Applications of Calculus I,3,10,1,,17
+1,GEOL 2877,Physical Geology,4,29,1,,18
+1,CHEM 2198,General Chemistry II,4,23,1,,19
+1,SUR 1403,Field Experience in Surveying Engineering,4,868,1,,20
+1,BIOL 1810,General Biology I,4,17,1,,21
+1,BIOL 2564,Human Anatomy and Physiology I,4,19,1,,22
+1,BIOL 1099,Biology and Society,3,215,1,,23
+1,MATH 2819,College Algebra,3,7,1,,24
+1,THTR 1435,History of Theatre,3,500,1,,25
+1,SPAN 1290,Spanish I,4,44,1,,26
+1,GOVT 1407,American National Government,3,33,1,,27
+1,ASTR 2945,History of Astronomy,3,326,1,,28
+1,BCIS 1907,Survey of Business Computer Information Systems,3,717,1,,29
+1,CHME 2859,Intermediate Chemical Engineering,3,736,1,,30
+1,AGRO 2287,Concepts in Agronomy,3,113,1,,31
+1,FIN 1057,Field Experience in Finance,4,665,1,,32
+1,MATH 1170,Trigonometry and Precalculus,4,8,1,,33
+1,ET 2360,Survey of Engineering Technology,4,846,1,,34
+1,ARTS 2485,Art Appreciation,3,48,1,,35
+1,PHIL 2067,"Logic, Reasoning and Critical Thinking",3,42,1,,36
+1,HIST 2159,United States History II,3,39,1,,37
+1,NURS 1016,Nursing Laboratory,3,883,1,,38
+1,AEEC 2954,Principles of Agricultural Economics I,4,156,1,,39
+1,ANTH 1064,Introduction to Cultural Anthropology,3,36,1,,40
+1,CHME 2833,Quantitative Approaches in Chemical Engineering,3,735,1,,41
+1,AE 1170,Foundations of Aerospace Engineering,4,813,1,,42
+1,ENGL 1358,English and Society,3,342,1,,43
+1,HIST 2103,United States History I,3,38,1,,44
+1,PSY 1001,Foundations of Psychology,3,379,1,,45
+1,ENGL 2989,Composition I,4,1,1,,46
+1,COMM 2043,Communication Studies Methods,3,436,1,,47
+2,BIOL 1219,Survey of Biology,3,216,1,,48
+2,MATH 1237,Survey of Mathematics,3,6,1,,49
+2,HIST 1114,United States History I,3,38,1,,50
+2,HIST 1904,Western Civilization I,3,40,1,,51
+2,COMM 2161,Public Speaking,3,4,1,,52
+2,SPAN 2159,Spanish II,4,45,1,,53
+2,ME 2209,Principles of Mechanical Engineering II,3,791,1,,54
+2,EDUC 2816,Field Experience in Education,3,962,1,,55
+2,COMM 2183,Communication Studies and Society,3,434,1,,56
+2,ENGL 2318,Writing in the Humanities and Social Sciences,3,3,1,,57
+2,BIOL 1292,Human Anatomy and Physiology I,4,19,1,,58
+2,BIOL 1903,General Biology I,4,17,1,,59
+2,MATH 1300,Introduction to Statistics,3,9,1,,60
+2,MGMT 1150,Principles of Management II,1,681,1,,61
+2,PHYS 2608,Calculus-Based Physics I,4,27,1,,62
+4,CHEM 1895,Organic Chemistry I,4,24,1,,63
+4,STAT 1195,Applied Statistics,3,16,1,,64
+4,PSY 2641,History of Psychology,3,385,1,,65
+4,LING 1729,Concepts in Linguistics,1,528,1,,66
+4,EDUC 2604,Introduction to Education,3,957,1,,67
+4,ENGL 2909,Composition I,4,1,1,,68
+4,SUR 2955,Concepts in Surveying Engineering,3,866,1,,69
+4,ANSC 1508,Foundations of Animal Science,3,73,1,,70
+4,AEEC 2794,Quantitative Approaches in Agricultural Economics,4,158,1,,71
+4,MATH 1788,Introduction to Statistics,3,9,1,,72
+4,IE 1547,Intermediate Industrial Engineering,4,836,1,,73
+3,ENGL 2038,Writing in the Humanities and Social Sciences,3,3,1,,74
+3,PHYS 2318,Algebra-Based Physics I,4,26,1,,75
+3,FIN 1929,Professional Practice in Finance,3,667,1,,76
+3,AGRO 1364,Foundations of Agronomy,3,107,1,,77
+3,AE 2803,Professional Practice in Aerospace Engineering,3,814,1,,78
+3,ENGL 2622,Composition I,4,1,1,,79
+3,STAT 1047,Concepts in Statistics,3,292,1,,80
+3,MKTG 1998,Explorations in Marketing,1,699,1,,81
+3,SOC 2805,History of Sociology,3,406,1,,82
+3,ENGL 1172,Professional Practice in English,3,346,1,,83
+3,SUR 1718,Concepts in Surveying Engineering,3,866,1,,84
+3,ARTS 2563,Drawing I,3,47,1,,85
+3,ENGL 1052,Introduction to Creative Writing,3,43,1,,86
+3,STAT 1386,Applied Statistics,3,16,1,,87
+3,GEOL 2314,Physical Geology,4,29,1,,88
+3,GOVT 2844,Principles of Government I,3,417,1,,89
+3,BIOL 2921,General Biology I,4,17,1,,90
+3,HRTM 1099,"Principles of Hotel, Restaurant and Tourism Management I",3,198,1,,91
+3,SOC 1282,Sociology and Society,3,402,1,,92
+3,CJUS 1485,Explorations in Criminal Justice,3,568,1,,93
+3,MATH 1649,College Algebra,3,7,1,,94
+5,ECON 2899,Microeconomic Principles,3,35,1,,95
+5,CE 2638,Principles of Civil Engineering I,4,751,1,,96
+5,GEOL 2517,Physical Geology,4,29,1,,97
+5,ENGL 2094,Composition I,4,1,1,,98
+5,SUR 2580,Principles of Surveying Engineering II,3,864,1,,99
+5,BIOL 1457,General Biology II,4,18,1,,100
+5,MATH 1500,Introduction to Statistics,3,9,1,,101
+5,ASTR 2989,Astronomy Methods,3,329,1,,102
+5,SOIL 1073,History of Soil Science,4,142,1,,103
+5,FIN 1164,Field Experience in Finance,4,665,1,,104
+5,AE 1343,Explorations in Aerospace Engineering,3,810,1,,105
+5,SWK 2950,Explorations in Social Work,3,940,1,,106
+5,PHYS 2866,Algebra-Based Physics I,4,26,1,,107
+5,ANTH 2248,Introduction to Cultural Anthropology,3,36,1,,108
+5,ARTS 2506,Field Experience in Art,3,469,1,,109
+5,MATH 1818,Applications of Calculus I,3,10,1,,110
+5,SWK 1167,Field Experience in Social Work,3,944,1,,111
+3,MATH 1298,Trigonometry and Precalculus,4,8,1,,112
+3,ANSC 1211,Quantitative Approaches in Animal Science,3,76,1,,113
+3,GOVT 2742,American National Government,3,33,1,,114
+3,CD 2707,Survey of Communication Disorders,3,990,1,,115
+3,HRTM 1864,"Intermediate Hotel, Restaurant and Tourism Management",4,204,1,,116
+1,PHYS 1384,Calculus-Based Physics II,4,28,1,,117
+1,MGMT 1505,Explorations in Management,3,680,1,,118
+1,SUR 1858,History of Surveying Engineering,4,867,1,,119
+1,ACCT 1563,Explorations in Accounting,3,612,1,,120
+1,KIN 2009,Kinesiology Methods,3,924,1,,121
+1,SPAN 1639,Quantitative Approaches in Spanish,3,509,1,,122
+1,SPAN 1941,Spanish II,4,45,1,,123
+1,CJUS 1937,History of Criminal Justice,3,571,1,,124
+1,COMM 1590,Quantitative Approaches in Communication Studies,4,438,1,,125
+1,MUS 1221,History of Music,3,484,1,,126
+1,PHYS 1585,Field Experience in Physics,3,311,1,,127
+1,PSY 2081,Psychology and Society,1,377,1,,128
+1,ET 1720,Engineering Technology Laboratory,3,851,1,,129
+1,IE 2901,Intermediate Industrial Engineering,4,836,1,,130
+1,SWK 1071,Field Experience in Social Work,3,944,1,,131
+1,KIN 2742,Foundations of Kinesiology,3,920,1,,132
+3,FCSC 1908,Intermediate Family and Consumer Sciences,3,173,1,,133
+3,LING 1011,Introduction to the Study of Language,3,46,1,,134
+3,ECON 2797,Microeconomic Principles,3,35,1,,135
+3,ECON 2537,Principles of Economics I,3,629,1,,136
+3,THTR 2361,Introduction to Theatre,3,50,1,,137
+3,CS 2452,Object-Oriented Programming,4,54,1,,138
+3,CE 1865,Civil Engineering Laboratory,4,753,1,,139
+3,PHYS 1991,History of Physics,4,309,1,,140
+3,CHEM 2183,General Chemistry II,4,23,1,,141
+3,ASTR 1664,Introduction to Astronomy,4,30,1,,142
+3,PSY 1222,History of Psychology,3,385,1,,143
+3,AEEC 1447,Principles of Agricultural Economics I,4,156,1,,144
+3,MGMT 1487,Concepts in Management,3,683,1,,145
+3,SPAN 1458,Concepts in Spanish,4,510,1,,146
+3,BIOL 2973,Human Anatomy and Physiology I,4,19,1,,147
+3,HIST 1047,United States History I,3,38,1,,148
+5,MATH 1025,Trigonometry and Precalculus,4,8,1,,149
+5,ARTS 1746,Drawing I,3,47,1,,150
+5,CJUS 2041,Foundations of Criminal Justice,3,569,1,,151
+5,ECON 1982,Macroeconomic Principles,3,34,1,,152
+5,RGSC 2449,Field Experience in Range Science,3,95,1,,153
+5,ENGL 1732,Writing in the Humanities and Social Sciences,3,3,1,,154
+5,PSY 1711,Introduction to Psychology,3,31,1,,155
+5,ARTS 1581,Art Appreciation,3,48,1,,156
+5,ANSC 2641,Foundations of Animal Science,3,73,1,,157
+5,MATH 1865,College Algebra,3,7,1,,158
+5,PHIL 2268,"Logic, Reasoning and Critical Thinking",3,42,1,,159
+1,AEEC 2633,Survey of Agricultural Economics,3,154,1,,160
+1,CD 1067,Quantitative Approaches in Communication Disorders,4,992,1,,161
+1,SOC 1249,Quantitative Approaches in Sociology,3,405,1,,162
+1,CJUS 2142,Foundations of Criminal Justice,3,569,1,,163
+1,MATH 1082,Calculus and Analytic Geometry I,4,11,1,,164
+1,FCSC 1851,Family and Consumer Sciences and Society,3,170,1,,165
+1,ASTR 2842,Introduction to Astronomy,4,30,1,,166
+1,AST 2315,Survey of Applied Statistics,1,644,1,,167
+1,PSY 2553,Introduction to Psychology,3,31,1,,168
+1,STAT 1042,Applied Statistics,3,16,1,,169
+1,CEP 1137,Counseling and Educational Psychology Methods,4,980,1,,170
+1,BIOL 2893,Biology Methods,3,218,1,,171
+1,MATH 1358,Professional Practice in Mathematics,3,269,1,,172
+1,CHME 2214,History of Chemical Engineering,3,738,1,,173
+1,HIST 2967,Field Experience in History,3,364,1,,174
+1,HIST 2778,History of History,3,366,1,,175
+1,LING 1970,Introduction to the Study of Language,3,46,1,,176
+1,CE 1037,Civil Engineering and Society,3,750,1,,177
+1,JOUR 2518,Survey of Journalism,3,453,1,,178
+1,ENGL 1101,Principles of English I,3,344,1,,179
+1,ANSC 1805,History of Animal Science,3,79,1,,180
+1,ENGL 1910,Professional Practice in English,3,346,1,,181
+1,RGSC 1235,Range Science Methods,3,96,1,,182
+1,CS 2361,Discrete Mathematics for Computer Science,3,55,1,,183
+2,KIN 2609,History of Kinesiology,4,925,1,,184
+2,PSY 2642,Introduction to Psychology,3,31,1,,185
+2,GEOG 2356,Concepts in Geography,3,601,1,,186
+2,PHIL 2889,Introduction to Philosophy,3,41,1,,187
+2,ENGL 2220,Introduction to Creative Writing,3,43,1,,188
+2,HIST 1590,History of History,3,366,1,,189
+2,CHEM 1284,General Chemistry II,4,23,1,,190
+2,CE 2614,Civil Engineering Laboratory,4,753,1,,191
+2,ARTS 1874,Foundations of Art,3,466,1,,192
+2,BIOL 2142,Introduction to Biology,4,214,1,,193
+2,ASTR 1535,Introduction to Astronomy,4,30,1,,194
+2,BCIS 2772,History of Business Computer Information Systems,3,721,1,,195
+2,COMM 1594,Principles of Communication Studies II,3,433,1,,196
+2,THTR 2129,Introduction to Theatre,3,50,1,,197
+2,IE 1143,Industrial Engineering Methods,3,837,1,,198
+2,MATH 1992,Applications of Calculus I,3,10,1,,199
+2,PSY 2103,Intermediate Psychology,3,380,1,,200
+18,STAT 1530,Statistics and Society,3,287,1,,201
+18,NURS 2302,Introduction to Nursing,4,878,1,,202
+18,HIST 2853,United States History I,3,38,1,,203
+18,ANTH 2750,Introduction to Cultural Anthropology,3,36,1,,204
+18,MATH 2151,Introduction to Statistics,3,9,1,,205
+18,CS 2105,Professional Practice in Computer Science,3,257,1,,206
+3,STAT 2937,Survey of Statistics,3,288,1,,207
+3,GEOG 2808,Physical Geography,3,37,1,,208
+3,BCIS 1912,Intermediate Business Computer Information Systems,3,718,1,,209
+3,MUS 2321,Music Appreciation,3,49,1,,210
+3,PHYS 2314,Calculus-Based Physics II,4,28,1,,211
+3,IE 2519,Survey of Industrial Engineering,3,833,1,,212
+3,ENGL 2595,Principles of English II,3,343,1,,213
+11,STAT 1729,Professional Practice in Statistics,3,293,1,,214
+11,CS 2633,Discrete Mathematics for Computer Science,3,55,1,,215
+11,GOVT 1193,American National Government,3,33,1,,216
+11,LING 2940,Introduction to the Study of Language,3,46,1,,217
+11,ARTS 2216,Drawing I,3,47,1,,218
+11,PHYS 2727,Algebra-Based Physics I,4,26,1,,219
+11,ARTS 2474,Art Appreciation,3,48,1,,220
+11,FCSC 2315,Family and Consumer Sciences Methods,3,175,1,,221
+11,MATH 2825,Trigonometry and Precalculus,4,8,1,,222
+11,BIOL 2758,Human Anatomy and Physiology I,4,19,1,,223
+11,SOIL 2759,Survey of Soil Science,3,141,1,,224
+11,CHEM 1179,Chemistry Laboratory,3,239,1,,225
+11,IE 1454,Explorations in Industrial Engineering,3,832,1,,226
+11,KIN 1712,Field Experience in Kinesiology,3,923,1,,227
+11,CHEM 1589,Quantitative Approaches in Chemistry,3,238,1,,228
+11,LING 2642,Principles of Linguistics II,3,526,1,,229
+11,AST 2690,Professional Practice in Applied Statistics,3,647,1,,230
+11,CHEM 2238,General Chemistry I,4,22,1,,231
+1,COMM 2984,Communication Studies Laboratory,3,439,1,,232
+1,MKTG 2058,Professional Practice in Marketing,3,705,1,,233
+1,EE 2730,History of Electrical and Computer Engineering,3,775,1,,234
+1,ENGL 2546,Introduction to Creative Writing,3,43,1,,235
+1,COMM 1566,Public Speaking,3,4,1,,236
+1,ARTS 1716,Field Experience in Art,3,469,1,,237
+1,HIST 1355,Western Civilization I,3,40,1,,238
+1,CE 1283,Quantitative Approaches in Civil Engineering,4,754,1,,239
+2,CS 2379,Introduction to Programming,3,52,1,,240
+2,SPAN 1289,Spanish I,4,44,1,,241
+2,CS 2703,Computer Science Principles,3,51,1,,242
+2,ENGL 1320,English Methods,3,347,1,,243
+2,HON 1431,Honors Seminar: Ideas and Society,3,71,1,,244
+2,MUS 2810,Music Appreciation,3,49,1,,245
+2,BIOL 1384,General Biology II,4,18,1,,246
+2,MKTG 2698,Introduction to Marketing,3,701,1,,247
+2,ME 1618,Intermediate Mechanical Engineering,3,794,1,,248
+2,MUS 1852,Music Methods,3,485,1,,249
+3,MKTG 1872,Field Experience in Marketing,3,702,1,,250
+3,ET 1068,Survey of Engineering Technology,4,846,1,,251
+3,AST 2704,Explorations in Applied Statistics,3,645,1,,252
+3,HIST 1925,Western Civilization I,3,40,1,,253
+3,COMM 1589,Public Speaking,3,4,1,,254
+3,ENGL 1608,English and Society,3,342,1,,255
+3,ASTR 1256,History of Astronomy,3,326,1,,256
+3,KIN 1310,Explorations in Kinesiology,3,918,1,,257
+3,COMM 2015,Communication Studies Methods,3,436,1,,258
+3,LING 2537,Linguistics Laboratory,3,527,1,,259
+3,MATH 2439,Introduction to Statistics,3,9,1,,260
+3,THTR 1969,Theatre Methods,3,498,1,,261
+3,RGSC 1972,Concepts in Range Science,4,94,1,,262
+3,LING 2330,Concepts in Linguistics,1,528,1,,263
+3,EDUC 2340,Quantitative Approaches in Education,3,963,1,,264
+2,ENGL 2816,Composition I,4,1,1,,265
+2,FWCE 2877,"Explorations in Fish, Wildlife and Conservation Ecology",3,186,1,,266
+2,MATH 1315,Trigonometry and Precalculus,4,8,1,,267
+2,ET 1825,Introduction to Engineering Technology,3,848,1,,268
+2,RGSC 1146,Principles of Range Science II,4,90,1,,269
+2,AEEC 2290,Quantitative Approaches in Agricultural Economics,4,158,1,,270
+2,ME 2824,Survey of Mechanical Engineering,3,789,1,,271
+2,HIST 2728,United States History II,3,39,1,,272
+2,SPAN 1896,Quantitative Approaches in Spanish,3,509,1,,273
+2,EDUC 2265,Principles of Education I,3,958,1,,274
+2,ANSC 1688,Foundations of Animal Science,3,73,1,,275
+2,AE 2593,Aerospace Engineering Laboratory,3,815,1,,276
+2,CJUS 2819,Criminal Justice Methods,3,574,1,,277
+1,ENGL 1732,Writing in the Humanities and Social Sciences,3,3,1,,278
+1,MGMT 1708,Concepts in Management,3,683,1,,279
+1,CHEM 2008,Quantitative Approaches in Chemistry,3,238,1,,280
+1,THTR 1735,Introduction to Theatre,3,50,1,,281
+1,AEEC 1515,Quantitative Approaches in Agricultural Economics,4,158,1,,282
+1,ARTS 2491,Drawing I,3,47,1,,283
+1,MATH 2133,Calculus and Analytic Geometry II,4,12,1,,284
+1,NURS 2563,Survey of Nursing,3,881,1,,285
+1,NURS 1512,Intermediate Nursing,3,882,1,,286
+1,ANSC 2178,Intermediate Animal Science,3,78,1,,287
+1,EE 1162,Concepts in Electrical and Computer Engineering,4,772,1,,288
+18,SPAN 1731,Field Experience in Spanish,3,512,1,,289
+18,HON 1760,Honors Seminar: Ideas and Society,3,71,1,,290
+18,ANTH 1654,Quantitative Approaches in Anthropology,3,545,1,,291
+18,GOVT 2616,Principles of Government I,3,417,1,,292
+18,GEOG 1621,Geography Methods,3,600,1,,293
+18,ENGL 2549,Composition I,4,1,1,,294
+18,ENGL 2053,Writing in the Humanities and Social Sciences,3,3,1,,295
+18,EE 2959,Professional Practice in Electrical and Computer Engineering,3,773,1,,296
+18,ENGL 2024,Introduction to Creative Writing,3,43,1,,297
+18,ASTR 2399,Introduction to Astronomy,4,30,1,,298
+18,GOVT 1025,Intermediate Government,3,420,1,,299
+18,CHEM 1886,Foundations of Chemistry,3,235,1,,300
+18,MATH 1734,Trigonometry and Precalculus,4,8,1,,301
+18,ME 1366,Intermediate Mechanical Engineering,3,794,1,,302
+18,ENGL 2931,Intermediate English,4,345,1,,303
+18,COMM 1170,Introduction to Communication,3,5,1,,304
+18,AST 2306,Professional Practice in Applied Statistics,3,647,1,,305
+18,BIOL 1657,General Biology II,4,18,1,,306
+18,HIST 2207,Western Civilization I,3,40,1,,307
+12,THTR 1867,Theatre Methods,3,498,1,,308
+12,AGRO 2163,Agronomy Methods,3,110,1,,309
+12,EDUC 1216,Education and Society,3,959,1,,310
+12,EDUC 1114,Principles of Education I,3,958,1,,311
+12,SPAN 2455,Survey of Spanish,3,508,1,,312
+12,ET 1088,Introduction to Engineering Technology,3,848,1,,313
+12,ANTH 2390,Principles of Anthropology II,3,542,1,,314
+12,ENGL 2048,Professional and Technical Communication,3,2,1,,315
+12,LING 1235,Introduction to the Study of Language,3,46,1,,316
+12,CHEM 1376,Chemistry Laboratory,3,239,1,,317
+12,BIOL 2390,Human Anatomy and Physiology I,4,19,1,,318
+12,MATH 1400,Calculus III,3,13,1,,319
+12,SPAN 1307,Quantitative Approaches in Spanish,3,509,1,,320
+8,ECON 2206,Macroeconomic Principles,3,34,1,,321
+8,AE 1926,Professional Practice in Aerospace Engineering,3,814,1,,322
+8,EE 2531,History of Electrical and Computer Engineering,3,775,1,,323
+8,HON 2307,Honors Composition,4,72,1,,324
+8,HIST 2216,United States History I,3,38,1,,325
+8,SOC 1668,Sociology and Society,3,402,1,,326
+1,CHEM 1095,General Chemistry I,4,22,1,,327
+1,JOUR 1646,Principles of Journalism I,3,454,1,,328
+1,SOC 2560,Sociology and Society,3,402,1,,329
+1,RGSC 1542,Survey of Range Science,4,91,1,,330
+1,ENGL 2049,English Methods,3,347,1,,331
+1,STAT 1221,Principles of Statistics II,3,285,1,,332
+1,LING 2040,Concepts in Linguistics,1,528,1,,333
+1,EDUC 2151,Education and Society,3,959,1,,334
+1,ANTH 2698,Principles of Anthropology II,3,542,1,,335
+1,PHYS 2983,Concepts in Physics,3,310,1,,336
+1,KIN 1632,Quantitative Approaches in Kinesiology,4,922,1,,337
+1,EE 2775,Field Experience in Electrical and Computer Engineering,3,774,1,,338
+1,IE 2521,Industrial Engineering Laboratory,3,835,1,,339
+1,ME 2163,Mechanical Engineering and Society,3,790,1,,340
+1,PSY 1888,History of Psychology,3,385,1,,341
+1,ENGL 2493,Explorations in English,4,341,1,,342
+1,HORT 2806,Introduction to Horticulture,4,125,1,,343
+1,HORT 1835,Explorations in Horticulture,3,124,1,,344
+1,KIN 1613,Concepts in Kinesiology,3,926,1,,345
+5,HIST 2626,Intermediate History,1,363,1,,346
+5,PSY 2269,Concepts in Psychology,3,383,1,,347
+5,PHYS 2713,Calculus-Based Physics II,4,28,1,,348
+5,SUR 2238,Foundations of Surveying Engineering,3,862,1,,349
+5,HIST 2640,History of History,3,366,1,,350
+5,ENGL 1888,Professional Practice in English,3,346,1,,351
+5,MATH 2790,Calculus and Analytic Geometry I,4,11,1,,352
+5,GOVT 2803,American National Government,3,33,1,,353
+5,STAT 2323,Introduction to Statistics,3,284,1,,354
+5,MATH 1993,Intermediate Mathematics,3,267,1,,355
+5,PHIL 2850,Introduction to Philosophy,3,41,1,,356
+5,THTR 1354,Introduction to Theatre,3,50,1,,357
+5,IE 2834,Intermediate Industrial Engineering,4,836,1,,358
+5,ECON 1025,Introduction to Economics,3,628,1,,359
+5,ARTS 1241,Concepts in Art,3,468,1,,360
+5,COMM 1301,Principles of Communication Studies II,3,433,1,,361
+5,CJUS 1157,Principles of Criminal Justice I,3,567,1,,362
+5,BCIS 1517,Survey of Business Computer Information Systems,3,717,1,,363
+1,ECON 1328,Principles of Economics I,3,629,1,,364
+1,EDUC 2826,Quantitative Approaches in Education,3,963,1,,365
+1,HON 1494,Honors Composition,4,72,1,,366
+1,CHEM 2090,Professional Practice in Chemistry,4,237,1,,367
+1,EE 2254,Electrical and Computer Engineering Laboratory,3,771,1,,368
+1,RGSC 2731,Principles of Range Science II,4,90,1,,369
+1,BCIS 2513,Professional Practice in Business Computer Information Systems,3,720,1,,370
+1,ECON 2194,Macroeconomic Principles,3,34,1,,371
+1,ENGL 2356,Professional and Technical Communication,3,2,1,,372
+1,STAT 2141,Professional Practice in Statistics,3,293,1,,373
+1,ANSC 1908,Foundations of Animal Science,3,73,1,,374
+1,NURS 1709,History of Nursing,3,885,1,,375
+1,AE 2797,Field Experience in Aerospace Engineering,3,816,1,,376
+1,KIN 1671,Introduction to Kinesiology,3,921,1,,377
+1,GOVT 2478,Intermediate Government,3,420,1,,378
+1,ANSC 1170,Quantitative Approaches in Animal Science,3,76,1,,379
+1,CJUS 2007,Criminal Justice Methods,3,574,1,,380
+2,ASTR 2764,Astronomy and Society,3,324,1,,381
+2,THTR 1417,History of Theatre,3,500,1,,382
+2,CJUS 2656,Foundations of Criminal Justice,3,569,1,,383
+2,CHME 1775,Principles of Chemical Engineering I,3,732,1,,384
+2,ECON 2819,Foundations of Economics,3,630,1,,385
+2,GOVT 2395,Foundations of Government,3,418,1,,386
+10,MUS 2508,Music Methods,3,485,1,,387
+10,AGRO 1718,Concepts in Agronomy,3,113,1,,388
+10,GOVT 2934,Intermediate Government,3,420,1,,389
+10,SOIL 1178,History of Soil Science,4,142,1,,390
+10,BIOL 1726,Biology and Society,3,215,1,,391
+10,PHYS 1366,Physics Laboratory,3,312,1,,392
+10,BIOL 1408,General Biology I,4,17,1,,393
+10,HIST 2516,United States History I,3,38,1,,394
+10,SOIL 1292,Introduction to Soil Science,3,139,1,,395
+10,FCSC 1424,Foundations of Family and Consumer Sciences,3,172,1,,396
+10,AEEC 1208,Agricultural Economics Laboratory,4,159,1,,397
+10,MATH 1594,Introduction to Statistics,3,9,1,,398
+10,AST 1779,Quantitative Approaches in Applied Statistics,3,650,1,,399
+10,PSY 2154,Psychology Laboratory,3,384,1,,400
+10,STAT 2465,Introduction to Statistics,3,284,1,,401
+10,GOVT 1439,Concepts in Government,4,422,1,,402
+3,EDUC 1255,Principles of Education I,3,958,1,,403
+3,EDUC 1537,Professional Practice in Education,3,960,1,,404
+3,JOUR 1379,Field Experience in Journalism,3,455,1,,405
+3,EDUC 1151,Education Methods,3,964,1,,406
+3,ENGL 1886,English Methods,3,347,1,,407
+3,FWCE 1601,"Explorations in Fish, Wildlife and Conservation Ecology",3,186,1,,408
+3,COMM 1794,Introduction to Communication,3,5,1,,409
+3,NURS 2732,Principles of Nursing II,3,880,1,,410
+3,AE 1574,History of Aerospace Engineering,3,817,1,,411
+3,MUS 2076,Intermediate Music,3,483,1,,412
+3,SWK 1231,Quantitative Approaches in Social Work,3,945,1,,413
+3,CS 2311,Discrete Mathematics for Computer Science,3,55,1,,414
+3,MATH 2065,Survey of Mathematics,3,6,1,,415
+3,PHYS 1138,Calculus-Based Physics I,4,27,1,,416
+3,PHIL 1161,"Logic, Reasoning and Critical Thinking",3,42,1,,417
+5,CS 1721,Introduction to Programming,3,52,1,,418
+5,PHYS 2593,Calculus-Based Physics I,4,27,1,,419
+5,KIN 1125,Field Experience in Kinesiology,3,923,1,,420
+5,CHEM 2195,Organic Chemistry II,4,25,1,,421
+5,ENGL 2417,Introduction to Creative Writing,3,43,1,,422
+5,HON 1953,Honors Composition,4,72,1,,423
+5,ASTR 2702,Introduction to Astronomy,4,30,1,,424
+5,AST 2041,Explorations in Applied Statistics,3,645,1,,425
+5,MKTG 1591,Explorations in Marketing,1,699,1,,426
+5,CE 2964,Quantitative Approaches in Civil Engineering,4,754,1,,427
+5,AST 1164,Quantitative Approaches in Applied Statistics,3,650,1,,428
+5,PHIL 2105,Field Experience in Philosophy,3,588,1,,429
+5,CHEM 2633,General Chemistry II,4,23,1,,430
+4,HIST 2468,Western Civilization I,3,40,1,,431
+4,ECON 1059,Intermediate Economics,4,632,1,,432
+4,HIST 1815,United States History I,3,38,1,,433
+4,PHIL 2871,Introduction to Philosophy,3,41,1,,434
+4,MATH 2680,Trigonometry and Precalculus,4,8,1,,435
+4,ACCT 2340,Accounting Methods,3,615,1,,436
+1,PSY 1125,Quantitative Approaches in Psychology,3,381,1,,437
+1,GOVT 2892,Principles of Government I,3,417,1,,438
+1,MUS 1575,Music Appreciation,3,49,1,,439
+1,EE 2472,Survey of Electrical and Computer Engineering,3,770,1,,440
+1,ME 1447,Principles of Mechanical Engineering II,3,791,1,,441
+1,ECON 1275,Microeconomic Principles,3,35,1,,442
+1,LING 1671,Quantitative Approaches in Linguistics,1,529,1,,443
+1,ACCT 1502,Principles of Accounting II,3,64,1,,444
+1,EE 2298,Explorations in Electrical and Computer Engineering,4,769,1,,445
+1,SOIL 1469,Field Experience in Soil Science,3,144,1,,446
+1,CD 1006,History of Communication Disorders,3,993,1,,447
+1,BCIS 2326,Business Computer Information Systems Methods,4,719,1,,448
+1,CE 2512,Foundations of Civil Engineering,4,749,1,,449
+1,SOC 1153,Introduction to Sociology,3,32,1,,450
+1,MATH 2309,Survey of Mathematics,3,6,1,,451
+1,MATH 1263,Intermediate Mathematics,3,267,1,,452
+1,MKTG 1719,Marketing and Society,3,700,1,,453
+1,IE 2678,Foundations of Industrial Engineering,3,834,1,,454
+1,CHME 1181,Professional Practice in Chemical Engineering,3,737,1,,455
+1,AEEC 2067,History of Agricultural Economics,3,157,1,,456
+1,SUR 1982,Principles of Surveying Engineering II,3,864,1,,457
+1,HON 1718,Honors Seminar: Ideas and Society,3,71,1,,458
+1,ENGL 1847,Principles of English II,3,343,1,,459
+6,JOUR 2743,Professional Practice in Journalism,3,456,1,,460
+6,PHYS 1320,History of Physics,4,309,1,,461
+6,LING 2844,Introduction to the Study of Language,3,46,1,,462
+6,SWK 2655,History of Social Work,4,942,1,,463
+6,ANSC 1989,Quantitative Approaches in Animal Science,3,76,1,,464
+6,PSY 1137,Concepts in Psychology,3,383,1,,465
+6,HON 2698,Honors Methods,3,1005,1,,466
+1,CS 1167,Concepts in Computer Science,3,255,1,,467
+1,FCSC 1198,Survey of Family and Consumer Sciences,3,171,1,,468
+1,AST 2848,Professional Practice in Applied Statistics,3,647,1,,469
+1,SUR 1786,Principles of Surveying Engineering I,3,863,1,,470
+1,SWK 2414,History of Social Work,4,942,1,,471
+1,PHIL 1946,Concepts in Philosophy,3,589,1,,472
+1,HRTM 2692,"Hotel, Restaurant and Tourism Management Methods",3,203,1,,473
+5,FWCE 2403,"Fish, Wildlife and Conservation Ecology Laboratory",3,189,1,,474
+5,ME 2149,Mechanical Engineering Laboratory,3,793,1,,475
+5,BIOL 2075,Introduction to Biology,4,214,1,,476
+5,CHEM 1134,General Chemistry I,4,22,1,,477
+5,STAT 1246,Intermediate Statistics,3,290,1,,478
+5,MUS 2295,Music Appreciation,3,49,1,,479
+5,AST 1714,Survey of Applied Statistics,1,644,1,,480
+5,JOUR 2758,Survey of Journalism,3,453,1,,481
+5,SOC 1401,Introduction to Sociology,3,32,1,,482
+5,HIST 2106,Western Civilization I,3,40,1,,483
+5,ACCT 2540,Explorations in Accounting,3,612,1,,484
+5,GEOG 1825,Physical Geography,3,37,1,,485
+5,MGMT 2363,Field Experience in Management,3,686,1,,486
+5,COMM 1914,Introduction to Communication,3,5,1,,487
+1,PHIL 2250,Field Experience in Philosophy,3,588,1,,488
+1,ECON 2605,Intermediate Economics,4,632,1,,489
+1,AE 2820,History of Aerospace Engineering,3,817,1,,490
+1,MUS 1802,Music and Society,3,481,1,,491
+1,MATH 1859,Introduction to Statistics,3,9,1,,492
+14,RGSC 1687,Principles of Range Science II,4,90,1,,493
+14,NURS 1468,Introduction to Nursing,4,878,1,,494
+14,MGMT 1288,Field Experience in Management,3,686,1,,495
+14,GOVT 2940,American National Government,3,33,1,,496
+14,BIOL 2081,General Biology I,4,17,1,,497
+14,SWK 1883,History of Social Work,4,942,1,,498
+14,LING 2071,Principles of Linguistics II,3,526,1,,499
+14,EE 1957,Introduction to Electrical and Computer Engineering,3,768,1,,500
+14,PHIL 2307,"Logic, Reasoning and Critical Thinking",3,42,1,,501
+14,SOC 2059,Introduction to Sociology,3,32,1,,502
+14,ANTH 2186,Introduction to Cultural Anthropology,3,36,1,,503
+1,PHIL 1714,Introduction to Philosophy,3,41,1,,504
+1,CE 1280,Civil Engineering Methods,3,755,1,,505
+1,BCIS 1529,History of Business Computer Information Systems,3,721,1,,506
+1,ET 1060,Field Experience in Engineering Technology,3,850,1,,507
+1,FWCE 2273,"Fish, Wildlife and Conservation Ecology Methods",3,188,1,,508
+1,AE 1537,Quantitative Approaches in Aerospace Engineering,4,818,1,,509
+1,EE 2696,Principles of Electrical and Computer Engineering I,3,767,1,,510
+1,MGMT 2403,Intermediate Management,3,685,1,,511
+2,PHYS 2186,Algebra-Based Physics I,4,26,1,,512
+2,PHYS 2698,Calculus-Based Physics II,4,28,1,,513
+2,PHYS 2612,Physics Laboratory,3,312,1,,514
+2,KIN 1836,Field Experience in Kinesiology,3,923,1,,515
+2,ECON 2466,Macroeconomic Principles,3,34,1,,516
+2,EDUC 2906,Education Methods,3,964,1,,517
+2,ME 2930,Field Experience in Mechanical Engineering,3,792,1,,518
+2,COMM 1431,Introduction to Communication,3,5,1,,519
+2,GEOL 1259,Geology and Society,3,554,1,,520
+2,AGRO 2991,Agronomy Methods,3,110,1,,521
+2,KIN 1466,Concepts in Kinesiology,3,926,1,,522
+2,SOIL 1466,Soils,4,69,1,,523
+1,FIN 1101,Finance Methods,3,666,1,,524
+1,AST 1253,Applied Statistics Methods,3,649,1,,525
+1,FWCE 2532,"Explorations in Fish, Wildlife and Conservation Ecology",3,186,1,,526
+1,CEP 2348,Foundations of Counseling and Educational Psychology,3,979,1,,527
+1,ME 1337,Survey of Mechanical Engineering,3,789,1,,528
+1,CS 2653,Object-Oriented Programming,4,54,1,,529
+1,HIST 2852,Intermediate History,1,363,1,,530
+1,SOIL 1908,Survey of Soil Science,3,141,1,,531
+1,AE 1819,Professional Practice in Aerospace Engineering,3,814,1,,532
+1,AGRO 1557,Agronomy Methods,3,110,1,,533
+1,HRTM 1739,"Survey of Hotel, Restaurant and Tourism Management",4,200,1,,534
+1,BIOL 2473,Concepts in Biology,3,217,1,,535
+1,BIOL 2777,General Biology II,4,18,1,,536
+1,NURS 2054,Introduction to Nursing,4,878,1,,537
+1,SPAN 2788,Concepts in Spanish,4,510,1,,538
+1,AE 1287,Survey of Aerospace Engineering,4,812,1,,539
+1,AE 1774,Aerospace Engineering and Society,3,811,1,,540
+1,BCIS 1751,Intermediate Business Computer Information Systems,3,718,1,,541
+3,SPAN 1521,Spanish Laboratory,3,511,1,,542
+3,JOUR 2636,Survey of Journalism,3,453,1,,543
+3,SUR 1844,Principles of Surveying Engineering II,3,864,1,,544
+3,ECON 2170,Macroeconomic Principles,3,34,1,,545
+3,HON 1135,Honors Composition,4,72,1,,546
+3,MATH 2845,Calculus and Analytic Geometry I,4,11,1,,547
+3,ACCT 2074,Principles of Accounting I,3,63,1,,548
+3,EDUC 1606,Introduction to Education,3,957,1,,549
+3,PHYS 1996,Field Experience in Physics,3,311,1,,550
+7,ET 1795,Principles of Engineering Technology II,4,847,1,,551
+7,ANSC 2894,Principles of Animal Science II,3,75,1,,552
+7,PHYS 2604,Physics Laboratory,3,312,1,,553
+7,NURS 2920,Survey of Nursing,3,881,1,,554
+7,ECON 2722,Microeconomic Principles,3,35,1,,555
+7,EDUC 2929,Quantitative Approaches in Education,3,963,1,,556
+7,SUR 1569,Principles of Surveying Engineering I,3,863,1,,557
+7,SPAN 2110,Spanish II,4,45,1,,558
+7,THTR 2270,Introduction to Theatre,3,50,1,,559
+7,CHEM 2239,General Chemistry I,4,22,1,,560
+7,GEOG 1032,Concepts in Geography,3,601,1,,561
+3,MUS 2438,Quantitative Approaches in Music,3,486,1,,562
+3,GEOG 1136,Concepts in Geography,3,601,1,,563
+3,MUS 2631,Music and Society,3,481,1,,564
+3,ME 2695,Principles of Mechanical Engineering II,3,791,1,,565
+3,SPAN 2875,Survey of Spanish,3,508,1,,566
+2,CD 2609,Quantitative Approaches in Communication Disorders,4,992,1,,567
+2,HRTM 2722,"Principles of Hotel, Restaurant and Tourism Management I",3,198,1,,568
+2,STAT 1595,Explorations in Statistics,3,286,1,,569
+2,GEOL 1952,Physical Geology,4,29,1,,570
+2,CS 1013,Computer Science Methods,3,256,1,,571
+2,STAT 2176,Applied Statistics,3,16,1,,572
+2,EE 1487,Principles of Electrical and Computer Engineering I,3,767,1,,573
+2,PHIL 1098,"Logic, Reasoning and Critical Thinking",3,42,1,,574
+2,GEOG 2189,Geography Methods,3,600,1,,575
+10,CD 2961,History of Communication Disorders,3,993,1,,576
+10,HON 2414,Honors Seminar: Ideas and Society,3,71,1,,577
+10,ENGL 1485,Introduction to Creative Writing,3,43,1,,578
+10,ENGL 1520,English and Society,3,342,1,,579
+10,MATH 1595,Calculus and Analytic Geometry I,4,11,1,,580
+10,PSY 2984,Psychology and Society,1,377,1,,581
+10,GEOG 1714,Concepts in Geography,3,601,1,,582
+10,ECON 1113,Macroeconomic Principles,3,34,1,,583
+10,ACCT 2012,History of Accounting,3,613,1,,584
+10,AST 1759,Intermediate Applied Statistics,3,648,1,,585
+10,STAT 2280,Statistics Laboratory,3,289,1,,586
+10,SPAN 1504,Spanish I,4,44,1,,587
+10,COMM 1300,Introduction to Communication,3,5,1,,588
+10,RGSC 2918,Concepts in Range Science,4,94,1,,589
+10,LING 1993,Introduction to the Study of Language,3,46,1,,590
+10,SPAN 1066,Survey of Spanish,3,508,1,,591
+10,SOC 1215,Introduction to Sociology,3,32,1,,592
+10,STAT 2653,Professional Practice in Statistics,3,293,1,,593
+10,CJUS 1355,Principles of Criminal Justice I,3,567,1,,594
+10,JOUR 2447,Survey of Journalism,3,453,1,,595
+3,SPAN 1770,Spanish II,4,45,1,,596
+3,ENGL 1429,Professional and Technical Communication,3,2,1,,597
+3,STAT 1563,History of Statistics,3,291,1,,598
+3,HRTM 1494,"Principles of Hotel, Restaurant and Tourism Management II",3,199,1,,599
+3,CEP 1269,Concepts in Counseling and Educational Psychology,3,981,1,,600
+14,SUR 2668,History of Surveying Engineering,4,867,1,,601
+14,MKTG 1173,Intermediate Marketing,3,704,1,,602
+14,ENGL 2003,Introduction to Creative Writing,3,43,1,,603
+14,EE 2428,Electrical and Computer Engineering Laboratory,3,771,1,,604
+14,EDUC 2847,Intermediate Education,3,961,1,,605
+14,HON 1941,Honors Seminar: Ideas and Society,3,71,1,,606
+14,MUS 2428,Music Appreciation,3,49,1,,607
+14,THTR 1972,Introduction to Theatre,3,50,1,,608
+14,GEOL 2625,Physical Geology,4,29,1,,609
+14,ENGL 1209,Principles of English I,3,344,1,,610
+14,RGSC 2900,Principles of Range Science I,3,92,1,,611
+14,IE 2559,Intermediate Industrial Engineering,4,836,1,,612
+2,CHEM 2340,Organic Chemistry II,4,25,1,,613
+2,CE 1747,Field Experience in Civil Engineering,3,752,1,,614
+2,CE 1323,Foundations of Civil Engineering,4,749,1,,615
+2,HON 2138,Honors Composition,4,72,1,,616
+2,RGSC 1300,Principles of Range Science I,3,92,1,,617
+2,STAT 2084,Intermediate Statistics,3,290,1,,618
+2,ARTS 1726,Art Laboratory,3,467,1,,619
+2,LING 2363,Introduction to the Study of Language,3,46,1,,620
+2,SPAN 1429,Spanish Laboratory,3,511,1,,621
+2,NURS 1645,Intermediate Nursing,3,882,1,,622
+1,SPAN 1745,Field Experience in Spanish,3,512,1,,623
+1,AST 1805,Explorations in Applied Statistics,3,645,1,,624
+1,PHLS 1225,Foundations of Public Health Sciences,3,902,1,,625
+1,CS 1996,Principles of Computer Science II,3,253,1,,626
+1,ME 1617,Explorations in Mechanical Engineering,3,788,1,,627
+1,NURS 1886,Nursing and Society,3,879,1,,628
+1,AEEC 2270,Agricultural Economics Laboratory,4,159,1,,629
+1,STAT 1801,Introduction to Statistics,3,284,1,,630
+1,MUS 2081,Principles of Music I,4,482,1,,631
+1,CE 1693,Civil Engineering Laboratory,4,753,1,,632
+1,HON 1963,Honors Methods,3,1005,1,,633
+2,PSY 2058,Principles of Psychology II,4,378,1,,634
+2,HORT 1076,Introduction to Horticulture,4,125,1,,635
+2,COMM 1169,Quantitative Approaches in Communication Studies,4,438,1,,636
+2,EE 1876,Electrical and Computer Engineering Laboratory,3,771,1,,637
+2,EE 2079,Explorations in Electrical and Computer Engineering,4,769,1,,638
+2,ENGL 1447,Professional and Technical Communication,3,2,1,,639
+2,STAT 2896,Concepts in Statistics,3,292,1,,640
+2,SOIL 2464,History of Soil Science,4,142,1,,641
+2,SOC 2222,Quantitative Approaches in Sociology,3,405,1,,642
+2,ENGL 1464,Principles of English I,3,344,1,,643
+2,BIOL 1292,Concepts in Biology,3,217,1,,644
+2,FWCE 2179,"Introduction to Fish, Wildlife and Conservation Ecology",3,184,1,,645
+2,JOUR 1082,Professional Practice in Journalism,3,456,1,,646
+1,SOC 1118,Sociology Methods,3,403,1,,647
+1,ASTR 1674,Concepts in Astronomy,3,328,1,,648
+1,ANSC 1555,Principles of Animal Science II,3,75,1,,649
+1,ASTR 1980,Explorations in Astronomy,3,325,1,,650
+2,MATH 1232,College Algebra,3,7,1,,651
+2,ET 1054,Engineering Technology Laboratory,3,851,1,,652
+2,SWK 2466,Quantitative Approaches in Social Work,3,945,1,,653
+14,SPAN 2058,Spanish II,4,45,1,,654
+14,GEOL 2429,Geology Methods,3,556,1,,655
+14,ENGL 1492,Professional Practice in English,3,346,1,,656
+14,CD 2899,Quantitative Approaches in Communication Disorders,4,992,1,,657
+14,ET 1108,History of Engineering Technology,3,849,1,,658
+14,ASTR 1757,History of Astronomy,3,326,1,,659
+14,MATH 1593,Calculus and Analytic Geometry I,4,11,1,,660
+14,CHEM 1055,Chemistry Laboratory,3,239,1,,661
+14,NURS 1970,Principles of Nursing II,3,880,1,,662
+14,RGSC 2680,Field Experience in Range Science,3,95,1,,663
+1,GEOG 2218,Survey of Geography,3,598,1,,664
+1,GEOG 2826,Physical Geography,3,37,1,,665
+1,AGRO 2328,Field Experience in Agronomy,3,111,1,,666
+1,PSY 2054,Intermediate Psychology,3,380,1,,667
+1,SOIL 2684,History of Soil Science,4,142,1,,668
+1,IE 2940,Industrial Engineering Methods,3,837,1,,669
+2,SOIL 2400,Introduction to Soil Science,3,139,1,,670
+2,PHLS 1106,Introduction to Public Health Sciences,3,901,1,,671
+2,MUS 1464,Quantitative Approaches in Music,3,486,1,,672
+2,MATH 1082,Introduction to Linear Algebra,3,14,1,,673
+2,COMM 2903,Communication Studies Methods,3,436,1,,674
+2,ME 1524,Concepts in Mechanical Engineering,3,796,1,,675
+2,CJUS 1001,Quantitative Approaches in Criminal Justice,3,570,1,,676
+2,PSY 2874,Psychology and Society,1,377,1,,677
+2,BIOL 1948,Microbiology,4,21,1,,678
+2,ANSC 1370,Principles of Animal Science I,3,74,1,,679
+2,MATH 1034,Mathematics Laboratory,3,266,1,,680
+1,PHYS 2214,Algebra-Based Physics I,4,26,1,,681
+2,ME 1143,Mechanical Engineering and Society,3,790,1,,682
+2,FCSC 1001,Family and Consumer Sciences Methods,3,175,1,,683
+2,HON 2841,Honors Methods,3,1005,1,,684
+2,COMM 2949,Professional Practice in Communication Studies,3,435,1,,685
+2,KIN 2649,Survey of Kinesiology,3,919,1,,686
+2,AE 1813,Foundations of Aerospace Engineering,4,813,1,,687
+2,ANSC 2635,Animal Science Laboratory,3,77,1,,688
+2,GOVT 2265,American National Government,3,33,1,,689
+2,CE 1934,Civil Engineering and Society,3,750,1,,690
+2,FWCE 1549,"Fish, Wildlife and Conservation Ecology Methods",3,188,1,,691
+2,MGMT 1250,Field Experience in Management,3,686,1,,692
+2,STAT 2490,Introduction to Statistics,3,284,1,,693
+3,FIN 2333,Field Experience in Finance,4,665,1,,694
+3,FCSC 1599,Professional Practice in Family and Consumer Sciences,3,174,1,,695
+3,CEP 1585,Human Growth and Development,3,70,1,,696
+3,HORT 1997,Horticulture Laboratory,3,126,1,,697
+3,MATH 1298,Applications of Calculus I,3,10,1,,698
+3,CHEM 2569,Quantitative Approaches in Chemistry,3,238,1,,699
+3,PHLS 2115,Explorations in Public Health Sciences,3,900,1,,700
+7,AST 2317,Explorations in Applied Statistics,3,645,1,,701
+7,ENGL 2101,Introduction to Creative Writing,3,43,1,,702
+7,GOVT 2329,Professional Practice in Government,3,419,1,,703
+7,ARTS 2384,Drawing I,3,47,1,,704
+7,RGSC 2267,Concepts in Range Science,4,94,1,,705
+7,BIOL 1733,Professional Practice in Biology,3,219,1,,706
+7,CJUS 2893,Intermediate Criminal Justice,3,573,1,,707
+7,AEEC 1783,Survey of Agricultural Economics,3,154,1,,708
+7,SOC 2738,Sociology Methods,3,403,1,,709
+7,PHYS 1147,Calculus-Based Physics II,4,28,1,,710
+7,ACCT 1671,Introduction to Accounting,3,611,1,,711
+7,MATH 1514,Survey of Mathematics,3,6,1,,712
+7,THTR 2547,Theatre Laboratory,3,499,1,,713
+7,CHEM 2937,General Chemistry II,4,23,1,,714
+7,ACCT 2624,Accounting Methods,3,615,1,,715
+7,PHYS 1434,Algebra-Based Physics I,4,26,1,,716
+7,JOUR 2127,Intermediate Journalism,3,457,1,,717
+7,COMM 1477,Introduction to Communication,3,5,1,,718
+7,BIOL 2591,General Biology II,4,18,1,,719
+7,COMM 1098,Professional Practice in Communication Studies,3,435,1,,720
+7,AEEC 2035,History of Agricultural Economics,3,157,1,,721
+7,HORT 1511,Field Experience in Horticulture,3,129,1,,722
+7,SOC 1967,Introduction to Sociology,3,32,1,,723
+2,ARTS 1771,Concepts in Art,3,468,1,,724
+2,ECON 1395,Intermediate Economics,4,632,1,,725
+2,AST 1831,Survey of Applied Statistics,1,644,1,,726
+2,CHME 1906,Quantitative Approaches in Chemical Engineering,3,735,1,,727
+2,HRTM 2737,"Principles of Hotel, Restaurant and Tourism Management II",3,199,1,,728
+2,HRTM 2401,"Quantitative Approaches in Hotel, Restaurant and Tourism Management",3,202,1,,729
+2,CEP 2857,Counseling and Educational Psychology Methods,4,980,1,,730
+2,SOC 2528,Sociology and Society,3,402,1,,731
+2,CEP 1311,Foundations of Counseling and Educational Psychology,3,979,1,,732
+1,HON 1007,Explorations in Honors,3,1003,1,,733
+1,CD 1226,Principles of Communication Disorders II,3,991,1,,734
+1,SPAN 2191,Survey of Spanish,3,508,1,,735
+1,FCSC 1558,Professional Practice in Family and Consumer Sciences,3,174,1,,736
+1,EDUC 1613,Intermediate Education,3,961,1,,737
+1,RGSC 2180,Principles of Range Science I,3,92,1,,738
+1,ET 1773,Principles of Engineering Technology II,4,847,1,,739
+18,AEEC 1243,Principles of Agricultural Economics I,4,156,1,,740
+18,STAT 2543,Applied Statistics,3,16,1,,741
+18,BIOL 1384,Microbiology,4,21,1,,742
+18,LING 1688,Introduction to the Study of Language,3,46,1,,743
+18,AE 2020,Foundations of Aerospace Engineering,4,813,1,,744
+18,CJUS 2265,Foundations of Criminal Justice,3,569,1,,745
+18,MATH 1100,College Algebra,3,7,1,,746
+18,MATH 1209,Applications of Calculus I,3,10,1,,747
+18,PSY 1584,Field Experience in Psychology,3,382,1,,748
+18,CHME 2353,Principles of Chemical Engineering I,3,732,1,,749
+18,PHLS 1112,History of Public Health Sciences,3,906,1,,750
+1,AGRO 2300,Professional Practice in Agronomy,3,112,1,,751
+1,BIOL 2279,Survey of Biology,3,216,1,,752
+1,PHYS 2566,Physics Laboratory,3,312,1,,753
+1,COMM 1021,Introduction to Communication,3,5,1,,754
+1,FWCE 2099,"Professional Practice in Fish, Wildlife and Conservation Ecology",3,187,1,,755
+1,ACCT 1949,Introduction to Accounting,3,611,1,,756
+4,EE 2643,Field Experience in Electrical and Computer Engineering,3,774,1,,757
+4,HON 1861,Honors Composition,4,72,1,,758
+4,JOUR 1896,Foundations of Journalism,3,452,1,,759
+4,FIN 2460,Finance Methods,3,666,1,,760
+4,SPAN 2231,Spanish II,4,45,1,,761
+4,BIOL 2713,General Biology II,4,18,1,,762
+4,ECON 1212,Macroeconomic Principles,3,34,1,,763
+4,ACCT 2318,Introduction to Accounting,3,611,1,,764
+4,FWCE 2534,"Fish, Wildlife and Conservation Ecology Methods",3,188,1,,765
+4,PHIL 2010,Field Experience in Philosophy,3,588,1,,766
+4,ARTS 2857,Art Appreciation,3,48,1,,767
+4,CE 2115,Quantitative Approaches in Civil Engineering,4,754,1,,768
+4,PHYS 1846,Calculus-Based Physics II,4,28,1,,769
+4,PHYS 2657,Calculus-Based Physics I,4,27,1,,770
+4,GEOL 2724,Concepts in Geology,4,555,1,,771
+4,EDUC 2462,Principles of Education I,3,958,1,,772
+4,MGMT 1119,Survey of Management,1,678,1,,773
+4,CHEM 2841,General Chemistry II,4,23,1,,774
+4,ANSC 2164,Animal Science Laboratory,3,77,1,,775
+1,ECON 2296,Foundations of Economics,3,630,1,,776
+1,ACCT 1746,History of Accounting,3,613,1,,777
+1,EE 2213,Professional Practice in Electrical and Computer Engineering,3,773,1,,778
+4,SOIL 2924,History of Soil Science,4,142,1,,779
+4,AGRO 2404,Agronomy and Society,3,108,1,,780
+4,MATH 1526,College Algebra,3,7,1,,781
+4,GOVT 2507,Principles of Government I,3,417,1,,782
+4,THTR 2203,Introduction to Theatre,3,50,1,,783
+4,PSY 2199,Introduction to Psychology,3,31,1,,784
+4,PHIL 2530,Concepts in Philosophy,3,589,1,,785
+4,MATH 2100,Survey of Mathematics,3,6,1,,786
+4,SOC 1346,Quantitative Approaches in Sociology,3,405,1,,787
+4,COMM 1924,Introduction to Communication,3,5,1,,788
+8,EE 2910,Explorations in Electrical and Computer Engineering,4,769,1,,789
+8,CJUS 2760,Introduction to Criminal Justice,3,566,1,,790
+8,HIST 1554,History of History,3,366,1,,791
+8,ANTH 1112,Concepts in Anthropology,3,543,1,,792
+8,ENGL 1323,English Methods,3,347,1,,793
+8,SPAN 1597,Spanish II,4,45,1,,794
+8,ASTR 2815,Concepts in Astronomy,3,328,1,,795
+8,GEOG 1993,Physical Geography,3,37,1,,796
+8,CD 2135,Quantitative Approaches in Communication Disorders,4,992,1,,797
+8,MGMT 2690,Management Laboratory,1,684,1,,798
+8,MKTG 1831,Intermediate Marketing,3,704,1,,799
+8,GEOL 2828,Physical Geology,4,29,1,,800
+8,CS 1252,Discrete Mathematics for Computer Science,3,55,1,,801
+8,THTR 1248,Introduction to Theatre,3,50,1,,802
+8,LING 1574,Introduction to the Study of Language,3,46,1,,803
+8,ME 1587,Intermediate Mechanical Engineering,3,794,1,,804
+8,MUS 1214,Principles of Music I,4,482,1,,805
+2,GEOG 1448,Quantitative Approaches in Geography,3,599,1,,806
+2,ANTH 2625,Introduction to Cultural Anthropology,3,36,1,,807
+2,COMM 2669,History of Communication Studies,3,437,1,,808
+2,MUS 2386,History of Music,3,484,1,,809
+2,LING 1199,Principles of Linguistics II,3,526,1,,810
+2,ANTH 2426,Concepts in Anthropology,3,543,1,,811
+2,MGMT 1599,Concepts in Management,3,683,1,,812
+2,EE 2451,Survey of Electrical and Computer Engineering,3,770,1,,813
+2,MKTG 1716,Explorations in Marketing,1,699,1,,814
+1,HORT 2341,Professional Practice in Horticulture,4,127,1,,815
+1,MKTG 1020,Marketing Methods,3,703,1,,816
+12,HON 2162,Honors Composition,4,72,1,,817
+12,FIN 2366,Survey of Finance,3,663,1,,818
+12,GOVT 2014,American National Government,3,33,1,,819
+12,ENGL 1413,Explorations in English,4,341,1,,820
+12,ARTS 1815,Drawing I,3,47,1,,821
+12,STAT 2606,Applied Statistics,3,16,1,,822
+12,MATH 1208,Introduction to Statistics,3,9,1,,823
+12,MKTG 2334,Marketing Methods,3,703,1,,824
+12,KIN 2007,Quantitative Approaches in Kinesiology,4,922,1,,825
+12,GEOL 2078,Geology Methods,3,556,1,,826
+12,PHYS 2259,Concepts in Physics,3,310,1,,827
+12,SPAN 1057,Spanish I,4,44,1,,828
+12,KIN 2903,Field Experience in Kinesiology,3,923,1,,829
+12,MATH 2240,Applications of Calculus I,3,10,1,,830
+13,GEOL 1257,Physical Geology,4,29,1,,831
+13,GEOL 2405,Geology Methods,3,556,1,,832
+13,FCSC 2491,Foundations of Family and Consumer Sciences,3,172,1,,833
+13,LING 2283,Quantitative Approaches in Linguistics,1,529,1,,834
+13,AE 1584,Aerospace Engineering Laboratory,3,815,1,,835
+13,CHEM 1888,General Chemistry I,4,22,1,,836
+13,PHIL 1766,Introduction to Philosophy,3,41,1,,837
+13,BCIS 1640,Professional Practice in Business Computer Information Systems,3,720,1,,838
+13,MKTG 1114,Marketing Methods,3,703,1,,839
+13,SPAN 2395,Spanish I,4,44,1,,840
+13,CS 1343,Computer Science Methods,3,256,1,,841
+13,PHIL 1542,"Logic, Reasoning and Critical Thinking",3,42,1,,842
+7,MATH 2687,College Algebra,3,7,1,,843
+7,AGRO 2400,Agronomy Methods,3,110,1,,844
+7,BIOL 1314,Biology and Society,3,215,1,,845
+7,SPAN 1245,Spanish I,4,44,1,,846
+7,CS 1369,Introduction to Programming,3,52,1,,847
+7,SUR 1798,Concepts in Surveying Engineering,3,866,1,,848
+7,PSY 1591,Introduction to Psychology,3,31,1,,849
+7,HIST 2427,Western Civilization I,3,40,1,,850
+7,LING 1419,Quantitative Approaches in Linguistics,1,529,1,,851
+7,HRTM 1480,"Quantitative Approaches in Hotel, Restaurant and Tourism Management",3,202,1,,852
+7,PHYS 1913,Calculus-Based Physics I,4,27,1,,853
+7,SOC 1154,Principles of Sociology I,3,401,1,,854
+7,ECON 1950,Macroeconomic Principles,3,34,1,,855
+1,LING 1678,Linguistics and Society,3,524,1,,856
+1,KIN 2136,History of Kinesiology,4,925,1,,857
+1,CS 1130,Computer Science Principles,3,51,1,,858
+1,FIN 1310,Professional Practice in Finance,3,667,1,,859
+1,FCSC 1481,Intermediate Family and Consumer Sciences,3,173,1,,860
+1,ME 2075,Mechanical Engineering Laboratory,3,793,1,,861
+10,PSY 1364,Quantitative Approaches in Psychology,3,381,1,,862
+10,HIST 1966,Western Civilization I,3,40,1,,863
+10,NURS 2207,Survey of Nursing,3,881,1,,864
+10,NURS 2395,Nursing Methods,3,884,1,,865
+10,CHEM 2186,General Chemistry II,4,23,1,,866
+10,AGRO 2117,Agronomy Methods,3,110,1,,867
+10,AST 1290,Explorations in Applied Statistics,3,645,1,,868
+10,ENGL 1492,Composition I,4,1,1,,869
+17,CHME 1639,Survey of Chemical Engineering,4,734,1,,870
+17,COMM 2196,Public Speaking,3,4,1,,871
+17,ASTR 2727,Introduction to Astronomy,4,30,1,,872
+17,BCIS 1581,History of Business Computer Information Systems,3,721,1,,873
+17,ENGL 1542,English and Society,3,342,1,,874
+17,MUS 2379,Music Appreciation,3,49,1,,875
+17,MUS 2574,History of Music,3,484,1,,876
+17,HIST 2740,United States History I,3,38,1,,877
+17,CS 2686,Computer Science Principles,3,51,1,,878
+17,PHYS 2602,Calculus-Based Physics II,4,28,1,,879
+17,SOIL 2214,Principles of Soil Science II,3,140,1,,880
+17,MATH 1582,Introduction to Statistics,3,9,1,,881
+17,PHIL 2466,Introduction to Philosophy,3,41,1,,882
+17,GOVT 1435,American National Government,3,33,1,,883
+17,MGMT 1223,Intermediate Management,3,685,1,,884
+17,ARTS 1083,Art Appreciation,3,48,1,,885
+17,ASTR 2493,History of Astronomy,3,326,1,,886
+17,BIOL 2672,Biology and Society,3,215,1,,887
+17,SPAN 1633,Spanish II,4,45,1,,888
+17,ACCT 1768,Accounting Methods,3,615,1,,889
+1,HRTM 2281,"Quantitative Approaches in Hotel, Restaurant and Tourism Management",3,202,1,,890
+1,SWK 2707,Foundations of Social Work,4,939,1,,891
+1,CJUS 1565,Principles of Criminal Justice I,3,567,1,,892
+1,ASTR 2258,Astronomy Methods,3,329,1,,893
+3,SUR 1284,History of Surveying Engineering,4,867,1,,894
+3,ARTS 2863,Art Appreciation,3,48,1,,895
+3,ENGL 1249,Intermediate English,4,345,1,,896
+3,MATH 1783,Mathematics Laboratory,3,266,1,,897
+3,PSY 2421,Principles of Psychology II,4,378,1,,898
+3,PHLS 1177,Field Experience in Public Health Sciences,3,903,1,,899
+3,MATH 1353,Intermediate Mathematics,3,267,1,,900
+18,SWK 2827,History of Social Work,4,942,1,,901
+18,LING 1402,Concepts in Linguistics,1,528,1,,902
+18,ACCT 1391,Principles of Accounting II,3,64,1,,903
+18,MKTG 1142,Explorations in Marketing,1,699,1,,904
+18,SPAN 2277,Survey of Spanish,3,508,1,,905
+18,ACCT 2224,Introduction to Accounting,3,611,1,,906
+18,BCIS 2050,Introduction to Business Computer Information Systems,3,716,1,,907
+18,SPAN 1557,Spanish I,4,44,1,,908
+18,MATH 1917,Mathematics Laboratory,3,266,1,,909
+18,COMM 1249,Communication Studies Laboratory,3,439,1,,910
+18,IE 2168,Foundations of Industrial Engineering,3,834,1,,911
+3,GEOL 1207,Field Experience in Geology,3,557,1,,912
+3,MKTG 2654,Marketing Methods,3,703,1,,913
+3,PSY 1434,Introduction to Psychology,3,31,1,,914
+3,MATH 1144,Professional Practice in Mathematics,3,269,1,,915
+3,IE 2263,Industrial Engineering Methods,3,837,1,,916
+3,MKTG 1458,Intermediate Marketing,3,704,1,,917
+3,HON 2749,Quantitative Approaches in Honors,4,1004,1,,918
+3,CHME 1201,Professional Practice in Chemical Engineering,3,737,1,,919
+3,GOVT 1752,Quantitative Approaches in Government,1,421,1,,920
+3,CE 1801,Civil Engineering and Society,3,750,1,,921
+3,STAT 2114,Statistics and Society,3,287,1,,922
+3,THTR 2568,Introduction to Theatre,3,497,1,,923
+3,SOIL 1162,Principles of Soil Science II,3,140,1,,924
+3,CHEM 1182,General Chemistry I,4,22,1,,925
+1,EDUC 1934,Introduction to Education,3,957,1,,926
+1,RGSC 2084,Quantitative Approaches in Range Science,3,93,1,,927
+1,GOVT 2721,Concepts in Government,4,422,1,,928
+1,CHME 2606,Principles of Chemical Engineering I,3,732,1,,929
+15,BIOL 2049,General Biology I,4,17,1,,930
+15,GOVT 1990,Professional Practice in Government,3,419,1,,931
+15,PHYS 1815,Calculus-Based Physics II,4,28,1,,932
+15,COMM 1401,Public Speaking,3,4,1,,933
+15,PHLS 1623,Public Health Sciences Laboratory,4,904,1,,934
+2,SUR 1309,Principles of Surveying Engineering I,3,863,1,,935
+2,ANSC 2991,Quantitative Approaches in Animal Science,3,76,1,,936
+2,ASTR 2283,Explorations in Astronomy,3,325,1,,937
+2,CHME 1205,Survey of Chemical Engineering,4,734,1,,938
+1,THTR 2030,Introduction to Theatre,3,497,1,,939
+1,ME 1313,Quantitative Approaches in Mechanical Engineering,3,795,1,,940
+6,SUR 1013,Principles of Surveying Engineering II,3,864,1,,941
+6,PHYS 2537,Calculus-Based Physics II,4,28,1,,942
+6,ASTR 2507,Introduction to Astronomy,4,30,1,,943
+6,MATH 1018,Calculus and Analytic Geometry I,4,11,1,,944
+6,AE 2138,Professional Practice in Aerospace Engineering,3,814,1,,945
+6,BCIS 2925,Survey of Business Computer Information Systems,3,717,1,,946
+6,AST 2148,Principles of Applied Statistics I,3,646,1,,947
+6,ENGL 2162,Composition I,4,1,1,,948
+6,ARTS 1494,Drawing I,3,47,1,,949
+6,MUS 2608,Music Appreciation,3,49,1,,950
+1,GEOL 2319,Concepts in Geology,4,555,1,,951
+1,GEOL 1486,Field Experience in Geology,3,557,1,,952
+11,ASTR 1488,History of Astronomy,3,326,1,,953
+11,IE 2695,Intermediate Industrial Engineering,4,836,1,,954
+11,COMM 2372,Introduction to Communication,3,5,1,,955
+11,ASTR 1915,Astronomy Laboratory,3,327,1,,956
+11,SPAN 1833,Spanish I,4,44,1,,957
+11,HIST 2315,United States History I,3,38,1,,958
+11,MGMT 1043,Survey of Management,1,678,1,,959
+11,NURS 2079,Principles of Nursing II,3,880,1,,960
+11,CS 2022,Introduction to Programming,3,52,1,,961
+11,AE 1116,Survey of Aerospace Engineering,4,812,1,,962
+11,FWCE 1712,"Explorations in Fish, Wildlife and Conservation Ecology",3,186,1,,963
+11,JOUR 2595,Principles of Journalism I,3,454,1,,964
+11,PHYS 1133,Calculus-Based Physics I,4,27,1,,965
+11,ME 1254,Quantitative Approaches in Mechanical Engineering,3,795,1,,966
+11,ENGL 1171,Writing in the Humanities and Social Sciences,3,3,1,,967
+11,HIST 1849,History of History,3,366,1,,968
+1,BIOL 2430,Professional Practice in Biology,3,219,1,,969
+1,AST 1703,Quantitative Approaches in Applied Statistics,3,650,1,,970
+1,CHEM 1423,Foundations of Chemistry,3,235,1,,971
+1,CD 1784,Survey of Communication Disorders,3,990,1,,972
+6,CE 1946,Civil Engineering and Society,3,750,1,,973
+6,MATH 2578,College Algebra,3,7,1,,974
+6,PHIL 2002,Professional Practice in Philosophy,3,587,1,,975
+6,SOIL 1019,History of Soil Science,4,142,1,,976
+6,COMM 1848,Introduction to Communication,3,5,1,,977
+6,CHEM 2698,General Chemistry II,4,23,1,,978
+6,MATH 2689,Mathematics Laboratory,3,266,1,,979
+6,HIST 2657,United States History II,3,39,1,,980
+6,MUS 1835,Music Methods,3,485,1,,981
+6,PSY 2139,Psychology and Society,1,377,1,,982
+6,FIN 1781,Introduction to Finance,3,662,1,,983
+6,ET 1462,Intermediate Engineering Technology,3,852,1,,984
+6,ENGL 1294,Writing in the Humanities and Social Sciences,3,3,1,,985
+6,FCSC 2559,Family and Consumer Sciences Methods,3,175,1,,986
+6,HIST 2285,United States History I,3,38,1,,987
+17,ANSC 1636,Intermediate Animal Science,3,78,1,,988
+17,HORT 1010,Professional Practice in Horticulture,4,127,1,,989
+17,HRTM 1862,"Hotel, Restaurant and Tourism Management Methods",3,203,1,,990
+17,CJUS 1978,History of Criminal Justice,3,571,1,,991
+17,ET 2200,Intermediate Engineering Technology,3,852,1,,992
+17,NURS 2183,Nursing Methods,3,884,1,,993
+17,THTR 2512,Introduction to Theatre,3,497,1,,994
+17,MGMT 2536,Management Laboratory,1,684,1,,995
+17,MGMT 2515,Principles of Management II,1,681,1,,996
+17,SUR 2078,Field Experience in Surveying Engineering,4,868,1,,997
+17,HRTM 2812,"Principles of Hotel, Restaurant and Tourism Management II",3,199,1,,998
+17,THTR 2609,Introduction to Theatre,3,50,1,,999
+17,HIST 2340,United States History II,3,39,1,,1000
+1,LING 1238,Principles of Linguistics I,3,525,1,,1001
+1,PHYS 1118,History of Physics,4,309,1,,1002
+1,EDUC 1106,Professional Practice in Education,3,960,1,,1003
+1,AGRO 2920,Principles of Agronomy II,3,109,1,,1004
+1,CJUS 1420,Quantitative Approaches in Criminal Justice,3,570,1,,1005
+1,STAT 1682,Survey of Statistics,3,288,1,,1006
+2,ANSC 2781,Intermediate Animal Science,3,78,1,,1007
+2,HIST 1201,Field Experience in History,3,364,1,,1008
+2,COMM 2931,Communication Studies Laboratory,3,439,1,,1009
+2,EDUC 1131,Quantitative Approaches in Education,3,963,1,,1010
+7,BIOL 2707,Human Anatomy and Physiology I,4,19,1,,1011
+7,AGRO 2599,Foundations of Agronomy,3,107,1,,1012
+7,ARTS 2324,Foundations of Art,3,466,1,,1013
+7,KIN 2503,Introduction to Kinesiology,3,921,1,,1014
+7,MATH 1648,Introduction to Statistics,3,9,1,,1015
+7,MATH 1901,Mathematics Laboratory,3,266,1,,1016
+7,PHLS 1245,Public Health Sciences Laboratory,4,904,1,,1017
+7,ECON 1470,Intermediate Economics,4,632,1,,1018
+7,CE 1348,Quantitative Approaches in Civil Engineering,4,754,1,,1019
+7,MATH 1237,Calculus and Analytic Geometry I,4,11,1,,1020
+7,AGRO 1786,Principles of Agronomy II,3,109,1,,1021
+7,GOVT 1003,American National Government,3,33,1,,1022
+7,GEOG 2404,Geography Methods,3,600,1,,1023
+7,KIN 2204,Foundations of Kinesiology,3,920,1,,1024
+7,CS 1219,Concepts in Computer Science,3,255,1,,1025
+15,ENGL 2566,Composition I,4,1,1,,1026
+15,NURS 1178,History of Nursing,3,885,1,,1027
+15,GEOG 2806,Physical Geography,3,37,1,,1028
+15,GOVT 2486,American National Government,3,33,1,,1029
+15,ANTH 1928,Introduction to Cultural Anthropology,3,36,1,,1030
+1,MKTG 1337,Intermediate Marketing,3,704,1,,1031
+1,EDUC 2033,Education Methods,3,964,1,,1032
+8,HIST 1898,Western Civilization I,3,40,1,,1033
+8,PHYS 1410,Algebra-Based Physics I,4,26,1,,1034
+8,GEOL 2734,Geology Methods,3,556,1,,1035
+8,ENGL 2577,Composition I,4,1,1,,1036
+8,AST 1198,Explorations in Applied Statistics,3,645,1,,1037
+8,ARTS 2962,Drawing I,3,47,1,,1038
+8,PHYS 2257,Calculus-Based Physics II,4,28,1,,1039
+8,ARTS 2011,Art Appreciation,3,48,1,,1040
+8,COMM 2065,Communication Studies Laboratory,3,439,1,,1041
+8,JOUR 2068,Principles of Journalism I,3,454,1,,1042
+8,ME 2654,Quantitative Approaches in Mechanical Engineering,3,795,1,,1043
+8,EE 1157,Principles of Electrical and Computer Engineering I,3,767,1,,1044
+5,KIN 1514,Explorations in Kinesiology,3,918,1,,1045
+5,LING 2713,Linguistics Laboratory,3,527,1,,1046
+5,HON 2128,Honors Seminar: Ideas and Society,3,71,1,,1047
+5,COMM 2594,Communication Studies and Society,3,434,1,,1048
+5,ECON 2264,Concepts in Economics,4,631,1,,1049
+5,MGMT 2487,Explorations in Management,3,680,1,,1050
+5,LING 2159,Introduction to the Study of Language,3,46,1,,1051
+5,CHME 1299,Intermediate Chemical Engineering,3,736,1,,1052
+5,FCSC 1360,Family and Consumer Sciences and Society,3,170,1,,1053
+5,AGRO 2634,Agronomy and Society,3,108,1,,1054
+5,COMM 1920,Public Speaking,3,4,1,,1055
+5,PHLS 2680,Public Health Sciences Laboratory,4,904,1,,1056
+5,SPAN 1478,Spanish II,4,45,1,,1057
+6,BIOL 2767,Biology Methods,3,218,1,,1058
+6,ANSC 2683,Foundations of Animal Science,3,73,1,,1059
+6,CEP 2555,Explorations in Counseling and Educational Psychology,3,978,1,,1060
+6,ENGL 1094,Introduction to Creative Writing,3,43,1,,1061
+6,PSY 1637,Psychology Laboratory,3,384,1,,1062
+6,MATH 1433,Introduction to Statistics,3,9,1,,1063
+6,GEOL 1823,Physical Geology,4,29,1,,1064
+6,FCSC 1680,Professional Practice in Family and Consumer Sciences,3,174,1,,1065
+6,ET 2561,History of Engineering Technology,3,849,1,,1066
+6,HON 2125,Honors Seminar: Ideas and Society,3,71,1,,1067
+6,ARTS 1844,Art Appreciation,3,48,1,,1068
+6,HORT 2270,Intermediate Horticulture,3,128,1,,1069
+6,KIN 2572,Kinesiology Methods,3,924,1,,1070
+6,EE 2125,Concepts in Electrical and Computer Engineering,4,772,1,,1071
+6,GOVT 2424,American National Government,3,33,1,,1072
+6,PSY 1290,Introduction to Psychology,3,31,1,,1073
+11,ECON 1439,Macroeconomic Principles,3,34,1,,1074
+11,AE 2539,Aerospace Engineering Laboratory,3,815,1,,1075
+11,MATH 2268,College Algebra,3,7,1,,1076
+11,AGRO 2187,Principles of Agronomy II,3,109,1,,1077
+11,PSY 1431,Quantitative Approaches in Psychology,3,381,1,,1078
+11,HIST 2253,Professional Practice in History,3,365,1,,1079
+11,CHME 1601,History of Chemical Engineering,3,738,1,,1080
+11,HORT 1347,Introduction to Horticulture,4,125,1,,1081
+11,MATH 2299,Survey of Mathematics,3,6,1,,1082
+11,MKTG 1477,Professional Practice in Marketing,3,705,1,,1083
+11,FCSC 1161,Intermediate Family and Consumer Sciences,3,173,1,,1084
+11,HORT 2548,Horticulture Laboratory,3,126,1,,1085
+11,BIOL 2135,General Biology II,4,18,1,,1086
+11,PHIL 1292,"Logic, Reasoning and Critical Thinking",3,42,1,,1087
+11,HRTM 2093,"History of Hotel, Restaurant and Tourism Management",3,201,1,,1088
+11,KIN 2024,Kinesiology Methods,3,924,1,,1089
+11,EE 2638,Explorations in Electrical and Computer Engineering,4,769,1,,1090
+11,MGMT 1438,Principles of Management II,1,681,1,,1091
+4,EE 2022,Survey of Electrical and Computer Engineering,3,770,1,,1092
+4,CHEM 1444,General Chemistry I,4,22,1,,1093
+4,FCSC 1880,Family and Consumer Sciences and Society,3,170,1,,1094
+4,IE 1490,Foundations of Industrial Engineering,3,834,1,,1095
+4,SUR 1604,History of Surveying Engineering,4,867,1,,1096
+4,SWK 2842,Introduction to Social Work,4,941,1,,1097
+4,SOC 1424,Introduction to Sociology,3,32,1,,1098
+4,LING 1989,Quantitative Approaches in Linguistics,1,529,1,,1099
+4,CS 2781,Computer Science Methods,3,256,1,,1100
+4,BCIS 2286,Business Computer Information Systems Methods,4,719,1,,1101
+4,GOVT 1705,Professional Practice in Government,3,419,1,,1102
+4,ANSC 1758,Principles of Animal Science II,3,75,1,,1103
+4,COMM 1234,Communication Studies and Society,3,434,1,,1104
+4,HIST 2456,Intermediate History,1,363,1,,1105
+4,MATH 1462,Calculus and Analytic Geometry I,4,11,1,,1106
+1,COMM 1074,Principles of Communication Studies II,3,433,1,,1107
+1,PSY 1978,Principles of Psychology II,4,378,1,,1108
+1,ENGL 1231,Intermediate English,4,345,1,,1109
+1,KIN 1965,Explorations in Kinesiology,3,918,1,,1110
+1,EDUC 2031,Explorations in Education,3,956,1,,1111
+10,ARTS 1147,Art Methods,3,470,1,,1112
+10,STAT 1921,Applied Statistics,3,16,1,,1113
+10,HORT 1809,Principles of Horticulture II,3,123,1,,1114
+10,ANTH 1999,Introduction to Cultural Anthropology,3,36,1,,1115
+10,STAT 1405,Statistics and Society,3,287,1,,1116
+10,PHYS 1941,Calculus-Based Physics II,4,28,1,,1117
+10,PHYS 1032,Field Experience in Physics,3,311,1,,1118
+10,IE 2802,Survey of Industrial Engineering,3,833,1,,1119
+10,CHME 2699,Chemical Engineering and Society,3,733,1,,1120
+10,COMM 1360,Public Speaking,3,4,1,,1121
+10,THTR 1201,Introduction to Theatre,3,50,1,,1122
+10,NURS 1714,Nursing Laboratory,3,883,1,,1123
+10,HORT 2654,Professional Practice in Horticulture,4,127,1,,1124
+10,SPAN 2070,Spanish II,4,45,1,,1125
+10,CHME 1871,History of Chemical Engineering,3,738,1,,1126
+10,PHIL 1740,Introduction to Philosophy,3,41,1,,1127
+10,CHEM 1305,Foundations of Chemistry,3,235,1,,1128
+10,ACCT 2367,Principles of Accounting I,3,63,1,,1129
+10,HIST 1194,United States History II,3,39,1,,1130
+3,CD 1914,Quantitative Approaches in Communication Disorders,4,992,1,,1131
+3,BIOL 2399,Survey of Biology,3,216,1,,1132
+3,CS 2737,Programming Fundamentals,4,53,1,,1133
+3,KIN 2482,Kinesiology Methods,3,924,1,,1134
+3,CEP 2091,Foundations of Counseling and Educational Psychology,3,979,1,,1135
+3,EE 1896,Concepts in Electrical and Computer Engineering,4,772,1,,1136
+8,CEP 1493,Explorations in Counseling and Educational Psychology,3,978,1,,1137
+8,SOC 2578,Principles of Sociology I,3,401,1,,1138
+8,SOIL 2109,Quantitative Approaches in Soil Science,3,143,1,,1139
+8,AST 2408,Intermediate Applied Statistics,3,648,1,,1140
+8,MKTG 1630,Introduction to Marketing,3,701,1,,1141
+8,FWCE 1220,"Fish, Wildlife and Conservation Ecology Methods",3,188,1,,1142
+8,PHYS 2637,Concepts in Physics,3,310,1,,1143
+8,COMM 2606,Public Speaking,3,4,1,,1144
+8,FIN 1096,Survey of Finance,3,663,1,,1145
+8,AGRO 2197,Concepts in Agronomy,3,113,1,,1146
+8,GOVT 1429,American National Government,3,33,1,,1147
+8,ENGL 2500,Principles of English I,3,344,1,,1148
+8,RGSC 1337,Principles of Range Science I,3,92,1,,1149
+8,BCIS 1190,History of Business Computer Information Systems,3,721,1,,1150
+8,BIOL 2669,General Biology I,4,17,1,,1151
+2,MGMT 1310,History of Management,3,682,1,,1152
+2,SOIL 2027,Quantitative Approaches in Soil Science,3,143,1,,1153
+2,CJUS 2996,History of Criminal Justice,3,571,1,,1154
+2,IE 2587,Intermediate Industrial Engineering,4,836,1,,1155
+2,ARTS 2157,Art Appreciation,3,48,1,,1156
+2,HRTM 2360,"Hotel, Restaurant and Tourism Management Methods",3,203,1,,1157
+2,GOVT 2141,Intermediate Government,3,420,1,,1158
+2,CE 2837,Civil Engineering Methods,3,755,1,,1159
+2,MKTG 1034,Marketing Methods,3,703,1,,1160
+2,JOUR 2106,Intermediate Journalism,3,457,1,,1161
+2,IE 2723,Survey of Industrial Engineering,3,833,1,,1162
+6,BIOL 2649,General Biology I,4,17,1,,1163
+6,MGMT 1918,Intermediate Management,3,685,1,,1164
+6,EE 1373,Professional Practice in Electrical and Computer Engineering,3,773,1,,1165
+6,MATH 1064,Survey of Mathematics,3,6,1,,1166
+6,CS 2334,Computer Science Methods,3,256,1,,1167
+6,ACCT 1931,Accounting Methods,3,615,1,,1168
+6,COMM 1881,Public Speaking,3,4,1,,1169
+6,NURS 2743,Nursing Methods,3,884,1,,1170
+3,STAT 1563,Statistics Laboratory,3,289,1,,1171
+3,KIN 1398,Quantitative Approaches in Kinesiology,4,922,1,,1172
+3,HIST 1415,United States History II,3,39,1,,1173
+3,BIOL 2675,General Biology II,4,18,1,,1174
+1,GEOG 2192,Concepts in Geography,3,601,1,,1175
+1,GEOL 2027,Geology and Society,3,554,1,,1176
+1,EDUC 2433,Field Experience in Education,3,962,1,,1177
+2,ECON 1693,Concepts in Economics,4,631,1,,1178
+2,THTR 1150,Theatre Laboratory,3,499,1,,1179
+2,BCIS 2198,Survey of Business Computer Information Systems,3,717,1,,1180
+2,PSY 1657,Foundations of Psychology,3,379,1,,1181
+2,RGSC 2631,Quantitative Approaches in Range Science,3,93,1,,1182
+11,SOIL 2858,Introduction to Soil Science,3,139,1,,1183
+11,ECON 1256,Principles of Economics I,3,629,1,,1184
+11,PHIL 1946,Introduction to Philosophy,3,41,1,,1185
+11,CJUS 2526,History of Criminal Justice,3,571,1,,1186
+11,LING 2949,Quantitative Approaches in Linguistics,1,529,1,,1187
+11,FCSC 2024,Survey of Family and Consumer Sciences,3,171,1,,1188
+11,COMM 1580,Professional Practice in Communication Studies,3,435,1,,1189
+3,SOC 2034,Introduction to Sociology,3,32,1,,1190
+3,COMM 2615,Professional Practice in Communication Studies,3,435,1,,1191
+3,CHEM 1172,Organic Chemistry II,4,25,1,,1192
+1,ET 1217,Introduction to Engineering Technology,3,848,1,,1193
+11,THTR 1349,Theatre Methods,3,498,1,,1194
+11,HORT 2929,Field Experience in Horticulture,3,129,1,,1195
+11,THTR 1908,Introduction to Theatre,3,50,1,,1196
+11,COMM 2887,Public Speaking,3,4,1,,1197
+11,AEEC 2219,Explorations in Agricultural Economics,3,155,1,,1198
+11,HON 1722,Honors Composition,4,72,1,,1199
+9,MKTG 2095,Marketing Methods,3,703,1,,1200
+9,ME 2815,Intermediate Mechanical Engineering,3,794,1,,1201
+9,SOC 2966,Sociology and Society,3,402,1,,1202
+9,BIOL 2562,Human Anatomy and Physiology II,4,20,1,,1203
+9,BIOL 1330,General Biology II,4,18,1,,1204
+9,ASTR 1137,Introduction to Astronomy,4,30,1,,1205
+13,ANTH 2668,Anthropology Methods,3,544,1,,1206
+13,HIST 2755,United States History II,3,39,1,,1207
+13,MATH 2627,Professional Practice in Mathematics,3,269,1,,1208
+13,CHEM 2482,General Chemistry II,4,23,1,,1209
+13,THTR 1617,History of Theatre,3,500,1,,1210
+13,ENGL 1432,Writing in the Humanities and Social Sciences,3,3,1,,1211
+13,ARTS 1177,Concepts in Art,3,468,1,,1212
+13,GEOG 2697,Physical Geography,3,37,1,,1213
+13,BIOL 1481,Human Anatomy and Physiology I,4,19,1,,1214
+13,HON 1920,Honors Seminar: Ideas and Society,3,71,1,,1215
+13,PHYS 2635,Calculus-Based Physics II,4,28,1,,1216
+13,MUS 2928,Music Appreciation,3,49,1,,1217
+13,PSY 2520,Introduction to Psychology,3,31,1,,1218
+13,HORT 2974,Principles of Horticulture II,3,123,1,,1219
+13,COMM 1763,Public Speaking,3,4,1,,1220
+13,IE 1572,Foundations of Industrial Engineering,3,834,1,,1221
+13,ARTS 1638,Art Laboratory,3,467,1,,1222
+13,BCIS 2491,Introduction to Business Computer Information Systems,3,716,1,,1223
+13,EDUC 1708,Education Methods,3,964,1,,1224
+2,HORT 1075,Intermediate Horticulture,3,128,1,,1225
+2,SUR 1507,Principles of Surveying Engineering II,3,864,1,,1226
+2,IE 1697,Industrial Engineering Laboratory,3,835,1,,1227
+3,AST 2110,Intermediate Applied Statistics,3,648,1,,1228
+3,NURS 1724,Nursing Laboratory,3,883,1,,1229
+3,PSY 2462,Foundations of Psychology,3,379,1,,1230
+3,JOUR 2924,Foundations of Journalism,3,452,1,,1231
+3,LING 2556,Linguistics and Society,3,524,1,,1232
+3,FIN 2236,Introduction to Finance,3,662,1,,1233
+6,BIOL 2605,General Biology II,4,18,1,,1234
+6,HORT 2363,Introduction to Horticulture,4,125,1,,1235
+6,BIOL 2489,Human Anatomy and Physiology I,4,19,1,,1236
+6,PHIL 2511,"Logic, Reasoning and Critical Thinking",3,42,1,,1237
+6,MKTG 2342,Intermediate Marketing,3,704,1,,1238
+6,CS 2131,Computer Science Principles,3,51,1,,1239
+6,STAT 2649,Statistics and Society,3,287,1,,1240
+6,ECON 2676,Macroeconomic Principles,3,34,1,,1241
+6,ET 1627,Engineering Technology Laboratory,3,851,1,,1242
+6,SOIL 1916,Field Experience in Soil Science,3,144,1,,1243
+6,MATH 1979,Applications of Calculus I,3,10,1,,1244
+6,HIST 2942,History of History,3,366,1,,1245
+6,CHEM 1003,Quantitative Approaches in Chemistry,3,238,1,,1246
+6,SUR 2718,Concepts in Surveying Engineering,3,866,1,,1247
+1,FWCE 2466,"Introduction to Fish, Wildlife and Conservation Ecology",3,184,1,,1248
+1,AGRO 1747,Foundations of Agronomy,3,107,1,,1249
+1,MATH 2225,Calculus III,3,13,1,,1250
+2,HRTM 2860,"Intermediate Hotel, Restaurant and Tourism Management",4,204,1,,1251
+2,HRTM 2698,"Survey of Hotel, Restaurant and Tourism Management",4,200,1,,1252
+2,CS 2502,Programming Fundamentals,4,53,1,,1253
+2,THTR 1655,Introduction to Theatre,3,497,1,,1254
+1,BCIS 2291,Introduction to Business Computer Information Systems,3,716,1,,1255
+1,FWCE 1233,"Fish, Wildlife and Conservation Ecology Laboratory",3,189,1,,1256
+2,ET 1732,Principles of Engineering Technology II,4,847,1,,1257
+2,AGRO 1646,Concepts in Agronomy,3,113,1,,1258
+2,ASTR 2519,Astronomy Methods,3,329,1,,1259
+2,ARTS 1779,Drawing I,3,47,1,,1260
+2,AGRO 2689,Professional Practice in Agronomy,3,112,1,,1261
+2,MATH 2041,Calculus and Analytic Geometry I,4,11,1,,1262
+2,SOIL 1766,Field Experience in Soil Science,3,144,1,,1263
+2,SWK 2804,History of Social Work,4,942,1,,1264
+2,MATH 2522,Intermediate Mathematics,3,267,1,,1265
+2,HRTM 1614,"History of Hotel, Restaurant and Tourism Management",3,201,1,,1266
+2,ARTS 2635,Art Methods,3,470,1,,1267
+2,GEOG 2382,Physical Geography,3,37,1,,1268
+2,AGRO 1834,Foundations of Agronomy,3,107,1,,1269
+2,SPAN 1622,Survey of Spanish,3,508,1,,1270
+8,ANTH 2990,Foundations of Anthropology,3,541,1,,1271
+8,KIN 2334,Concepts in Kinesiology,3,926,1,,1272
+8,NURS 2935,Nursing Laboratory,3,883,1,,1273
+8,HIST 2820,Intermediate History,1,363,1,,1274
+8,ME 2902,Mechanical Engineering Laboratory,3,793,1,,1275
+8,MGMT 2990,Concepts in Management,3,683,1,,1276
+8,ANTH 2821,Introduction to Cultural Anthropology,3,36,1,,1277
+8,BIOL 1829,Biology Methods,3,218,1,,1278
+8,LING 1774,Quantitative Approaches in Linguistics,1,529,1,,1279
+8,ANTH 1480,Principles of Anthropology II,3,542,1,,1280
+8,AGRO 2388,Professional Practice in Agronomy,3,112,1,,1281
+8,ET 2671,Introduction to Engineering Technology,3,848,1,,1282
+8,PHIL 2161,"Logic, Reasoning and Critical Thinking",3,42,1,,1283
+8,MATH 2610,Trigonometry and Precalculus,4,8,1,,1284
+8,FWCE 1335,"Explorations in Fish, Wildlife and Conservation Ecology",3,186,1,,1285
+13,ACCT 1166,History of Accounting,3,613,1,,1286
+13,MUS 2424,History of Music,3,484,1,,1287
+13,CJUS 1828,Quantitative Approaches in Criminal Justice,3,570,1,,1288
+13,MATH 1640,Calculus and Analytic Geometry I,4,11,1,,1289
+13,SPAN 1662,Survey of Spanish,3,508,1,,1290
+13,NURS 2047,Nursing Laboratory,3,883,1,,1291
+13,ACCT 1720,Principles of Accounting II,3,64,1,,1292
+13,LING 2141,Principles of Linguistics I,3,525,1,,1293
+13,JOUR 1602,Professional Practice in Journalism,3,456,1,,1294
+13,LING 2906,Introduction to the Study of Language,3,46,1,,1295
+13,ECON 2037,Macroeconomic Principles,3,34,1,,1296
+13,ARTS 1149,Drawing I,3,47,1,,1297
+13,EE 1905,History of Electrical and Computer Engineering,3,775,1,,1298
+13,ASTR 2579,Concepts in Astronomy,3,328,1,,1299
+13,HORT 1105,Intermediate Horticulture,3,128,1,,1300
+13,ENGL 2601,Principles of English II,3,343,1,,1301
+7,BCIS 2628,Survey of Business Computer Information Systems,3,717,1,,1302
+7,HORT 2124,Horticulture Laboratory,3,126,1,,1303
+7,PHIL 1395,"Logic, Reasoning and Critical Thinking",3,42,1,,1304
+7,SPAN 1577,Quantitative Approaches in Spanish,3,509,1,,1305
+7,FWCE 2313,"Fish, Wildlife and Conservation Ecology Laboratory",3,189,1,,1306
+7,MATH 2036,Professional Practice in Mathematics,3,269,1,,1307
+7,ASTR 1960,Astronomy Methods,3,329,1,,1308
+7,AEEC 2647,Concepts in Agricultural Economics,3,160,1,,1309
+7,GEOL 2564,Field Experience in Geology,3,557,1,,1310
+7,ACCT 2946,Principles of Accounting II,3,610,1,,1311
+7,MUS 2248,Music Methods,3,485,1,,1312
+7,ASTR 2269,Introduction to Astronomy,4,30,1,,1313
+7,PHLS 1287,Explorations in Public Health Sciences,3,900,1,,1314
+7,AST 1710,Quantitative Approaches in Applied Statistics,3,650,1,,1315
+7,MATH 2792,Trigonometry and Precalculus,4,8,1,,1316
+7,CHEM 2796,Chemistry Laboratory,3,239,1,,1317
+7,CEP 1828,Foundations of Counseling and Educational Psychology,3,979,1,,1318
+7,MGMT 2177,Foundations of Management,3,679,1,,1319
+7,ACCT 1602,History of Accounting,3,613,1,,1320
+7,HIST 2643,United States History II,3,39,1,,1321
+7,PHLS 1781,Quantitative Approaches in Public Health Sciences,3,905,1,,1322
+7,ENGL 2296,Professional and Technical Communication,3,2,1,,1323
+7,MKTG 2446,Marketing Methods,3,703,1,,1324
+7,COMM 1100,Public Speaking,3,4,1,,1325
+7,MATH 2607,Applications of Calculus I,3,10,1,,1326
+7,AE 1928,Aerospace Engineering and Society,3,811,1,,1327
+7,CHEM 1955,Organic Chemistry II,4,25,1,,1328
+4,BCIS 1063,Intermediate Business Computer Information Systems,3,718,1,,1329
+4,BCIS 2987,History of Business Computer Information Systems,3,721,1,,1330
+4,AEEC 1817,History of Agricultural Economics,3,157,1,,1331
+4,IE 2984,Industrial Engineering Methods,3,837,1,,1332
+4,MATH 2332,Calculus III,3,13,1,,1333
+4,ARTS 2718,Art Laboratory,3,467,1,,1334
+4,AE 1260,Field Experience in Aerospace Engineering,3,816,1,,1335
+4,ASTR 1273,Astronomy and Society,3,324,1,,1336
+4,ECON 2071,Principles of Economics I,3,629,1,,1337
+4,SPAN 2274,Field Experience in Spanish,3,512,1,,1338
+4,AGRO 2430,Principles of Agronomy II,3,109,1,,1339
+4,ENGL 1794,Writing in the Humanities and Social Sciences,3,3,1,,1340
+4,PSY 2520,Psychology and Society,1,377,1,,1341
+4,HIST 2658,United States History II,3,39,1,,1342
+1,AST 1790,Principles of Applied Statistics I,3,646,1,,1343
+1,PHLS 2707,History of Public Health Sciences,3,906,1,,1344
+10,AE 1506,Explorations in Aerospace Engineering,3,810,1,,1345
+10,PHLS 1444,Introduction to Public Health Sciences,3,901,1,,1346
+10,HON 2785,Honors Methods,3,1005,1,,1347
+10,PSY 1011,Intermediate Psychology,3,380,1,,1348
+10,THTR 1420,Theatre Laboratory,3,499,1,,1349
+10,PHLS 2065,Quantitative Approaches in Public Health Sciences,3,905,1,,1350
+10,MGMT 1579,Survey of Management,1,678,1,,1351
+10,CEP 1681,Explorations in Counseling and Educational Psychology,3,978,1,,1352
+10,ENGL 1795,Writing in the Humanities and Social Sciences,3,3,1,,1353
+10,PHYS 1993,Algebra-Based Physics I,4,26,1,,1354
+10,IE 1537,Industrial Engineering Laboratory,3,835,1,,1355
+10,MKTG 1214,Marketing Methods,3,703,1,,1356
+10,CHEM 2815,General Chemistry I,4,22,1,,1357
+7,FCSC 1660,Family and Consumer Sciences Methods,3,175,1,,1358
+7,BCIS 2294,Business Computer Information Systems Methods,4,719,1,,1359
+7,HRTM 1543,"Hotel, Restaurant and Tourism Management Methods",3,203,1,,1360
+7,SOC 1921,Quantitative Approaches in Sociology,3,405,1,,1361
+7,MUS 2223,Music Appreciation,3,49,1,,1362
+7,CHME 2428,Professional Practice in Chemical Engineering,3,737,1,,1363
+7,STAT 2195,Applied Statistics,3,16,1,,1364
+7,CS 2096,Quantitative Approaches in Computer Science,4,254,1,,1365
+7,CJUS 1493,History of Criminal Justice,3,571,1,,1366
+7,CHEM 1420,Organic Chemistry I,4,24,1,,1367
+7,PHIL 1951,Concepts in Philosophy,3,589,1,,1368
+7,CHME 2036,Chemical Engineering and Society,3,733,1,,1369
+7,STAT 2023,History of Statistics,3,291,1,,1370
+7,AEEC 2622,Quantitative Approaches in Agricultural Economics,4,158,1,,1371
+1,GOVT 2134,Quantitative Approaches in Government,1,421,1,,1372
+1,MKTG 1975,Field Experience in Marketing,3,702,1,,1373
+1,SUR 1533,Concepts in Surveying Engineering,3,866,1,,1374
+2,HON 1412,Quantitative Approaches in Honors,4,1004,1,,1375
+2,SOC 2327,Principles of Sociology I,3,401,1,,1376
+2,MGMT 1315,Management Laboratory,1,684,1,,1377
+2,SPAN 1756,Field Experience in Spanish,3,512,1,,1378
+2,BCIS 1961,Intermediate Business Computer Information Systems,3,718,1,,1379
+2,AST 1419,Intermediate Applied Statistics,3,648,1,,1380
+2,STAT 2658,Professional Practice in Statistics,3,293,1,,1381
+2,JOUR 2288,Field Experience in Journalism,3,455,1,,1382
+2,AEEC 2411,Principles of Agricultural Economics I,4,156,1,,1383
+2,PHLS 2692,History of Public Health Sciences,3,906,1,,1384
+2,FIN 2843,Finance Methods,3,666,1,,1385
+2,ME 1207,Explorations in Mechanical Engineering,3,788,1,,1386
+14,STAT 2601,Applied Statistics,3,16,1,,1387
+14,BIOL 1353,Human Anatomy and Physiology I,4,19,1,,1388
+14,LING 2431,Introduction to the Study of Language,3,46,1,,1389
+14,CEP 1551,Human Growth and Development,3,70,1,,1390
+14,ECON 2567,Foundations of Economics,3,630,1,,1391
+14,HIST 2857,United States History I,3,38,1,,1392
+14,PHYS 1069,Calculus-Based Physics I,4,27,1,,1393
+14,ECON 1245,Principles of Economics I,3,629,1,,1394
+14,ARTS 2495,Drawing I,3,47,1,,1395
+14,ASTR 2502,Introduction to Astronomy,4,30,1,,1396
+14,JOUR 2519,Professional Practice in Journalism,3,456,1,,1397
+14,GOVT 1815,Quantitative Approaches in Government,1,421,1,,1398
+14,ARTS 2433,Foundations of Art,3,466,1,,1399
+14,EDUC 2584,Principles of Education I,3,958,1,,1400
+20,NURS 2305,History of Nursing,3,885,1,,1401
+20,ACCT 2824,Principles of Accounting II,3,64,1,,1402
+20,SWK 2404,Foundations of Social Work,4,939,1,,1403
+20,JOUR 1002,Professional Practice in Journalism,3,456,1,,1404
+20,HRTM 1269,"Principles of Hotel, Restaurant and Tourism Management I",3,198,1,,1405
+20,JOUR 2894,Field Experience in Journalism,3,455,1,,1406
+20,SOC 2665,Sociology Laboratory,3,404,1,,1407
+20,HRTM 1364,"Quantitative Approaches in Hotel, Restaurant and Tourism Management",3,202,1,,1408
+20,COMM 2452,Public Speaking,3,4,1,,1409
+20,BIOL 2965,General Biology II,4,18,1,,1410
+20,MGMT 2089,Foundations of Management,3,679,1,,1411
+20,AGRO 2662,Foundations of Agronomy,3,107,1,,1412
+20,HIST 2653,United States History II,3,39,1,,1413
+20,CHEM 1768,General Chemistry II,4,23,1,,1414
+2,HON 1866,Explorations in Honors,3,1003,1,,1415
+2,ANTH 2791,Foundations of Anthropology,3,541,1,,1416
+1,CS 1773,Computer Science Methods,3,256,1,,1417
+1,CEP 2545,Human Growth and Development,3,70,1,,1418
+4,AEEC 2068,Survey of Agricultural Economics,3,154,1,,1419
+4,CHME 2848,Intermediate Chemical Engineering,3,736,1,,1420
+4,SPAN 1645,Spanish I,4,44,1,,1421
+4,EDUC 1797,Education and Society,3,959,1,,1422
+4,JOUR 2343,Field Experience in Journalism,3,455,1,,1423
+4,LING 2983,Linguistics Laboratory,3,527,1,,1424
+4,COMM 2841,Principles of Communication Studies II,3,433,1,,1425
+4,GOVT 1198,Intermediate Government,3,420,1,,1426
+4,COMM 2655,Public Speaking,3,4,1,,1427
+4,CHEM 2756,Foundations of Chemistry,3,235,1,,1428
+4,HON 2373,Honors Seminar: Ideas and Society,3,71,1,,1429
+4,SOIL 2893,Field Experience in Soil Science,3,144,1,,1430
+4,GEOL 2329,Field Experience in Geology,3,557,1,,1431
+4,ENGL 1566,Principles of English II,3,343,1,,1432
+4,CJUS 1583,Criminal Justice Methods,3,574,1,,1433
+17,LING 2081,Concepts in Linguistics,1,528,1,,1434
+17,AGRO 2444,Concepts in Agronomy,3,113,1,,1435
+17,MATH 1138,Survey of Mathematics,3,6,1,,1436
+17,BIOL 1919,General Biology II,4,18,1,,1437
+17,ANSC 2670,Principles of Animal Science I,3,74,1,,1438
+17,SWK 2430,Field Experience in Social Work,3,944,1,,1439
+17,PHYS 2152,Algebra-Based Physics I,4,26,1,,1440
+17,ENGL 2239,Introduction to Creative Writing,3,43,1,,1441
+17,ENGL 1516,Writing in the Humanities and Social Sciences,3,3,1,,1442
+17,KIN 1937,Quantitative Approaches in Kinesiology,4,922,1,,1443
+17,HIST 2930,Western Civilization I,3,40,1,,1444
+17,PHIL 2516,"Logic, Reasoning and Critical Thinking",3,42,1,,1445
+17,PSY 1917,Psychology and Society,1,377,1,,1446
+17,CJUS 1028,Concepts in Criminal Justice,3,572,1,,1447
+17,ME 1672,Quantitative Approaches in Mechanical Engineering,3,795,1,,1448
+17,GEOG 1699,Physical Geography,3,37,1,,1449
+17,EE 2793,Electrical and Computer Engineering Laboratory,3,771,1,,1450
+2,SOC 1070,Introduction to Sociology,3,32,1,,1451
+2,FWCE 2589,"Fish, Wildlife and Conservation Ecology Laboratory",3,189,1,,1452
+2,JOUR 1375,Foundations of Journalism,3,452,1,,1453
+10,EDUC 2029,Field Experience in Education,3,962,1,,1454
+10,MKTG 1837,Professional Practice in Marketing,3,705,1,,1455
+10,BIOL 1691,General Biology II,4,18,1,,1456
+10,ET 1149,History of Engineering Technology,3,849,1,,1457
+10,ANSC 2203,Foundations of Animal Science,3,73,1,,1458
+10,ASTR 1628,Concepts in Astronomy,3,328,1,,1459
+10,FWCE 1196,"Introduction to Fish, Wildlife and Conservation Ecology",3,184,1,,1460
+10,ECON 1083,Introduction to Economics,3,628,1,,1461
+10,MATH 2446,Calculus III,3,13,1,,1462
+10,PHIL 2807,"Logic, Reasoning and Critical Thinking",3,42,1,,1463
+10,BIOL 2212,Human Anatomy and Physiology I,4,19,1,,1464
+10,PHYS 2434,Calculus-Based Physics I,4,27,1,,1465
+10,ANSC 1924,Intermediate Animal Science,3,78,1,,1466
+11,STAT 2853,Explorations in Statistics,3,286,1,,1467
+11,HON 2590,Honors Seminar: Ideas and Society,3,71,1,,1468
+11,EDUC 2565,Intermediate Education,3,961,1,,1469
+11,FWCE 1280,"Fish, Wildlife and Conservation Ecology Methods",3,188,1,,1470
+11,GOVT 1725,Intermediate Government,3,420,1,,1471
+11,AE 2022,Field Experience in Aerospace Engineering,3,816,1,,1472
+11,CD 1989,Communication Disorders Methods,3,994,1,,1473
+11,SUR 2488,History of Surveying Engineering,4,867,1,,1474
+11,PSY 1006,Introduction to Psychology,3,31,1,,1475
+11,COMM 2858,History of Communication Studies,3,437,1,,1476
+11,ANSC 2022,Foundations of Animal Science,3,73,1,,1477
+11,AE 1456,Explorations in Aerospace Engineering,3,810,1,,1478
+6,THTR 2921,History of Theatre,3,500,1,,1479
+6,PHLS 2909,History of Public Health Sciences,3,906,1,,1480
+6,CHEM 2195,General Chemistry I,4,22,1,,1481
+6,MKTG 1454,Introduction to Marketing,3,701,1,,1482
+6,PHIL 1155,Introduction to Philosophy,3,41,1,,1483
+6,NURS 1569,Introduction to Nursing,4,878,1,,1484
+6,SOC 1993,Introduction to Sociology,3,32,1,,1485
+6,RGSC 2490,Survey of Range Science,4,91,1,,1486
+6,COMM 2261,Principles of Communication Studies II,3,433,1,,1487
+6,FWCE 1324,"Fish, Wildlife and Conservation Ecology Methods",3,188,1,,1488
+2,ET 1584,Field Experience in Engineering Technology,3,850,1,,1489
+2,CHME 1545,History of Chemical Engineering,3,738,1,,1490
+2,ANSC 2852,History of Animal Science,3,79,1,,1491
+2,MGMT 1984,Intermediate Management,3,685,1,,1492
+2,KIN 2777,Foundations of Kinesiology,3,920,1,,1493
+2,PSY 2276,Concepts in Psychology,3,383,1,,1494
+1,ANSC 2161,Principles of Animal Science I,3,74,1,,1495
+1,MGMT 2013,Survey of Management,1,678,1,,1496
+1,JOUR 2401,Professional Practice in Journalism,3,456,1,,1497
+1,ARTS 1336,Art Methods,3,470,1,,1498
+1,MKTG 1609,Introduction to Marketing,3,701,1,,1499
+1,PSY 2513,Concepts in Psychology,3,383,1,,1500
+1,CHEM 1795,Chemistry Laboratory,3,239,1,,1501
+1,SOIL 1683,Introduction to Soil Science,3,139,1,,1502
+1,CD 2166,Communication Disorders Methods,3,994,1,,1503
+1,CHEM 2871,Principles of Chemistry II,3,236,1,,1504
+1,FIN 2611,Finance Laboratory,3,668,1,,1505
+1,HIST 2045,Professional Practice in History,3,365,1,,1506
+1,CEP 1934,Concepts in Counseling and Educational Psychology,3,981,1,,1507
+10,GEOG 2928,Geography Methods,3,600,1,,1508
+10,CHME 2755,Professional Practice in Chemical Engineering,3,737,1,,1509
+10,COMM 1683,History of Communication Studies,3,437,1,,1510
+10,MATH 2312,Survey of Mathematics,3,6,1,,1511
+10,ENGL 2695,Intermediate English,4,345,1,,1512
+10,GEOL 1344,Physical Geology,4,29,1,,1513
+10,MUS 2124,Music Appreciation,3,49,1,,1514
+10,COMM 2874,Principles of Communication Studies II,3,433,1,,1515
+10,ME 2016,Concepts in Mechanical Engineering,3,796,1,,1516
+10,EE 1091,Professional Practice in Electrical and Computer Engineering,3,773,1,,1517
+10,STAT 1940,Concepts in Statistics,3,292,1,,1518
+10,MATH 2780,Calculus and Analytic Geometry II,4,12,1,,1519
+4,CS 2725,Principles of Computer Science II,3,253,1,,1520
+4,AST 2405,Applied Statistics Methods,3,649,1,,1521
+4,MKTG 2799,Field Experience in Marketing,3,702,1,,1522
+4,BIOL 2924,Human Anatomy and Physiology I,4,19,1,,1523
+4,BIOL 1830,Introduction to Biology,4,214,1,,1524
+4,LING 1650,Introduction to the Study of Language,3,46,1,,1525
+4,PHYS 1263,Algebra-Based Physics I,4,26,1,,1526
+4,HON 1311,Explorations in Honors,3,1003,1,,1527
+4,ARTS 2549,Drawing I,3,47,1,,1528
+11,EE 2000,Principles of Electrical and Computer Engineering I,3,767,1,,1529
+11,RGSC 1968,Principles of Range Science I,3,92,1,,1530
+11,ENGL 1458,English Methods,3,347,1,,1531
+11,ANSC 1451,Animal Science Laboratory,3,77,1,,1532
+11,GEOL 2555,Geology Methods,3,556,1,,1533
+11,BCIS 1944,Introduction to Business Computer Information Systems,3,716,1,,1534
+11,CHME 2303,Chemical Engineering and Society,3,733,1,,1535
+11,FWCE 2500,"Professional Practice in Fish, Wildlife and Conservation Ecology",3,187,1,,1536
+11,AGRO 1251,Agronomy Methods,3,110,1,,1537
+10,HRTM 1214,"Survey of Hotel, Restaurant and Tourism Management",4,200,1,,1538
+10,SOC 2742,Sociology Laboratory,3,404,1,,1539
+10,RGSC 1628,Principles of Range Science I,3,92,1,,1540
+10,BIOL 2975,Concepts in Biology,3,217,1,,1541
+10,ACCT 1367,Accounting Methods,3,615,1,,1542
+10,MKTG 1936,Explorations in Marketing,1,699,1,,1543
+10,CS 2990,Professional Practice in Computer Science,3,257,1,,1544
+10,ARTS 2908,Art Appreciation,3,48,1,,1545
+10,MATH 2489,Mathematics Laboratory,3,266,1,,1546
+10,HORT 1272,Introduction to Horticulture,4,125,1,,1547
+10,IE 2530,Intermediate Industrial Engineering,4,836,1,,1548
+10,BCIS 1515,Introduction to Information Systems,3,65,1,,1549
+10,FIN 1277,Introduction to Finance,3,662,1,,1550
+10,PHLS 2758,History of Public Health Sciences,3,906,1,,1551
+3,STAT 2231,Introduction to Statistics,3,284,1,,1552
+3,PSY 2684,Psychology and Society,1,377,1,,1553
+3,FIN 2053,Survey of Finance,3,663,1,,1554
+3,SUR 2920,Surveying Engineering Laboratory,4,865,1,,1555
+3,HORT 1820,Introduction to Horticulture,4,125,1,,1556
+3,HON 1031,Honors Seminar: Ideas and Society,3,71,1,,1557
+3,SPAN 1331,Spanish I,4,44,1,,1558
+3,MGMT 1761,Management Laboratory,1,684,1,,1559
+3,COMM 1922,Communication Studies Laboratory,3,439,1,,1560
+3,STAT 1554,Intermediate Statistics,3,290,1,,1561
+3,GEOL 1194,Geology and Society,3,554,1,,1562
+3,HIST 2301,Intermediate History,1,363,1,,1563
+3,STAT 1268,Principles of Statistics II,3,285,1,,1564
+3,AE 1034,Aerospace Engineering and Society,3,811,1,,1565
+6,HON 2946,Explorations in Honors,3,1003,1,,1566
+6,EDUC 2458,Field Experience in Education,3,962,1,,1567
+6,ECON 1708,Foundations of Economics,3,630,1,,1568
+6,MUS 1601,Principles of Music I,4,482,1,,1569
+6,HON 1756,Honors Composition,4,72,1,,1570
+3,ARTS 1107,Foundations of Art,3,466,1,,1571
+3,CJUS 1344,Introduction to Criminal Justice,3,566,1,,1572
+3,PHLS 1161,Foundations of Public Health Sciences,3,902,1,,1573
+3,EE 1224,Survey of Electrical and Computer Engineering,3,770,1,,1574
+3,NURS 1179,Introduction to Nursing,4,878,1,,1575
+3,SUR 2277,Principles of Surveying Engineering I,3,863,1,,1576
+3,THTR 1625,History of Theatre,3,500,1,,1577
+3,MKTG 1736,Marketing and Society,3,700,1,,1578
+1,JOUR 2811,Intermediate Journalism,3,457,1,,1579
+1,ANTH 1881,Concepts in Anthropology,3,543,1,,1580
+1,HORT 1399,Field Experience in Horticulture,3,129,1,,1581
+1,ASTR 1755,Astronomy and Society,3,324,1,,1582
+1,CHME 1662,Chemical Engineering and Society,3,733,1,,1583
+2,BIOL 2629,Biology Methods,3,218,1,,1584
+2,PSY 2218,Field Experience in Psychology,3,382,1,,1585
+2,PHLS 1866,Foundations of Public Health Sciences,3,902,1,,1586
+2,PSY 1513,Psychology Laboratory,3,384,1,,1587
+2,ACCT 1410,Introduction to Accounting,3,611,1,,1588
+2,FCSC 1646,Foundations of Family and Consumer Sciences,3,172,1,,1589
+2,NURS 1972,Introduction to Nursing,4,878,1,,1590
+1,BIOL 2992,Human Anatomy and Physiology II,4,20,1,,1591
+1,MUS 1608,Quantitative Approaches in Music,3,486,1,,1592
+1,MGMT 1376,Foundations of Management,3,679,1,,1593
+1,AE 2840,Aerospace Engineering Laboratory,3,815,1,,1594
+10,FIN 1643,Professional Practice in Finance,3,667,1,,1595
+10,MATH 2324,Trigonometry and Precalculus,4,8,1,,1596
+10,GOVT 1665,American National Government,3,33,1,,1597
+10,AEEC 1558,History of Agricultural Economics,3,157,1,,1598
+10,CHEM 1103,Chemistry Laboratory,3,239,1,,1599
+7,NURS 2939,Nursing and Society,3,879,1,,1600
+7,EE 2773,Field Experience in Electrical and Computer Engineering,3,774,1,,1601
+7,LING 1555,Principles of Linguistics I,3,525,1,,1602
+7,MGMT 2663,Principles of Management II,1,681,1,,1603
+1,AEEC 1756,Concepts in Agricultural Economics,3,160,1,,1604
+1,CJUS 2212,Introduction to Criminal Justice,3,566,1,,1605
+1,SOC 2559,Principles of Sociology I,3,401,1,,1606
+2,SOC 2636,History of Sociology,3,406,1,,1607
+2,EDUC 1122,Introduction to Education,3,957,1,,1608
+2,RGSC 2972,Range Science Methods,3,96,1,,1609
+2,HORT 1477,Professional Practice in Horticulture,4,127,1,,1610
+2,HIST 2020,Intermediate History,1,363,1,,1611
+2,GEOL 2233,Concepts in Geology,4,555,1,,1612
+3,PHIL 2524,Introduction to Philosophy,3,41,1,,1613
+3,BIOL 2011,Concepts in Biology,3,217,1,,1614
+3,LING 2233,Quantitative Approaches in Linguistics,1,529,1,,1615
+2,CJUS 1371,Concepts in Criminal Justice,3,572,1,,1616
+2,IE 1210,Explorations in Industrial Engineering,3,832,1,,1617
+2,KIN 1131,Introduction to Kinesiology,3,921,1,,1618
+2,ACCT 2961,Quantitative Approaches in Accounting,3,614,1,,1619
+18,SOC 1771,Principles of Sociology I,3,401,1,,1620
+18,HON 2743,Honors Methods,3,1005,1,,1621
+18,GEOG 2827,Survey of Geography,3,598,1,,1622
+18,HIST 1017,United States History II,3,39,1,,1623
+18,SPAN 1316,Spanish II,4,45,1,,1624
+18,PHIL 2983,"Logic, Reasoning and Critical Thinking",3,42,1,,1625
+18,IE 2861,Intermediate Industrial Engineering,4,836,1,,1626
+18,MATH 1117,Calculus and Analytic Geometry I,4,11,1,,1627
+18,PHIL 1996,Introduction to Philosophy,3,41,1,,1628
+18,PHYS 2702,Calculus-Based Physics II,4,28,1,,1629
+18,NURS 2193,Survey of Nursing,3,881,1,,1630
+18,EE 2027,Electrical and Computer Engineering Laboratory,3,771,1,,1631
+18,PSY 1410,History of Psychology,3,385,1,,1632
+18,ARTS 2018,Drawing I,3,47,1,,1633
+18,HRTM 2823,"Quantitative Approaches in Hotel, Restaurant and Tourism Management",3,202,1,,1634
+18,ARTS 1487,Art Appreciation,3,48,1,,1635
+10,EE 2477,History of Electrical and Computer Engineering,3,775,1,,1636
+10,ENGL 1693,Professional and Technical Communication,3,2,1,,1637
+10,ET 2441,Principles of Engineering Technology II,4,847,1,,1638
+20,ARTS 1257,Art Appreciation,3,48,1,,1639
+20,MATH 1777,Trigonometry and Precalculus,4,8,1,,1640
+20,HRTM 1554,"Hotel, Restaurant and Tourism Management Methods",3,203,1,,1641
+20,ET 1526,History of Engineering Technology,3,849,1,,1642
+20,CHEM 1862,General Chemistry I,4,22,1,,1643
+20,EDUC 2957,Introduction to Education,3,957,1,,1644
+20,ME 1006,Quantitative Approaches in Mechanical Engineering,3,795,1,,1645
+20,ECON 1499,Macroeconomic Principles,3,34,1,,1646
+20,BIOL 2374,General Biology I,4,17,1,,1647
+20,LING 1049,Quantitative Approaches in Linguistics,1,529,1,,1648
+20,THTR 1314,Introduction to Theatre,3,50,1,,1649
+20,COMM 2453,Introduction to Communication,3,5,1,,1650
+20,HON 1445,Quantitative Approaches in Honors,4,1004,1,,1651
+20,NURS 1974,Field Experience in Nursing,1,886,1,,1652
+20,FWCE 2359,"Fish, Wildlife and Conservation Ecology Laboratory",3,189,1,,1653
+20,HIST 2584,United States History I,3,38,1,,1654
+12,EE 2865,Introduction to Electrical and Computer Engineering,3,768,1,,1655
+12,MGMT 1663,History of Management,3,682,1,,1656
+12,AE 2919,Foundations of Aerospace Engineering,4,813,1,,1657
+12,ME 2859,Quantitative Approaches in Mechanical Engineering,3,795,1,,1658
+12,CS 1227,Introduction to Programming,3,52,1,,1659
+12,PSY 2029,Introduction to Psychology,3,31,1,,1660
+12,ET 1010,Survey of Engineering Technology,4,846,1,,1661
+12,COMM 2221,Introduction to Communication,3,5,1,,1662
+12,SOIL 2425,Quantitative Approaches in Soil Science,3,143,1,,1663
+12,PHYS 1419,Field Experience in Physics,3,311,1,,1664
+12,IE 2323,Industrial Engineering Methods,3,837,1,,1665
+12,ME 1785,Field Experience in Mechanical Engineering,3,792,1,,1666
+12,SOIL 2653,Introduction to Soil Science,3,139,1,,1667
+12,CHEM 2807,General Chemistry II,4,23,1,,1668
+12,ME 2078,Concepts in Mechanical Engineering,3,796,1,,1669
+12,HIST 2939,United States History II,3,39,1,,1670
+2,CS 2908,Quantitative Approaches in Computer Science,4,254,1,,1671
+2,GOVT 2744,Quantitative Approaches in Government,1,421,1,,1672
+2,CJUS 2344,Introduction to Criminal Justice,3,566,1,,1673
+2,SUR 1647,Field Experience in Surveying Engineering,4,868,1,,1674
+9,HIST 2105,United States History II,3,39,1,,1675
+9,CHEM 1747,General Chemistry II,4,23,1,,1676
+9,HIST 2358,United States History I,3,38,1,,1677
+9,GEOL 2705,Field Experience in Geology,3,557,1,,1678
+9,KIN 2669,Foundations of Kinesiology,3,920,1,,1679
+9,GEOG 1117,Geography Methods,3,600,1,,1680
+9,FIN 2240,Survey of Finance,3,663,1,,1681
+9,HIST 1460,Western Civilization I,3,40,1,,1682
+9,PSY 2094,Principles of Psychology II,4,378,1,,1683
+9,AST 1093,Quantitative Approaches in Applied Statistics,3,650,1,,1684
+9,NURS 1386,Principles of Nursing II,3,880,1,,1685
+9,SOC 2928,Introduction to Sociology,3,32,1,,1686
+9,ECON 2113,Microeconomic Principles,3,35,1,,1687
+9,ENGL 1375,Introduction to Creative Writing,3,43,1,,1688
+9,KIN 1970,Survey of Kinesiology,3,919,1,,1689
+13,NURS 1827,Principles of Nursing II,3,880,1,,1690
+13,IE 1531,Industrial Engineering Laboratory,3,835,1,,1691
+13,BCIS 2120,History of Business Computer Information Systems,3,721,1,,1692
+13,SUR 2275,Field Experience in Surveying Engineering,4,868,1,,1693
+13,RGSC 1485,Principles of Range Science I,3,92,1,,1694
+13,CD 1098,Principles of Communication Disorders II,3,991,1,,1695
+13,SWK 1421,Professional Practice in Social Work,3,943,1,,1696
+13,PSY 1744,Foundations of Psychology,3,379,1,,1697
+13,PHYS 1034,Concepts in Physics,3,310,1,,1698
+13,FWCE 1100,"Introduction to Fish, Wildlife and Conservation Ecology",3,184,1,,1699
+13,STAT 2068,Professional Practice in Statistics,3,293,1,,1700
+13,EE 1878,Professional Practice in Electrical and Computer Engineering,3,773,1,,1701
+13,PHYS 2755,Physics Laboratory,3,312,1,,1702
+13,HIST 1726,United States History I,3,38,1,,1703
+13,CS 2408,Quantitative Approaches in Computer Science,4,254,1,,1704
+5,EE 2887,Survey of Electrical and Computer Engineering,3,770,1,,1705
+5,ME 2908,Field Experience in Mechanical Engineering,3,792,1,,1706
+5,EE 1274,Professional Practice in Electrical and Computer Engineering,3,773,1,,1707
+5,BIOL 2515,Human Anatomy and Physiology I,4,19,1,,1708
+5,AEEC 1009,Principles of Agricultural Economics I,4,156,1,,1709
+3,NURS 2554,Nursing Methods,3,884,1,,1710
+3,SOIL 2651,History of Soil Science,4,142,1,,1711
+3,EDUC 1684,Intermediate Education,3,961,1,,1712
+3,HRTM 1623,"Survey of Hotel, Restaurant and Tourism Management",4,200,1,,1713
+3,ACCT 1255,Quantitative Approaches in Accounting,3,614,1,,1714
+3,ARTS 1576,Art Methods,3,470,1,,1715
+3,BIOL 1557,Introduction to Biology,4,214,1,,1716
+1,PHLS 2746,Public Health Sciences Laboratory,4,904,1,,1717
+1,HRTM 1740,"History of Hotel, Restaurant and Tourism Management",3,201,1,,1718
+1,ME 1702,Intermediate Mechanical Engineering,3,794,1,,1719
+5,AGRO 1549,Principles of Agronomy II,3,109,1,,1720
+5,SOC 2995,Sociology Laboratory,3,404,1,,1721
+5,AE 2716,Foundations of Aerospace Engineering,4,813,1,,1722
+5,HRTM 1607,"Quantitative Approaches in Hotel, Restaurant and Tourism Management",3,202,1,,1723
+5,MKTG 1037,Marketing Methods,3,703,1,,1724
+5,COMM 1341,Communication Studies Laboratory,3,439,1,,1725
+1,SWK 2086,Professional Practice in Social Work,3,943,1,,1726
+1,BIOL 2482,Microbiology,4,21,1,,1727
+1,ACCT 1169,Accounting Methods,3,615,1,,1728
+1,PSY 2406,Field Experience in Psychology,3,382,1,,1729
+1,CS 1424,Quantitative Approaches in Computer Science,4,254,1,,1730
+1,PHLS 2389,Field Experience in Public Health Sciences,3,903,1,,1731
+1,PHLS 1520,Quantitative Approaches in Public Health Sciences,3,905,1,,1732
+11,NURS 2969,Intermediate Nursing,3,882,1,,1733
+11,MGMT 1248,History of Management,3,682,1,,1734
+11,STAT 2211,History of Statistics,3,291,1,,1735
+11,SWK 1029,Foundations of Social Work,4,939,1,,1736
+11,COMM 2607,Communication Studies Methods,3,436,1,,1737
+11,STAT 1183,Introduction to Statistics,3,284,1,,1738
+11,MATH 2721,Applications of Calculus I,3,10,1,,1739
+11,CHEM 2301,Organic Chemistry I,4,24,1,,1740
+11,CEP 1477,Explorations in Counseling and Educational Psychology,3,978,1,,1741
+11,ECON 1163,Introduction to Economics,3,628,1,,1742
+3,ET 1938,Principles of Engineering Technology II,4,847,1,,1743
+3,CS 2374,Quantitative Approaches in Computer Science,4,254,1,,1744
+3,PHYS 1988,Physics Laboratory,3,312,1,,1745
+3,NURS 2266,Field Experience in Nursing,1,886,1,,1746
+3,AE 2032,Explorations in Aerospace Engineering,3,810,1,,1747
+1,NURS 2054,Field Experience in Nursing,1,886,1,,1748
+1,BIOL 2759,Introduction to Biology,4,214,1,,1749
+1,COMM 2473,Professional Practice in Communication Studies,3,435,1,,1750
+1,GOVT 1828,Foundations of Government,3,418,1,,1751
+1,STAT 1690,Statistics Laboratory,3,289,1,,1752
+2,FWCE 2333,"Professional Practice in Fish, Wildlife and Conservation Ecology",3,187,1,,1753
+2,CJUS 2369,Principles of Criminal Justice I,3,567,1,,1754
+2,CS 1027,Professional Practice in Computer Science,3,257,1,,1755
+2,CHEM 2839,Quantitative Approaches in Chemistry,3,238,1,,1756
+6,MGMT 2747,History of Management,3,682,1,,1757
+6,HORT 2549,Field Experience in Horticulture,3,129,1,,1758
+6,SPAN 2833,Spanish II,4,45,1,,1759
+6,GEOG 2428,Quantitative Approaches in Geography,3,599,1,,1760
+6,PHLS 2529,Quantitative Approaches in Public Health Sciences,3,905,1,,1761
+6,CS 1490,Object-Oriented Programming,4,54,1,,1762
+20,PHIL 1293,"Logic, Reasoning and Critical Thinking",3,42,1,,1763
+20,SOC 2143,Introduction to Sociology,3,32,1,,1764
+20,HIST 2339,Intermediate History,1,363,1,,1765
+20,ECON 2143,Concepts in Economics,4,631,1,,1766
+20,FCSC 1283,Professional Practice in Family and Consumer Sciences,3,174,1,,1767
+20,PHIL 2449,Introduction to Philosophy,3,41,1,,1768
+20,CJUS 1951,Principles of Criminal Justice I,3,567,1,,1769
+20,ENGL 2451,Explorations in English,4,341,1,,1770
+20,CHEM 2053,Professional Practice in Chemistry,4,237,1,,1771
+20,IE 1068,Survey of Industrial Engineering,3,833,1,,1772
+20,PSY 2732,Foundations of Psychology,3,379,1,,1773
+20,ENGL 2716,Writing in the Humanities and Social Sciences,3,3,1,,1774
+20,HIST 1140,History of History,3,366,1,,1775
+20,PSY 1810,Introduction to Psychology,3,31,1,,1776
+20,EDUC 1142,Field Experience in Education,3,962,1,,1777
+20,AST 2403,Survey of Applied Statistics,1,644,1,,1778
+20,CS 1342,Quantitative Approaches in Computer Science,4,254,1,,1779
+1,KIN 1742,Field Experience in Kinesiology,3,923,1,,1780
+17,CEP 2014,Foundations of Counseling and Educational Psychology,3,979,1,,1781
+17,LING 1089,Introduction to the Study of Language,3,46,1,,1782
+17,GEOL 2905,Geology Methods,3,556,1,,1783
+17,CHEM 1685,General Chemistry I,4,22,1,,1784
+17,FIN 1379,Introduction to Finance,3,662,1,,1785
+17,AST 2108,Survey of Applied Statistics,1,644,1,,1786
+17,FIN 2472,Finance Laboratory,3,668,1,,1787
+17,LING 2094,Principles of Linguistics I,3,525,1,,1788
+17,PHLS 2703,Public Health Sciences Laboratory,4,904,1,,1789
+17,MATH 1928,Introduction to Linear Algebra,3,14,1,,1790
+17,JOUR 2760,Survey of Journalism,3,453,1,,1791
+17,BIOL 1763,General Biology I,4,17,1,,1792
+13,ME 1100,Survey of Mechanical Engineering,3,789,1,,1793
+13,MATH 1651,Applications of Calculus I,3,10,1,,1794
+13,PHLS 1751,Public Health Sciences Laboratory,4,904,1,,1795
+13,ME 1675,Principles of Mechanical Engineering II,3,791,1,,1796
+13,MGMT 2060,Principles of Management II,1,681,1,,1797
+13,MATH 1091,Trigonometry and Precalculus,4,8,1,,1798
+13,SWK 2797,Introduction to Social Work,4,941,1,,1799
+13,ANTH 2699,Introduction to Cultural Anthropology,3,36,1,,1800
+13,HRTM 2358,"Principles of Hotel, Restaurant and Tourism Management II",3,199,1,,1801
+13,ANSC 1208,History of Animal Science,3,79,1,,1802
+13,COMM 1470,Introduction to Communication,3,5,1,,1803
+13,JOUR 2254,Survey of Journalism,3,453,1,,1804
+13,HIST 1954,Western Civilization I,3,40,1,,1805
+16,AEEC 1194,Explorations in Agricultural Economics,3,155,1,,1806
+16,CHEM 2584,General Chemistry I,4,22,1,,1807
+16,GOVT 1629,American National Government,3,33,1,,1808
+16,AE 1928,Explorations in Aerospace Engineering,3,810,1,,1809
+16,SWK 2125,Professional Practice in Social Work,3,943,1,,1810
+16,CHEM 1398,Organic Chemistry II,4,25,1,,1811
+16,HON 1630,Honors Seminar: Ideas and Society,3,71,1,,1812
+16,SUR 2555,Surveying Engineering Laboratory,4,865,1,,1813
+7,LING 2570,Principles of Linguistics II,3,526,1,,1814
+7,NURS 1263,Intermediate Nursing,3,882,1,,1815
+7,ENGL 2077,Writing in the Humanities and Social Sciences,3,3,1,,1816
+7,KIN 2828,Quantitative Approaches in Kinesiology,4,922,1,,1817
+7,CS 2025,Programming Fundamentals,4,53,1,,1818
+7,HRTM 2548,"Principles of Hotel, Restaurant and Tourism Management II",3,199,1,,1819
+7,MUS 2174,Music and Society,3,481,1,,1820
+7,HORT 1911,Intermediate Horticulture,3,128,1,,1821
+7,BIOL 2075,Microbiology,4,21,1,,1822
+13,MUS 2131,Music and Society,3,481,1,,1823
+13,PHYS 1728,Field Experience in Physics,3,311,1,,1824
+13,MUS 2416,Principles of Music I,4,482,1,,1825
+13,JOUR 2519,Intermediate Journalism,3,457,1,,1826
+13,CJUS 2515,Introduction to Criminal Justice,3,566,1,,1827
+13,SOC 1618,Introduction to Sociology,3,32,1,,1828
+13,SOC 2420,History of Sociology,3,406,1,,1829
+13,ENGL 1289,Introduction to Creative Writing,3,43,1,,1830
+13,MKTG 2550,Intermediate Marketing,3,704,1,,1831
+13,ASTR 2815,Introduction to Astronomy,4,30,1,,1832
+13,SOIL 1503,Quantitative Approaches in Soil Science,3,143,1,,1833
+13,STAT 2878,Statistics and Society,3,287,1,,1834
+13,NURS 1152,Field Experience in Nursing,1,886,1,,1835
+13,CE 2601,Field Experience in Civil Engineering,3,752,1,,1836
+13,CS 2962,Computer Science Principles,3,51,1,,1837
+13,CS 1042,Programming Fundamentals,4,53,1,,1838
+13,ACCT 2614,Quantitative Approaches in Accounting,3,614,1,,1839
+13,MGMT 2446,Foundations of Management,3,679,1,,1840
+2,STAT 1552,Survey of Statistics,3,288,1,,1841
+2,NURS 2855,Principles of Nursing II,3,880,1,,1842
+2,CHEM 1958,Principles of Chemistry II,3,236,1,,1843
+2,CD 1369,Principles of Communication Disorders II,3,991,1,,1844
+2,ACCT 2198,Principles of Accounting II,3,64,1,,1845
+2,BCIS 1690,Introduction to Information Systems,3,65,1,,1846
+2,ET 1804,History of Engineering Technology,3,849,1,,1847
+3,ANTH 1502,Introduction to Cultural Anthropology,3,36,1,,1848
+3,LING 1040,Principles of Linguistics I,3,525,1,,1849
+3,ECON 1312,Concepts in Economics,4,631,1,,1850
+3,PHIL 2920,Professional Practice in Philosophy,3,587,1,,1851
+9,MUS 2571,Music Appreciation,3,49,1,,1852
+9,BIOL 1880,Human Anatomy and Physiology I,4,19,1,,1853
+9,SPAN 1307,Spanish I,4,44,1,,1854
+9,GOVT 2670,Concepts in Government,4,422,1,,1855
+9,SWK 1310,Field Experience in Social Work,3,944,1,,1856
+9,ECON 1680,Macroeconomic Principles,3,34,1,,1857
+9,NURS 2491,Nursing and Society,3,879,1,,1858
+9,AE 1056,History of Aerospace Engineering,3,817,1,,1859
+9,CEP 1008,Foundations of Counseling and Educational Psychology,3,979,1,,1860
+9,MUS 2388,Quantitative Approaches in Music,3,486,1,,1861
+9,PHYS 2613,Algebra-Based Physics I,4,26,1,,1862
+9,ARTS 1047,Field Experience in Art,3,469,1,,1863
+9,NURS 2736,Nursing Laboratory,3,883,1,,1864
+9,GOVT 1787,American National Government,3,33,1,,1865
+3,STAT 2970,Explorations in Statistics,3,286,1,,1866
+3,ANTH 2505,Anthropology Methods,3,544,1,,1867
+3,SOIL 2390,Survey of Soil Science,3,141,1,,1868
+3,CHME 1685,Quantitative Approaches in Chemical Engineering,3,735,1,,1869
+3,SOIL 2118,Quantitative Approaches in Soil Science,3,143,1,,1870
+3,CS 1881,Concepts in Computer Science,3,255,1,,1871
+3,FIN 2517,Finance Laboratory,3,668,1,,1872
+2,CHEM 2896,General Chemistry I,4,22,1,,1873
+2,AEEC 1251,Concepts in Agricultural Economics,3,160,1,,1874
+1,SWK 1313,Introduction to Social Work,4,941,1,,1875
+1,MATH 2976,Quantitative Approaches in Mathematics,3,268,1,,1876
+1,FCSC 1206,Family and Consumer Sciences Methods,3,175,1,,1877
+2,GOVT 2706,Principles of Government I,3,417,1,,1878
+2,GOVT 1633,Professional Practice in Government,3,419,1,,1879
+2,FCSC 1066,Family and Consumer Sciences and Society,3,170,1,,1880
+3,AGRO 2795,Professional Practice in Agronomy,3,112,1,,1881
+3,CHME 2960,Chemical Engineering and Society,3,733,1,,1882
+3,CS 1629,Principles of Computer Science II,3,253,1,,1883
+3,ANTH 2580,Principles of Anthropology II,3,542,1,,1884
+3,HIST 1456,History of History,3,366,1,,1885
+3,ME 1178,Quantitative Approaches in Mechanical Engineering,3,795,1,,1886
+12,ME 1014,Intermediate Mechanical Engineering,3,794,1,,1887
+12,JOUR 2701,Foundations of Journalism,3,452,1,,1888
+12,BIOL 2703,General Biology I,4,17,1,,1889
+12,MKTG 2622,Professional Practice in Marketing,3,705,1,,1890
+12,PHIL 2148,Introduction to Philosophy,3,41,1,,1891
+12,SUR 2766,Principles of Surveying Engineering II,3,864,1,,1892
+12,HIST 2332,Western Civilization I,3,40,1,,1893
+12,EDUC 2370,Quantitative Approaches in Education,3,963,1,,1894
+6,FIN 1888,Finance and Society,3,664,1,,1895
+6,SUR 2764,History of Surveying Engineering,4,867,1,,1896
+6,MUS 1711,Intermediate Music,3,483,1,,1897
+6,ANTH 2147,Introduction to Cultural Anthropology,3,36,1,,1898
+6,CD 2262,Quantitative Approaches in Communication Disorders,4,992,1,,1899
+6,SPAN 2947,Concepts in Spanish,4,510,1,,1900
+6,EE 1017,History of Electrical and Computer Engineering,3,775,1,,1901
+6,PHYS 1315,Algebra-Based Physics I,4,26,1,,1902
+6,KIN 2461,Foundations of Kinesiology,3,920,1,,1903
+6,GEOL 2016,Field Experience in Geology,3,557,1,,1904
+6,STAT 2573,Statistics Laboratory,3,289,1,,1905
+6,ECON 2365,Intermediate Economics,4,632,1,,1906
+1,ANTH 2277,Anthropology Methods,3,544,1,,1907
+1,ANTH 2152,Foundations of Anthropology,3,541,1,,1908
+3,EE 2147,Introduction to Electrical and Computer Engineering,3,768,1,,1909
+3,FCSC 2274,Foundations of Family and Consumer Sciences,3,172,1,,1910
+3,PSY 2333,Field Experience in Psychology,3,382,1,,1911
+4,PHYS 1985,Concepts in Physics,3,310,1,,1912
+4,ME 2477,Survey of Mechanical Engineering,3,789,1,,1913
+4,MKTG 1130,Marketing and Society,3,700,1,,1914
+4,AE 2673,Quantitative Approaches in Aerospace Engineering,4,818,1,,1915
+4,MKTG 1918,Marketing Methods,3,703,1,,1916
+4,ENGL 2993,Professional and Technical Communication,3,2,1,,1917
+4,NURS 1286,Field Experience in Nursing,1,886,1,,1918
+4,ACCT 2545,Principles of Accounting II,3,64,1,,1919
+4,MUS 1997,Music Appreciation,3,49,1,,1920
+4,AEEC 1422,Concepts in Agricultural Economics,3,160,1,,1921
+4,CJUS 2875,Foundations of Criminal Justice,3,569,1,,1922
+4,BIOL 1774,Biology Methods,3,218,1,,1923
+3,KIN 2262,Concepts in Kinesiology,3,926,1,,1924
+3,PSY 2382,Concepts in Psychology,3,383,1,,1925
+3,BCIS 1016,Survey of Business Computer Information Systems,3,717,1,,1926
+6,AE 2522,Aerospace Engineering and Society,3,811,1,,1927
+6,CE 2746,Civil Engineering Methods,3,755,1,,1928
+6,AGRO 2858,Concepts in Agronomy,3,113,1,,1929
+6,PHYS 2423,Calculus-Based Physics I,4,27,1,,1930
+6,AST 1172,Intermediate Applied Statistics,3,648,1,,1931
+6,CS 2838,Quantitative Approaches in Computer Science,4,254,1,,1932
+6,THTR 1566,Introduction to Theatre,3,50,1,,1933
+6,ASTR 1198,Astronomy Laboratory,3,327,1,,1934
+6,NURS 1847,Principles of Nursing II,3,880,1,,1935
+6,HRTM 2590,"Quantitative Approaches in Hotel, Restaurant and Tourism Management",3,202,1,,1936
+6,ARTS 2770,Field Experience in Art,3,469,1,,1937
+1,ET 1412,History of Engineering Technology,3,849,1,,1938
+1,SOIL 2091,Quantitative Approaches in Soil Science,3,143,1,,1939
+2,HORT 1092,Principles of Horticulture II,3,123,1,,1940
+2,EDUC 2057,Education and Society,3,959,1,,1941
+2,AEEC 2472,Survey of Agricultural Economics,3,154,1,,1942
+2,BCIS 1718,Introduction to Business Computer Information Systems,3,716,1,,1943
+1,SWK 1271,Quantitative Approaches in Social Work,3,945,1,,1944
+1,AST 1211,Intermediate Applied Statistics,3,648,1,,1945
+10,COMM 1072,Professional Practice in Communication Studies,3,435,1,,1946
+10,AEEC 1659,Survey of Agricultural Economics,3,154,1,,1947
+10,EDUC 2690,Intermediate Education,3,961,1,,1948
+10,ENGL 2630,English Methods,3,347,1,,1949
+10,HIST 2786,Intermediate History,1,363,1,,1950
+10,GOVT 2773,Foundations of Government,3,418,1,,1951
+10,CE 1386,Principles of Civil Engineering I,4,751,1,,1952
+2,GEOG 2163,Survey of Geography,3,598,1,,1953
+2,MATH 2086,Quantitative Approaches in Mathematics,3,268,1,,1954
+14,PSY 1284,Field Experience in Psychology,3,382,1,,1955
+14,MATH 2618,Professional Practice in Mathematics,3,269,1,,1956
+14,CS 2560,Programming Fundamentals,4,53,1,,1957
+14,PHYS 1283,Algebra-Based Physics I,4,26,1,,1958
+14,STAT 1648,Intermediate Statistics,3,290,1,,1959
+14,CD 2797,History of Communication Disorders,3,993,1,,1960
+14,AST 2923,Explorations in Applied Statistics,3,645,1,,1961
+14,ECON 2407,Macroeconomic Principles,3,34,1,,1962
+14,ASTR 2819,Astronomy Laboratory,3,327,1,,1963
+14,JOUR 2718,Principles of Journalism I,3,454,1,,1964
+14,ENGL 2118,Professional and Technical Communication,3,2,1,,1965
+14,FWCE 2448,"Professional Practice in Fish, Wildlife and Conservation Ecology",3,187,1,,1966
+14,FWCE 1343,"Introduction to Fish, Wildlife and Conservation Ecology",3,184,1,,1967
+14,CEP 2688,Foundations of Counseling and Educational Psychology,3,979,1,,1968
+14,ASTR 1577,Astronomy and Society,3,324,1,,1969
+14,AGRO 1521,Agronomy and Society,3,108,1,,1970
+14,MATH 1878,College Algebra,3,7,1,,1971
+7,SUR 2410,Surveying Engineering Laboratory,4,865,1,,1972
+7,SWK 1458,Introduction to Social Work,4,941,1,,1973
+7,HIST 1603,United States History I,3,38,1,,1974
+7,ME 1798,Survey of Mechanical Engineering,3,789,1,,1975
+7,ANTH 1347,Introduction to Cultural Anthropology,3,36,1,,1976
+7,HON 1150,Honors Seminar: Ideas and Society,3,71,1,,1977
+7,RGSC 1431,Range Science Methods,3,96,1,,1978
+7,ACCT 1321,Principles of Accounting II,3,64,1,,1979
+7,MGMT 1873,Field Experience in Management,3,686,1,,1980
+1,THTR 2715,Theatre Laboratory,3,499,1,,1981
+1,CHEM 2810,Organic Chemistry II,4,25,1,,1982
+1,ME 1626,Concepts in Mechanical Engineering,3,796,1,,1983
+19,GOVT 2483,American National Government,3,33,1,,1984
+19,HON 2315,Honors Methods,3,1005,1,,1985
+19,MGMT 1300,Principles of Management II,1,681,1,,1986
+19,MATH 2686,Trigonometry and Precalculus,4,8,1,,1987
+19,MATH 2304,Calculus III,3,13,1,,1988
+19,RGSC 2052,Quantitative Approaches in Range Science,3,93,1,,1989
+19,MGMT 1847,Concepts in Management,3,683,1,,1990
+19,MATH 1782,Introduction to Statistics,3,9,1,,1991
+19,AEEC 2035,Survey of Agricultural Economics,3,154,1,,1992
+10,MATH 1743,College Algebra,3,7,1,,1993
+10,ECON 2605,Microeconomic Principles,3,35,1,,1994
+10,SWK 2138,Field Experience in Social Work,3,944,1,,1995
+7,NURS 1195,Introduction to Nursing,4,878,1,,1996
+7,ENGL 1844,Composition I,4,1,1,,1997
+7,STAT 2828,Concepts in Statistics,3,292,1,,1998
+7,EDUC 2256,Field Experience in Education,3,962,1,,1999
+7,SPAN 1244,Survey of Spanish,3,508,1,,2000
+17,ANTH 1242,Introduction to Cultural Anthropology,3,36,1,,2001
+17,CS 1945,Principles of Computer Science II,3,253,1,,2002
+17,ENGL 1416,Composition I,4,1,1,,2003
+17,ARTS 1343,Drawing I,3,47,1,,2004
+17,PHIL 1495,Professional Practice in Philosophy,3,587,1,,2005
+17,CE 2108,Foundations of Civil Engineering,4,749,1,,2006
+17,BIOL 2686,Human Anatomy and Physiology I,4,19,1,,2007
+17,BCIS 2635,Introduction to Business Computer Information Systems,3,716,1,,2008
+17,HIST 2937,Professional Practice in History,3,365,1,,2009
+17,MATH 2920,Calculus and Analytic Geometry I,4,11,1,,2010
+10,CJUS 1683,Foundations of Criminal Justice,3,569,1,,2011
+10,MATH 2334,Applications of Calculus I,3,10,1,,2012
+10,BCIS 2519,History of Business Computer Information Systems,3,721,1,,2013
+10,SPAN 2333,Concepts in Spanish,4,510,1,,2014
+1,MATH 2661,Introduction to Linear Algebra,3,14,1,,2015
+1,CS 1408,Professional Practice in Computer Science,3,257,1,,2016
+1,MGMT 2211,Principles of Management II,1,681,1,,2017
+1,RGSC 1050,Concepts in Range Science,4,94,1,,2018
+3,FIN 2102,Finance Methods,3,666,1,,2019
+3,EDUC 1407,Education and Society,3,959,1,,2020
+3,SWK 1740,Explorations in Social Work,3,940,1,,2021
+3,HON 2910,Explorations in Honors,3,1003,1,,2022
+3,HORT 1899,Professional Practice in Horticulture,4,127,1,,2023
+6,MATH 1849,Trigonometry and Precalculus,4,8,1,,2024
+6,AEEC 1444,Principles of Agricultural Economics I,4,156,1,,2025
+6,CHEM 1783,Foundations of Chemistry,3,235,1,,2026
+6,PSY 1267,Quantitative Approaches in Psychology,3,381,1,,2027
+6,AGRO 2291,Field Experience in Agronomy,3,111,1,,2028
+6,CHEM 2047,Chemistry Laboratory,3,239,1,,2029
+6,ECON 1790,Microeconomic Principles,3,35,1,,2030
+6,ASTR 2590,Concepts in Astronomy,3,328,1,,2031
+6,BCIS 1734,Business Computer Information Systems Methods,4,719,1,,2032
+1,CS 1443,Programming Fundamentals,4,53,1,,2033
+1,JOUR 2387,Field Experience in Journalism,3,455,1,,2034
+1,COMM 1342,Communication Studies and Society,3,434,1,,2035
+1,MUS 1537,Intermediate Music,3,483,1,,2036
+2,FIN 2207,Survey of Finance,3,663,1,,2037
+2,CHEM 2499,Organic Chemistry I,4,24,1,,2038
+2,MATH 1115,Professional Practice in Mathematics,3,269,1,,2039
+2,ENGL 1123,Explorations in English,4,341,1,,2040
+3,MGMT 1868,Intermediate Management,3,685,1,,2041
+3,CEP 1962,Counseling and Educational Psychology Methods,4,980,1,,2042
+11,GEOG 2248,Physical Geography,3,37,1,,2043
+11,GOVT 1846,Professional Practice in Government,3,419,1,,2044
+11,ET 2396,Field Experience in Engineering Technology,3,850,1,,2045
+11,RGSC 1973,Range Science Methods,3,96,1,,2046
+11,PHLS 2278,Quantitative Approaches in Public Health Sciences,3,905,1,,2047
+11,FIN 1029,Survey of Finance,3,663,1,,2048
+11,AST 1146,Applied Statistics Methods,3,649,1,,2049
+11,HIST 2299,Western Civilization I,3,40,1,,2050
+11,AGRO 2606,Professional Practice in Agronomy,3,112,1,,2051
+11,ENGL 2177,Professional and Technical Communication,3,2,1,,2052
+11,SPAN 1820,Spanish II,4,45,1,,2053
+11,ANTH 2051,Concepts in Anthropology,3,543,1,,2054
+11,KIN 1138,Quantitative Approaches in Kinesiology,4,922,1,,2055
+2,CHME 2025,Chemical Engineering and Society,3,733,1,,2056
+2,ET 1269,Intermediate Engineering Technology,3,852,1,,2057
+2,CE 2920,Quantitative Approaches in Civil Engineering,4,754,1,,2058
+2,CD 2096,History of Communication Disorders,3,993,1,,2059
+3,HRTM 2001,"History of Hotel, Restaurant and Tourism Management",3,201,1,,2060
+5,SPAN 2077,Spanish I,4,44,1,,2061
+5,GEOL 1413,Geology and Society,3,554,1,,2062
+5,NURS 1371,Principles of Nursing II,3,880,1,,2063
+5,PSY 1469,Psychology Laboratory,3,384,1,,2064
+5,ECON 2741,Principles of Economics I,3,629,1,,2065
+5,HRTM 1847,"Principles of Hotel, Restaurant and Tourism Management II",3,199,1,,2066
+5,CHEM 1435,Principles of Chemistry II,3,236,1,,2067
+5,PHLS 1638,Explorations in Public Health Sciences,3,900,1,,2068
+5,MATH 1535,Introduction to Linear Algebra,3,14,1,,2069
+5,ET 2350,Field Experience in Engineering Technology,3,850,1,,2070
+5,NURS 1752,Field Experience in Nursing,1,886,1,,2071
+5,MUS 1265,Quantitative Approaches in Music,3,486,1,,2072
+1,STAT 2868,Intermediate Statistics,3,290,1,,2073
+1,STAT 2130,Explorations in Statistics,3,286,1,,2074
+2,PHYS 1280,Concepts in Physics,3,310,1,,2075
+2,ECON 2579,Principles of Economics I,3,629,1,,2076
+2,PHLS 2024,Public Health Sciences Laboratory,4,904,1,,2077
+4,FWCE 1847,"Fish, Wildlife and Conservation Ecology and Society",3,185,1,,2078
+4,STAT 1201,Statistics Laboratory,3,289,1,,2079
+4,THTR 2126,Theatre Methods,3,498,1,,2080
+4,MKTG 1547,Professional Practice in Marketing,3,705,1,,2081
+4,STAT 1957,Concepts in Statistics,3,292,1,,2082
+4,GOVT 1284,American National Government,3,33,1,,2083
+4,HRTM 1639,"Intermediate Hotel, Restaurant and Tourism Management",4,204,1,,2084
+6,CHME 1585,Intermediate Chemical Engineering,3,736,1,,2085
+6,SPAN 2735,Spanish Laboratory,3,511,1,,2086
+6,SWK 2967,Quantitative Approaches in Social Work,3,945,1,,2087
+6,HIST 1256,Western Civilization I,3,40,1,,2088

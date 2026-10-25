@@ -1,0 +1,94 @@
+student_id,section_id,override_type,granted_by_person_id,granted_at,expires_at,reason,used_at,id
+525,2460,prerequisite,46,2025-04-25 09:33:00+00:00,,Equivalent coursework completed elsewhere,2025-04-29 09:33:00+00:00,1
+53,2498,prerequisite,94,2025-04-27 13:39:00+00:00,,Equivalent coursework completed elsewhere,2025-04-27 13:39:00+00:00,2
+358,2500,prerequisite,1168,2025-05-12 07:59:00+00:00,,Advisor approved overload,2025-05-17 07:59:00+00:00,3
+498,2519,prerequisite,88,2025-06-16 07:14:00+00:00,,Equivalent coursework completed elsewhere,2025-06-20 07:14:00+00:00,4
+830,2524,capacity,89,2025-04-07 10:01:00+00:00,,Equivalent coursework completed elsewhere,2025-04-10 10:01:00+00:00,5
+674,2523,capacity,89,2025-05-02 07:10:00+00:00,,Equivalent coursework completed elsewhere,2025-05-03 07:10:00+00:00,6
+817,2524,prerequisite,89,2025-06-04 14:02:00+00:00,,Equivalent coursework completed elsewhere,2025-06-07 14:02:00+00:00,7
+44,2528,prerequisite,42,2025-07-19 11:02:00+00:00,,Advisor approved overload,2025-07-19 11:02:00+00:00,8
+481,2533,capacity,1200,2025-08-14 11:55:00+00:00,,Graduating senior,2025-08-15 11:55:00+00:00,9
+833,2536,prerequisite,59,2025-08-19 15:24:00+00:00,,Graduating senior,2025-08-23 15:24:00+00:00,10
+39,2545,prerequisite,70,2025-05-01 12:17:00+00:00,,Instructor permission,2025-05-04 12:17:00+00:00,11
+585,2548,time_conflict,12,2025-04-30 07:33:00+00:00,,Advisor approved overload,2025-05-03 07:33:00+00:00,12
+214,2551,prerequisite,34,2025-07-07 17:25:00+00:00,,Instructor permission,2025-07-12 17:25:00+00:00,13
+43,2558,prerequisite,71,2025-07-29 16:45:00+00:00,,Equivalent coursework completed elsewhere,2025-07-29 16:45:00+00:00,14
+278,2585,prerequisite,1168,2025-04-15 11:36:00+00:00,,Instructor permission,2025-04-19 11:36:00+00:00,15
+204,2589,capacity,1184,2025-04-07 09:29:00+00:00,,Instructor permission,2025-04-10 09:29:00+00:00,16
+603,2601,prerequisite,1177,2025-07-13 17:22:00+00:00,,Graduating senior,2025-07-17 17:22:00+00:00,17
+357,2687,prerequisite,80,2025-04-25 14:39:00+00:00,,Graduating senior,2025-04-30 14:39:00+00:00,18
+524,2701,level,12,2025-04-03 12:42:00+00:00,,Instructor permission,2025-04-05 12:42:00+00:00,19
+157,2709,prerequisite,1240,2025-05-11 10:11:00+00:00,,Instructor permission,2025-05-11 10:11:00+00:00,20
+366,2732,prerequisite,1173,2025-08-25 08:45:00+00:00,,Graduating senior,2025-08-25 08:45:00+00:00,21
+189,2739,prerequisite,67,2025-08-09 19:31:00+00:00,,Advisor approved overload,2025-08-11 19:31:00+00:00,22
+486,2744,prerequisite,1198,2025-04-12 07:19:00+00:00,,Advisor approved overload,2025-04-14 07:19:00+00:00,23
+301,2885,prerequisite,1169,2025-08-04 20:25:00+00:00,,Instructor permission,2025-08-07 20:25:00+00:00,24
+585,2902,time_conflict,16,2025-07-18 18:51:00+00:00,,Equivalent coursework completed elsewhere,2025-07-22 18:51:00+00:00,25
+326,2910,credit_overload,15,2025-06-07 11:59:00+00:00,,Equivalent coursework completed elsewhere,2025-06-08 11:59:00+00:00,26
+608,2955,level,15,2025-06-27 14:34:00+00:00,,Graduating senior,2025-07-02 14:34:00+00:00,27
+658,2957,credit_overload,18,2025-05-11 19:52:00+00:00,,Instructor permission,2025-05-12 19:52:00+00:00,28
+497,2989,time_conflict,20,2025-04-18 17:43:00+00:00,,Instructor permission,2025-04-18 17:43:00+00:00,29
+565,3096,prerequisite,93,2025-11-20 12:22:00+00:00,,Equivalent coursework completed elsewhere,2025-11-23 12:22:00+00:00,30
+289,3104,prerequisite,82,2025-11-05 11:50:00+00:00,,Equivalent coursework completed elsewhere,2025-11-05 11:50:00+00:00,31
+259,3126,prerequisite,48,2026-01-02 19:30:00+00:00,,Graduating senior,2026-01-07 19:30:00+00:00,32
+302,3141,prerequisite,53,2025-12-02 17:45:00+00:00,,Advisor approved overload,2025-12-03 17:45:00+00:00,33
+566,3150,capacity,1165,2026-01-22 13:54:00+00:00,,Advisor approved overload,2026-01-22 13:54:00+00:00,34
+232,3165,time_conflict,22,2026-01-13 13:23:00+00:00,,Advisor approved overload,2026-01-16 13:23:00+00:00,35
+106,3187,prerequisite,34,2025-11-20 12:47:00+00:00,,Graduating senior,2025-11-23 12:47:00+00:00,36
+846,3217,prerequisite,72,2025-12-27 15:43:00+00:00,,Equivalent coursework completed elsewhere,2026-01-01 15:43:00+00:00,37
+796,3217,prerequisite,72,2025-11-29 12:46:00+00:00,,Equivalent coursework completed elsewhere,2025-12-01 12:46:00+00:00,38
+282,3232,prerequisite,41,2025-11-23 13:03:00+00:00,,Equivalent coursework completed elsewhere,2025-11-28 13:03:00+00:00,39
+659,3237,prerequisite,111,2025-11-11 09:50:00+00:00,,Instructor permission,2025-11-13 09:50:00+00:00,40
+543,3252,capacity,1177,2025-11-03 18:13:00+00:00,,Graduating senior,2025-11-06 18:13:00+00:00,41
+553,3303,prerequisite,1274,2026-01-02 20:34:00+00:00,,Equivalent coursework completed elsewhere,2026-01-05 20:34:00+00:00,42
+569,3372,time_conflict,19,2025-12-07 18:12:00+00:00,,Instructor permission,2025-12-10 18:12:00+00:00,43
+277,3405,capacity,1225,2026-01-18 10:08:00+00:00,,Equivalent coursework completed elsewhere,2026-01-22 10:08:00+00:00,44
+659,3413,prerequisite,1232,2025-12-14 15:50:00+00:00,,Equivalent coursework completed elsewhere,2025-12-14 15:50:00+00:00,45
+406,3470,prerequisite,61,2025-12-19 20:37:00+00:00,,Graduating senior,2025-12-20 20:37:00+00:00,46
+674,3608,prerequisite,1294,2025-12-02 18:06:00+00:00,,Equivalent coursework completed elsewhere,2025-12-02 18:06:00+00:00,47
+569,3608,prerequisite,1294,2025-12-01 11:28:00+00:00,,Instructor permission,2025-12-02 11:28:00+00:00,48
+545,3624,capacity,1264,2025-12-28 08:26:00+00:00,,Advisor approved overload,2025-12-29 08:26:00+00:00,49
+812,3631,prerequisite,1254,2025-11-08 15:50:00+00:00,,Advisor approved overload,2025-11-13 15:50:00+00:00,50
+735,3639,time_conflict,12,2025-12-18 15:14:00+00:00,,Instructor permission,2025-12-21 15:14:00+00:00,51
+953,3723,prerequisite,44,2026-04-25 10:11:00+00:00,,Instructor permission,2026-04-30 10:11:00+00:00,52
+1009,3723,prerequisite,44,2026-06-27 07:32:00+00:00,,Equivalent coursework completed elsewhere,2026-07-02 07:32:00+00:00,53
+833,3733,capacity,50,2026-06-02 14:45:00+00:00,,Equivalent coursework completed elsewhere,2026-06-02 14:45:00+00:00,54
+194,3780,capacity,94,2026-04-16 20:11:00+00:00,,Equivalent coursework completed elsewhere,2026-04-17 20:11:00+00:00,55
+840,3781,capacity,86,2026-04-11 09:06:00+00:00,,Advisor approved overload,2026-04-11 09:06:00+00:00,56
+849,3781,prerequisite,86,2026-07-19 13:41:00+00:00,,Equivalent coursework completed elsewhere,2026-07-21 13:41:00+00:00,57
+933,3786,prerequisite,74,2026-08-17 20:02:00+00:00,,Instructor permission,2026-08-19 20:02:00+00:00,58
+55,3798,prerequisite,68,2026-07-15 11:23:00+00:00,,Instructor permission,2026-07-19 11:23:00+00:00,59
+1013,3816,prerequisite,72,2026-05-29 13:20:00+00:00,,Equivalent coursework completed elsewhere,2026-05-30 13:20:00+00:00,60
+311,3820,prerequisite,35,2026-05-13 16:49:00+00:00,,Instructor permission,2026-05-17 16:49:00+00:00,61
+118,3842,time_conflict,12,2026-04-17 19:26:00+00:00,,Advisor approved overload,2026-04-20 19:26:00+00:00,62
+553,3858,prerequisite,1172,2026-06-23 12:13:00+00:00,,Advisor approved overload,2026-06-23 12:13:00+00:00,63
+153,3876,prerequisite,1210,2026-05-07 16:55:00+00:00,,Instructor permission,2026-05-08 16:55:00+00:00,64
+998,3933,prerequisite,69,2026-06-23 10:06:00+00:00,,Instructor permission,2026-06-28 10:06:00+00:00,65
+707,3958,time_conflict,17,2026-08-25 11:43:00+00:00,,Equivalent coursework completed elsewhere,2026-08-25 11:43:00+00:00,66
+712,3958,capacity,124,2026-07-23 16:03:00+00:00,,Instructor permission,2026-07-23 16:03:00+00:00,67
+228,3967,capacity,1194,2026-08-06 13:32:00+00:00,,Graduating senior,2026-08-08 13:32:00+00:00,68
+596,3969,prerequisite,1193,2026-04-17 10:28:00+00:00,,Advisor approved overload,2026-04-21 10:28:00+00:00,69
+379,3980,time_conflict,24,2026-05-30 19:59:00+00:00,,Advisor approved overload,2026-05-31 19:59:00+00:00,70
+619,3994,capacity,59,2026-08-11 15:22:00+00:00,,Graduating senior,2026-08-14 15:22:00+00:00,71
+268,4014,capacity,99,2026-06-23 10:06:00+00:00,,Advisor approved overload,2026-06-26 10:06:00+00:00,72
+989,4020,prerequisite,83,2026-08-15 18:54:00+00:00,,Advisor approved overload,2026-08-20 18:54:00+00:00,73
+289,4047,prerequisite,1190,2026-04-20 20:15:00+00:00,,Instructor permission,2026-04-25 20:15:00+00:00,74
+929,4057,prerequisite,61,2026-04-15 20:42:00+00:00,,Graduating senior,2026-04-17 20:42:00+00:00,75
+685,4113,capacity,1272,2026-05-29 10:11:00+00:00,,Instructor permission,2026-05-29 10:11:00+00:00,76
+365,4121,capacity,1342,2026-07-01 10:02:00+00:00,,Instructor permission,2026-07-03 10:02:00+00:00,77
+711,4166,capacity,1231,2026-05-13 08:49:00+00:00,,Graduating senior,2026-05-14 08:49:00+00:00,78
+399,4171,capacity,1273,2026-07-10 20:10:00+00:00,,Graduating senior,2026-07-11 20:10:00+00:00,79
+705,4211,prerequisite,1283,2026-04-06 19:04:00+00:00,,Equivalent coursework completed elsewhere,2026-04-07 19:04:00+00:00,80
+628,4225,prerequisite,1270,2026-07-09 10:13:00+00:00,,Graduating senior,2026-07-13 10:13:00+00:00,81
+754,4237,time_conflict,22,2026-07-12 19:25:00+00:00,,Graduating senior,2026-07-12 19:25:00+00:00,82
+479,4240,prerequisite,1277,2026-06-22 11:02:00+00:00,,Instructor permission,2026-06-22 11:02:00+00:00,83
+1008,4254,capacity,1227,2026-04-14 19:16:00+00:00,,Equivalent coursework completed elsewhere,2026-04-16 19:16:00+00:00,84
+958,4254,time_conflict,12,2026-08-18 18:52:00+00:00,,Graduating senior,2026-08-18 18:52:00+00:00,85
+987,4254,capacity,1227,2026-07-28 17:57:00+00:00,,Graduating senior,2026-07-31 17:57:00+00:00,86
+674,4258,prerequisite,1250,2026-03-31 17:53:00+00:00,,Instructor permission,2026-04-02 17:53:00+00:00,87
+853,4258,capacity,1250,2026-07-15 13:08:00+00:00,,Graduating senior,2026-07-20 13:08:00+00:00,88
+797,4296,prerequisite,1218,2026-06-27 09:39:00+00:00,,Instructor permission,2026-07-01 09:39:00+00:00,89
+1018,4296,prerequisite,1218,2026-07-14 17:38:00+00:00,,Graduating senior,2026-07-14 17:38:00+00:00,90
+767,4304,prerequisite,1309,2026-07-08 10:23:00+00:00,,Graduating senior,2026-07-13 10:23:00+00:00,91
+910,4309,prerequisite,1349,2026-06-27 08:12:00+00:00,,Advisor approved overload,2026-06-29 08:12:00+00:00,92
+752,4354,prerequisite,1353,2026-08-23 07:56:00+00:00,,Advisor approved overload,2026-08-24 07:56:00+00:00,93

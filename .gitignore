@@ -1,0 +1,8 @@
+pgdata/
+pgrun/
+.env
+__pycache__/
+*.pyc
+# full-size dataset (~150 MB); regenerate with scripts/seed.py --dump
+data/seed_csv/
+data/*.log

@@ -1,0 +1,161 @@
+term_id,name,event_type,event_date,end_date,description,id
+1,Classes begin,milestone,2021-08-20,,,1
+1,Last day to add,deadline,2021-08-26,,,2
+1,Last day to drop without a W,deadline,2021-09-02,,,3
+1,Census date,milestone,2021-09-09,,,4
+1,Last day to withdraw with a W,deadline,2021-10-30,,,5
+1,Final examinations,finals,2021-12-07,2021-12-11,,6
+1,Grades due from instructors,deadline,2021-12-16,,,7
+1,Labor Day (no classes),holiday,2021-09-06,,,8
+1,Thanksgiving break,holiday,2021-11-26,2021-11-28,,9
+1,Commencement,commencement,2021-12-12,,,10
+2,Classes begin,milestone,2022-01-17,,,11
+2,Last day to add,deadline,2022-01-23,,,12
+2,Last day to drop without a W,deadline,2022-01-30,,,13
+2,Census date,milestone,2022-02-06,,,14
+2,Last day to withdraw with a W,deadline,2022-03-31,,,15
+2,Final examinations,finals,2022-05-05,2022-05-09,,16
+2,Grades due from instructors,deadline,2022-05-14,,,17
+2,Martin Luther King Jr. Day (no classes),holiday,2022-01-20,,,18
+2,Spring break,holiday,2022-03-16,2022-03-20,,19
+2,Commencement,commencement,2022-05-10,,,20
+3,Classes begin,milestone,2022-06-01,,,21
+3,Last day to add,deadline,2022-06-07,,,22
+3,Last day to drop without a W,deadline,2022-06-14,,,23
+3,Census date,milestone,2022-06-21,,,24
+3,Last day to withdraw with a W,deadline,2022-07-06,,,25
+3,Final examinations,finals,2022-07-27,2022-07-31,,26
+3,Grades due from instructors,deadline,2022-08-05,,,27
+3,Independence Day (no classes),holiday,2022-07-04,,,28
+4,Classes begin,milestone,2022-08-20,,,29
+4,Last day to add,deadline,2022-08-26,,,30
+4,Last day to drop without a W,deadline,2022-09-02,,,31
+4,Census date,milestone,2022-09-09,,,32
+4,Last day to withdraw with a W,deadline,2022-10-30,,,33
+4,Final examinations,finals,2022-12-07,2022-12-11,,34
+4,Grades due from instructors,deadline,2022-12-16,,,35
+4,Labor Day (no classes),holiday,2022-09-05,,,36
+4,Thanksgiving break,holiday,2022-11-26,2022-11-28,,37
+4,Commencement,commencement,2022-12-12,,,38
+5,Classes begin,milestone,2023-01-17,,,39
+5,Last day to add,deadline,2023-01-23,,,40
+5,Last day to drop without a W,deadline,2023-01-30,,,41
+5,Census date,milestone,2023-02-06,,,42
+5,Last day to withdraw with a W,deadline,2023-03-31,,,43
+5,Final examinations,finals,2023-05-05,2023-05-09,,44
+5,Grades due from instructors,deadline,2023-05-14,,,45
+5,Martin Luther King Jr. Day (no classes),holiday,2023-01-20,,,46
+5,Spring break,holiday,2023-03-16,2023-03-20,,47
+5,Commencement,commencement,2023-05-10,,,48
+6,Classes begin,milestone,2023-06-01,,,49
+6,Last day to add,deadline,2023-06-07,,,50
+6,Last day to drop without a W,deadline,2023-06-14,,,51
+6,Census date,milestone,2023-06-21,,,52
+6,Last day to withdraw with a W,deadline,2023-07-06,,,53
+6,Final examinations,finals,2023-07-27,2023-07-31,,54
+6,Grades due from instructors,deadline,2023-08-05,,,55
+6,Independence Day (no classes),holiday,2023-07-04,,,56
+7,Classes begin,milestone,2023-08-20,,,57
+7,Last day to add,deadline,2023-08-26,,,58
+7,Last day to drop without a W,deadline,2023-09-02,,,59
+7,Census date,milestone,2023-09-09,,,60
+7,Last day to withdraw with a W,deadline,2023-10-30,,,61
+7,Final examinations,finals,2023-12-07,2023-12-11,,62
+7,Grades due from instructors,deadline,2023-12-16,,,63
+7,Labor Day (no classes),holiday,2023-09-04,,,64
+7,Thanksgiving break,holiday,2023-11-26,2023-11-28,,65
+7,Commencement,commencement,2023-12-12,,,66
+8,Classes begin,milestone,2024-01-17,,,67
+8,Last day to add,deadline,2024-01-23,,,68
+8,Last day to drop without a W,deadline,2024-01-30,,,69
+8,Census date,milestone,2024-02-06,,,70
+8,Last day to withdraw with a W,deadline,2024-03-31,,,71
+8,Final examinations,finals,2024-05-05,2024-05-09,,72
+8,Grades due from instructors,deadline,2024-05-14,,,73
+8,Martin Luther King Jr. Day (no classes),holiday,2024-01-20,,,74
+8,Spring break,holiday,2024-03-16,2024-03-20,,75
+8,Commencement,commencement,2024-05-10,,,76
+9,Classes begin,milestone,2024-06-01,,,77
+9,Last day to add,deadline,2024-06-07,,,78
+9,Last day to drop without a W,deadline,2024-06-14,,,79
+9,Census date,milestone,2024-06-21,,,80
+9,Last day to withdraw with a W,deadline,2024-07-06,,,81
+9,Final examinations,finals,2024-07-27,2024-07-31,,82
+9,Grades due from instructors,deadline,2024-08-05,,,83
+9,Independence Day (no classes),holiday,2024-07-04,,,84
+10,Classes begin,milestone,2024-08-20,,,85
+10,Last day to add,deadline,2024-08-26,,,86
+10,Last day to drop without a W,deadline,2024-09-02,,,87
+10,Census date,milestone,2024-09-09,,,88
+10,Last day to withdraw with a W,deadline,2024-10-30,,,89
+10,Final examinations,finals,2024-12-07,2024-12-11,,90
+10,Grades due from instructors,deadline,2024-12-16,,,91
+10,Labor Day (no classes),holiday,2024-09-02,,,92
+10,Thanksgiving break,holiday,2024-11-26,2024-11-28,,93
+10,Commencement,commencement,2024-12-12,,,94
+11,Classes begin,milestone,2025-01-17,,,95
+11,Last day to add,deadline,2025-01-23,,,96
+11,Last day to drop without a W,deadline,2025-01-30,,,97
+11,Census date,milestone,2025-02-06,,,98
+11,Last day to withdraw with a W,deadline,2025-03-31,,,99
+11,Final examinations,finals,2025-05-05,2025-05-09,,100
+11,Grades due from instructors,deadline,2025-05-14,,,101
+11,Martin Luther King Jr. Day (no classes),holiday,2025-01-20,,,102
+11,Spring break,holiday,2025-03-16,2025-03-20,,103
+11,Commencement,commencement,2025-05-10,,,104
+12,Classes begin,milestone,2025-06-01,,,105
+12,Last day to add,deadline,2025-06-07,,,106
+12,Last day to drop without a W,deadline,2025-06-14,,,107
+12,Census date,milestone,2025-06-21,,,108
+12,Last day to withdraw with a W,deadline,2025-07-06,,,109
+12,Final examinations,finals,2025-07-27,2025-07-31,,110
+12,Grades due from instructors,deadline,2025-08-05,,,111
+12,Independence Day (no classes),holiday,2025-07-04,,,112
+13,Classes begin,milestone,2025-08-20,,,113
+13,Last day to add,deadline,2025-08-26,,,114
+13,Last day to drop without a W,deadline,2025-09-02,,,115
+13,Census date,milestone,2025-09-09,,,116
+13,Last day to withdraw with a W,deadline,2025-10-30,,,117
+13,Final examinations,finals,2025-12-07,2025-12-11,,118
+13,Grades due from instructors,deadline,2025-12-16,,,119
+13,Labor Day (no classes),holiday,2025-09-01,,,120
+13,Thanksgiving break,holiday,2025-11-26,2025-11-28,,121
+13,Commencement,commencement,2025-12-12,,,122
+14,Classes begin,milestone,2026-01-17,,,123
+14,Last day to add,deadline,2026-01-23,,,124
+14,Last day to drop without a W,deadline,2026-01-30,,,125
+14,Census date,milestone,2026-02-06,,,126
+14,Last day to withdraw with a W,deadline,2026-03-31,,,127
+14,Final examinations,finals,2026-05-05,2026-05-09,,128
+14,Grades due from instructors,deadline,2026-05-14,,,129
+14,Martin Luther King Jr. Day (no classes),holiday,2026-01-20,,,130
+14,Spring break,holiday,2026-03-16,2026-03-20,,131
+14,Commencement,commencement,2026-05-10,,,132
+15,Classes begin,milestone,2026-06-01,,,133
+15,Last day to add,deadline,2026-06-07,,,134
+15,Last day to drop without a W,deadline,2026-06-14,,,135
+15,Census date,milestone,2026-06-21,,,136
+15,Last day to withdraw with a W,deadline,2026-07-06,,,137
+15,Final examinations,finals,2026-07-27,2026-07-31,,138
+15,Grades due from instructors,deadline,2026-08-05,,,139
+15,Independence Day (no classes),holiday,2026-07-04,,,140
+16,Classes begin,milestone,2026-08-20,,,141
+16,Last day to add,deadline,2026-08-26,,,142
+16,Last day to drop without a W,deadline,2026-09-02,,,143
+16,Census date,milestone,2026-09-09,,,144
+16,Last day to withdraw with a W,deadline,2026-10-30,,,145
+16,Final examinations,finals,2026-12-07,2026-12-11,,146
+16,Grades due from instructors,deadline,2026-12-16,,,147
+16,Labor Day (no classes),holiday,2026-09-07,,,148
+16,Thanksgiving break,holiday,2026-11-26,2026-11-28,,149
+16,Commencement,commencement,2026-12-12,,,150
+17,Classes begin,milestone,2027-01-17,,,151
+17,Last day to add,deadline,2027-01-23,,,152
+17,Last day to drop without a W,deadline,2027-01-30,,,153
+17,Census date,milestone,2027-02-06,,,154
+17,Last day to withdraw with a W,deadline,2027-03-31,,,155
+17,Final examinations,finals,2027-05-05,2027-05-09,,156
+17,Grades due from instructors,deadline,2027-05-14,,,157
+17,Martin Luther King Jr. Day (no classes),holiday,2027-01-20,,,158
+17,Spring break,holiday,2027-03-16,2027-03-20,,159
+17,Commencement,commencement,2027-05-10,,,160

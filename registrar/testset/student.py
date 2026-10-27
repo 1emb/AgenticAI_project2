@@ -11,7 +11,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 
 from . import student_queries as Q
-from .common import (DAY_NAMES, GRADE_ORDER, WEEK, QueryLog, article, cap_first, fmt_credits, fmt_date, fmt_dt, fmt_list, fmt_meeting, fmt_time, gpa,
+from .common import (DAY_NAMES, GRADE_ORDER, WEEK, QueryLog, with_allowed, article, cap_first, fmt_credits, fmt_date, fmt_dt, fmt_list, fmt_meeting, fmt_time, gpa,
                      grade_meets, num)
 
 UTC = timezone.utc
@@ -285,7 +285,7 @@ class Builder:
             "question": question,
             "paraphrases": paraphrases,
             "slots": slots,
-            "answer": discrete if discrete is not None else discrete_answer(intent, facts),
+            "answer": with_allowed(discrete if discrete is not None else discrete_answer(intent, facts)),
             "sql": q.entries,
             "expected_facts": facts,
             "reference_answer": answer,

@@ -11,7 +11,7 @@ from datetime import datetime
 
 from . import professor_queries as PQ
 from . import student_queries as Q
-from .common import (DAY_NAMES, GRADE_ORDER, WEEK, QueryLog, fmt_credits, fmt_date, fmt_list, fmt_meeting, fmt_time, gpa,
+from .common import (DAY_NAMES, GRADE_ORDER, WEEK, QueryLog, with_allowed, fmt_credits, fmt_date, fmt_list, fmt_meeting, fmt_time, gpa,
                      num)
 from .student import (CURRENT, DEFAULT_AS_OF, UTC, course_code, describe_section, evaluate_add, pick, section_block,
                       strip_private, term_phrase)
@@ -84,7 +84,7 @@ class ProfBuilder:
             "professor": {"instructor_id": pr["instructor_id"], "university_id": pr["university_id"], "name": prof_name(pr),
                           "email": pr["email"], "department": pr["department"], "rank": pr["rank"]},
             "question": question, "paraphrases": paraphrases, "slots": slots,
-            "answer": strip_private(answer), "sql": q.entries, "expected_facts": strip_private(facts if facts is not None else answer),
+            "answer": with_allowed(strip_private(answer)), "sql": q.entries, "expected_facts": strip_private(facts if facts is not None else answer),
             "reference_answer": reference,
         }
         if must_not_mention:

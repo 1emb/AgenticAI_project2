@@ -239,7 +239,8 @@ def course_equivalents(q: QueryLog, student_id: int, subject: str, number: str) 
         UNION ALL
         SELECT 'test' AS source, x.test_type || ' ' || x.test_subject AS detail, x.credits_awarded AS credits
         FROM test_credit x JOIN course c ON c.id = x.equivalent_course_id JOIN subject sub ON sub.id = c.subject_id
-        WHERE x.student_id = %(sid)s AND sub.code = %(subject)s AND c.course_number = %(number)s""",
+        WHERE x.student_id = %(sid)s AND sub.code = %(subject)s AND c.course_number = %(number)s
+        ORDER BY 1, 2""",
         sid=student_id, subject=subject, number=number)
 
 

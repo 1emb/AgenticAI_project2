@@ -47,7 +47,8 @@ def generate(conn, seed: int = 11) -> list[dict]:
         JOIN section sec ON sec.id = si.section_id JOIN academic_term t ON t.id = sec.term_id
         LEFT JOIN waitlist_entry w ON w.section_id = sec.id AND sec.term_id = %(cur)s AND w.status = 'waiting'
         GROUP BY 1, 2, 3, 4
-        HAVING COUNT(DISTINCT sec.id) FILTER (WHERE sec.term_id = %(cur)s) >= 1""", cur=cur["id"], fut=fut["id"], cseq=cur["sequence"])
+        HAVING COUNT(DISTINCT sec.id) FILTER (WHERE sec.term_id = %(cur)s) >= 1
+        ORDER BY 1""", cur=cur["id"], fut=fut["id"], cseq=cur["sequence"])
     rng.shuffle(pool)
     core = [x for x in pool if x["n_past"] >= 2 and x["n_fut"] >= 1]
     with_wl = [x for x in pool if x["has_waitlist"]]
@@ -76,8 +77,8 @@ def generate(conn, seed: int = 11) -> list[dict]:
 
     def roster_uid(section_id: int, status: str = "registered") -> str | None:
         r = fetch(conn, """SELECT p.university_id FROM enrollment e JOIN student s ON s.id = e.student_id JOIN person p ON p.id = s.person_id
-                           WHERE e.section_id = %(sid)s AND e.status = %(st)s ORDER BY random() LIMIT 1""", sid=section_id, st=status)
-        return r[0]["university_id"] if r else None
+                           WHERE e.section_id = %(sid)s AND e.status = %(st)s ORDER BY p.university_id""", sid=section_id, st=status)
+        return rng.choice(r)["university_id"] if r else None
 
     def other_section(iid: int, term_id: int, same_subject_of: str | None = None, graded: bool = False) -> int:
         subj = same_subject_of.split()[0] if same_subject_of else None
@@ -88,16 +89,16 @@ def generate(conn, seed: int = 11) -> list[dict]:
               {"AND sub.code = %(subj)s" if subj else ""}
               {"AND EXISTS (SELECT 1 FROM enrollment e JOIN grade g ON g.enrollment_id = e.id WHERE e.section_id = sec.id)" if graded else ""}
               AND EXISTS (SELECT 1 FROM enrollment e WHERE e.section_id = sec.id AND e.status IN ('registered', 'completed'))
-            ORDER BY random() LIMIT 1""", iid=iid, tid=term_id or cur["id"], subj=subj)
+            ORDER BY sec.id""", iid=iid, tid=term_id or cur["id"], subj=subj)
         if not rows and subj:
             return other_section(iid, term_id, None, graded)
-        return rows[0]["id"]
+        return rng.choice(rows)["id"]
 
     def random_student(exclude_section: int, with_history: bool = True) -> str:
-        return fetch(conn, """SELECT p.university_id FROM student s JOIN person p ON p.id = s.person_id
+        return rng.choice(fetch(conn, """SELECT p.university_id FROM student s JOIN person p ON p.id = s.person_id
                               WHERE s.status = 'active' AND NOT EXISTS (SELECT 1 FROM enrollment e WHERE e.student_id = s.id AND e.section_id = %(x)s)
                               AND (%(hist)s = FALSE OR EXISTS (SELECT 1 FROM student_term_record r WHERE r.student_id = s.id))
-                              ORDER BY random() LIMIT 1""", x=exclude_section, hist=with_history)[0]["university_id"]
+                              ORDER BY p.university_id""", x=exclude_section, hist=with_history))["university_id"]
 
     cases: list[dict] = []
     k = 0
@@ -150,7 +151,7 @@ def generate(conn, seed: int = 11) -> list[dict]:
             cases.append(pb.roster(s["uid"], code, DEFAULT_AS_OF, sec["crn"]))
     for s in with_wl[: QUOTA["roster_waitlist"]]:
         sec = fetch(conn, """SELECT sec.crn FROM waitlist_entry w JOIN section sec ON sec.id = w.section_id JOIN section_instructor si ON si.section_id = sec.id
-                             WHERE si.instructor_id = %(iid)s AND sec.term_id = %(tid)s LIMIT 1""", iid=s["iid"], tid=cur["id"])[0]
+                             WHERE si.instructor_id = %(iid)s AND sec.term_id = %(tid)s ORDER BY sec.crn LIMIT 1""", iid=s["iid"], tid=cur["id"])[0]
         cases.append(pb.roster(s["uid"], CURRENT, DEFAULT_AS_OF, sec["crn"], waitlist=True))
     for i in range(QUOTA["student_in_section"]):
         s = nxt(pool)
@@ -183,7 +184,7 @@ def generate(conn, seed: int = 11) -> list[dict]:
                          FROM grade g JOIN enrollment e ON e.id = g.enrollment_id JOIN section sec ON sec.id = e.section_id JOIN academic_term t ON t.id = sec.term_id
                          JOIN section_instructor si ON si.section_id = sec.id AND si.role = 'primary' JOIN instructor i ON i.id = si.instructor_id JOIN person p ON p.id = i.person_id
                          JOIN student st ON st.id = e.student_id JOIN person sp ON sp.id = st.person_id
-                         WHERE g.grade = 'I' AND NOT g.is_final ORDER BY 1""")
+                         WHERE g.grade = 'I' AND NOT g.is_final ORDER BY 1, 3, 4""")
     rng.shuffle(inc)
     plan = [(inc[0]["uid"], None, None, False), (inc[1]["uid"], inc[1]["code"], None, False), (inc[2]["uid"], inc[2]["code"], inc[2]["student_uid"], False),
             (inc[3]["uid"], None, None, True), (nxt(pool)["uid"], None, None, False)]
@@ -197,7 +198,7 @@ def generate(conn, seed: int = 11) -> list[dict]:
         cases.append(pb.grade_status(s["uid"], code, DEFAULT_AS_OF, sec["crn"] if i % 3 == 0 else None, sec["course"] if i % 3 == 1 else None))
     gc = fetch(conn, """SELECT DISTINCT p.university_id AS uid, sp.university_id AS student_uid, sec.crn
                         FROM grade_change gc JOIN person p ON p.id = gc.requested_by_person_id JOIN grade g ON g.id = gc.grade_id
-                        JOIN enrollment e ON e.id = g.enrollment_id JOIN section sec ON sec.id = e.section_id JOIN student st ON st.id = e.student_id JOIN person sp ON sp.id = st.person_id""")
+                        JOIN enrollment e ON e.id = g.enrollment_id JOIN section sec ON sec.id = e.section_id JOIN student st ON st.id = e.student_id JOIN person sp ON sp.id = st.person_id ORDER BY 1, 3, 2""")
     for i, r in enumerate(gc[: QUOTA["grade_change_status"]]):
         cases.append(pb.grade_change_status(r["uid"], DEFAULT_AS_OF, r["student_uid"] if i == 0 else None, r["crn"] if i == 1 else None))
 

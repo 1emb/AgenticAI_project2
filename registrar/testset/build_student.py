@@ -45,10 +45,11 @@ def generate(conn, seed: int = 7) -> list[dict]:
         LEFT JOIN enrollment e ON e.student_id = s.id AND e.term_id = %(cur)s
         WHERE s.status = 'active'
         GROUP BY p.university_id, s.id, s.admit_term_id
-        HAVING COUNT(e.id) FILTER (WHERE e.status = 'registered') >= 2""", cur=cur_id, fut=fut_id)
+        HAVING COUNT(e.id) FILTER (WHERE e.status = 'registered') >= 2
+        ORDER BY p.university_id""", cur=cur_id, fut=fut_id)
     others = fetch(conn, """
         SELECT p.university_id AS uid, s.id AS sid, s.status
-        FROM student s JOIN person p ON p.id = s.person_id WHERE s.status <> 'active'""")
+        FROM student s JOIN person p ON p.id = s.person_id WHERE s.status <> 'active' ORDER BY p.university_id""")
     rng.shuffle(active)
     rng.shuffle(others)
     by_status = {}
@@ -57,7 +58,7 @@ def generate(conn, seed: int = 7) -> list[dict]:
 
     def spring_candidates(sid: int, n: int) -> list[dict]:
         """Open Spring 2027 sections of courses in the student's primary program that they have not completed."""
-        return fetch(conn, """
+        rows = fetch(conn, """
             WITH done AS (
                 SELECT sec.course_id FROM enrollment e JOIN section sec ON sec.id = e.section_id
                 WHERE e.student_id = %(sid)s AND e.status = 'completed')
@@ -70,19 +71,21 @@ def generate(conn, seed: int = 7) -> list[dict]:
             JOIN subject sub ON sub.id = c.subject_id
             JOIN section sec ON sec.course_id = c.id AND sec.term_id = %(fut)s AND sec.status = 'open'
             WHERE sp.student_id = %(sid)s AND sp.is_primary AND sp.status = 'declared' AND c.id NOT IN (SELECT course_id FROM done)
-            ORDER BY random() LIMIT %(n)s""", sid=sid, fut=fut_id, n=n)
+            ORDER BY sec.crn""", sid=sid, fut=fut_id)
+        return rng.sample(rows, min(n, len(rows)))
 
     def fall_sections(sid: int) -> list[dict]:
-        return fetch(conn, """
+        rows = fetch(conn, """
             SELECT sec.crn, sub.code AS subject, c.course_number, sec.status, e.student_id IS NOT NULL AS mine,
                    (SELECT COUNT(*) FROM course_prerequisite cp WHERE cp.course_id = c.id) AS n_prereq
             FROM section sec JOIN course c ON c.id = sec.course_id JOIN subject sub ON sub.id = c.subject_id
             LEFT JOIN enrollment e ON e.section_id = sec.id AND e.student_id = %(sid)s AND e.status IN ('registered', 'waitlisted')
-            WHERE sec.term_id = %(cur)s ORDER BY random() LIMIT 30""", sid=sid, cur=cur_id)
+            WHERE sec.term_id = %(cur)s ORDER BY sec.crn""", sid=sid, cur=cur_id)
+        return rng.sample(rows, min(30, len(rows)))
 
     multi_fall = fetch(conn, """
         SELECT MIN(sec.crn) AS crn FROM section sec WHERE sec.term_id = %(cur)s
-        GROUP BY sec.course_id HAVING COUNT(*) > 1""", cur=cur_id)
+        GROUP BY sec.course_id HAVING COUNT(*) > 1 ORDER BY 1""", cur=cur_id)
     cases: list[dict] = []
 
     # ---------------------------------------------------------------- can_add
@@ -158,12 +161,10 @@ def generate(conn, seed: int = 7) -> list[dict]:
     for i in range(QUOTA["seats_left"]):
         s = active[i]
         term = CURRENT if i % 2 == 0 else FUTURE
-        rows = fetch(conn, """SELECT sec.crn, sub.code AS subject, c.course_number FROM section sec JOIN course c ON c.id = sec.course_id
-                              JOIN subject sub ON sub.id = c.subject_id WHERE sec.term_id = %(t)s
-                              ORDER BY (sec.status = 'closed') DESC, random() LIMIT 1""" if i % 3 == 0 else
-                     """SELECT sec.crn, sub.code AS subject, c.course_number FROM section sec JOIN course c ON c.id = sec.course_id
-                        JOIN subject sub ON sub.id = c.subject_id WHERE sec.term_id = %(t)s ORDER BY random() LIMIT 1""", t=term_ids[term])
-        r = rows[0]
+        rows = fetch(conn, """SELECT sec.crn, sub.code AS subject, c.course_number, sec.status FROM section sec JOIN course c ON c.id = sec.course_id
+                              JOIN subject sub ON sub.id = c.subject_id WHERE sec.term_id = %(t)s ORDER BY sec.crn""", t=term_ids[term])
+        closed = [x for x in rows if x["status"] == "closed"]
+        r = rng.choice(closed or rows) if i % 3 == 0 else rng.choice(rows)
         if i % 5 in (1, 3):
             cases.append(b.seats(s["uid"], term, None, (r["subject"], r["course_number"]), DEFAULT_AS_OF))
         else:
@@ -184,9 +185,10 @@ def generate(conn, seed: int = 7) -> list[dict]:
         if i % 2 == 0:
             r = fetch(conn, """SELECT sub.code AS subject, c.course_number FROM enrollment e JOIN section sec ON sec.id = e.section_id
                                JOIN course c ON c.id = sec.course_id JOIN subject sub ON sub.id = c.subject_id
-                               WHERE e.student_id = %(sid)s AND e.status = 'completed' ORDER BY random() LIMIT 1""", sid=s["sid"])
+                               WHERE e.student_id = %(sid)s AND e.status = 'completed' ORDER BY e.term_id, sub.code, c.course_number""", sid=s["sid"])
+            r = [rng.choice(r)] if r else r
         if i % 2 == 1 or not r:
-            r = spring_candidates(s["sid"], 1) or fetch(conn, "SELECT sub.code AS subject, c.course_number FROM course c JOIN subject sub ON sub.id = c.subject_id ORDER BY random() LIMIT 1")
+            r = spring_candidates(s["sid"], 1) or [rng.choice(fetch(conn, "SELECT sub.code AS subject, c.course_number FROM course c JOIN subject sub ON sub.id = c.subject_id ORDER BY 1, 2"))]
         cases.append(b.classes_taken(s["uid"], DEFAULT_AS_OF, "course", course=(r[0]["subject"], r[0]["course_number"])))
 
     # ---------------------------------------------------------------- schedule
@@ -248,8 +250,8 @@ def generate(conn, seed: int = 7) -> list[dict]:
                 SELECT p.university_id AS uid FROM enrollment e JOIN section sec ON sec.id = e.section_id JOIN student st ON st.id = e.student_id JOIN person p ON p.id = st.person_id
                 WHERE e.term_id = %(cur)s AND e.status = 'registered' AND e.student_id <> %(sid)s
                   AND sec.course_id IN (SELECT s2.course_id FROM enrollment e2 JOIN section s2 ON s2.id = e2.section_id WHERE e2.student_id = %(sid)s AND e2.term_id = %(cur)s AND e2.status = 'registered')
-                ORDER BY random() LIMIT 1""", cur=cur_id, sid=s["sid"])
-            t = mate[0] if mate else history[(i * 13 + 7) % len(history)]
+                ORDER BY p.university_id""", cur=cur_id, sid=s["sid"])
+            t = rng.choice(mate) if mate else history[(i * 13 + 7) % len(history)]
         else:
             t = next(x for x in history[(i * 11 + 2) % len(history):] + history if x["uid"] != s["uid"])
         cases.append(ab.partial(s["uid"], DEFAULT_AS_OF, sc, t["uid"]))

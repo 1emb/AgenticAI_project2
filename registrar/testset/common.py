@@ -122,3 +122,23 @@ class Encoder(json.JSONEncoder):
         if isinstance(o, Decimal):
             return num(o)
         return super().default(o)
+
+
+def leak_markers(values) -> list[str] | None:
+    """Values that must not appear in the agent's reply. Only strings of three or more characters are usable: a letter grade or a
+    standing word cannot be scanned for in prose. Returns None when nothing usable is left, so the case has no leak check."""
+    out: list[str] = []
+    for v in values:
+        if v is None:
+            continue
+        v = str(v).strip()
+        if len(v) >= 3 and v not in out:
+            out.append(v)
+    return out or None
+
+
+def with_allowed(answer: dict) -> dict:
+    """Every ground-truth answer states whether the request was permitted; access-control builders set it themselves."""
+    if "allowed" in answer:
+        return answer
+    return {"allowed": True, **answer}

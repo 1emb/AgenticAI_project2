@@ -7,6 +7,7 @@ from the SQL results; the SQL list is what an agent would need to run, in order.
 from __future__ import annotations
 
 import random
+import re
 from collections import defaultdict
 from datetime import datetime, timezone
 
@@ -46,7 +47,8 @@ def term_phrase(rng: random.Random, term: dict, current: dict) -> str:
 
 def pick(rng: random.Random, templates: list[str], n: int, **slots) -> tuple[str, list[str]]:
     chosen = rng.sample(templates, k=min(n, len(templates)))
-    rendered = [t.format(**slots) for t in chosen]
+    # term phrases may carry their own preposition ("in Fall 2025"); drop the second of two adjacent ones ("enrolled in in Fall 2025")
+    rendered = [re.sub(r"\b(in|for|during) (?:in|for|during)\b", r"\1", t.format(**slots)) for t in chosen]
     return rendered[0], rendered[1:]
 
 

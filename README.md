@@ -22,6 +22,16 @@ The full dataset is deterministic: `python scripts/seed.py --dump` regenerates i
 `scripts/load_csv.py <dir>` loads any CSV dump into the database named by `DATABASE_URL`; the sample is loaded into a
 second database, `registrar_sample`, on the same cluster, and the test sets in `data/testset/` are generated from it.
 
+## Test dataset
+`data/testset/` holds English questions with program-checkable answers for the registrar agent, generated from the
+`registrar_sample` database: 191 student cases (registration, schedule, transcript) and 176 professor cases (schedule,
+courses, statistics), each with two paraphrases, a simulated clock (`as_of`, default 2026-11-20 18:00 UTC), the
+authenticated user, and a discrete `answer` that starts with `allowed`. Thirty cases per persona test access control
+(other students' records, other instructors' sections, department-wide statistics) and carry `must_not_mention` values
+the reply must not leak. `derivation.jsonl` beside each set keeps the SQL and full facts for audit. The administrator
+persona is drafted only. Formats, answer shapes, the verification contract and the regeneration commands are in
+[data/testset/README.md](data/testset/README.md).
+
 ## Setup
 ```bash
 conda activate /home/sheshnagnobackup/mnguyen/envs/registrar

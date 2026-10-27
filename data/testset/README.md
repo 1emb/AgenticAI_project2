@@ -15,11 +15,67 @@ python scripts/make_testset.py --persona professor    # data/testset/professor/c
 
 Generation is deterministic: the same database and seed reproduce the files byte for byte (random picks use the seeded Python generator over ordered rows, never SQL `random()`).
 
-| Persona | Cases | Categories |
-|---|---|---|
-| student | 188 | registration, schedule, transcript, access_control |
-| professor | 176 | schedule, courses, statistics, access_control |
-| administrator | drafted only (`administrator/questions.md`) | |
+## What is in the sets now
+
+Generated 2026-10-27 from the 5% sample. Counts below are of distinct cases; each case also has two paraphrases.
+
+| Persona | Cases | Distinct users | Clock | Access-control cases |
+|---|---|---|---|---|
+| student | 191 | 106 students | 173 at the default clock, 18 at 2026-10-19, 2026-11-10 or 2026-12-03 | 30 (18 denied, 8 allowed, 4 partial) |
+| professor | 176 | 153 professors | all at the default clock | 30 (18 denied, 8 allowed, 4 partial) |
+| administrator | none yet (question catalog drafted in `administrator/questions.md`) | | | |
+
+### Student (191 cases)
+
+| Category | Intent | Cases | Example question |
+|---|---|---|---|
+| registration | `can_add` | 32 | I want to add CRN 10590 in Spring 2027. Can I? |
+| registration | `register_when` | 13 | When's my time ticket? |
+| registration | `seats_left` | 15 | Are there still open seats in CRN 10267 this term? |
+| registration | `taken_all` | 8 | What classes have I taken so far? |
+| registration | `taken_term` | 7 | What classes did I take in Fall 2025? |
+| registration | `taken_course` | 8 | Have I taken MUS 1130 yet? |
+| schedule | `schedule_current` | 15 | Which courses am I taking this term, and when do they meet? |
+| schedule | `schedule_previous` | 13 | Can you show me the classes I had for Spring 2026? |
+| schedule | `schedule_week` | 12 | Lay out my weekly timetable this semester. |
+| schedule | `schedule_day` | 8 | What's my Thursday schedule? |
+| transcript | `transcript` | 18 | What's on my transcript right now? |
+| transcript | `gpa` | 12 | What was my GPA last term, and what is it overall? |
+| access_control | `access_denied` | 18 | Which sections is Nathaniel James registered for this fall? |
+| access_control | `access_allowed` | 8 | Who is the instructor for my PSY 1110 section? |
+| access_control | `access_partial` | 4 | Is my GPA higher than 801783646's? |
+
+### Professor (176 cases)
+
+| Category | Intent | Cases | Example question |
+|---|---|---|---|
+| schedule | `teach_current` | 10 | Show me my sections and rooms this fall. |
+| schedule | `teach_term` | 8 | List my sections next semester. |
+| schedule | `teach_week` | 6 | What does my teaching week look like? |
+| schedule | `teach_day` | 6 | What do I teach on Fridays? |
+| schedule | `section_meeting` | 5 | What time does my MUS 3310 section start? |
+| schedule | `term_dates` | 8 | When are grades due this fall? |
+| schedule | `teach_load` | 5 | What's my teaching load for Fall 2026: sections, credits, students? |
+| courses | `enrollment_count` | 8 | How many seats are left in CRN 10047? |
+| courses | `roster` | 6 | Can you give me the class list for my AEEC 3550 section this term? |
+| courses | `roster_waitlist` | 2 | Who is waiting to get into my ASTR 1115 section this fall? |
+| courses | `student_in_section` | 6 | Is 800948649 in my class this semester? |
+| courses | `drops_withdrawals` | 6 | Who dropped or withdrew from CRN 10319, and when? |
+| courses | `course_catalog` | 6 | Is PHIL 2530 a gen-ed course, and in which area? |
+| courses | `student_prereq_check` | 8 | Student 801345469 wants to add my ANSC 3420 section. Do they meet the prerequisites? |
+| courses | `incompletes` | 5 | Which of my students have an incomplete grade outstanding? |
+| courses | `grade_status` | 5 | Is grading complete for CRN 10589? |
+| courses | `grade_change_status` | 3 | Is the grade change for 800169389 still pending? |
+| statistics | `grade_distribution` | 10 | What's the grade distribution for everything I taught for Fall 2026? |
+| statistics | `dfw_rate` | 6 | What was the pass rate in my BCIS 2410 sections overall? |
+| statistics | `enrollment_trend` | 6 | Which term had the most students in my FIN 2310 class? |
+| statistics | `fill_rate` | 5 | How full are my sections in Fall 2026? |
+| statistics | `withdrawal_stats` | 5 | How many students have withdrawn from my classes this term? |
+| statistics | `class_composition` | 8 | What's the class-standing breakdown of CRN 10416? |
+| statistics | `students_taught` | 3 | What's my lifetime teaching count: students, sections, terms? |
+| access_control | `access_denied` | 18 | Can you list the students in Ana Maestas Rivera's SWK 2710 section? |
+| access_control | `access_allowed` | 8 | How many students are registered in CRN 10617? |
+| access_control | `access_partial` | 4 | Remind me of Timoteo Navarro's grade in my Summer 2026 ENGL 2310 class, and give me their cumulative GPA. |
 
 ## Files
 - `<persona>/cases.jsonl`: the test set. Question, paraphrases, clock, authenticated user, slots, discrete `answer`,

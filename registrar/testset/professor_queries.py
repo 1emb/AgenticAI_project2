@@ -61,7 +61,7 @@ def section_enrollments(q: QueryLog, section_ids: list[int]) -> list[dict]:
 
 def waitlist(q: QueryLog, section_id: int) -> list[dict]:
     return q.rows("waitlist in order", """
-        SELECT w.position, w.status, p.university_id
+        SELECT w.position, w.status, p.university_id, p.legal_first_name, p.preferred_first_name, p.legal_last_name
         FROM waitlist_entry w JOIN student s ON s.id = w.student_id JOIN person p ON p.id = s.person_id
         WHERE w.section_id = %(sid)s AND w.status = 'waiting'
         ORDER BY w.position""", sid=section_id)

@@ -107,9 +107,10 @@ Schedule:
 
 Courses:
 - `enrollment_count`: `sections{crn: {course, registered, capacity, seats_left, is_full, waitlisted, waitlist_capacity}}`.
-- `roster`: `crn`, `term`, `count`, `students[]` (`university_id`, `status`). `roster_waitlist`: `students[]` (`university_id`, `position`), ordered.
+- `roster`: `crn`, `term`, `count`, `students[]` (`university_id`, `name`, `status`). `roster_waitlist`: `students[]` (`university_id`, `name`, `position`), ordered.
+  `name` is the student's preferred first name (legal first name when none) followed by the legal last name, as stored.
 - `student_in_section`: `university_id`, `found` (any enrollment row in the professor's sections that term, dropped included), `sections[]` (`crn`, `course`, `status`).
-- `drops_withdrawals`: `sections{crn: {dropped[], withdrawn[]}}` of (`university_id`, `date`), `total_dropped`, `total_withdrawn`;
+- `drops_withdrawals`: `sections{crn: {dropped[], withdrawn[]}}` of (`university_id`, `name`, `date`), `total_dropped`, `total_withdrawn`;
   the single-student variant is `university_id`, `status`, `date`.
 - `course_catalog`: `course`, `title`, `credits_min`, `credits_max`, `level`, `is_gen_ed`, `gen_ed_area`,
   `prerequisites[]` (`group`, `any_of[]` of `course`, `type`, `min_grade`); groups are AND, `any_of` is OR.
@@ -137,7 +138,7 @@ Statistics (own sections only):
 Access control:
 - `access_denied`: `allowed: false`, `reason` (`other_instructor_section`, `student_record_not_permitted`,
   `aggregate_not_permitted`), `target` (`crn` or `university_id`; `{}` for department-wide questions). `access_partial`: plus `own_answer` (`grade`; or `in_section`, `status`; or
-  `students[]`; or `my_registered`, `other_registered`). `access_allowed`: `allowed: true` plus the fact (`seats_left`,
+  `students[]` of `university_id` and `name`; or `my_registered`, `other_registered`). `access_allowed`: `allowed: true` plus the fact (`seats_left`,
   `grade` in the professor's own section, `instructor`, `prerequisites`, `email`, `classification`, `meetings`).
 
 ## Not covered yet

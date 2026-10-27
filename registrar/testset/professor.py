@@ -287,14 +287,14 @@ class ProfBuilder:
         if waitlist:
             wl = PQ.waitlist(q, sec["_section_id"])
             question, paras = pick(self.rng, self.WAITLIST, 3, **slots)
-            answer = {"crn": crn, "term": term["name"], "count": len(wl), "students": [{"university_id": w["university_id"], "position": w["position"]} for w in wl]}
+            answer = {"crn": crn, "term": term["name"], "count": len(wl), "students": [{"university_id": w["university_id"], "name": student_name(w), "position": w["position"]} for w in wl]}
             ref = (f"{len(wl)} student(s) on the waitlist for CRN {crn}: " + ", ".join(f"#{w['position']} {w['university_id']}" for w in wl)) if wl else f"No one is on the waitlist for CRN {crn}."
             return self.case("roster_waitlist", "courses", pr, as_of, q, question, paras, slots, answer, ref)
         enr = PQ.section_enrollments(q, [sec["_section_id"]])
         statuses = counted_statuses(term, current)
         rows = [e for e in enr if e["status"] in statuses]
         question, paras = pick(self.rng, self.ROSTER_PAST if is_past(term, current) else self.ROSTER, 3, **slots)
-        answer = {"crn": crn, "term": term["name"], "count": len(rows), "students": [{"university_id": e["university_id"], "status": e["status"]} for e in rows]}
+        answer = {"crn": crn, "term": term["name"], "count": len(rows), "students": [{"university_id": e["university_id"], "name": student_name(e), "status": e["status"]} for e in rows]}
         ref = f"{len(rows)} students in CRN {crn} ({sec['course']}, {term['name']}): " + ", ".join(f"{student_name(e)} ({e['university_id']}{', ' + e['status'] if e['status'] != 'registered' else ''})" for e in rows)
         return self.case("roster", "courses", pr, as_of, q, question, paras, slots, answer, ref)
 
@@ -348,7 +348,7 @@ class ProfBuilder:
         out = {s["crn"]: {"dropped": [], "withdrawn": []} for s in secs}
         for e in enr:
             if e["status"] in ("dropped", "withdrawn"):
-                out[by_id[e["section_id"]]["crn"]][e["status"]].append({"university_id": e["university_id"], "date": e["dropped_at"].date()})
+                out[by_id[e["section_id"]]["crn"]][e["status"]].append({"university_id": e["university_id"], "name": student_name(e), "date": e["dropped_at"].date()})
         answer = {"sections": out, "total_dropped": sum(len(v["dropped"]) for v in out.values()), "total_withdrawn": sum(len(v["withdrawn"]) for v in out.values())}
         ref = "\n".join(f"CRN {c}: dropped {', '.join(d['university_id'] + ' (' + fmt_date(d['date']) + ')' for d in v['dropped']) or 'none'}; withdrawn {', '.join(d['university_id'] + ' (' + fmt_date(d['date']) + ')' for d in v['withdrawn']) or 'none'}" for c, v in out.items())
         return self.case("drops_withdrawals", "courses", pr, as_of, q, question, paras, slots, answer, ref)

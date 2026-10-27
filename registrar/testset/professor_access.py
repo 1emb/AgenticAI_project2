@@ -240,7 +240,7 @@ class ProfAccess:
             target_desc = {"university_id": target_uid}
         elif scenario == "roster_with_gpa":
             rows = [e for e in enr if e["status"] == "registered"]
-            own = {"students": [e["university_id"] for e in rows]}
+            own = {"students": [{"university_id": e["university_id"], "name": student_name(e)} for e in rows]}
             for e in rows[:3]:
                 g = self._gpa(q, e["student_id"])
                 if g:

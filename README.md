@@ -7,7 +7,8 @@ the domain definition, the PostgreSQL schema, and a synthetic NMSU-sized dataset
 ```
 registrar/models/   SQLAlchemy 2.0 models (53 tables)       docs/domain.md   what the registrar does, data, users
 registrar/seed/     synthetic data generator + COPY loader   docs/schema.md   table-by-table reference
-registrar/db.py     engine / session (reads .env)            scripts/         init_db.py, seed.py
+registrar/db.py     engine / session (reads .env)            scripts/         init_db.py, seed.py, load_csv.py, make_testset.py
+registrar/testset/  question -> SQL -> facts test generators data/testset/    English test cases (see its README)
 db/                 start.sh / stop.sh / psql.sh             alembic/         migrations
 pgdata/             Postgres 18 cluster (port 5433)          data/seed_csv/   CSV copy of the seeded dataset
                                                              data/sample/     5% CSV sample (committed)
@@ -18,6 +19,8 @@ Not in git: `pgdata/` (~1.4 GB), the full-size `data/seed_csv/` (~150 MB), and `
 The committed `data/sample/seed_csv/` has the same 52 tables and columns at 5% scale (1,036 students, 143,813 rows,
 8.8 MB), produced by `DATA_DIR=data/sample python scripts/seed.py --scale 0.05 --seed 42 --dump --no-load`.
 The full dataset is deterministic: `python scripts/seed.py --dump` regenerates it.
+`scripts/load_csv.py <dir>` loads any CSV dump into the database named by `DATABASE_URL`; the sample is loaded into a
+second database, `registrar_sample`, on the same cluster, and the test sets in `data/testset/` are generated from it.
 
 ## Setup
 ```bash

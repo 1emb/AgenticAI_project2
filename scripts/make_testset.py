@@ -1,7 +1,6 @@
 """Build the English question -> discrete answer test set from a loaded database (plus a derivation side file).
 
-    DATABASE_URL=postgresql+psycopg://registrar@localhost:5433/registrar_sample \
-        python scripts/make_testset.py --persona student --out data/testset/student/cases.jsonl
+    python scripts/make_testset.py --persona student      # reads DATABASE_URL (data/seed loaded), writes data/testset/student/cases.jsonl
 """
 import argparse
 import json

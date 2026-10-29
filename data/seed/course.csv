@@ -1,0 +1,73 @@
+code,subject,number,title,description,credit_hours,level,is_active
+CS 1110,CS,1110,Introduction to Programming,"Problem solving and program design in Python: variables, control flow, functions, lists and files.",4,lower_division,true
+CS 1120,CS,1120,Computer Science Principles,"A broad look at computing: algorithms, data, networks, security and the impact of computing on society.",3,lower_division,true
+CS 2210,CS,2210,Data Structures,"Lists, stacks, queues, trees, hash tables and graphs; analysis of their operations; implementation in Java.",4,lower_division,true
+CS 2215,CS,2215,Programming in C++,"Systems-level programming in C++: pointers, memory management, classes and the standard library.",3,lower_division,true
+CS 2230,CS,2230,Computer Organization,"Digital logic, instruction sets, assembly language, memory hierarchy and processor design.",3,lower_division,true
+CS 2250,CS,2250,Programming in Java,Object-oriented programming in Java. Retired; replaced by the Java track inside CS 2210.,3,lower_division,false
+CS 3310,CS,3310,Algorithms,"Design and analysis of algorithms: divide and conquer, greedy methods, dynamic programming, graph algorithms, NP-completeness.",3,upper_division,true
+CS 3320,CS,3320,Operating Systems,"Processes and threads, scheduling, synchronization, memory management, file systems.",3,upper_division,true
+CS 3350,CS,3350,Programming Languages,"Syntax, semantics and implementation of programming languages; functional and logic paradigms.",3,upper_division,true
+CS 3410,CS,3410,Database Systems,"Relational model, SQL, normalization, transactions, indexing and query processing.",3,upper_division,true
+CS 3420,CS,3420,Software Engineering,"Requirements, design, testing, version control and team development of a medium-sized system.",3,upper_division,true
+CS 3510,CS,3510,Computer Networks,"Protocol layers, TCP/IP, routing, congestion control and network programming.",3,upper_division,true
+CS 4110,CS,4110,Compiler Construction,"Lexical analysis, parsing, semantic analysis, intermediate code and code generation.",3,upper_division,true
+CS 4310,CS,4310,Theory of Computation,"Automata, formal languages, computability and complexity.",3,upper_division,true
+CS 4510,CS,4510,Computer Security,"Threat models, cryptography in practice, authentication, software and network security.",3,upper_division,true
+CS 4710,CS,4710,Machine Learning,"Supervised and unsupervised learning, model evaluation, neural networks.",3,upper_division,true
+CS 4720,CS,4720,Artificial Intelligence,"Search, knowledge representation, planning, reasoning under uncertainty.",3,upper_division,true
+CS 4750,CS,4750,Computer Graphics,"Rendering pipeline, transformations, shading, modeling and animation.",3,upper_division,true
+CS 4810,CS,4810,Distributed Systems,"Consistency, replication, fault tolerance, consensus and distributed storage.",3,upper_division,true
+CS 4910,CS,4910,Senior Project,Capstone team project from proposal to delivery.,3,upper_division,true
+CS 5110,CS,5110,Advanced Algorithms,"Randomized, approximation and online algorithms; advanced data structures.",3,graduate,true
+CS 5320,CS,5320,Advanced Operating Systems,"Kernel design, virtualization, concurrency at scale; research paper discussion.",3,graduate,true
+CS 5410,CS,5410,Advanced Database Systems,"Query optimization, distributed and NoSQL databases, transaction processing internals.",3,graduate,true
+CS 5710,CS,5710,Advanced Machine Learning,"Deep learning, probabilistic models, optimization and current research.",3,graduate,true
+CS 5720,CS,5720,Natural Language Processing,"Language models, parsing, information extraction, machine translation.",3,graduate,true
+CS 5810,CS,5810,Cloud Computing,"Cloud architectures, containers and orchestration, serverless computing, cost and reliability.",3,graduate,true
+CS 5990,CS,5990,Master's Thesis,Supervised research culminating in a written thesis and defense.,6,graduate,true
+ENG 1110,ENG,1110,Introduction to Engineering,"The engineering profession, design process, teamwork, units and estimation.",3,lower_division,true
+ENG 1120,ENG,1120,Engineering Graphics,"Sketching, orthographic projection and computer-aided drawing.",2,lower_division,true
+ENG 2110,ENG,2110,Statics,"Forces, moments, equilibrium of particles and rigid bodies, trusses and frames.",3,lower_division,true
+ENG 2120,ENG,2120,Dynamics,"Kinematics and kinetics of particles and rigid bodies; work, energy, impulse and momentum.",3,lower_division,true
+ENG 2210,ENG,2210,Circuits I,"DC and AC circuit analysis, network theorems, operational amplifiers.",3,lower_division,true
+ENG 2310,ENG,2310,Thermodynamics,"Properties of substances, first and second laws, cycles.",3,lower_division,true
+ENG 2410,ENG,2410,Materials Science,"Structure and properties of metals, polymers, ceramics and composites.",3,lower_division,true
+ENG 2450,ENG,2450,Surveying,Field measurement and mapping. Retired.,2,lower_division,false
+ENG 3110,ENG,3110,Mechanics of Materials,"Stress, strain, torsion, bending, deflection and buckling.",3,upper_division,true
+ENG 3210,ENG,3210,Circuits II,"Transient and steady-state analysis, Laplace methods, filters.",3,upper_division,true
+ENG 3310,ENG,3310,Fluid Mechanics,"Fluid statics, conservation laws, pipe flow and dimensional analysis.",3,upper_division,true
+ENG 3410,ENG,3410,Engineering Economics,"Time value of money, comparison of alternatives, depreciation and risk.",3,upper_division,true
+ENG 3510,ENG,3510,Control Systems,"Modeling, transfer functions, stability, root locus and frequency response.",3,upper_division,true
+ENG 4110,ENG,4110,Machine Design,Design of machine elements under static and fatigue loading.,3,upper_division,true
+ENG 4210,ENG,4210,Power Systems,"Generation, transmission and distribution; power flow and protection.",3,upper_division,true
+ENG 4310,ENG,4310,Heat Transfer,"Conduction, convection and radiation; heat exchangers.",3,upper_division,true
+ENG 4510,ENG,4510,Robotics,"Kinematics, sensing, control and programming of robotic systems.",3,upper_division,true
+ENG 4910,ENG,4910,Capstone Design I,"Team design project: problem definition, specification and preliminary design.",3,upper_division,true
+ENG 4920,ENG,4920,Capstone Design II,"Team design project: detailed design, build, test and presentation.",3,upper_division,true
+ENG 5110,ENG,5110,Advanced Mechanics of Materials,"Energy methods, plates and shells, elasticity and plasticity.",3,graduate,true
+ENG 5310,ENG,5310,Computational Fluid Dynamics,Numerical solution of the governing equations of fluid flow.,3,graduate,true
+ENG 5510,ENG,5510,Advanced Control Systems,"State-space methods, optimal and robust control.",3,graduate,true
+ENG 5610,ENG,5610,Finite Element Analysis,Formulation and application of finite element methods.,3,graduate,true
+ENG 5990,ENG,5990,Master's Thesis,Supervised research culminating in a written thesis and defense.,6,graduate,true
+MATH 1511,MATH,1511,Calculus I,"Limits, derivatives and applications, introduction to integration.",4,lower_division,true
+MATH 1521,MATH,1521,Calculus II,"Techniques of integration, sequences and series, parametric curves.",4,lower_division,true
+MATH 2210,MATH,2210,Discrete Mathematics,"Logic, proofs, sets, relations, counting and graphs.",3,lower_division,true
+MATH 2520,MATH,2520,Differential Equations,"First and second order equations, Laplace transforms, systems.",3,lower_division,true
+MATH 2530,MATH,2530,Linear Algebra,"Matrices, vector spaces, eigenvalues and linear transformations.",3,lower_division,true
+MATH 2531,MATH,2531,Calculus III,"Vectors, partial derivatives, multiple integrals and vector calculus.",4,lower_division,true
+MATH 3110,MATH,3110,Probability and Statistics,"Probability, random variables, estimation and hypothesis testing.",3,upper_division,true
+PHYS 2110,PHYS,2110,Physics I: Mechanics,"Kinematics, Newton's laws, energy, momentum, rotation and oscillations.",4,lower_division,true
+PHYS 2120,PHYS,2120,Physics II: Electricity and Magnetism,"Electric and magnetic fields, circuits, waves and optics.",4,lower_division,true
+ENGL 1110,ENGL,1110,Composition I,"Writing for academic audiences: process, argument and revision.",4,lower_division,true
+ENGL 1120,ENGL,1120,Composition II,Research-based writing and argumentation.,3,lower_division,true
+ENGL 2210,ENGL,2210,Technical and Professional Writing,"Reports, proposals, documentation and correspondence for technical fields.",3,lower_division,true
+HIST 1110,HIST,1110,World History I,Human societies from antiquity to 1500.,3,lower_division,true
+HIST 1120,HIST,1120,World History II,Global history from 1500 to the present.,3,lower_division,true
+HIST 2110,HIST,2110,United States History,The United States from colonization to the present.,3,lower_division,true
+COMM 1130,COMM,1130,Public Speaking,Preparing and delivering speeches; listening and audience analysis.,3,lower_division,true
+PSY 1110,PSY,1110,Introduction to Psychology,Survey of behavior and mental processes.,3,lower_division,true
+ECON 2110,ECON,2110,Principles of Microeconomics,"Markets, prices, consumer and producer behavior.",3,lower_division,true
+ECON 2120,ECON,2120,Principles of Macroeconomics,"National income, inflation, unemployment and policy.",3,lower_division,true
+PHIL 1110,PHIL,1110,Introduction to Philosophy,"Central problems of knowledge, reality and value.",3,lower_division,true
+PHIL 2110,PHIL,2110,Ethics,Major ethical theories and their application to contemporary issues.,3,lower_division,true

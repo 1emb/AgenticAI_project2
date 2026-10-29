@@ -1,0 +1,5 @@
+code,department_code,name,degree,total_credits_required,min_gpa
+BSCS,CS,Bachelor of Science in Computer Science,BS,120,2.00
+BSENG,ENG,Bachelor of Science in Engineering,BS,128,2.00
+MSCS,CS,Master of Science in Computer Science,MS,30,3.00
+MSENG,ENG,Master of Science in Engineering,MS,30,3.00

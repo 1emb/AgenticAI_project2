@@ -4,16 +4,17 @@ Agentic system that takes over the functions of a university registrar office. T
 definition, the PostgreSQL schema, and the test sets for the agents.
 
 The schema was rebuilt on 2026-10-28 around natural keys and a two-major scope (BS Computer Science and BS
-Engineering, plus an MS in each for graduate students). The earlier 53-table schema, its synthetic generator and the
-CSV dumps were removed; the test sets under `data/testset/` were generated from that old schema and still need
-re-targeting. The dataset is a static snapshot: the agents only read it.
+Engineering, plus an MS in each for graduate students). The dataset is a static snapshot committed as one CSV per
+table under `data/seed/` (1,660 rows, written by the deterministic generator in `registrar/seed/`); the agents only
+read it. The test sets under `data/testset/` were regenerated from it the same day.
 
 ## Layout
 ```
 registrar/models/   SQLAlchemy 2.0 models (12 tables)       docs/domain.md    what the registrar does, data, users
 registrar/db.py     engine / session (reads .env)            docs/schema.html  visual schema reference with example rows
-registrar/testset/  question -> SQL -> facts generators      scripts/          init_db.py, make_testset.py
-                    (written against the old schema)         data/testset/     English test cases (see its README)
+registrar/seed/     dataset generator; catalog.py holds the  data/seed/        the dataset, one CSV per table
+                    hand-written courses and degree plans    scripts/          seed.py, load_seed.py, make_testset.py, init_db.py
+registrar/testset/  question -> SQL -> answer generators     data/testset/     English test cases (see its README)
 db/                 start.sh / stop.sh / psql.sh             alembic/          migrations
 pgdata/             Postgres 18 cluster (port 5433)
 ```
@@ -90,21 +91,29 @@ conda activate /home/sheshnagnobackup/mnguyen/envs/registrar
 ./db/start.sh                     # starts Postgres on localhost:5433 (TCP only, no unix socket)
 ./db/psql.sh                      # psql into the registrar database
 alembic upgrade head              # create the tables and the grade_scale rows
+python scripts/load_seed.py       # load data/seed/*.csv (empties the eleven data tables first)
 ```
 Connection string: `postgresql+psycopg://registrar@localhost:5433/registrar` (in `.env` as `DATABASE_URL`).
 To rebuild from scratch: `dropdb -h localhost -p 5433 -U registrar registrar && createdb -h localhost -p 5433 -U registrar registrar`,
 then `alembic upgrade head`. `python scripts/init_db.py --drop` creates the tables from the models without Alembic
 and without the grade_scale rows.
-The `registrar_sample` database on the same cluster still holds the old 5% dataset that the test sets were built from.
+
+## Dataset
+`data/seed/` is the whole dataset: 10 departments, 4 programs, 20 terms (Fall 2021 to Spring 2031), 339 people
+(300 students: 150 BSCS, 120 BSENG, 15 MSCS, 15 MSENG; 45 instructors, six of them MS students working as TAs),
+72 courses (two retired), 73 prerequisite rows, 97 degree-plan rows, 6 category minimums and 694 lectures over
+Fall 2024 to Spring 2027. Every value is synthetic. `python scripts/seed.py` regenerates the CSVs byte for byte
+from `registrar/seed/` (seed 42; `--load` also loads them). The data and the test sets are frozen together:
+regenerating with a different seed or catalog changes the answers in `data/testset/`, so rerun `make_testset.py` too.
 
 ## Test dataset
-`data/testset/` holds English questions with program-checkable answers: 191 student cases and 176 professor cases,
+`data/testset/` holds English questions with program-checkable answers: 152 student cases and 118 professor cases,
 each with two paraphrases, a simulated clock (`as_of`), the authenticated user, and a discrete `answer` that starts
-with `allowed`. Thirty cases per persona test access control. Formats and the verification contract are in
-[data/testset/README.md](data/testset/README.md). The cases reference the old schema's identifiers and must be
-regenerated once the new schema has seed data.
+with `allowed`. Twenty-six cases per persona test access control. The intents cover the catalog, lectures, degree
+plans, the calendar and teaching schedules; everything that needs enrollment (registration, transcripts, rosters,
+grade statistics) is listed as pending in each persona's `questions.md`. Formats, clocks, the permission model and
+the verification contract are in [data/testset/README.md](data/testset/README.md).
 
 ## Next steps
-1. Seed data: departments (one per subject code), programs, a catalog with prerequisites, degree plans, terms, instructors, students, lectures.
-2. `enrollment` table, proposed as (`term_code`, `crn`, `student_university_id`) with `status` (enrolled/dropped/withdrawn) and `grade` FK `grade_scale`; then GPA and degree-progress queries.
-3. Re-target `registrar/testset/` and regenerate `data/testset/`.
+1. The agent itself, graded against `data/testset/` (the schema and data are frozen for it).
+2. When the schema reopens: `enrollment` table, proposed as (`term_code`, `crn`, `student_university_id`) with `status` (enrolled/dropped/withdrawn) and `grade` FK `grade_scale`; then the pending intents (registration, transcripts, GPA, rosters, grade statistics) and the administrator persona.

@@ -1,2 +1,0 @@
-actor_user_id,actor_type,action,table_name,record_id,before,after,occurred_at,ip_address,reason,id
-1353,system,seed,*,,,"{'note': 'synthetic data load', 'scale': 0.05}",2026-10-19 12:00:00+00:00,,initial seed,1

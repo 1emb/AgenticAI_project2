@@ -23,6 +23,15 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
+
+
+def render_item(type_, obj, autogen_context):
+    """Skip CHECK constraints that belong to a non-native Enum column: the Enum creates them itself
+    at CREATE TABLE. Alembic 1.20 does not recognise them under SQLAlchemy 2.1 and would render each one
+    twice, which fails with 'constraint already exists' on upgrade."""
+    if type_ == "check" and getattr(obj, "_type_bound", False):
+        return None
+    return False
 config.set_main_option('sqlalchemy.url', DATABASE_URL)
 
 # other values from the config, defined by the needs of env.py,
@@ -49,6 +58,7 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        render_item=render_item,
     )
 
     with context.begin_transaction():
@@ -70,7 +80,7 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection, target_metadata=target_metadata, render_item=render_item
         )
 
         with context.begin_transaction():

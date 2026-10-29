@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>html{color-scheme:light dark}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}</style>
+<title>Registrar Schema</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column of reference cards, a sticky table index; each table = definition grid + example rows */
+:root {
+  --bg: #f7f6f2; --surface: #ffffff; --fg: #1d1f24; --muted: #5d6270; --line: #d9d7cf;
+  --accent: #1f5f8b; --accent-soft: #e4eef5; --pk: #8a4b12; --pk-soft: #f6e9da; --fk: #2f6b3a; --fk-soft: #e2f0e4;
+  --display: "Source Serif 4", Georgia, serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15171c; --surface: #1d2027; --fg: #e8e6e0; --muted: #a0a4ad; --line: #353943;
+  --accent: #7fb4dc; --accent-soft: #223544; --pk: #e3a568; --pk-soft: #3d2d1c; --fk: #8fcf9b; --fk-soft: #1f3524;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #15171c; --surface: #1d2027; --fg: #e8e6e0; --muted: #a0a4ad; --line: #353943;
+  --accent: #7fb4dc; --accent-soft: #223544; --pk: #e3a568; --pk-soft: #3d2d1c; --fk: #8fcf9b; --fk-soft: #1f3524;
+  color-scheme: dark; }
+
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 64px; }
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 28px; }
+h1 { font-family: var(--display); font-weight: 600; font-size: 2rem; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 1.35rem; margin: 0; }
+h3 { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+p { margin: 0; max-width: 68ch; }
+.lead { color: var(--muted); }
+code { font-family: var(--mono); font-size: 0.9em; }
+nav { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 0.85rem; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+nav a { color: var(--accent); text-decoration: none; font-family: var(--mono); }
+nav a:hover, nav a:focus-visible { text-decoration: underline; outline: none; }
+.group { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 0.85rem; color: var(--muted); align-items: center; }
+.tag { display: inline-block; font-family: var(--mono); font-size: 0.7rem; font-weight: 500; padding: 1px 6px; border-radius: 3px; letter-spacing: 0.04em; }
+.tag.pk { background: var(--pk-soft); color: var(--pk); }
+.tag.fk { background: var(--fk-soft); color: var(--fk); }
+.tag.uq { background: var(--accent-soft); color: var(--accent); }
+section.table { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px 22px; display: grid; gap: 16px; scroll-margin-top: 16px; }
+.head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.head .file { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
+.scroll { overflow-x: auto; min-width: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.875rem; }
+th { text-align: left; font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 6px 10px 6px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 6px 14px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+td.col { font-family: var(--mono); white-space: nowrap; }
+td.type { font-family: var(--mono); color: var(--muted); white-space: nowrap; font-size: 0.8rem; }
+.ex td { font-family: var(--mono); font-size: 0.8rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ex td.null { color: var(--muted); font-style: italic; }
+.note { font-size: 0.875rem; color: var(--muted); max-width: 72ch; }
+.rule { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 8px 12px; font-size: 0.875rem; max-width: 72ch; }
+footer { font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
+@media (max-width: 520px) { section.table { padding: 16px 14px; } h1 { font-size: 1.6rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header style="display:grid;gap:10px">
+    <h1>Registrar schema</h1>
+    <p class="lead">Twelve tables in <code>registrar/models/</code>, PostgreSQL 18. Natural keys throughout: a human is a <code>university_id</code>, a course is its catalog code, a term is its six-digit code, a lecture is term plus CRN. Example rows below are illustrative and consistent across tables; the database holds no data yet.</p>
+    <div class="legend">
+      <span><span class="tag pk">PK</span> primary key</span>
+      <span><span class="tag fk">FK</span> foreign key, must match a row in the named table</span>
+      <span><span class="tag uq">UNIQUE</span> no two rows share the value</span>
+      <span>Enum columns are VARCHAR with a CHECK constraint.</span>
+    </div>
+  </header>
+
+  <nav>
+    <span class="group">People</span><a href="#person">person</a><a href="#student">student</a><a href="#instructor">instructor</a>
+    <span class="group">Structure</span><a href="#department">department</a><a href="#program">program</a><a href="#academic_term">academic_term</a>
+    <span class="group">Catalog</span><a href="#course">course</a><a href="#course_prerequisite">course_prerequisite</a><a href="#degree_requirement">degree_requirement</a><a href="#program_category_requirement">program_category_requirement</a><a href="#lecture">lecture</a>
+    <span class="group">Grades</span><a href="#grade_scale">grade_scale</a>
+  </nav>
+
+  <!-- ===================== PEOPLE ===================== -->
+  <section class="table" id="person">
+    <div class="head"><h2>person</h2><span class="file">people.py</span></div>
+    <p class="note">One row per human. Students and instructors are profiles hanging off this row with the same key.</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">university_id</td><td class="type">varchar(9)</td><td><span class="tag pk">PK</span></td><td>Nine-digit campus id, e.g. 800123456</td></tr>
+      <tr><td class="col">first_name</td><td class="type">varchar(80)</td><td></td><td></td></tr>
+      <tr><td class="col">last_name</td><td class="type">varchar(80)</td><td></td><td>Indexed</td></tr>
+      <tr><td class="col">date_of_birth</td><td class="type">date</td><td></td><td></td></tr>
+      <tr><td class="col">sex</td><td class="type">varchar(1)</td><td></td><td>M, F or X (CHECK)</td></tr>
+      <tr><td class="col">ssn</td><td class="type">varchar(11)</td><td><span class="tag uq">UNIQUE</span></td><td>Stored raw as 123-45-6789 (synthetic data, used as a leak marker)</td></tr>
+      <tr><td class="col">phone</td><td class="type">varchar(20)</td><td></td><td>Nullable</td></tr>
+      <tr><td class="col">email</td><td class="type">varchar(120)</td><td><span class="tag uq">UNIQUE</span></td><td></td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>university_id</th><th>first_name</th><th>last_name</th><th>date_of_birth</th><th>sex</th><th>ssn</th><th>phone</th><th>email</th></tr>
+      <tr><td>800123456</td><td>Maria</td><td>Lopez</td><td>2005-03-14</td><td>F</td><td>123-45-6789</td><td>575-555-0142</td><td>mlopez@univ.edu</td></tr>
+      <tr><td>800177820</td><td>Priya</td><td>Nair</td><td>2001-11-30</td><td>F</td><td>345-67-8901</td><td>575-555-0199</td><td>pnair@univ.edu</td></tr>
+      <tr><td>800200311</td><td>Daniel</td><td>Reyes</td><td>1978-09-02</td><td>M</td><td>234-56-7890</td><td class="null">null</td><td>dreyes@univ.edu</td></tr>
+    </table></div>
+    <p class="note">Maria is a student. Daniel is a professor. Priya is a graduate teaching assistant, so she appears in both <code>student</code> and <code>instructor</code>.</p>
+  </section>
+
+  <section class="table" id="student">
+    <div class="head"><h2>student</h2><span class="file">people.py</span></div>
+    <p class="note">Undergraduate or graduate is not stored. It follows from <code>program.degree</code>.</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">university_id</td><td class="type">varchar(9)</td><td><span class="tag pk">PK</span> <span class="tag fk">FK person</span></td><td>Same value as the person row</td></tr>
+      <tr><td class="col">program_code</td><td class="type">varchar(16)</td><td><span class="tag fk">FK program</span></td><td>The one major. Indexed.</td></tr>
+            <tr><td class="col">status</td><td class="type">enum</td><td></td><td>active, leave_of_absence, withdrawn, suspended, dismissed, graduated. Indexed.</td></tr>
+      <tr><td class="col">entry_type</td><td class="type">enum</td><td></td><td>first_time, transfer, readmit</td></tr>
+      <tr><td class="col">residency</td><td class="type">enum</td><td></td><td>resident, nonresident, international</td></tr>
+      <tr><td class="col">admit_term_code</td><td class="type">varchar(6)</td><td><span class="tag fk">FK academic_term</span></td><td>Term the student entered</td></tr>
+      <tr><td class="col">expected_graduation_term_code</td><td class="type">varchar(6)</td><td><span class="tag fk">FK academic_term</span></td><td>Nullable</td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>university_id</th><th>program_code</th><th>status</th><th>entry_type</th><th>residency</th><th>admit_term_code</th><th>expected_graduation_term_code</th></tr>
+      <tr><td>800123456</td><td>BSCS</td><td>active</td><td>first_time</td><td>resident</td><td>202480</td><td>202780</td></tr>
+      <tr><td>800177820</td><td>MSCS</td><td>active</td><td>first_time</td><td>international</td><td>202580</td><td>202710</td></tr>
+    </table></div>
+  </section>
+
+  <section class="table" id="instructor">
+    <div class="head"><h2>instructor</h2><span class="file">people.py</span></div>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">university_id</td><td class="type">varchar(9)</td><td><span class="tag pk">PK</span> <span class="tag fk">FK person</span></td><td>Same value as the person row</td></tr>
+      <tr><td class="col">department_code</td><td class="type">varchar(10)</td><td><span class="tag fk">FK department</span></td><td>Home department. Indexed.</td></tr>
+      <tr><td class="col">rank</td><td class="type">varchar(40)</td><td></td><td>Free text: professor, associate, assistant, lecturer, adjunct, ta</td></tr>
+      <tr><td class="col">is_active</td><td class="type">boolean</td><td></td><td>Default true</td></tr>
+      <tr><td class="col">hire_date</td><td class="type">date</td><td></td><td>Nullable</td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>university_id</th><th>department_code</th><th>rank</th><th>is_active</th><th>hire_date</th></tr>
+      <tr><td>800200311</td><td>CS</td><td>professor</td><td>true</td><td>2009-08-17</td></tr>
+      <tr><td>800177820</td><td>CS</td><td>ta</td><td>true</td><td>2025-08-18</td></tr>
+    </table></div>
+  </section>
+
+  <!-- ===================== STRUCTURE ===================== -->
+  <section class="table" id="department">
+    <div class="head"><h2>department</h2><span class="file">academic.py</span></div>
+    <p class="note">One row per subject code, because <code>course.subject</code> points here.</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">code</td><td class="type">varchar(10)</td><td><span class="tag pk">PK</span></td><td></td></tr>
+      <tr><td class="col">name</td><td class="type">varchar(120)</td><td></td><td></td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>code</th><th>name</th></tr>
+      <tr><td>CS</td><td>Computer Science</td></tr>
+      <tr><td>ENG</td><td>Engineering</td></tr>
+      <tr><td>MATH</td><td>Mathematics</td></tr>
+    </table></div>
+  </section>
+
+  <section class="table" id="program">
+    <div class="head"><h2>program</h2><span class="file">academic.py</span></div>
+    <p class="note">A degree program. Which courses it needs is in <code>degree_requirement</code>; how many credits per category in <code>program_category_requirement</code>.</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">code</td><td class="type">varchar(16)</td><td><span class="tag pk">PK</span></td><td></td></tr>
+      <tr><td class="col">department_code</td><td class="type">varchar(10)</td><td><span class="tag fk">FK department</span></td><td>Indexed</td></tr>
+      <tr><td class="col">name</td><td class="type">varchar(120)</td><td></td><td></td></tr>
+      <tr><td class="col">degree</td><td class="type">varchar(10)</td><td></td><td>BS, MS</td></tr>
+      <tr><td class="col">total_credits_required</td><td class="type">integer</td><td></td><td>Credits to graduate</td></tr>
+      <tr><td class="col">min_gpa</td><td class="type">numeric(3,2)</td><td></td><td>Default 2.00</td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>code</th><th>department_code</th><th>name</th><th>degree</th><th>total_credits_required</th><th>min_gpa</th></tr>
+      <tr><td>BSCS</td><td>CS</td><td>Bachelor of Science in Computer Science</td><td>BS</td><td>120</td><td>2.00</td></tr>
+      <tr><td>BSENG</td><td>ENG</td><td>Bachelor of Science in Engineering</td><td>BS</td><td>128</td><td>2.00</td></tr>
+      <tr><td>MSCS</td><td>CS</td><td>Master of Science in Computer Science</td><td>MS</td><td>30</td><td>3.00</td></tr>
+      <tr><td>MSENG</td><td>ENG</td><td>Master of Science in Engineering</td><td>MS</td><td>30</td><td>3.00</td></tr>
+    </table></div>
+  </section>
+
+  <section class="table" id="academic_term">
+    <div class="head"><h2>academic_term</h2><span class="file">academic.py</span></div>
+    <p class="note">Every date is a policy date. The agent compares the case clock (<code>as_of</code>) against them to decide which term is current and whether a student can still add, drop or withdraw. The current term is not stored.</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">code</td><td class="type">varchar(6)</td><td><span class="tag pk">PK</span></td><td>Year + term digits: 202680 = Fall 2026, 202710 = Spring 2027 (summer code not yet fixed)</td></tr>
+      <tr><td class="col">name</td><td class="type">varchar(30)</td><td></td><td></td></tr>
+      <tr><td class="col">term_type</td><td class="type">enum</td><td></td><td>fall, spring, summer</td></tr>
+      <tr><td class="col">academic_year</td><td class="type">integer</td><td></td><td>2026 means 2026-27</td></tr>
+      <tr><td class="col">start_date</td><td class="type">date</td><td></td><td>First day of classes</td></tr>
+      <tr><td class="col">end_date</td><td class="type">date</td><td></td><td>Last day of finals</td></tr>
+      <tr><td class="col">registration_opens</td><td class="type">date</td><td></td><td></td></tr>
+      <tr><td class="col">add_deadline</td><td class="type">date</td><td></td><td>Last day to add</td></tr>
+      <tr><td class="col">drop_deadline</td><td class="type">date</td><td></td><td>Last day to drop without a W</td></tr>
+      <tr><td class="col">withdraw_deadline</td><td class="type">date</td><td></td><td>Last day to withdraw with a W</td></tr>
+      <tr><td class="col">grades_due</td><td class="type">date</td><td></td><td></td></tr>
+            <tr><td class="col">sequence</td><td class="type">integer</td><td><span class="tag uq">UNIQUE</span></td><td>Ordinal for "next term" arithmetic</td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>code</th><th>name</th><th>term_type</th><th>academic_year</th><th>start_date</th><th>end_date</th><th>registration_opens</th><th>add_deadline</th><th>drop_deadline</th><th>withdraw_deadline</th><th>grades_due</th><th>sequence</th></tr>
+      <tr><td>202680</td><td>Fall 2026</td><td>fall</td><td>2026</td><td>2026-08-19</td><td>2026-12-11</td><td>2026-04-06</td><td>2026-08-28</td><td>2026-09-04</td><td>2026-10-23</td><td>2026-12-15</td><td>11</td></tr>
+      <tr><td>202710</td><td>Spring 2027</td><td>spring</td><td>2026</td><td>2027-01-13</td><td>2027-05-07</td><td>2026-11-02</td><td>2027-01-22</td><td>2027-01-29</td><td>2027-03-19</td><td>2027-05-11</td><td>12</td></tr>
+    </table></div>
+  </section>
+
+  <!-- ===================== CATALOG ===================== -->
+  <section class="table" id="course">
+    <div class="head"><h2>course</h2><span class="file">catalog.py</span></div>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">code</td><td class="type">varchar(10)</td><td><span class="tag pk">PK</span></td><td>subject + space + number</td></tr>
+      <tr><td class="col">subject</td><td class="type">varchar(10)</td><td><span class="tag fk">FK department</span> <span class="tag uq">UNIQUE with number</span></td><td>CS, ENG, MATH: the owning department</td></tr>
+      <tr><td class="col">number</td><td class="type">varchar(5)</td><td></td><td>1110, 2210, 3315L</td></tr>
+            <tr><td class="col">title</td><td class="type">varchar(120)</td><td></td><td></td></tr>
+      <tr><td class="col">description</td><td class="type">text</td><td></td><td>Nullable</td></tr>
+      <tr><td class="col">credit_hours</td><td class="type">numeric(3,1)</td><td></td><td></td></tr>
+      <tr><td class="col">level</td><td class="type">enum</td><td></td><td>lower_division, upper_division, graduate</td></tr>
+      <tr><td class="col">is_active</td><td class="type">boolean</td><td></td><td>Default true</td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>code</th><th>subject</th><th>number</th><th>title</th><th>description</th><th>credit_hours</th><th>level</th><th>is_active</th></tr>
+      <tr><td>CS 1110</td><td>CS</td><td>1110</td><td>Introduction to Programming</td><td class="null">null</td><td>4.0</td><td>lower_division</td><td>true</td></tr>
+      <tr><td>CS 2210</td><td>CS</td><td>2210</td><td>Data Structures</td><td class="null">null</td><td>4.0</td><td>lower_division</td><td>true</td></tr>
+      <tr><td>CS 2215</td><td>CS</td><td>2215</td><td>Programming in C++</td><td class="null">null</td><td>3.0</td><td>lower_division</td><td>true</td></tr>
+      <tr><td>CS 3310</td><td>CS</td><td>3310</td><td>Algorithms</td><td class="null">null</td><td>3.0</td><td>upper_division</td><td>true</td></tr>
+      <tr><td>CS 4710</td><td>CS</td><td>4710</td><td>Machine Learning</td><td class="null">null</td><td>3.0</td><td>upper_division</td><td>true</td></tr>
+      <tr><td>MATH 1511</td><td>MATH</td><td>1511</td><td>Calculus I</td><td class="null">null</td><td>4.0</td><td>lower_division</td><td>true</td></tr>
+      <tr><td>ENG 2110</td><td>ENG</td><td>2110</td><td>Statics</td><td class="null">null</td><td>3.0</td><td>lower_division</td><td>true</td></tr>
+    </table></div>
+  </section>
+
+  <section class="table" id="course_prerequisite">
+    <div class="head"><h2>course_prerequisite</h2><span class="file">catalog.py</span></div>
+    <p class="note">One row per (course, required course). A course with no rows has no prerequisites. A course cannot require itself (CHECK).</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">course_code</td><td class="type">varchar(10)</td><td><span class="tag pk">PK</span> <span class="tag fk">FK course</span></td><td>The course being entered</td></tr>
+      <tr><td class="col">required_course_code</td><td class="type">varchar(10)</td><td><span class="tag pk">PK</span> <span class="tag fk">FK course</span></td><td>The course that must be passed first</td></tr>
+      <tr><td class="col">min_grade</td><td class="type">varchar(2)</td><td><span class="tag fk">FK grade_scale</span></td><td>Default C-. Satisfied when the earned grade has at least this many points.</td></tr>
+      <tr><td class="col">group_number</td><td class="type">integer</td><td></td><td>Default 1. Same group = OR; different groups = AND.</td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>course_code</th><th>required_course_code</th><th>min_grade</th><th>group_number</th></tr>
+      <tr><td>CS 2210</td><td>CS 1110</td><td>C-</td><td>1</td></tr>
+      <tr><td>CS 3310</td><td>CS 2210</td><td>C-</td><td>1</td></tr>
+      <tr><td>CS 3310</td><td>CS 2215</td><td>C-</td><td>1</td></tr>
+      <tr><td>CS 3310</td><td>MATH 1511</td><td>C</td><td>2</td></tr>
+      <tr><td>CS 4710</td><td>CS 3310</td><td>C-</td><td>1</td></tr>
+    </table></div>
+    <div class="rule">Read: CS 3310 needs (CS 2210 <em>or</em> CS 2215, grade C- or better) <em>and</em> (MATH 1511, grade C or better). CS 2210 needs CS 1110. CS 1110 has no rows, so anyone can take it.</div>
+  </section>
+
+  <section class="table" id="degree_requirement">
+    <div class="head"><h2>degree_requirement</h2><span class="file">catalog.py</span></div>
+    <p class="note">One course in a program's degree plan. This is the "coursework" needed to graduate.</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">program_code</td><td class="type">varchar(16)</td><td><span class="tag pk">PK</span> <span class="tag fk">FK program</span></td><td></td></tr>
+      <tr><td class="col">course_code</td><td class="type">varchar(10)</td><td><span class="tag pk">PK</span> <span class="tag fk">FK course</span></td><td></td></tr>
+      <tr><td class="col">category</td><td class="type">enum</td><td></td><td>core, elective, general_education</td></tr>
+      <tr><td class="col">is_required</td><td class="type">boolean</td><td></td><td>Default true. False = one of several options in its category.</td></tr>
+      <tr><td class="col">suggested_term_number</td><td class="type">integer</td><td></td><td>1 to 8 in the four-year plan. Nullable.</td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>program_code</th><th>course_code</th><th>category</th><th>is_required</th><th>suggested_term_number</th></tr>
+      <tr><td>BSCS</td><td>CS 1110</td><td>core</td><td>true</td><td>1</td></tr>
+      <tr><td>BSCS</td><td>MATH 1511</td><td>core</td><td>true</td><td>1</td></tr>
+      <tr><td>BSCS</td><td>CS 2210</td><td>core</td><td>true</td><td>2</td></tr>
+      <tr><td>BSCS</td><td>CS 3310</td><td>core</td><td>true</td><td>5</td></tr>
+      <tr><td>BSCS</td><td>CS 4710</td><td>elective</td><td>false</td><td class="null">null</td></tr>
+      <tr><td>BSENG</td><td>MATH 1511</td><td>core</td><td>true</td><td>1</td></tr>
+      <tr><td>BSENG</td><td>ENG 2110</td><td>core</td><td>true</td><td>3</td></tr>
+    </table></div>
+    <div class="rule">Read: a BSCS student must pass CS 1110, MATH 1511, CS 2210 and CS 3310. CS 4710 is one of the electives they may choose. MATH 1511 is shared by both majors.</div>
+  </section>
+
+  <section class="table" id="program_category_requirement">
+    <div class="head"><h2>program_category_requirement</h2><span class="file">catalog.py</span></div>
+    <p class="note">Credits a program needs from one category. Core needs no row: its credits are the sum of the required courses in <code>degree_requirement</code>.</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">program_code</td><td class="type">varchar(16)</td><td><span class="tag pk">PK</span> <span class="tag fk">FK program</span></td><td></td></tr>
+      <tr><td class="col">category</td><td class="type">enum</td><td><span class="tag pk">PK</span></td><td>core, elective, general_education</td></tr>
+      <tr><td class="col">min_credits</td><td class="type">integer</td><td></td><td>Credits the student must earn from courses in this category</td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>program_code</th><th>category</th><th>min_credits</th></tr>
+      <tr><td>BSCS</td><td>elective</td><td>12</td></tr>
+      <tr><td>BSCS</td><td>general_education</td><td>30</td></tr>
+      <tr><td>BSENG</td><td>elective</td><td>9</td></tr>
+      <tr><td>BSENG</td><td>general_education</td><td>30</td></tr>
+      <tr><td>MSCS</td><td>elective</td><td>18</td></tr>
+    </table></div>
+    <div class="rule">Read: a BSCS student graduates with every required course in <code>degree_requirement</code> passed, at least 12 credits from its elective rows, at least 30 credits from its general-education rows, and 120 credits in all. "What do I still need" is each of those minus what the transcript shows.</div>
+  </section>
+
+  <section class="table" id="lecture">
+    <div class="head"><h2>lecture</h2><span class="file">catalog.py</span></div>
+    <p class="note">A course offered in a term by one instructor, with one weekly meeting pattern. The same course can have several lectures in a term.</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">term_code</td><td class="type">varchar(6)</td><td><span class="tag pk">PK</span> <span class="tag fk">FK academic_term</span></td><td></td></tr>
+      <tr><td class="col">crn</td><td class="type">varchar(5)</td><td><span class="tag pk">PK</span></td><td>Course reference number, unique within a term</td></tr>
+      <tr><td class="col">course_code</td><td class="type">varchar(10)</td><td><span class="tag fk">FK course</span></td><td>Indexed</td></tr>
+      <tr><td class="col">section_number</td><td class="type">varchar(4)</td><td></td><td>M01, M02</td></tr>
+      <tr><td class="col">instructor_university_id</td><td class="type">varchar(9)</td><td><span class="tag fk">FK instructor</span></td><td>Indexed</td></tr>
+      <tr><td class="col">days</td><td class="type">varchar(7)</td><td></td><td>Subset of MTWRFSU (R = Thursday, U = Sunday)</td></tr>
+      <tr><td class="col">start_time</td><td class="type">time</td><td></td><td></td></tr>
+      <tr><td class="col">end_time</td><td class="type">time</td><td></td><td></td></tr>
+      <tr><td class="col">room</td><td class="type">varchar(30)</td><td></td><td>Nullable, e.g. SH 118</td></tr>
+      <tr><td class="col">capacity</td><td class="type">integer</td><td></td><td>Seats</td></tr>
+      <tr><td class="col">is_cancelled</td><td class="type">boolean</td><td></td><td>Default false. Whether the lecture is full is not stored; it comes from enrollment against capacity.</td></tr>
+    </table></div>
+    <h3>Example rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>term_code</th><th>crn</th><th>course_code</th><th>section_number</th><th>instructor_university_id</th><th>days</th><th>start_time</th><th>end_time</th><th>room</th><th>capacity</th><th>is_cancelled</th></tr>
+      <tr><td>202680</td><td>10231</td><td>CS 2210</td><td>M01</td><td>800200311</td><td>MWF</td><td>09:30</td><td>10:20</td><td>SH 118</td><td>60</td><td>false</td></tr>
+      <tr><td>202680</td><td>10232</td><td>CS 2210</td><td>M02</td><td>800177820</td><td>TR</td><td>13:00</td><td>14:15</td><td>SH 120</td><td>40</td><td>false</td></tr>
+      <tr><td>202710</td><td>20145</td><td>CS 3310</td><td>M01</td><td>800200311</td><td>MW</td><td>10:30</td><td>11:45</td><td class="null">null</td><td>45</td><td>false</td></tr>
+    </table></div>
+    <div class="rule">Read: in Fall 2026, Data Structures runs twice, once with Daniel Reyes on Monday, Wednesday, Friday mornings and once with the TA Priya Nair on Tuesday and Thursday afternoons. Reyes teaches Algorithms in Spring 2027, room not yet assigned.</div>
+  </section>
+
+  <!-- ===================== GRADES ===================== -->
+  <section class="table" id="grade_scale">
+    <div class="head"><h2>grade_scale</h2><span class="file">grades.py</span></div>
+    <p class="note">Reference data: these 14 rows are inserted by the initial migration, not by the seed. <code>course_prerequisite.min_grade</code> points here, and so will the enrollment grade.</p>
+    <div class="scroll"><table>
+      <tr><th>Column</th><th>Type</th><th>Key</th><th>Meaning</th></tr>
+      <tr><td class="col">letter</td><td class="type">varchar(2)</td><td><span class="tag pk">PK</span></td><td>A through F, plus W (withdrawn) and I (incomplete)</td></tr>
+      <tr><td class="col">points</td><td class="type">numeric(2,1)</td><td></td><td>Grade points per credit hour. Null for W and I.</td></tr>
+    </table></div>
+    <h3>All rows</h3>
+    <div class="scroll"><table class="ex">
+      <tr><th>letter</th><th>points</th></tr>
+      <tr><td>A</td><td>4.0</td></tr>
+      <tr><td>A-</td><td>3.7</td></tr>
+      <tr><td>B+</td><td>3.3</td></tr>
+      <tr><td>B</td><td>3.0</td></tr>
+      <tr><td>B-</td><td>2.7</td></tr>
+      <tr><td>C+</td><td>2.3</td></tr>
+      <tr><td>C</td><td>2.0</td></tr>
+      <tr><td>C-</td><td>1.7</td></tr>
+      <tr><td>D+</td><td>1.3</td></tr>
+      <tr><td>D</td><td>1.0</td></tr>
+      <tr><td>D-</td><td>0.7</td></tr>
+      <tr><td>F</td><td>0.0</td></tr>
+      <tr><td>W</td><td class="null">null</td></tr>
+      <tr><td>I</td><td class="null">null</td></tr>
+    </table></div>
+    <div class="rule">Read: "C- or better" means points of at least 1.7, so a B+ (3.3) passes. GPA is the sum of points times credit hours, divided by credit hours, over rows with points. A grade earns credit when points are above zero, so F, W and I earn nothing.</div>
+  </section>
+
+  <footer>Not modeled yet: enrollment (which student sits in which lecture, with what grade). Without it, "what have I taken", "can I add" and every statistic have nothing to query. Source of truth: <code>registrar/models/*.py</code> and the schema section of <code>README.md</code>.</footer>
+</div>
+</body>
+</html>

@@ -1,96 +1,46 @@
-"""Academic structure: colleges, departments, programs, requirements, terms, calendar."""
+"""Academic structure: departments, degree programs, terms."""
 from datetime import date
 
-from sqlalchemy import Boolean, Date, ForeignKey, Integer, Numeric, String, Text, UniqueConstraint
+from sqlalchemy import Date, ForeignKey, Integer, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
-from .enums import ProgramType, RequirementType, TermType, db_enum
-
-
-class College(Base):
-    __tablename__ = "college"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    code: Mapped[str] = mapped_column(String(10), unique=True)
-    name: Mapped[str] = mapped_column(String(120))
-    dean_person_id: Mapped[int | None] = mapped_column(ForeignKey("person.id"))
-
-    departments: Mapped[list["Department"]] = relationship(back_populates="college")
+from .enums import TermType, db_enum
 
 
 class Department(Base):
     __tablename__ = "department"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    college_id: Mapped[int] = mapped_column(ForeignKey("college.id"), index=True)
-    code: Mapped[str] = mapped_column(String(10), unique=True)
+    code: Mapped[str] = mapped_column(String(10), primary_key=True)  # CS, ENG
     name: Mapped[str] = mapped_column(String(120))
-    chair_person_id: Mapped[int | None] = mapped_column(ForeignKey("person.id"))
 
-    college: Mapped[College] = relationship(back_populates="departments")
     programs: Mapped[list["Program"]] = relationship(back_populates="department")
 
 
 class Program(Base):
+    """A degree program, e.g. BS in Computer Science. Its required courses live in degree_requirement,
+    the credits it needs per category in program_category_requirement."""
+
     __tablename__ = "program"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    department_id: Mapped[int] = mapped_column(ForeignKey("department.id"), index=True)
-    code: Mapped[str] = mapped_column(String(16), unique=True)
+    code: Mapped[str] = mapped_column(String(16), primary_key=True)  # BSCS, BSENG
+    department_code: Mapped[str] = mapped_column(ForeignKey("department.code"), index=True)
     name: Mapped[str] = mapped_column(String(120))
-    degree_type: Mapped[str | None] = mapped_column(String(10))  # BA, BS, BBA, BSN, BSEE ... null for minors
-    program_type: Mapped[ProgramType] = mapped_column(db_enum(ProgramType, "program_type"))
+    degree: Mapped[str] = mapped_column(String(10))  # BS, MS
     total_credits_required: Mapped[int] = mapped_column(Integer)
-    min_gpa: Mapped[float] = mapped_column(Numeric(3, 2), default=2.0)
-    upper_division_credits_required: Mapped[int] = mapped_column(Integer, default=0)
-    residency_credits_required: Mapped[int] = mapped_column(Integer, default=30)
-    cip_code: Mapped[str | None] = mapped_column(String(10))  # federal classification, IPEDS
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    min_gpa: Mapped[float] = mapped_column(Numeric(3, 2), default=2.0, server_default="2.00")
 
     department: Mapped[Department] = relationship(back_populates="programs")
-    requirements: Mapped[list["ProgramRequirement"]] = relationship(back_populates="program")
-
-
-class ProgramRequirement(Base):
-    """One block of a degree plan for a given catalog year, e.g. 'Core' or 'Gen Ed: Communication'."""
-
-    __tablename__ = "program_requirement"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    program_id: Mapped[int] = mapped_column(ForeignKey("program.id"), index=True)
-    catalog_term_id: Mapped[int] = mapped_column(ForeignKey("academic_term.id"))
-    name: Mapped[str] = mapped_column(String(120))
-    requirement_type: Mapped[RequirementType] = mapped_column(db_enum(RequirementType, "requirement_type"))
-    min_credits: Mapped[int] = mapped_column(Integer, default=0)
-    min_courses: Mapped[int] = mapped_column(Integer, default=0)
-    min_grade: Mapped[str | None] = mapped_column(String(2))
-    sort_order: Mapped[int] = mapped_column(Integer, default=0)
-    description: Mapped[str | None] = mapped_column(Text)
-
-    program: Mapped[Program] = relationship(back_populates="requirements")
-    courses: Mapped[list["ProgramRequirementCourse"]] = relationship(back_populates="requirement")
-
-
-class ProgramRequirementCourse(Base):
-    """Courses that can satisfy a requirement block."""
-
-    __tablename__ = "program_requirement_course"
-    __table_args__ = (UniqueConstraint("requirement_id", "course_id"),)
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    requirement_id: Mapped[int] = mapped_column(ForeignKey("program_requirement.id"), index=True)
-    course_id: Mapped[int] = mapped_column(ForeignKey("course.id"), index=True)
-    is_required: Mapped[bool] = mapped_column(Boolean, default=True)  # False = one of several options
-
-    requirement: Mapped[ProgramRequirement] = relationship(back_populates="courses")
+    requirements: Mapped[list["DegreeRequirement"]] = relationship(back_populates="program")
+    category_requirements: Mapped[list["ProgramCategoryRequirement"]] = relationship(back_populates="program")
 
 
 class AcademicTerm(Base):
+    """The current term is not stored: derive it from the clock against start_date and end_date."""
+
     __tablename__ = "academic_term"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    code: Mapped[str] = mapped_column(String(6), unique=True)  # e.g. 202680 = Fall 2026
+    code: Mapped[str] = mapped_column(String(6), primary_key=True)  # 202680 = Fall 2026, 202710 = Spring 2027
     name: Mapped[str] = mapped_column(String(30))
     term_type: Mapped[TermType] = mapped_column(db_enum(TermType, "term_type"))
     academic_year: Mapped[int] = mapped_column(Integer)  # 2026 for 2026-27
@@ -99,20 +49,9 @@ class AcademicTerm(Base):
     registration_opens: Mapped[date] = mapped_column(Date)
     add_deadline: Mapped[date] = mapped_column(Date)
     drop_deadline: Mapped[date] = mapped_column(Date)  # drop without W
-    census_date: Mapped[date] = mapped_column(Date)
     withdraw_deadline: Mapped[date] = mapped_column(Date)  # W grade deadline
     grades_due: Mapped[date] = mapped_column(Date)
-    is_current: Mapped[bool] = mapped_column(Boolean, default=False)
     sequence: Mapped[int] = mapped_column(Integer, unique=True)  # ordinal for "next term" math
 
 
-class AcademicCalendarEvent(Base):
-    __tablename__ = "academic_calendar_event"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    term_id: Mapped[int] = mapped_column(ForeignKey("academic_term.id"), index=True)
-    name: Mapped[str] = mapped_column(String(120))
-    event_type: Mapped[str] = mapped_column(String(40))  # holiday, deadline, commencement, finals
-    event_date: Mapped[date] = mapped_column(Date)
-    end_date: Mapped[date | None] = mapped_column(Date)
-    description: Mapped[str | None] = mapped_column(Text)
+from .catalog import DegreeRequirement, ProgramCategoryRequirement  # noqa: E402

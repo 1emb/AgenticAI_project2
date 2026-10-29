@@ -52,7 +52,7 @@ def term_windows(ctx: Context, keep: set[str]) -> tuple[dict[str, int], dict[str
         if p["course_code"] in keep:
             groups.setdefault(p["course_code"], {}).setdefault(p["group_number"], []).append(p["required_course_code"])
     INF = H + 1
-    avail = {c: 0 for c in done}  # usable from term 1 on
+    avail = {c: 0 for c in done | ctx.waived}  # usable from term 1 on
 
     def ready(c: str, i: int) -> bool:
         return all(any(avail.get(r, INF) < i for r in alts) for alts in groups.get(c, {}).values())
@@ -151,6 +151,8 @@ def build_facts(ctx: Context, *, target: bool = True, use_load_pref: bool = True
         f.append(f"completed({q(c)},{tenths(p)}).")
     for c in ctx.in_progress:
         f.append(f"in_progress({q(c)}).")
+    for c in sorted(ctx.waived):
+        f.append(f"waived({q(c)}).")
     for c, tcode, crn in ctx.fixed:
         f.append(f"fixed({q(c)},{term_index[tcode]},{q(crn)}).")
 

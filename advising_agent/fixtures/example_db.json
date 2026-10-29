@@ -791,7 +791,8 @@
      "graduate"
     ]
    },
-   "probation_rule": "last_term_gpa_below_program_min"
+   "probation_rule": "last_term_gpa_below_program_min",
+   "grad_admit_meets_undergrad_prereqs": true
   },
   "citations": [
    {
@@ -813,6 +814,11 @@
     "key": "probation_rule",
     "source": "Synthetic Handbook, Sec. 5.1 Academic Standing",
     "text": "Placeholder passage for probation."
+   },
+   {
+    "key": "grad_admit_meets_undergrad_prereqs",
+    "source": "Synthetic Handbook, Sec. 6.1 Graduate Admission",
+    "text": "Placeholder passage: admission to a master's program certifies the undergraduate prerequisites."
    }
   ]
  }

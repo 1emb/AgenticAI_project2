@@ -94,6 +94,24 @@ class AdvisingAgent:
                 out.append({"code": "required_course_inactive", "course": c})
             elif c not in published and not (ctx.offered_hist.get(c, set()) & {t["term_type"] for t in ctx.terms}):
                 out.append({"code": "required_course_not_offered", "course": c})
+        allowed = set(ctx.policy["allowed_levels_by_degree"][ctx.program["degree"]])
+        have = {c for c, p in ctx.best_points.items() if p > 0} | ctx.in_progress | ctx.waived
+
+        def reachable(c: str, seen: frozenset = frozenset()) -> bool:
+            if c in have:
+                return True
+            if c in seen or c not in ctx.courses or ctx.courses[c]["level"] not in allowed:
+                return False
+            groups: dict[int, list[str]] = {}
+            for p in ctx.prereqs:
+                if p["course_code"] == c:
+                    groups.setdefault(p["group_number"], []).append(p["required_course_code"])
+            return all(any(reachable(r, seen | {c}) for r in alts) for alts in groups.values())
+
+        for r in ctx.degree_plan:
+            if r["is_required"] and not reachable(r["course_code"]):
+                out.append({"code": "required_course_unreachable", "course": r["course_code"],
+                            "reason": "a prerequisite is neither completed nor takeable at this student's level"})
         return out
 
     def _remaining(self, ctx: Context) -> dict:

@@ -70,7 +70,7 @@ td code { white-space: nowrap; }
 
 <header>
   <h1>Advising Agent: interface and design</h1>
-  <p class="lede">What the Advising agent needs from the Router, the Data agent and the Policy agent, what it returns, and how its ASP planner works. The code in <code>advising_agent/contracts.py</code> is the typed version of this page; keep the two in sync. Last updated 2026-10-28 against the 12-table schema (commit 834038e).</p>
+  <p class="lede">What the Advising agent needs from the Router, the Data agent and the Policy agent, what it returns, and how its ASP planner works. The code in <code>advising_agent/contracts.py</code> is the typed version of this page; keep the two in sync. Last updated 2026-10-29 against the 12-table schema and seed data (commit 5ab1cda).</p>
   <nav class="toc" aria-label="Contents">
     <a href="#role">1. Role</a><a href="#deps">2. Dependencies</a><a href="#in-router">3. From Router</a>
     <a href="#in-data">4. From Data agent</a><a href="#in-policy">5. From Policy agent</a><a href="#out">6. Output</a>
@@ -95,8 +95,8 @@ td code { white-space: nowrap; }
   <div class="scroll"><table>
     <thead><tr><th>Needed</th><th>Owner</th><th>State in repo</th><th>Impact</th></tr></thead>
     <tbody>
-      <tr><td><code>enrollment</code> table (term, CRN, student, status, grade)</td><td>Data</td><td>Proposed in README "Next steps 2", not modeled</td><td><span class="pill blocking">blocking</span> Without it there is no grade history, GPA or standing, so no plan for real students.</td></tr>
-      <tr><td>Seed data: catalog, prerequisites, degree plans, terms, lectures</td><td>Data</td><td>README "Next steps 1"</td><td><span class="pill blocking">blocking</span> for real runs; the fixture covers development.</td></tr>
+      <tr><td><code>enrollment</code> table (term, CRN, student, status, grade)</td><td>Data</td><td>Not modeled; schema declared frozen for the agents (README, 5ab1cda)</td><td><span class="pill blocking">blocking</span> Without it there is no grade history, GPA or standing, so no plan for real students.</td></tr>
+      <tr><td>Seed data: catalog, prerequisites, degree plans, terms, lectures</td><td>Data</td><td>Done (commit 5ab1cda, <code>data/seed/</code>)</td><td><span class="pill ready">ready</span> <code>seed_tools.py</code> reads it; all four programs plan without validator violations.</td></tr>
       <tr><td>Advisor assignment (advisor, student)</td><td>Data</td><td>No table. The professor question catalog mentions advisees.</td><td><span class="pill blocking">blocking</span> for advisors viewing advisees; students and admins work without it.</td></tr>
       <tr><td>Offering history per course and term type (derived view)</td><td>Data</td><td>Derivable from <code>lecture</code> + <code>academic_term</code></td><td><span class="pill needed">needed</span> Planning beyond published terms uses it.</td></tr>
       <tr><td>Seats taken per lecture</td><td>Data</td><td>Comes from enrollment</td><td><span class="pill needed">needed</span> Without it, full sections are not detected; the answer says so.</td></tr>
@@ -163,6 +163,7 @@ td code { white-space: nowrap; }
       <tr><td><code>repeat_rule</code></td><td>enum</td><td><code>below_prereq_min</code></td><td>a passed course may be repeated when its grade is below some prerequisite minimum (planted case: D in MATH 2780)</td></tr>
       <tr><td><code>allowed_levels_by_degree</code></td><td>{degree: [level]}</td><td><code>BS: lower, upper; MS: upper, graduate</code></td><td>undergraduates cannot plan graduate courses</td></tr>
       <tr><td><code>probation_rule</code></td><td>enum</td><td><code>last_term_gpa_below_program_min</code></td><td>which credit cap applies</td></tr>
+      <tr><td><code>grad_admit_meets_undergrad_prereqs</code></td><td>bool</td><td><code>true</code></td><td>MS students: prerequisites below graduate level that are not in the MS plan count as met (no credit). Needed because MSCS requires a course that needs CS 3310 and MSENG one that needs ENG 3110, and no undergraduate record exists. With <code>false</code>, the answer names the unreachable course.</td></tr>
     </tbody>
   </table></div>
   <p><code>cite(keys)</code> returns <code>{key, source, text}</code> passages from the handbook RAG; they go into the response and the explanation.</p>
@@ -324,8 +325,10 @@ td code { white-space: nowrap; }
   validate.py         independent plan check
   agent.py            AdvisingAgent.handle(request): access, relaxation ladder, response
   fixture_tools.py    DataTools / PolicyTools over the JSON fixture
+  seed_tools.py       DataTools over the team's seed CSVs (data/seed); no enrollment, so students look new
   fixtures/           example_db.json (row shapes of the 12 tables + enrollment), example_requests.json
-  tests/              pytest over the fixture requests; test_scale.py is the opt-in stress test
+  tests/              pytest over the fixture requests; test_seed.py runs the four programs of the seed data;
+                      test_scale.py is the opt-in stress test
   docs/               this page; design/ holds the system mindmap and process flow
 
 pip install clingo pytest

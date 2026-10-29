@@ -37,6 +37,7 @@ class Context:
     standing: str = "good"
     assumptions: list[str] = field(default_factory=list)
     candidates: set[str] = field(default_factory=set)  # courses the solver may plan
+    waived: set[str] = field(default_factory=set)  # prerequisites treated as met (not credited)
     placeholders: list[str] = field(default_factory=list)  # generic free-elective slots
 
 
@@ -124,6 +125,10 @@ def build_context(req: AdvisingRequest, data: DataTools, policy: PolicyTools) ->
     if params["probation_rule"] == "last_term_gpa_below_program_min" and ctx.last_term_gpa is not None:
         ctx.standing = "probation" if ctx.last_term_gpa < float(program["min_gpa"]) else "good"
 
+    if ctx.program["degree"] == "MS" and params.get("grad_admit_meets_undergrad_prereqs"):
+        in_plan = {r["course_code"] for r in plan_rows}
+        ctx.waived = {c for c, row in courses.items() if row["level"] != "graduate" and c not in in_plan}
+        ctx.assumptions.append("As a graduate admit, undergraduate prerequisites outside the MS plan are treated as met.")
     select_candidates(ctx)
 
     if ctx.in_progress:
@@ -152,7 +157,7 @@ def select_candidates(ctx: Context) -> None:
     cand: set[str] = set()
     while todo:
         c = todo.pop()
-        if c in cand or c not in ctx.courses:
+        if c in cand or c not in ctx.courses or c in ctx.waived:
             continue
         cand.add(c)
         todo.extend(pre.get(c, ()))

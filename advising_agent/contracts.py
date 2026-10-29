@@ -174,6 +174,8 @@ class PolicyParams(TypedDict):
     repeat_rule: Literal["below_prereq_min", "never", "always_if_below_C"]
     allowed_levels_by_degree: dict[str, list[str]]  # {"BS": ["lower_division", "upper_division"]}
     probation_rule: Literal["last_term_gpa_below_program_min"]  # per README note of 2026-10-28
+    grad_admit_meets_undergrad_prereqs: bool  # MS students: prerequisites below graduate level that are not in
+                                              # their degree plan count as met (no undergraduate record exists)
 
 
 class PolicyTools(Protocol):

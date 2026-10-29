@@ -13,6 +13,7 @@
 %   overlap(T,N1,N2).                 two sections of T meet at the same time           [lecture]
 %   completed(C,P).                   best grade points earned in C (W, I excluded)     [enrollment+grade_scale]
 %   in_progress(C).                   enrolled in the current term, no grade yet        [enrollment]
+%   waived(C).                        prerequisite treated as met by policy             [policy]
 %   fixed(C,T,N).                     already registered for a planned term             [enrollment]
 %   prereq(C,G,R,M).                  C needs, for each G, some R with points >= M      [course_prerequisite]
 %   repeat_below_prereq_min.          a passed course may be repeated when its grade
@@ -56,6 +57,7 @@ take(C,T) :- fixed(C,T,_).
 % ---------- prerequisites (a planned course is assumed to meet the minimum grade) ----------
 met(R,M,T) :- prereq(_,_,R,M), completed(R,P), P >= M, term(T).
 met(R,M,T) :- prereq(_,_,R,M), in_progress(R), term(T).
+met(R,M,T) :- prereq(_,_,R,M), waived(R), term(T).      % policy: treated as met, earns no credit
 met(R,M,T) :- prereq(_,_,R,M), take(R,T0), term(T), T0 < T.
 
 grp_ok(C,G,T) :- take(C,T), prereq(C,G,R,M), met(R,M,T).

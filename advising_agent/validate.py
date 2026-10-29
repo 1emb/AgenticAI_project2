@@ -10,7 +10,7 @@ def check_plan(ctx: Context, plan: dict, max_load: float, min_load: float | None
     v: list[str] = []
     pts = ctx.points
     have: dict[str, float] = dict(ctx.best_points)  # course -> points assumed available
-    for c in ctx.in_progress:
+    for c in ctx.in_progress | ctx.waived:
         have[c] = 4.0
     lec_by_crn = {(l["term_code"], l["crn"]): l for l in ctx.lectures}
     allowed = set(ctx.policy["allowed_levels_by_degree"][ctx.program["degree"]])
@@ -54,7 +54,7 @@ def check_plan(ctx: Context, plan: dict, max_load: float, min_load: float | None
         for c in t["courses"]:  # available from the next term on
             have[c["course_code"]] = 4.0
 
-    fin = {c for c, p in have.items() if p > 0}
+    fin = {c for c, p in have.items() if p > 0 and c not in ctx.waived}
     for r in ctx.degree_plan:
         if r["is_required"] and r["course_code"] not in fin:
             v.append(f"required course {r['course_code']} missing")

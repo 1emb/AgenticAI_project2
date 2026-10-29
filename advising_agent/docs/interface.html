@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Advising Agent Interface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column with wide tables in scroll boxes. Same palette family as the project mindmap and process flow. */
+:root {
+  --bg: #eef1ec; --paper: #fbfcf9; --ink: #1f2a28; --muted: #5b6863; --rule: #cfd6cf; --chip: #e6ebe5;
+  --agent: #2c6a6e; --code: #4a7526; --user: #8a2d3b; --store: #9a6512;
+  --block: #8a2d3b; --warn: #9a6512; --ok: #4a7526;
+  --f-display: "Spectral", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c; --chip: #26302d;
+    --agent: #6cc3c6; --code: #9fcf6a; --user: #e07f8d; --store: #e0a94a; --block: #e07f8d; --warn: #e0a94a; --ok: #9fcf6a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c; --chip: #26302d;
+  --agent: #6cc3c6; --code: #9fcf6a; --user: #e07f8d; --store: #e0a94a; --block: #e07f8d; --warn: #e0a94a; --ok: #9fcf6a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font: 14.5px/1.55 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+main { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+h1 { font: 600 30px/1.2 var(--f-display); margin: 0; text-wrap: balance; }
+h2 { font: 600 21px/1.25 var(--f-display); margin: 0 0 8px; text-wrap: balance; }
+h3 { font: 600 15px/1.3 var(--f-body); margin: 14px 0 6px; }
+p { margin: 0 0 8px; max-width: 72ch; }
+ul, ol { margin: 0 0 8px; padding-left: 20px; max-width: 76ch; }
+li { margin: 2px 0; }
+code, .mono { font-family: var(--f-mono); font-size: 12.5px; }
+:not(pre) > code { background: var(--chip); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { margin: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font: 12.5px/1.5 var(--f-mono); }
+.lede { color: var(--muted); }
+section { min-width: 0; }
+.scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; font-size: 12px; letter-spacing: .03em; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td code { white-space: nowrap; }
+.pill { display: inline-block; font: 500 11px var(--f-mono); letter-spacing: .04em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.blocking { color: var(--block); } .needed { color: var(--warn); } .ready { color: var(--ok); }
+.toc { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; }
+.toc a { color: var(--agent); text-decoration: none; }
+.toc a:hover, .toc a:focus-visible { text-decoration: underline; }
+.lane { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.lane div { background: var(--paper); border: 1px solid var(--rule); border-top: 3px solid var(--c); border-radius: 8px; padding: 10px 12px; min-width: 0; }
+.lane b { display: block; } .lane span { color: var(--muted); font-size: 13px; }
+.note { border-left: 3px solid var(--warn); padding: 6px 12px; background: var(--paper); border-radius: 0 6px 6px 0; max-width: 80ch; }
+@media (max-width: 760px) { .lane { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>Advising Agent: interface and design</h1>
+  <p class="lede">What the Advising agent needs from the Router, the Data agent and the Policy agent, what it returns, and how its ASP planner works. The code in <code>advising_agent/contracts.py</code> is the typed version of this page; keep the two in sync. Last updated 2026-10-28 against the 12-table schema (commit 834038e).</p>
+  <nav class="toc" aria-label="Contents">
+    <a href="#role">1. Role</a><a href="#deps">2. Dependencies</a><a href="#in-router">3. From Router</a>
+    <a href="#in-data">4. From Data agent</a><a href="#in-policy">5. From Policy agent</a><a href="#out">6. Output</a>
+    <a href="#asp">7. ASP planner</a><a href="#tests">8. Test cases</a><a href="#files">9. Files</a>
+  </nav>
+</header>
+
+<section id="role">
+  <h2>1. Role in the system</h2>
+  <p>The Advising agent answers "what should this student take, and when can they graduate?". It turns the student's record, the degree plan and the course offerings into a multi-term plan. An ASP solver (clingo) builds the plan, and plain Python checks it again independently. The LLM only writes the explanation from the finished result. The agent never writes to the database.</p>
+  <div class="lane">
+    <div style="--c: var(--agent)"><b>Router</b><span>sends an AdvisingRequest with the role from the session and the fields it clarified</span></div>
+    <div style="--c: var(--agent)"><b>Advising agent</b><span>access check, context, ASP solve, validator, explanation</span></div>
+    <div style="--c: var(--store)"><b>Data and Policy agents</b><span>read-only rows; typed policy parameters with citations</span></div>
+    <div style="--c: var(--user)"><b>Router, then user</b><span>AdvisingResponse; CRNs go to Registration only if the user asks</span></div>
+  </div>
+</section>
+
+<section id="deps">
+  <h2>2. Dependencies on other parts</h2>
+  <p>These are what the Advising agent needs from the other parts, and their state in the repo today. Until the seed data and the enrollment table exist, the agent runs on <code>fixtures/example_db.json</code>, which uses the same row shapes.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Needed</th><th>Owner</th><th>State in repo</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td><code>enrollment</code> table (term, CRN, student, status, grade)</td><td>Data</td><td>Proposed in README "Next steps 2", not modeled</td><td><span class="pill blocking">blocking</span> Without it there is no grade history, GPA or standing, so no plan for real students.</td></tr>
+      <tr><td>Seed data: catalog, prerequisites, degree plans, terms, lectures</td><td>Data</td><td>README "Next steps 1"</td><td><span class="pill blocking">blocking</span> for real runs; the fixture covers development.</td></tr>
+      <tr><td>Advisor assignment (advisor, student)</td><td>Data</td><td>No table. The professor question catalog mentions advisees.</td><td><span class="pill blocking">blocking</span> for advisors viewing advisees; students and admins work without it.</td></tr>
+      <tr><td>Offering history per course and term type (derived view)</td><td>Data</td><td>Derivable from <code>lecture</code> + <code>academic_term</code></td><td><span class="pill needed">needed</span> Planning beyond published terms uses it.</td></tr>
+      <tr><td>Seats taken per lecture</td><td>Data</td><td>Comes from enrollment</td><td><span class="pill needed">needed</span> Without it, full sections are not detected; the answer says so.</td></tr>
+      <tr><td>Policy parameters (credit cap, repeat rule, levels, probation) + citations</td><td>Policy</td><td>Handbook not written yet</td><td><span class="pill needed">needed</span> Placeholder values in the fixture.</td></tr>
+      <tr><td>Corequisites</td><td>Data</td><td>No table</td><td><span class="pill ready">optional</span> Not modeled; easy to add to the encoding.</td></tr>
+      <tr><td>Summer term code</td><td>Data</td><td>Only 80 (fall) and 10 (spring) are documented</td><td><span class="pill ready">confirm</span> Projected summer terms assume suffix 60.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Questions for the team</h3>
+  <ul>
+    <li><b>Category credits:</b> does <code>program_category_requirement.min_credits</code> count all <code>degree_requirement</code> rows of that category, or only the optional ones (<code>is_required = false</code>)? The code counts all rows.</li>
+    <li><b>Writes:</b> the README says "agents only read the dataset", but we decided on read + write for registration. Advising only reads, so it is not affected, but the Registration part is.</li>
+    <li><b>Prerequisite minimum for in-progress and planned courses:</b> both are assumed to meet the minimum grade, and the answer states this. Is that the rule we want, or should a plan wait for posted grades?</li>
+  </ul>
+</section>
+
+<section id="in-router">
+  <h2>3. Input from the Router: <code>AdvisingRequest</code></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Field</th><th>Type</th><th>Req.</th><th>Source</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>request_id</code></td><td>string</td><td>yes</td><td>Router</td><td>Echoed in the response.</td></tr>
+      <tr><td><code>as_of</code></td><td>ISO datetime</td><td>yes</td><td>clock</td><td>Same meaning as in <code>data/testset</code>; decides current and next term (README clock rule).</td></tr>
+      <tr><td><code>requester.university_id</code>, <code>requester.role</code></td><td>string, <code>student|instructor|admin</code></td><td>yes</td><td>login session</td><td>Never taken from chat.</td></tr>
+      <tr><td><code>student_university_id</code></td><td>9-char ID</td><td>yes</td><td>session (student) or user (advisor, admin)</td><td>For an advisor, the Router lists advisees with a lookup tool and asks if there are several.</td></tr>
+      <tr><td><code>horizon_terms</code></td><td>int</td><td>no</td><td>default 4</td><td>Not asked. Extended automatically (up to 4 more) when too short; the answer says so.</td></tr>
+      <tr><td><code>include_summer</code></td><td>bool</td><td>no</td><td>default false</td><td>User field; ask only if the student mentions summer.</td></tr>
+      <tr><td><code>target_graduation_term_code</code>, <code>target_is_hard</code></td><td>term code, bool</td><td>no</td><td>user</td><td>Optional. Without it, the plan graduates as early as possible.</td></tr>
+      <tr><td><code>preferences</code></td><td>object</td><td>no</td><td>user</td><td><code>max_credits_per_term</code>, <code>min_credits_per_term</code>, <code>prefer_courses[]</code>, <code>avoid_courses[]</code> (course code + weight 1 to 5), <code>avoid_days</code> (subset of MTWRFSU), <code>earliest_start</code>, <code>latest_end</code>. Only the credit bounds are hard; the rest are soft.</td></tr>
+      <tr><td><code>num_plans</code></td><td>int</td><td>no</td><td>default 3</td><td>Upper bound on optimal alternatives returned; often fewer, see section 7.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Clarification rule for the Router: <code>student_university_id</code> is a data field (look up, then ask only if several), and target and preferences are user fields (never required; the agent returns a plan without them). A missing required field returns <code>status: needs_input</code> with the field names.</p>
+</section>
+
+<section id="in-data">
+  <h2>4. Input from the Data agent: read tools</h2>
+  <p>All tools are read-only and filtered by the requester's permissions. Row shapes are exactly the table columns (see <code>contracts.py</code>). The SQL is a sketch against the schema; <code>enrollment</code> and <code>advisor_assignment</code> are proposed tables.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Tool</th><th>Returns</th><th>SQL sketch</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td><code>get_student(uid)</code></td><td>StudentRow</td><td class="mono">SELECT university_id, program_code, status, admit_term_code, expected_graduation_term_code FROM student WHERE university_id = :uid</td><td>program, eligibility (status must be active)</td></tr>
+      <tr><td><code>get_program(code)</code></td><td>ProgramRow</td><td class="mono">SELECT code, degree, total_credits_required, min_gpa FROM program WHERE code = :code</td><td>total credits, level rules, probation threshold</td></tr>
+      <tr><td><code>get_enrollments(uid)</code></td><td>EnrollmentRow[]</td><td class="mono">SELECT e.term_code, e.crn, l.course_code, e.status, e.grade FROM enrollment e JOIN lecture l USING (term_code, crn) WHERE e.student_university_id = :uid</td><td>completed (best grade), withdrawn, in progress, already registered</td></tr>
+      <tr><td><code>get_grade_scale()</code></td><td>GradeScaleRow[]</td><td class="mono">SELECT letter, points FROM grade_scale</td><td>grade comparison, GPA, credit (points &gt; 0)</td></tr>
+      <tr><td><code>get_terms_after(as_of, n, include_summer)</code></td><td>(current TermRow, next n TermRow[])</td><td class="mono">... FROM academic_term WHERE start_date &gt; :clock ORDER BY sequence LIMIT :n</td><td>planning horizon; missing future terms are projected</td></tr>
+      <tr><td><code>get_courses()</code></td><td>CourseRow[]</td><td class="mono">SELECT code, title, credit_hours, level, is_active FROM course</td><td>credits, level</td></tr>
+      <tr><td><code>get_prerequisites()</code></td><td>PrerequisiteRow[]</td><td class="mono">SELECT course_code, required_course_code, min_grade, group_number FROM course_prerequisite</td><td>prerequisite groups (same group = OR, different groups = AND)</td></tr>
+      <tr><td><code>get_degree_plan(program)</code></td><td>(DegreeRequirementRow[], CategoryRequirementRow[])</td><td class="mono">SELECT * FROM degree_requirement WHERE program_code = :p; SELECT * FROM program_category_requirement WHERE program_code = :p</td><td>required courses, category credits</td></tr>
+      <tr><td><code>get_lectures(term_codes)</code></td><td>LectureRow[] + <code>seats_taken</code></td><td class="mono">SELECT l.*, (SELECT count(*) FROM enrollment e WHERE (e.term_code, e.crn) = (l.term_code, l.crn) AND e.status = 'enrolled') AS seats_taken FROM lecture l WHERE l.term_code = ANY(:terms)</td><td>sections, time conflicts, full sections in published terms</td></tr>
+      <tr><td><code>get_offering_history(codes)</code></td><td>OfferingHistoryRow[]</td><td class="mono">SELECT l.course_code, array_agg(DISTINCT t.term_type) FROM lecture l JOIN academic_term t ON t.code = l.term_code WHERE NOT l.is_cancelled GROUP BY l.course_code</td><td>which term types a course runs in, for projected terms</td></tr>
+      <tr><td><code>is_advisor_of(iid, uid)</code></td><td>bool</td><td class="mono">SELECT 1 FROM advisor_assignment WHERE advisor_university_id = :iid AND student_university_id = :uid</td><td>access check for instructors</td></tr>
+    </tbody>
+  </table></div>
+  <p>Derived in code by the Advising agent (not by an LLM): best grade per course, withdrawn courses, cumulative and last-term GPA, and standing (probation when last-term GPA &lt; <code>program.min_gpa</code>, per the README note of 2026-10-28).</p>
+</section>
+
+<section id="in-policy">
+  <h2>5. Input from the Policy agent</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Parameter</th><th>Type</th><th>Fixture value (placeholder)</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><code>max_credits_by_standing</code></td><td>{standing: credits}</td><td><code>{"good": 18, "probation": 13}</code></td><td>hard per-term cap; the student's own cap can only lower it</td></tr>
+      <tr><td><code>repeat_rule</code></td><td>enum</td><td><code>below_prereq_min</code></td><td>a passed course may be repeated when its grade is below some prerequisite minimum (planted case: D in MATH 2780)</td></tr>
+      <tr><td><code>allowed_levels_by_degree</code></td><td>{degree: [level]}</td><td><code>BS: lower, upper; MS: upper, graduate</code></td><td>undergraduates cannot plan graduate courses</td></tr>
+      <tr><td><code>probation_rule</code></td><td>enum</td><td><code>last_term_gpa_below_program_min</code></td><td>which credit cap applies</td></tr>
+    </tbody>
+  </table></div>
+  <p><code>cite(keys)</code> returns <code>{key, source, text}</code> passages from the handbook RAG; they go into the response and the explanation.</p>
+  <p class="note">Numeric parameters come from a versioned policy config that matches the synthetic handbook, not from LLM extraction at run time: one wrong number changes every plan. The Policy agent's RAG supplies the citations. The NMSU-based handbook should change some values from the real NMSU ones, so the prior-knowledge test in the evaluation can detect answers that ignore retrieval.</p>
+</section>
+
+<section id="out">
+  <h2>6. Output to the Router: <code>AdvisingResponse</code></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><code>allowed</code></td><td>First field, as in <code>data/testset</code>. <code>false</code> only for <code>denied</code>.</td></tr>
+      <tr><td><code>status</code></td><td>See the status table below.</td></tr>
+      <tr><td><code>plans[]</code></td><td>Optimal plans: <code>rank</code>, <code>graduation_term_code</code>, <code>terms[]</code> (term code and name, <code>is_projected</code>, credits, courses with category, CRN for published terms, <code>is_retake</code>), <code>total_credits_after</code>, <code>penalties</code>, <code>violations</code> (always empty unless the validator disagrees).</td></tr>
+      <tr><td><code>earliest_graduation_term_code</code></td><td>Graduation term of the best plan under the constraints that were kept.</td></tr>
+      <tr><td><code>must_take_next_term[]</code></td><td>Courses in next term of <i>every</i> plan that graduates as early as possible (ASP cautious consequences). The most useful single fact for the student.</td></tr>
+      <tr><td><code>remaining</code></td><td>Before the plan: required courses left, category credits, credits earned and required, cumulative GPA, program minimum GPA, standing.</td></tr>
+      <tr><td><code>relaxed[]</code>, <code>blockers[]</code>, <code>assumptions[]</code></td><td>What was relaxed to find a plan; why there is none; what the plan assumes.</td></tr>
+      <tr><td><code>citations[]</code></td><td>Policy passages behind the parameters.</td></tr>
+      <tr><td><code>explanation</code></td><td>Prose. A template by default; an optional LLM may rephrase it but must not change courses, terms, CRNs or numbers.</td></tr>
+      <tr><td><code>registration_handoff</code></td><td>First-term CRNs when that term is published. The Router passes them to the Registration agent only if the user asks to register; Registration validates again and asks for confirmation.</td></tr>
+      <tr><td><code>solver</code></td><td>Engine, whether optimality was proven, time, plans found.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Statuses</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Status</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td><code>ok</code></td><td>A plan meets every hard constraint and the hard target, if one was given.</td></tr>
+      <tr><td><code>target_infeasible</code></td><td>No plan meets the hard target; plans show the earliest feasible term.</td></tr>
+      <tr><td><code>horizon_too_short</code></td><td>The requirements need more terms than requested; the horizon was extended (by up to 4 terms).</td></tr>
+      <tr><td><code>load_infeasible</code></td><td>The student's own credit cap is too low even with more terms; plans use the policy cap.</td></tr>
+      <tr><td><code>infeasible</code></td><td>No plan after relaxing everything, or a static blocker (a required course is inactive or never offered).</td></tr>
+      <tr><td><code>not_eligible</code></td><td>Student status is not <code>active</code>.</td></tr>
+      <tr><td><code>denied</code></td><td>A student asked about another student, or an instructor about someone who is not an advisee.</td></tr>
+      <tr><td><code>needs_input</code></td><td>A required request field is missing.</td></tr>
+      <tr><td><code>error</code></td><td>The independent validator disagrees with the solver. This is a bug, not a student problem.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Example (fixture request <code>adv-001</code>, trimmed)</h3>
+  <p>The student wants to graduate by Spring 2028 (hard), at most 12 credits per term, prefers CS 4750, avoids CS 4880 and Fridays. CS 4710 runs only in fall and needs CS 3720, so Spring 2028 is impossible.</p>
+<pre>{
+ "allowed": true,
+ "status": "target_infeasible",
+ "relaxed": ["target_graduation_term"],
+ "earliest_graduation_term_code": "202880",
+ "must_take_next_term": ["CS 2730"],
+ "remaining": {"required_courses": ["CS 2730", "CS 3720", "CS 4710", "CS 4740"],
+               "categories": {"elective": {"needed": 6, "earned": 0}},
+               "credits_earned": 21.0, "credits_required": 43,
+               "cumulative_gpa": 2.67, "program_min_gpa": 2.0, "standing": "good"},
+ "plans": [{
+   "rank": 1, "graduation_term_code": "202880",
+   "terms": [
+    {"term_code": "202710", "term_name": "Spring 2027", "is_projected": false, "credits": 9.0,
+     "courses": [{"course_code": "CS 2730", "category": "core", "crn": "10201", "is_retake": false},
+                 {"course_code": "CS 4870", "category": "elective", "crn": "10302", "is_retake": false},
+                 {"course_code": "MATH 2780", "category": "core", "crn": "10102", "is_retake": true}]},
+    {"term_code": "202780", "term_name": "Fall 2027", "is_projected": true, "credits": 6.0,
+     "courses": [{"course_code": "CS 3720", "crn": null}, {"course_code": "CS 4820", "crn": null}]},
+    {"term_code": "202810", "term_name": "Spring 2028", "is_projected": true, "credits": 6.0,
+     "courses": [{"course_code": "CS 4740", "crn": null}, {"course_code": "CS 4750", "crn": null}]},
+    {"term_code": "202880", "term_name": "Fall 2028", "is_projected": true, "credits": 4.0,
+     "courses": [{"course_code": "CS 4710", "crn": null}, {"course_code": "CS 4750L", "crn": null}]}],
+   "total_credits_after": 43.0,
+   "violations": []}],
+ "registration_handoff": [{"term_code": "202710", "crn": "10201", "course_code": "CS 2730"}, ...],
+ "solver": {"engine": "clingo", "optimal": true, "seconds": 0.01, "plans_found": 1}
+}</pre>
+  <p>What the example shows: MATH 2780 M01 is full, so M02 is chosen; CS 4870 M01 overlaps MATH 2780 M02 and M03 meets on Friday, so M02 is chosen; the D in MATH 2780 is below the C- that CS 3720 needs, so it is repeated; the cancelled CS 4820 lecture is ignored in Spring 2027.</p>
+</section>
+
+<section id="asp">
+  <h2>7. ASP planner (<code>asp/advising.lp</code>)</h2>
+  <h3>Facts, generated from the input by <code>facts.py</code></h3>
+  <p>Credits and grade points are integers in tenths (3.0 credits is 30, C- 1.7 is 17), because ASP has no decimals.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Predicate</th><th>From</th></tr></thead>
+    <tbody>
+      <tr><td><code>term(T)</code>, <code>term_type(T,Y)</code>, <code>published(T)</code></td><td><code>academic_term</code>; published = has lecture rows</td></tr>
+      <tr><td><code>course(C,Cr)</code>, <code>level(C,L)</code>, <code>allowed_level(L)</code></td><td><code>course</code>, policy</td></tr>
+      <tr><td><code>lecture(T,C,N)</code>, <code>full(T,N)</code>, <code>overlap(T,N1,N2)</code></td><td><code>lecture</code>, seats from enrollment, meeting times</td></tr>
+      <tr><td><code>offered_hist(C,Y)</code></td><td>offering history</td></tr>
+      <tr><td><code>completed(C,P)</code>, <code>in_progress(C)</code>, <code>fixed(C,T,N)</code></td><td><code>enrollment</code> + <code>grade_scale</code></td></tr>
+      <tr><td><code>prereq(C,G,R,M)</code>, <code>repeat_below_prereq_min</code></td><td><code>course_prerequisite</code>, policy</td></tr>
+      <tr><td><code>required(C)</code>, <code>req_course(K,C)</code>, <code>cat_min(K,N)</code>, <code>total_credits(N)</code></td><td><code>degree_requirement</code>, <code>program_category_requirement</code>, <code>program</code></td></tr>
+      <tr><td><code>max_load(N)</code>, <code>min_load(N)</code>, <code>target(T)</code>, <code>prefer(C,W)</code>, <code>avoid(C,W)</code>, <code>bad_slot(T,N,W)</code></td><td>policy and request</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Hard constraints</h3>
+  <ul>
+    <li>Each open course at most once, only in a term where it is offered (a non-full, non-cancelled lecture in published terms; the offering history in projected terms), and only at an allowed level.</li>
+    <li>Every prerequisite group is met before the term (by a completed grade at or above the minimum, a course in progress, or an earlier planned course).</li>
+    <li>In published terms: exactly one open section per course, no two sections overlapping.</li>
+    <li>Credits per term at most <code>max_load</code>; at least <code>min_load</code> except in the last term; nothing after the hard target.</li>
+    <li>By the end of the plan: all required courses, every category minimum, and the program's total credits.</li>
+  </ul>
+  <h3>Objectives, lexicographic (higher first)</h3>
+  <ol>
+    <li>Fewest terms (earliest graduation).</li>
+    <li>Fewest avoided courses and sections on avoided days or times.</li>
+    <li>Most preferred courses.</li>
+    <li>Fewest planned credits (no padding).</li>
+    <li>Tie-break: take courses earlier.</li>
+  </ol>
+  <h3>Beyond one plan</h3>
+  <ul>
+    <li><b>Relaxation ladder:</b> if there is no plan, the agent drops the hard target, then plans more terms (keeping the student's credit cap), then drops the credit-cap preference, and stops at the first that works. <code>relaxed[]</code> lists exactly what changed.</li>
+    <li><b>Cautious consequences:</b> a second run with only objective 1 computes <code>must_take_next_term</code>, the courses that appear next term in every earliest-graduation plan.</li>
+    <li><b>Alternatives:</b> clingo enumerates optimal models (<code>--opt-mode=optN</code>, projected on the shown atoms). With all five objectives the optimum is often unique, so <code>plans_found</code> is often 1; dropping objective 5 gives more alternatives.</li>
+    <li><b>Independent check:</b> <code>validate.py</code> re-checks every plan in plain Python without using the encoding. The Registration agent can reuse it for a single term.</li>
+  </ul>
+  <h3>Known limits</h3>
+  <ul>
+    <li>Projected terms assume the past offering pattern holds; sections and seats are only checked in published terms.</li>
+    <li>Every planned course is assumed passed with the prerequisite minimum, so the plan is a best case.</li>
+    <li>The program's minimum GPA is reported, not planned, since future grades are unknown.</li>
+    <li>No corequisites, transfer credit or holds yet (not in the schema).</li>
+  </ul>
+</section>
+
+<section id="tests">
+  <h2>8. Test cases</h2>
+  <p><code>fixtures/example_requests.json</code> holds 10 requests with expected results. They cover a hard target that cannot be met, a plan with no target, an advisor allowed, an instructor denied, a student asking about another student, a suspended student, a horizon that is too short, a credit cap that is too low, a request with no preferences, and a missing field. Run <code>pytest advising_agent/tests -q</code>.</p>
+  <p>Proposed shape for <code>data/testset</code> (persona student, intent <code>plan_graduation</code>), following its verification contract:</p>
+<pre>"answer": {"allowed": true, "status": "ok",
+           "earliest_graduation_term": "Fall 2028",
+           "must_take_next_term": ["CS 2730"],
+           "remaining_required": ["CS 2730", "CS 3720", "CS 4710", "CS 4740"]}</pre>
+  <p>Several plans can be optimal, so the grader should check these invariants and run <code>validate.check_plan</code> on the agent's plan, not compare one plan exactly. If the ground truth also comes from this solver, the check is partly circular; a few hand-checked cases and the independent validator reduce that risk.</p>
+</section>
+
+<section id="files">
+  <h2>9. Files and how to run</h2>
+<pre>advising_agent/
+  contracts.py        typed interfaces (this page in code)
+  context.py          build the context from DataTools + PolicyTools; GPA, standing, terms
+  facts.py            context -> ASP facts
+  asp/advising.lp     the planner
+  solver.py           clingo: optimal plans, cautious next-term courses
+  validate.py         independent plan check
+  agent.py            AdvisingAgent.handle(request): access, relaxation ladder, response
+  fixture_tools.py    DataTools / PolicyTools over the JSON fixture
+  fixtures/           example_db.json (row shapes of the 12 tables + enrollment), example_requests.json
+  tests/              pytest over the fixture requests
+  docs/               this page; design/ holds the system mindmap and process flow
+
+pip install clingo pytest
+python -m advising_agent.run_example adv-001
+pytest advising_agent/tests -q</pre>
+</section>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,293 @@
+[
+ {
+  "as_of": "2026-11-20T18:00:00+00:00",
+  "student_university_id": "800123456",
+  "horizon_terms": 4,
+  "include_summer": false,
+  "num_plans": 3,
+  "preferences": {
+   "max_credits_per_term": 12,
+   "min_credits_per_term": 6,
+   "prefer_courses": [
+    {
+     "course_code": "CS 4750",
+     "weight": 2
+    }
+   ],
+   "avoid_courses": [
+    {
+     "course_code": "CS 4880",
+     "weight": 1
+    }
+   ],
+   "avoid_days": "F"
+  },
+  "request_id": "adv-001",
+  "requester": {
+   "university_id": "800123456",
+   "role": "student"
+  },
+  "target_graduation_term_code": "202810",
+  "target_is_hard": true,
+  "_expect": {
+   "status": "target_infeasible",
+   "earliest_graduation_term_code": "202880",
+   "must_take_next_term": [
+    "CS 2730"
+   ]
+  }
+ },
+ {
+  "as_of": "2026-11-20T18:00:00+00:00",
+  "student_university_id": "800123456",
+  "horizon_terms": 4,
+  "include_summer": false,
+  "num_plans": 3,
+  "preferences": {
+   "max_credits_per_term": 12,
+   "min_credits_per_term": 6,
+   "prefer_courses": [
+    {
+     "course_code": "CS 4750",
+     "weight": 2
+    }
+   ],
+   "avoid_courses": [
+    {
+     "course_code": "CS 4880",
+     "weight": 1
+    }
+   ],
+   "avoid_days": "F"
+  },
+  "request_id": "adv-002",
+  "requester": {
+   "university_id": "800123456",
+   "role": "student"
+  },
+  "_expect": {
+   "status": "ok",
+   "earliest_graduation_term_code": "202880"
+  }
+ },
+ {
+  "as_of": "2026-11-20T18:00:00+00:00",
+  "student_university_id": "800123456",
+  "horizon_terms": 4,
+  "include_summer": false,
+  "num_plans": 3,
+  "preferences": {
+   "max_credits_per_term": 12,
+   "min_credits_per_term": 6,
+   "prefer_courses": [
+    {
+     "course_code": "CS 4750",
+     "weight": 2
+    }
+   ],
+   "avoid_courses": [
+    {
+     "course_code": "CS 4880",
+     "weight": 1
+    }
+   ],
+   "avoid_days": "F"
+  },
+  "request_id": "adv-003",
+  "requester": {
+   "university_id": "800999001",
+   "role": "instructor"
+  },
+  "_expect": {
+   "status": "ok",
+   "allowed": true
+  }
+ },
+ {
+  "as_of": "2026-11-20T18:00:00+00:00",
+  "student_university_id": "800123456",
+  "horizon_terms": 4,
+  "include_summer": false,
+  "num_plans": 3,
+  "preferences": {
+   "max_credits_per_term": 12,
+   "min_credits_per_term": 6,
+   "prefer_courses": [
+    {
+     "course_code": "CS 4750",
+     "weight": 2
+    }
+   ],
+   "avoid_courses": [
+    {
+     "course_code": "CS 4880",
+     "weight": 1
+    }
+   ],
+   "avoid_days": "F"
+  },
+  "request_id": "adv-004",
+  "requester": {
+   "university_id": "800888002",
+   "role": "instructor"
+  },
+  "_expect": {
+   "status": "denied",
+   "allowed": false
+  }
+ },
+ {
+  "as_of": "2026-11-20T18:00:00+00:00",
+  "student_university_id": "800123456",
+  "horizon_terms": 4,
+  "include_summer": false,
+  "num_plans": 3,
+  "preferences": {
+   "max_credits_per_term": 12,
+   "min_credits_per_term": 6,
+   "prefer_courses": [
+    {
+     "course_code": "CS 4750",
+     "weight": 2
+    }
+   ],
+   "avoid_courses": [
+    {
+     "course_code": "CS 4880",
+     "weight": 1
+    }
+   ],
+   "avoid_days": "F"
+  },
+  "request_id": "adv-005",
+  "requester": {
+   "university_id": "800654321",
+   "role": "student"
+  },
+  "_expect": {
+   "status": "denied",
+   "allowed": false
+  }
+ },
+ {
+  "as_of": "2026-11-20T18:00:00+00:00",
+  "student_university_id": "800654321",
+  "horizon_terms": 4,
+  "include_summer": false,
+  "num_plans": 3,
+  "preferences": {
+   "max_credits_per_term": 12,
+   "min_credits_per_term": 6,
+   "prefer_courses": [
+    {
+     "course_code": "CS 4750",
+     "weight": 2
+    }
+   ],
+   "avoid_courses": [
+    {
+     "course_code": "CS 4880",
+     "weight": 1
+    }
+   ],
+   "avoid_days": "F"
+  },
+  "request_id": "adv-006",
+  "requester": {
+   "university_id": "800654321",
+   "role": "student"
+  },
+  "_expect": {
+   "status": "not_eligible"
+  }
+ },
+ {
+  "as_of": "2026-11-20T18:00:00+00:00",
+  "student_university_id": "800123456",
+  "horizon_terms": 2,
+  "include_summer": false,
+  "num_plans": 3,
+  "preferences": {
+   "max_credits_per_term": 12,
+   "min_credits_per_term": 6,
+   "prefer_courses": [
+    {
+     "course_code": "CS 4750",
+     "weight": 2
+    }
+   ],
+   "avoid_courses": [
+    {
+     "course_code": "CS 4880",
+     "weight": 1
+    }
+   ],
+   "avoid_days": "F"
+  },
+  "request_id": "adv-007",
+  "requester": {
+   "university_id": "800123456",
+   "role": "student"
+  },
+  "_expect": {
+   "status": "horizon_too_short",
+   "earliest_graduation_term_code": "202880"
+  }
+ },
+ {
+  "as_of": "2026-11-20T18:00:00+00:00",
+  "student_university_id": "800123456",
+  "horizon_terms": 4,
+  "include_summer": false,
+  "num_plans": 3,
+  "preferences": {
+   "max_credits_per_term": 3,
+   "min_credits_per_term": 6,
+   "prefer_courses": [
+    {
+     "course_code": "CS 4750",
+     "weight": 2
+    }
+   ],
+   "avoid_courses": [
+    {
+     "course_code": "CS 4880",
+     "weight": 1
+    }
+   ],
+   "avoid_days": "F"
+  },
+  "request_id": "adv-008",
+  "requester": {
+   "university_id": "800123456",
+   "role": "student"
+  },
+  "_expect": {
+   "status": "load_infeasible"
+  }
+ },
+ {
+  "request_id": "adv-009",
+  "as_of": "2026-11-20T18:00:00+00:00",
+  "requester": {
+   "university_id": "800123456",
+   "role": "student"
+  },
+  "student_university_id": "800123456",
+  "_expect": {
+   "status": "ok",
+   "earliest_graduation_term_code": "202880"
+  }
+ },
+ {
+  "request_id": "adv-010",
+  "requester": {
+   "university_id": "800123456",
+   "role": "student"
+  },
+  "student_university_id": "800123456",
+  "_expect": {
+   "status": "needs_input"
+  }
+ }
+]

@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Registrar Process Flow</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one wide hand-laid flowchart in three bands (intake, work, answer), then legend and two traced examples. Same palette family as the project mindmap. */
+:root {
+  --bg: #eef1ec;
+  --paper: #fbfcf9;
+  --ink: #1f2a28;
+  --muted: #5b6863;
+  --rule: #cfd6cf;
+  --band: #f5f7f3;
+  --edge: #6d7a75;
+  --agent: #2c6a6e;  --agent-bg: #e2efef;
+  --code: #4a7526;   --code-bg: #fbfcf9;
+  --user: #8a2d3b;   --user-bg: #f6e6e8;
+  --store: #9a6512;  --store-bg: #f7eedc;
+  --f-display: "Spectral", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c; --band: #19201f; --edge: #8c9a95;
+    --agent: #6cc3c6; --agent-bg: #1c3536; --code: #9fcf6a; --code-bg: #1d2523;
+    --user: #e07f8d; --user-bg: #3a2327; --store: #e0a94a; --store-bg: #362b17;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c; --band: #19201f; --edge: #8c9a95;
+  --agent: #6cc3c6; --agent-bg: #1c3536; --code: #9fcf6a; --code-bg: #1d2523;
+  --user: #e07f8d; --user-bg: #3a2327; --store: #e0a94a; --store-bg: #362b17;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 14px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+}
+.page { max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+h1 { font-family: var(--f-display); font-weight: 600; font-size: 28px; margin: 0; text-wrap: balance; }
+.lede { margin: 4px 0 0; color: var(--muted); max-width: 70ch; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.sw { width: 18px; height: 12px; border-radius: 3px; border: 2px solid; display: inline-block; }
+.sw.agent { border-color: var(--agent); background: var(--agent-bg); }
+.sw.code { border-color: var(--code); background: var(--code-bg); }
+.sw.user { border-color: var(--user); background: var(--user-bg); }
+.sw.store { border-color: var(--store); background: var(--store-bg); }
+.sw.conn { width: 16px; height: 16px; border-radius: 50%; border-color: var(--ink); background: var(--paper); font: 600 10px var(--f-mono); display: inline-grid; place-items: center; }
+
+.scroll { overflow-x: auto; background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 10px; }
+svg.flow { display: block; width: 100%; min-width: 980px; height: auto; font-family: var(--f-body); }
+
+.band { fill: var(--band); stroke: var(--rule); stroke-width: 1; }
+.bt { font-family: var(--f-display); font-weight: 600; font-size: 16px; fill: var(--ink); }
+.bn { font-family: var(--f-mono); font-size: 13px; fill: var(--muted); }
+.bs { font-family: var(--f-body); font-weight: 400; font-size: 12.5px; fill: var(--muted); }
+
+.n-agent { fill: var(--agent-bg); stroke: var(--agent); stroke-width: 2; }
+.n-code { fill: var(--code-bg); stroke: var(--code); stroke-width: 1.8; }
+.n-user { fill: var(--user-bg); stroke: var(--user); stroke-width: 1.8; }
+.n-store { fill: var(--store-bg); stroke: var(--store); stroke-width: 1.8; }
+.cyl-lip { fill: none; }
+.t { font-size: 12.5px; fill: var(--ink); }
+.ts { font-size: 11.5px; }
+.e { fill: none; stroke: var(--edge); stroke-width: 1.4; }
+.halo { fill: none; stroke: var(--band); stroke-width: 9; }
+.arrow { fill: var(--edge); }
+.el { font-size: 11.5px; fill: var(--muted); paint-order: stroke; stroke: var(--band); stroke-width: 4px; stroke-linejoin: round; }
+.conn { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+.conn-t { font: 600 11px var(--f-mono); fill: var(--ink); }
+
+.traces { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.trace { background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+.trace h2 { font-family: var(--f-display); font-weight: 600; font-size: 17px; margin: 0 0 2px; }
+.trace .q { margin: 0 0 8px; color: var(--muted); }
+.trace ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.trace li::marker { font-family: var(--f-mono); color: var(--muted); font-size: 12px; }
+.trace code { font-family: var(--f-mono); font-size: 12px; background: var(--band); padding: 0 4px; border-radius: 3px; }
+.tag { font: 500 10.5px var(--f-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+
+.rules { background: var(--paper); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; }
+.rules h2 { font-family: var(--f-display); font-weight: 600; font-size: 17px; margin: 0 0 6px; }
+.rules ul { margin: 0; padding-left: 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 28px; }
+
+@media (max-width: 820px) {
+  .traces, .rules ul { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+
+<div class="page">
+  <header>
+    <h1>Registrar process flow</h1>
+    <p class="lede">The full path of one user message: intake and clarification by the Router, work by the specialist agents and deterministic code, and the final answer. Circles marked 3 lead to stage 3.</p>
+  </header>
+
+  <div class="legend" aria-label="Legend">
+    <span><i class="sw agent"></i>LLM agent (Router or specialist)</span>
+    <span><i class="sw code"></i>Deterministic code or tool</span>
+    <span><i class="sw user"></i>User interaction</span>
+    <span><i class="sw store"></i>Data store</span>
+    <span><i class="sw conn">3</i>Go to stage 3 (Answer)</span>
+  </div>
+
+  <div class="scroll">
+<svg class="flow" viewBox="0 0 1280 1152" role="img" aria-labelledby="flow-title flow-desc">
+<title id="flow-title">Registrar process flow</title>
+<desc id="flow-desc">Three stages. Intake: the Router fills required fields from the question, session and defaults; missing data fields are looked up with read-only tools, missing user fields are asked; one option is auto-filled, several are asked, zero is explained. Work: dispatch to Policy, Advising, Data or Registration agent; advising plans and registrations pass validator code; writes need user confirmation, then commit through access control. Answer: the Router composes the answer with result, cited rule, query and assumptions.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrow" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+<rect class="band" x="20" y="14" width="1240" height="386" rx="14"/>
+<text class="bt" x="40" y="38"><tspan class="bn">1</tspan><tspan dx="8">Intake and clarification</tspan><tspan class="bs" dx="10">Router, with lookup tools</tspan></text>
+<rect class="band" x="20" y="420" width="1240" height="590" rx="14"/>
+<text class="bt" x="40" y="444"><tspan class="bn">2</tspan><tspan dx="8">Work</tspan><tspan class="bs" dx="10">specialist agents and deterministic code</tspan></text>
+<rect class="band" x="20" y="1030" width="1240" height="110" rx="14"/>
+<text class="bt" x="40" y="1054"><tspan class="bn">3</tspan><tspan dx="8">Answer</tspan><tspan class="bs" dx="10">Router</tspan></text>
+<rect class="n-user" x="22.0" y="120.0" width="116" height="40" rx="20.0"/>
+<text class="t" x="80" y="140.0" text-anchor="middle" dominant-baseline="middle"><tspan x="80" dy="0">User message</tspan></text>
+<rect class="n-code" x="155.0" y="114.0" width="190" height="52" rx="8"/>
+<text class="t" x="250" y="132.5" text-anchor="middle" dominant-baseline="middle"><tspan x="250" dy="0">Session: user ID + role</tspan><tspan x="250" dy="15">from login, never from chat</tspan></text>
+<rect class="n-agent" x="380.0" y="108.0" width="200" height="64" rx="8"/>
+<text class="t" x="480" y="125.0" text-anchor="middle" dominant-baseline="middle"><tspan x="480" dy="0" font-weight="600">Router</tspan><tspan x="480" dy="15">classify intent; fill fields from</tspan><tspan x="480" dy="15">question, session, defaults</tspan></text>
+<polygon class="n-code" points="700,98.0 770.0,140 700,182.0 630.0,140"/>
+<text class="t ts" x="700" y="132.5" text-anchor="middle" dominant-baseline="middle"><tspan x="700" dy="0">Required</tspan><tspan x="700" dy="15">fields missing?</tspan></text>
+<polygon class="n-code" points="900,104.0 960.0,140 900,176.0 840.0,140"/>
+<text class="t ts" x="900" y="140.0" text-anchor="middle" dominant-baseline="middle"><tspan x="900" dy="0">Field kind?</tspan></text>
+<rect class="n-code" x="995.0" y="108.0" width="190" height="64" rx="8"/>
+<text class="t" x="1090" y="125.0" text-anchor="middle" dominant-baseline="middle"><tspan x="1090" dy="0">Lookup tools (read-only)</tspan><tspan x="1090" dy="15">list_sections · my_courses</tspan><tspan x="1090" dy="15">search_course · my_advisees</tspan></text>
+<polygon class="n-code" points="1090,225.0 1152.0,262 1090,299.0 1028.0,262"/>
+<text class="t ts" x="1090" y="254.5" text-anchor="middle" dominant-baseline="middle"><tspan x="1090" dy="0">Options</tspan><tspan x="1090" dy="15">found?</tspan></text>
+<polygon class="n-user" points="809.0,230.0 1003.0,230.0 991.0,294.0 797.0,294.0"/>
+<text class="t" x="900" y="247.0" text-anchor="middle" dominant-baseline="middle"><tspan x="900" dy="0">Ask the user one question</tspan><tspan x="900" dy="15">with the real options;</tspan><tspan x="900" dy="15">max 2 rounds, then assume</tspan></text>
+<rect class="n-user" x="845.0" y="343.0" width="110" height="34" rx="17.0"/>
+<text class="t" x="900" y="360.0" text-anchor="middle" dominant-baseline="middle"><tspan x="900" dy="0">User reply</tspan></text>
+<rect class="n-code" x="995.0" y="335.0" width="190" height="50" rx="8"/>
+<text class="t" x="1090" y="352.5" text-anchor="middle" dominant-baseline="middle"><tspan x="1090" dy="0">Explain why: not offered,</tspan><tspan x="1090" dy="15">no access, missing prereq</tspan></text>
+<path class="e" d="M138,140 L155,140" marker-end="url(#arr)"/>
+<path class="e" d="M345,140 L380,140" marker-end="url(#arr)"/>
+<path class="e" d="M580,140 L630,140" marker-end="url(#arr)"/>
+<path class="e" d="M770,140 L840,140" marker-end="url(#arr)"/>
+<text class="el" x="805" y="132" text-anchor="middle">yes</text>
+<path class="e" d="M960,140 L995,140" marker-end="url(#arr)"/>
+<text class="el" x="977" y="132" text-anchor="middle">data</text>
+<path class="e" d="M900,176 L900,230" marker-end="url(#arr)"/>
+<text class="el" x="908" y="207" text-anchor="start">user field</text>
+<path class="e" d="M1090,172 L1090,225" marker-end="url(#arr)"/>
+<path class="e" d="M1028,262 L1003,262" marker-end="url(#arr)"/>
+<text class="el" x="1016" y="254" text-anchor="middle">several</text>
+<path class="e" d="M1090,299 L1090,335" marker-end="url(#arr)"/>
+<text class="el" x="1098" y="320" text-anchor="start">0</text>
+<path class="e" d="M1152,262 L1215,262 L1215,66 L700,66 L700,98" marker-end="url(#arr)"/>
+<text class="el" x="958" y="58" text-anchor="middle">1 option: auto-fill, state the assumption</text>
+<path class="e" d="M900,294 L900,343" marker-end="url(#arr)"/>
+<path class="e" d="M845,360 L480,360 L480,172" marker-end="url(#arr)"/>
+<text class="el" x="560" y="352" text-anchor="middle">reply</text>
+<path class="halo" d="M700,182 L700,452"/>
+<path class="e" d="M700,182 L700,452" marker-end="url(#arr)"/>
+<text class="el" x="708" y="232" text-anchor="start">no: all fields filled</text>
+<path class="e" d="M1185,360 L1213,360" marker-end="url(#arr)"/>
+<circle class="conn" cx="1226" cy="360" r="11"/>
+<text class="conn-t" x="1226" y="360" text-anchor="middle" dominant-baseline="central">3</text>
+<polygon class="n-agent" points="700,453.0 780.0,488 700,523.0 620.0,488"/>
+<text class="t ts" x="700" y="480.5" text-anchor="middle" dominant-baseline="middle"><tspan x="700" dy="0">Dispatch</tspan><tspan x="700" dy="15">by intent</tspan></text>
+<path class="e" d="M700,523 L700,540 M200,540 L1040,540"/>
+<path class="e" d="M200,540 L200,560" marker-end="url(#arr)"/>
+<path class="e" d="M470,540 L470,560" marker-end="url(#arr)"/>
+<path class="e" d="M740,540 L740,560" marker-end="url(#arr)"/>
+<path class="e" d="M1040,540 L1040,560" marker-end="url(#arr)"/>
+<rect class="n-agent" x="100.0" y="562.0" width="200" height="56" rx="8"/>
+<text class="t" x="200" y="582.5" text-anchor="middle" dominant-baseline="middle"><tspan x="200" dy="0" font-weight="600">Policy agent</tspan><tspan x="200" dy="15">rule questions</tspan></text>
+<rect class="n-agent" x="370.0" y="562.0" width="200" height="56" rx="8"/>
+<text class="t" x="470" y="582.5" text-anchor="middle" dominant-baseline="middle"><tspan x="470" dy="0" font-weight="600">Advising agent</tspan><tspan x="470" dy="15">course planning</tspan></text>
+<rect class="n-agent" x="640.0" y="562.0" width="200" height="56" rx="8"/>
+<text class="t" x="740" y="582.5" text-anchor="middle" dominant-baseline="middle"><tspan x="740" dy="0" font-weight="600">Data agent</tspan><tspan x="740" dy="15">records, statistics</tspan></text>
+<rect class="n-agent" x="940.0" y="562.0" width="200" height="56" rx="8"/>
+<text class="t" x="1040" y="582.5" text-anchor="middle" dominant-baseline="middle"><tspan x="1040" dy="0" font-weight="600">Registration agent</tspan><tspan x="1040" dy="15">changes; only write tools</tspan></text>
+<path class="e" d="M370,590 L302,590" marker-end="url(#arr)"/>
+<text class="el" x="336" y="582" text-anchor="middle">rules</text>
+<path class="e" d="M570,590 L638,590" marker-end="url(#arr)"/>
+<text class="el" x="604" y="582" text-anchor="middle">record</text>
+<rect class="n-code" x="100.0" y="664.0" width="200" height="52" rx="8"/>
+<text class="t" x="200" y="682.5" text-anchor="middle" dominant-baseline="middle"><tspan x="200" dy="0">Hybrid retrieval</tspan><tspan x="200" dy="15">BM25 + dense + rerank</tspan></text>
+<path class="n-store" d="M110.0,777.0 A90.0,9 0 0 1 290.0,777.0 L290.0,833.0 A90.0,9 0 0 1 110.0,833.0 Z"/><path class="n-store cyl-lip" d="M110.0,777.0 A90.0,9 0 0 0 290.0,777.0"/>
+<text class="t" x="200" y="802.5" text-anchor="middle" dominant-baseline="middle"><tspan x="200" dy="0">Handbook index</tspan><tspan x="200" dy="15">NMSU-based, synthetic</tspan></text>
+<path class="e" d="M200,618 L200,662" marker-end="url(#arr)"/>
+<path class="e" d="M200,716 L200,766" marker-end="url(#arr)"/>
+<path class="e" d="M100,590 L64,590" marker-end="url(#arr)"/>
+<circle class="conn" cx="51" cy="590" r="11"/>
+<text class="conn-t" x="51" y="590" text-anchor="middle" dominant-baseline="central">3</text>
+<text class="el" x="51" y="568" text-anchor="middle">cited rule</text>
+<rect class="n-code" x="370.0" y="664.0" width="200" height="52" rx="8"/>
+<text class="t" x="470" y="682.5" text-anchor="middle" dominant-baseline="middle"><tspan x="470" dy="0">Course plan: LLM proposes,</tspan><tspan x="470" dy="15">or ASP / CP solver generates</tspan></text>
+<polygon class="n-code" points="470,756.0 588.0,806 470,856.0 352.0,806"/>
+<text class="t ts" x="470" y="791.0" text-anchor="middle" dominant-baseline="middle"><tspan x="470" dy="0">Validator code</tspan><tspan x="470" dy="15">prereqs, offerings,</tspan><tspan x="470" dy="15">credit cap, degree reqs</tspan></text>
+<path class="e" d="M470,618 L470,662" marker-end="url(#arr)"/>
+<path class="e" d="M470,716 L470,754" marker-end="url(#arr)"/>
+<path class="e" d="M352,806 L336,806 L336,640 L430,640 L430,620" marker-end="url(#arr)"/>
+<text class="el" x="326" y="722" text-anchor="middle" transform="rotate(-90 326 722)">violation: repair</text>
+<path class="e" d="M470,856 L470,888" marker-end="url(#arr)"/>
+<text class="el" x="480" y="878" text-anchor="start">valid plan</text>
+<circle class="conn" cx="470" cy="901" r="11"/>
+<text class="conn-t" x="470" y="901" text-anchor="middle" dominant-baseline="central">3</text>
+<rect class="n-code" x="640.0" y="664.0" width="200" height="52" rx="8"/>
+<text class="t" x="740" y="682.5" text-anchor="middle" dominant-baseline="middle"><tspan x="740" dy="0">Read tools, or guarded</tspan><tspan x="740" dy="15">text-to-SQL (SELECT only)</tspan></text>
+<path class="e" d="M740,618 L740,662" marker-end="url(#arr)"/>
+<path class="e" d="M740,716 L740,858" marker-end="url(#arr)"/>
+<path class="e" d="M840,590 L884,590" marker-end="url(#arr)"/>
+<text class="el" x="862" y="576" text-anchor="middle">result</text>
+<circle class="conn" cx="897" cy="590" r="11"/>
+<text class="conn-t" x="897" y="590" text-anchor="middle" dominant-baseline="central">3</text>
+<rect class="n-code" x="625.0" y="860.0" width="270" height="40" rx="6"/>
+<text class="t" x="760" y="880.0" text-anchor="middle" dominant-baseline="middle"><tspan x="760" dy="0">Access control · row-level filters</tspan></text>
+<path class="n-store" d="M675.0,935.0 A85.0,9 0 0 1 845.0,935.0 L845.0,981.0 A85.0,9 0 0 1 675.0,981.0 Z"/><path class="n-store cyl-lip" d="M675.0,935.0 A85.0,9 0 0 0 845.0,935.0"/>
+<text class="t" x="760" y="963.0" text-anchor="middle" dominant-baseline="middle"><tspan x="760" dy="0">Synthetic DB</tspan></text>
+<path class="e" d="M760,900 L760,924" marker-end="url(#arr)"/>
+<polygon class="n-code" points="1040,647.0 1147.0,690 1040,733.0 933.0,690"/>
+<text class="t ts" x="1040" y="675.0" text-anchor="middle" dominant-baseline="middle"><tspan x="1040" dy="0">Validator code</tspan><tspan x="1040" dy="15">prereqs, conflicts,</tspan><tspan x="1040" dy="15">credit cap, capacity</tspan></text>
+<polygon class="n-user" points="949.0,767.0 1143.0,767.0 1131.0,813.0 937.0,813.0"/>
+<text class="t" x="1040" y="782.5" text-anchor="middle" dominant-baseline="middle"><tspan x="1040" dy="0">Confirm with the user</tspan><tspan x="1040" dy="15">show the exact change</tspan></text>
+<rect class="n-code" x="945.0" y="857.0" width="190" height="46" rx="8"/>
+<text class="t" x="1040" y="872.5" text-anchor="middle" dominant-baseline="middle"><tspan x="1040" dy="0">Commit transaction</tspan><tspan x="1040" dy="15">+ audit log</tspan></text>
+<path class="e" d="M1040,618 L1040,645" marker-end="url(#arr)"/>
+<path class="e" d="M1040,733 L1040,765" marker-end="url(#arr)"/>
+<text class="el" x="1048" y="753" text-anchor="start">valid</text>
+<path class="e" d="M1040,813 L1040,855" marker-end="url(#arr)"/>
+<text class="el" x="1048" y="838" text-anchor="start">yes</text>
+<path class="e" d="M945,880 L897,880" marker-end="url(#arr)"/>
+<path class="e" d="M1147,690 L1208,690" marker-end="url(#arr)"/>
+<text class="el" x="1178" y="681" text-anchor="middle">violation</text>
+<circle class="conn" cx="1222" cy="690" r="11"/>
+<text class="conn-t" x="1222" y="690" text-anchor="middle" dominant-baseline="central">3</text>
+<path class="e" d="M1140,790 L1208,790" marker-end="url(#arr)"/>
+<text class="el" x="1178" y="781" text-anchor="middle">no: cancel</text>
+<circle class="conn" cx="1222" cy="790" r="11"/>
+<text class="conn-t" x="1222" y="790" text-anchor="middle" dominant-baseline="central">3</text>
+<path class="e" d="M1040,903 L1040,940" marker-end="url(#arr)"/>
+<text class="el" x="1048" y="926" text-anchor="start">committed</text>
+<circle class="conn" cx="1040" cy="953" r="11"/>
+<text class="conn-t" x="1040" y="953" text-anchor="middle" dominant-baseline="central">3</text>
+<circle class="conn" cx="110" cy="1088" r="11"/>
+<text class="conn-t" x="110" y="1088" text-anchor="middle" dominant-baseline="central">3</text>
+<text class="el" x="128" y="1112" text-anchor="start">results from every path</text>
+<path class="e" d="M122,1088 L268,1088" marker-end="url(#arr)"/>
+<rect class="n-agent" x="270.0" y="1058.0" width="360" height="60" rx="8"/>
+<text class="t" x="450" y="1080.5" text-anchor="middle" dominant-baseline="middle"><tspan x="450" dy="0" font-weight="600">Router composes the answer</tspan><tspan x="450" dy="15">result + cited rule + query used + assumptions</tspan></text>
+<path class="e" d="M630,1088 L700,1088" marker-end="url(#arr)"/>
+<rect class="n-user" x="702.0" y="1068.0" width="156" height="40" rx="20.0"/>
+<text class="t" x="780" y="1088.0" text-anchor="middle" dominant-baseline="middle"><tspan x="780" dy="0">Answer to user</tspan></text>
+</svg>
+  </div>
+
+  <div class="traces">
+    <section class="trace">
+      <span class="tag">Read path</span>
+      <h2>Administrator</h2>
+      <p class="q">"Which students are near dismissal?"</p>
+      <ol>
+        <li>Session gives role = admin. Router: intent = student-group statistics.</li>
+        <li>Missing field: student group. Data field, so lookup lists the departments. Several options, so the Router asks: "All students, or one department?"</li>
+        <li>User: "Computer Science." All fields filled, dispatch.</li>
+        <li>Policy agent retrieves the dismissal rule from the handbook, with citation.</li>
+        <li>Data agent turns the rule into a read tool call, e.g. <code>students_by_gpa(dept, lo, hi)</code>; access control and DB return the list.</li>
+        <li>Router composes: list + cited rule + query used + assumption (current semester).</li>
+      </ol>
+    </section>
+    <section class="trace">
+      <span class="tag">Write path</span>
+      <h2>Student</h2>
+      <p class="q">"Register me for databases."</p>
+      <ol>
+        <li>Session gives role = student, ID. Router: intent = register.</li>
+        <li>Missing data fields: course, section. <code>search_course("databases")</code> finds CS 482 and CS 582; CS 582 is graduate-only, so one course remains.</li>
+        <li><code>list_sections(CS 482, Spring 2027)</code> finds 2 open sections, so the Router asks which one.</li>
+        <li>User picks sec 02. Registration agent calls the register tool.</li>
+        <li>Validator checks prerequisites, time conflicts, credit cap, capacity. Valid, so the user sees the exact change and confirms.</li>
+        <li>Commit through access control, write audit log, Router confirms the registration.</li>
+      </ol>
+    </section>
+  </div>
+
+  <section class="rules">
+    <h2>Rules the diagram encodes</h2>
+    <ul>
+      <li>Identity and role come only from the login session.</li>
+      <li>Missing data fields are looked up before asking; missing user fields are asked directly.</li>
+      <li>At most 2 clarification rounds, then answer with stated assumptions.</li>
+      <li>Lookup tools are read-only and use the same access control.</li>
+      <li>Only the Registration agent has write tools, and it never sees retrieved policy text.</li>
+      <li>Every write needs validator approval and user confirmation.</li>
+      <li>Numbers (GPA, statistics) are computed by SQL or code, never by the LLM.</li>
+      <li>Every answer states its source: cited rule, query used, assumptions.</li>
+    </ul>
+  </section>
+</div>
+
+</body>
+</html>

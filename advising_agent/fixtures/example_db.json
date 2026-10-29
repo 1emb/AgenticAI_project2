@@ -1,0 +1,819 @@
+{
+ "_note": "Synthetic fixture in the row shapes of registrar/models (12 tables) plus the proposed enrollment table. Course codes, rules and thresholds are placeholders, not NMSU values. offering_history and seats_taken are what the Data agent derives from lecture and enrollment.",
+ "grade_scale": [
+  {
+   "letter": "A",
+   "points": 4.0
+  },
+  {
+   "letter": "A-",
+   "points": 3.7
+  },
+  {
+   "letter": "B+",
+   "points": 3.3
+  },
+  {
+   "letter": "B",
+   "points": 3.0
+  },
+  {
+   "letter": "B-",
+   "points": 2.7
+  },
+  {
+   "letter": "C+",
+   "points": 2.3
+  },
+  {
+   "letter": "C",
+   "points": 2.0
+  },
+  {
+   "letter": "C-",
+   "points": 1.7
+  },
+  {
+   "letter": "D+",
+   "points": 1.3
+  },
+  {
+   "letter": "D",
+   "points": 1.0
+  },
+  {
+   "letter": "D-",
+   "points": 0.7
+  },
+  {
+   "letter": "F",
+   "points": 0.0
+  },
+  {
+   "letter": "W",
+   "points": null
+  },
+  {
+   "letter": "I",
+   "points": null
+  }
+ ],
+ "academic_term": [
+  {
+   "code": "202580",
+   "name": "Fall 2025",
+   "term_type": "fall",
+   "start_date": "2025-08-20",
+   "end_date": "2025-12-12",
+   "sequence": 1
+  },
+  {
+   "code": "202610",
+   "name": "Spring 2026",
+   "term_type": "spring",
+   "start_date": "2026-01-14",
+   "end_date": "2026-05-08",
+   "sequence": 2
+  },
+  {
+   "code": "202660",
+   "name": "Summer 2026",
+   "term_type": "summer",
+   "start_date": "2026-06-01",
+   "end_date": "2026-07-31",
+   "sequence": 3
+  },
+  {
+   "code": "202680",
+   "name": "Fall 2026",
+   "term_type": "fall",
+   "start_date": "2026-08-19",
+   "end_date": "2026-12-11",
+   "sequence": 4
+  },
+  {
+   "code": "202710",
+   "name": "Spring 2027",
+   "term_type": "spring",
+   "start_date": "2027-01-13",
+   "end_date": "2027-05-07",
+   "sequence": 5
+  }
+ ],
+ "program": [
+  {
+   "code": "BSCS",
+   "department_code": "CS",
+   "name": "BS Computer Science (toy subset)",
+   "degree": "BS",
+   "total_credits_required": 43,
+   "min_gpa": 2.0
+  }
+ ],
+ "student": [
+  {
+   "university_id": "800123456",
+   "program_code": "BSCS",
+   "status": "active",
+   "admit_term_code": "202580",
+   "expected_graduation_term_code": "202810"
+  },
+  {
+   "university_id": "800654321",
+   "program_code": "BSCS",
+   "status": "suspended",
+   "admit_term_code": "202580",
+   "expected_graduation_term_code": null
+  }
+ ],
+ "course": [
+  {
+   "code": "CS 1710",
+   "subject": "CS",
+   "number": "1710",
+   "title": "Introduction to Programming",
+   "credit_hours": 4,
+   "level": "lower_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 1720",
+   "subject": "CS",
+   "number": "1720",
+   "title": "Data Structures",
+   "credit_hours": 4,
+   "level": "lower_division",
+   "is_active": true
+  },
+  {
+   "code": "MATH 1910",
+   "subject": "MATH",
+   "number": "1910",
+   "title": "Calculus I",
+   "credit_hours": 4,
+   "level": "lower_division",
+   "is_active": true
+  },
+  {
+   "code": "MATH 2780",
+   "subject": "MATH",
+   "number": "2780",
+   "title": "Discrete Mathematics",
+   "credit_hours": 3,
+   "level": "lower_division",
+   "is_active": true
+  },
+  {
+   "code": "ENGL 2180",
+   "subject": "ENGL",
+   "number": "2180",
+   "title": "Technical Writing",
+   "credit_hours": 3,
+   "level": "lower_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 2720",
+   "subject": "CS",
+   "number": "2720",
+   "title": "Systems Programming",
+   "credit_hours": 3,
+   "level": "lower_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 2730",
+   "subject": "CS",
+   "number": "2730",
+   "title": "Machine Programming",
+   "credit_hours": 3,
+   "level": "lower_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 3720",
+   "subject": "CS",
+   "number": "3720",
+   "title": "Algorithms",
+   "credit_hours": 3,
+   "level": "upper_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 4710",
+   "subject": "CS",
+   "number": "4710",
+   "title": "Programming Languages",
+   "credit_hours": 3,
+   "level": "upper_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 4740",
+   "subject": "CS",
+   "number": "4740",
+   "title": "Operating Systems",
+   "credit_hours": 3,
+   "level": "upper_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 4750",
+   "subject": "CS",
+   "number": "4750",
+   "title": "Artificial Intelligence",
+   "credit_hours": 3,
+   "level": "upper_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 4750L",
+   "subject": "CS",
+   "number": "4750L",
+   "title": "Artificial Intelligence Lab",
+   "credit_hours": 1,
+   "level": "upper_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 4820",
+   "subject": "CS",
+   "number": "4820",
+   "title": "Database Systems",
+   "credit_hours": 3,
+   "level": "upper_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 4870",
+   "subject": "CS",
+   "number": "4870",
+   "title": "Software Engineering",
+   "credit_hours": 3,
+   "level": "upper_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 4880",
+   "subject": "CS",
+   "number": "4880",
+   "title": "Computer Security",
+   "credit_hours": 3,
+   "level": "upper_division",
+   "is_active": true
+  },
+  {
+   "code": "CS 5750",
+   "subject": "CS",
+   "number": "5750",
+   "title": "Advanced Artificial Intelligence",
+   "credit_hours": 3,
+   "level": "graduate",
+   "is_active": true
+  }
+ ],
+ "course_prerequisite": [
+  {
+   "course_code": "CS 1720",
+   "required_course_code": "CS 1710",
+   "min_grade": "C",
+   "group_number": 1
+  },
+  {
+   "course_code": "MATH 2780",
+   "required_course_code": "MATH 1910",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 2720",
+   "required_course_code": "CS 1720",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 2730",
+   "required_course_code": "CS 1720",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 3720",
+   "required_course_code": "CS 1720",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 3720",
+   "required_course_code": "MATH 2780",
+   "min_grade": "C-",
+   "group_number": 2
+  },
+  {
+   "course_code": "CS 4710",
+   "required_course_code": "CS 3720",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 4740",
+   "required_course_code": "CS 2720",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 4740",
+   "required_course_code": "CS 2730",
+   "min_grade": "C-",
+   "group_number": 2
+  },
+  {
+   "course_code": "CS 4750",
+   "required_course_code": "CS 3720",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 4750L",
+   "required_course_code": "CS 4750",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 4820",
+   "required_course_code": "CS 3720",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 4820",
+   "required_course_code": "CS 2720",
+   "min_grade": "B",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 4870",
+   "required_course_code": "CS 2720",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 4880",
+   "required_course_code": "CS 2720",
+   "min_grade": "C-",
+   "group_number": 1
+  },
+  {
+   "course_code": "CS 5750",
+   "required_course_code": "CS 4750",
+   "min_grade": "B",
+   "group_number": 1
+  }
+ ],
+ "degree_requirement": [
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 1710",
+   "category": "core",
+   "is_required": true,
+   "suggested_term_number": 1
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "MATH 1910",
+   "category": "core",
+   "is_required": true,
+   "suggested_term_number": 1
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 1720",
+   "category": "core",
+   "is_required": true,
+   "suggested_term_number": 2
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "MATH 2780",
+   "category": "core",
+   "is_required": true,
+   "suggested_term_number": 2
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 2720",
+   "category": "core",
+   "is_required": true,
+   "suggested_term_number": 3
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 2730",
+   "category": "core",
+   "is_required": true,
+   "suggested_term_number": 4
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 3720",
+   "category": "core",
+   "is_required": true,
+   "suggested_term_number": 5
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 4710",
+   "category": "core",
+   "is_required": true,
+   "suggested_term_number": 7
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 4740",
+   "category": "core",
+   "is_required": true,
+   "suggested_term_number": 6
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "ENGL 2180",
+   "category": "general_education",
+   "is_required": true,
+   "suggested_term_number": 2
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 4750",
+   "category": "elective",
+   "is_required": false,
+   "suggested_term_number": null
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 4750L",
+   "category": "elective",
+   "is_required": false,
+   "suggested_term_number": null
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 4820",
+   "category": "elective",
+   "is_required": false,
+   "suggested_term_number": null
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 4870",
+   "category": "elective",
+   "is_required": false,
+   "suggested_term_number": null
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 4880",
+   "category": "elective",
+   "is_required": false,
+   "suggested_term_number": null
+  },
+  {
+   "program_code": "BSCS",
+   "course_code": "CS 5750",
+   "category": "elective",
+   "is_required": false,
+   "suggested_term_number": null
+  }
+ ],
+ "program_category_requirement": [
+  {
+   "program_code": "BSCS",
+   "category": "elective",
+   "min_credits": 6
+  }
+ ],
+ "enrollment": [
+  {
+   "student_university_id": "800123456",
+   "term_code": "202580",
+   "crn": "80011",
+   "course_code": "CS 1710",
+   "status": "enrolled",
+   "grade": "A"
+  },
+  {
+   "student_university_id": "800123456",
+   "term_code": "202580",
+   "crn": "80031",
+   "course_code": "MATH 1910",
+   "status": "enrolled",
+   "grade": "C"
+  },
+  {
+   "student_university_id": "800123456",
+   "term_code": "202610",
+   "crn": "10021",
+   "course_code": "CS 1720",
+   "status": "enrolled",
+   "grade": "B"
+  },
+  {
+   "student_university_id": "800123456",
+   "term_code": "202610",
+   "crn": "10044",
+   "course_code": "ENGL 2180",
+   "status": "enrolled",
+   "grade": "B"
+  },
+  {
+   "student_university_id": "800123456",
+   "term_code": "202610",
+   "crn": "10052",
+   "course_code": "MATH 2780",
+   "status": "enrolled",
+   "grade": "D"
+  },
+  {
+   "student_university_id": "800123456",
+   "term_code": "202610",
+   "crn": "10063",
+   "course_code": "CS 2730",
+   "status": "withdrawn",
+   "grade": "W"
+  },
+  {
+   "student_university_id": "800123456",
+   "term_code": "202680",
+   "crn": "80072",
+   "course_code": "CS 2720",
+   "status": "enrolled",
+   "grade": null
+  }
+ ],
+ "lecture": [
+  {
+   "term_code": "202710",
+   "crn": "10101",
+   "course_code": "MATH 2780",
+   "section_number": "M01",
+   "days": "MW",
+   "start_time": "10:00",
+   "end_time": "11:15",
+   "capacity": 30,
+   "is_cancelled": false,
+   "seats_taken": 30
+  },
+  {
+   "term_code": "202710",
+   "crn": "10102",
+   "course_code": "MATH 2780",
+   "section_number": "M02",
+   "days": "TR",
+   "start_time": "09:00",
+   "end_time": "10:15",
+   "capacity": 30,
+   "is_cancelled": false,
+   "seats_taken": 21
+  },
+  {
+   "term_code": "202710",
+   "crn": "10201",
+   "course_code": "CS 2730",
+   "section_number": "M01",
+   "days": "MW",
+   "start_time": "13:30",
+   "end_time": "14:45",
+   "capacity": 40,
+   "is_cancelled": false,
+   "seats_taken": 33
+  },
+  {
+   "term_code": "202710",
+   "crn": "10301",
+   "course_code": "CS 4870",
+   "section_number": "M01",
+   "days": "TR",
+   "start_time": "09:30",
+   "end_time": "10:45",
+   "capacity": 35,
+   "is_cancelled": false,
+   "seats_taken": 20
+  },
+  {
+   "term_code": "202710",
+   "crn": "10302",
+   "course_code": "CS 4870",
+   "section_number": "M02",
+   "days": "MW",
+   "start_time": "15:00",
+   "end_time": "16:15",
+   "capacity": 35,
+   "is_cancelled": false,
+   "seats_taken": 12
+  },
+  {
+   "term_code": "202710",
+   "crn": "10303",
+   "course_code": "CS 4870",
+   "section_number": "M03",
+   "days": "F",
+   "start_time": "09:00",
+   "end_time": "11:50",
+   "capacity": 35,
+   "is_cancelled": false,
+   "seats_taken": 5
+  },
+  {
+   "term_code": "202710",
+   "crn": "10401",
+   "course_code": "CS 4740",
+   "section_number": "M01",
+   "days": "TR",
+   "start_time": "13:00",
+   "end_time": "14:15",
+   "capacity": 40,
+   "is_cancelled": false,
+   "seats_taken": 10
+  },
+  {
+   "term_code": "202710",
+   "crn": "10501",
+   "course_code": "CS 4820",
+   "section_number": "M01",
+   "days": "TR",
+   "start_time": "15:00",
+   "end_time": "16:15",
+   "capacity": 40,
+   "is_cancelled": true,
+   "seats_taken": 0
+  },
+  {
+   "term_code": "202710",
+   "crn": "10601",
+   "course_code": "CS 4750",
+   "section_number": "M01",
+   "days": "MW",
+   "start_time": "11:30",
+   "end_time": "12:45",
+   "capacity": 40,
+   "is_cancelled": false,
+   "seats_taken": 15
+  }
+ ],
+ "offering_history": [
+  {
+   "course_code": "CS 1710",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 1720",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "MATH 1910",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "MATH 2780",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "ENGL 2180",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 2720",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 2730",
+   "term_types": [
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 3720",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 4710",
+   "term_types": [
+    "fall"
+   ]
+  },
+  {
+   "course_code": "CS 4740",
+   "term_types": [
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 4750",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 4750L",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 4820",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 4870",
+   "term_types": [
+    "spring"
+   ]
+  },
+  {
+   "course_code": "CS 4880",
+   "term_types": [
+    "fall"
+   ]
+  },
+  {
+   "course_code": "CS 5750",
+   "term_types": [
+    "fall",
+    "spring"
+   ]
+  }
+ ],
+ "advisor_assignment": [
+  [
+   "800999001",
+   "800123456"
+  ]
+ ],
+ "policy": {
+  "params": {
+   "max_credits_by_standing": {
+    "good": 18,
+    "probation": 13
+   },
+   "repeat_rule": "below_prereq_min",
+   "allowed_levels_by_degree": {
+    "BS": [
+     "lower_division",
+     "upper_division"
+    ],
+    "MS": [
+     "upper_division",
+     "graduate"
+    ]
+   },
+   "probation_rule": "last_term_gpa_below_program_min"
+  },
+  "citations": [
+   {
+    "key": "max_credits_by_standing",
+    "source": "Synthetic Handbook, Sec. 3.2 Course Load",
+    "text": "Placeholder passage for the course-load rule."
+   },
+   {
+    "key": "repeat_rule",
+    "source": "Synthetic Handbook, Sec. 2.4 Repeated Courses",
+    "text": "Placeholder passage for the repeat rule."
+   },
+   {
+    "key": "allowed_levels_by_degree",
+    "source": "Synthetic Handbook, Sec. 4.1 Course Levels",
+    "text": "Placeholder passage for course levels."
+   },
+   {
+    "key": "probation_rule",
+    "source": "Synthetic Handbook, Sec. 5.1 Academic Standing",
+    "text": "Placeholder passage for probation."
+   }
+  ]
+ }
+}

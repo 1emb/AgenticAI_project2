@@ -34,7 +34,9 @@ def check_plan(ctx: Context, plan: dict, max_load: float, min_load: float | None
             for g, alts in groups.get(code, {}).items():
                 if not any(have.get(r, -1) >= m for r, m in alts):
                     v.append(f"{t['term_code']} {code}: prerequisite group {g} not met")
-            if t["is_projected"]:
+            if code in ctx.placeholders:
+                pass
+            elif t["is_projected"]:
                 if t["term_type"] not in ctx.offered_hist.get(code, set()):
                     v.append(f"{t['term_code']} {code}: not offered in {t['term_type']} terms")
             else:

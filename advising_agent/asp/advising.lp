@@ -25,6 +25,9 @@
 %   prefer(C,W). avoid(C,W).          soft course preferences                           [request]
 %   bad_slot(T,N,W).                  section N meets on an avoided day or time         [request]
 %   all_objectives.                   use every objective level (omitted in the cautious run)
+%   placeholder(C). ph_order(C1,C2).  generic free-elective slots, any term, no section
+%   earliest(C,E). latest(C,L).       redundant term bounds (prune search, keep all plans)
+%   grad_lb(L).                       the plan cannot end before term L (counting bound)
 %
 % Shown: take(C,T), sec(C,T,N), load(T,N), grad(T)
 % =====================================================================================================
@@ -40,11 +43,14 @@ open(C) :- retake(C).
 
 % ---------- where a course can be taken ----------
 can_take(C,T) :- open(C), published(T), lecture(T,C,N), not full(T,N).
-can_take(C,T) :- open(C), term(T), not published(T), term_type(T,Y), offered_hist(C,Y).
+can_take(C,T) :- open(C), term(T), not published(T), term_type(T,Y), offered_hist(C,Y), not placeholder(C).
+can_take(C,T) :- open(C), placeholder(C), term(T).
 ok_level(C) :- course(C,_), level(C,L), allowed_level(L).
 
 % ---------- choice: each open course at most once ----------
-{ take(C,T) : can_take(C,T) } 1 :- open(C), ok_level(C).
+{ take(C,T) : can_take(C,T), not too_early(C,T), not too_late(C,T) } 1 :- open(C), ok_level(C).
+too_early(C,T) :- can_take(C,T), earliest(C,E), T < E.   % redundant bounds from facts.py
+too_late(C,T)  :- can_take(C,T), latest(C,L), T > L.
 take(C,T) :- fixed(C,T,_).
 
 % ---------- prerequisites (a planned course is assumed to meet the minimum grade) ----------
@@ -56,9 +62,13 @@ grp_ok(C,G,T) :- take(C,T), prereq(C,G,R,M), met(R,M,T).
 :- take(C,T), prereq(C,G,_,_), not grp_ok(C,G,T).
 
 % ---------- sections in published terms ----------
-1 { sec(C,T,N) : lecture(T,C,N), not full(T,N) } 1 :- take(C,T), published(T), not fixed(C,T,_).
+1 { sec(C,T,N) : lecture(T,C,N), not full(T,N) } 1 :- take(C,T), published(T), not fixed(C,T,_), not placeholder(C).
 sec(C,T,N) :- fixed(C,T,N).
 :- sec(C1,T,N1), sec(C2,T,N2), C1 != C2, overlap(T,N1,N2).
+
+% free-elective slots are interchangeable: use them in order to avoid symmetric plans
+take_le(C,T) :- take(C,T0), term(T), T0 <= T.
+:- take(C2,T), ph_order(C1,C2), not take_le(C1,T).
 
 % ---------- load ----------
 load(T,S) :- term(T), S = #sum{ Cr,C : take(C,T), course(C,Cr) }.
@@ -69,6 +79,7 @@ used(T) :- used(T+1), term(T).
 grad(T) :- used(T), not used(T+1).
 :- used(T), not grad(T), load(T,S), min_load(M), S < M.
 :- target(T0), used(T), T > T0.
+:- grad_lb(L), term(L), not used(L).   % redundant lower bound from facts.py (credits needed / cap)
 
 % ---------- graduation requirements, checked at the end of the plan ----------
 fin(C) :- done(C).

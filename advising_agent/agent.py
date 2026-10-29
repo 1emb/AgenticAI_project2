@@ -7,7 +7,7 @@ from typing import Callable
 
 from .context import DEFAULT_PLANS, Context, build_context, project_terms
 from .contracts import AdvisingRequest, AdvisingResponse, DataTools, PolicyTools
-from .facts import build_facts, max_load
+from .facts import build_facts, capacity_infeasible, graduation_lower_bound, max_load
 from .solver import SolveResult, solve
 from .validate import check_plan
 
@@ -55,6 +55,8 @@ class AdvisingAgent:
             ctx.terms = base_terms + (project_terms(base_terms[-1], extra, req.get("include_summer", False))
                                       if extra else [])
             result = self._solve(ctx, target=target, use_load_pref=use_pref)
+            if not result.satisfiable and result.timed_out:
+                return self._answer(ctx, "timeout", None, [], blockers=[{"code": "solver_timeout_no_plan"}])
             if result.satisfiable:
                 relaxed = ([] if target or not has_target else ["target_graduation_term"]) \
                     + ([f"horizon extended by {extra} term(s)"] if extra else []) \
@@ -76,8 +78,10 @@ class AdvisingAgent:
 
     def _solve(self, ctx: Context, target: bool = True, use_load_pref: bool = True) -> SolveResult:
         ctx._use_load_pref = use_load_pref  # type: ignore[attr-defined]
+        if capacity_infeasible(ctx, use_load_pref):  # proven in Python, no solver call
+            return SolveResult(False, False, [], [], 0.0)
         return solve(build_facts(ctx, target=target, use_load_pref=use_load_pref),
-                     ctx.request.get("num_plans", DEFAULT_PLANS))
+                     ctx.request.get("num_plans", DEFAULT_PLANS), grad_lb=graduation_lower_bound(ctx, use_load_pref))
 
     def _static_blockers(self, ctx: Context) -> list[dict]:
         out = []
@@ -116,7 +120,8 @@ class AdvisingAgent:
                 if m.grad is None or i > m.grad:
                     break
                 cs = [{"course_code": c, "credit_hours": float(ctx.courses[c]["credit_hours"]),
-                       "category": cat.get(c), "crn": m.sec.get((c, i)), "is_retake": c in retakes}
+                       "category": "free_elective" if c in ctx.placeholders else cat.get(c),
+                       "crn": m.sec.get((c, i)), "is_retake": c in retakes}
                       for c, ti in sorted(m.take.items()) if ti == i]
                 terms.append({"term_code": t["code"], "term_name": t["name"], "term_type": t["term_type"],
                               "is_projected": t["is_projected"], "credits": m.load.get(i, 0) / 10, "courses": cs})
@@ -168,12 +173,21 @@ class AdvisingAgent:
             resp["plans"] = plans
             resp["earliest_graduation_term_code"] = plans[0]["graduation_term_code"] if plans else None
             resp["must_take_next_term"] = result.cautious_first_term
+            if result.timed_out:
+                note = ("The graduation term is proven earliest; the course mix was not fully optimized within the "
+                        "time limit." if result.graduation_proven else
+                        "The solver hit its time limit: the plan meets every rule but may not graduate earliest.")
+                resp["assumptions"] = resp["assumptions"] + [note]
+            if not result.graduation_proven:
+                resp["earliest_graduation_term_code"] = None  # a plan exists, but "earliest" is not proven
             first = plans[0]["terms"][0] if plans and plans[0]["terms"] else None
             if first and not first["is_projected"]:
                 resp["registration_handoff"] = [{"term_code": first["term_code"], "crn": c["crn"],
                                                  "course_code": c["course_code"]} for c in first["courses"]]
-            resp["solver"] = {"engine": "clingo", "optimal": result.optimal, "seconds": round(result.seconds, 3),
-                              "plans_found": len(plans)}
+            resp["solver"] = {"engine": "clingo", "optimal": result.optimal,
+                              "graduation_proven": result.graduation_proven,
+                              "must_take_proven": result.cautious_first_term is not None,
+                              "seconds": round(result.seconds, 3), "plans_found": len(plans)}
         resp["explanation"] = self._explain(resp)
         return resp
 

@@ -24,8 +24,10 @@ class SolveResult:
     satisfiable: bool
     optimal: bool
     models: list[Model]
-    cautious_first_term: list[str]
+    cautious_first_term: list[str] | None  # None = not proven within the time limit
     seconds: float
+    timed_out: bool = False  # True: the best plan's lower-priority objectives are not proven optimal
+    graduation_proven: bool = False  # True: no plan ends earlier
 
 
 def _parse(symbols) -> Model:
@@ -51,13 +53,19 @@ def _control(facts: str, extra: list[str]) -> clingo.Control:
     return ctl
 
 
-def solve(facts: str, num_plans: int = 3, timeout_s: float = 20.0) -> SolveResult:
+def solve(facts: str, num_plans: int = 3, timeout_s: float = 10.0, grad_lb: int | None = None) -> SolveResult:
     t0 = time.perf_counter()
     models: list[Model] = []
     optimal = False
 
+    best: list[Model] = []  # last model seen = best so far (clingo improves monotonically)
+
     def on_model(mdl: clingo.Model):
         nonlocal optimal
+        if not mdl.optimality_proven:
+            b = _parse(mdl.symbols(shown=True))
+            b.cost = list(mdl.cost)
+            best[:] = [b]
         if mdl.optimality_proven:
             optimal = True
             if len(models) < num_plans:
@@ -73,8 +81,11 @@ def solve(facts: str, num_plans: int = 3, timeout_s: float = 20.0) -> SolveResul
         if not finished:
             h.cancel()
         res = h.get()
-    if not res.satisfiable:
-        return SolveResult(False, False, [], [], time.perf_counter() - t0)
+    if not res.satisfiable and not best:
+        # unknown (timeout, no model yet) must not be read as unsatisfiable
+        return SolveResult(False, False, [], [], time.perf_counter() - t0, timed_out=bool(res.unknown))
+    if not models:  # timeout before optimality was proven: return the best plan found, flagged
+        models = best
 
     cautious: list[str] = []
     ctl2 = _control(facts, ["--enum-mode=cautious"])  # graduation objective only (no all_objectives)
@@ -86,10 +97,14 @@ def solve(facts: str, num_plans: int = 3, timeout_s: float = 20.0) -> SolveResul
             last = list(mdl.symbols(shown=True))
         return True
 
+    cautious_done = True
     with ctl2.solve(on_model=on_cautious, async_=True) as h2:
         if not h2.wait(timeout_s):
             h2.cancel()
-            last = []
+            cautious_done = False  # an unfinished cautious set is a superset: not sound to report
         h2.get()
-    cautious = sorted(s.arguments[0].string for s in last if s.name == "take" and s.arguments[1].number == 1)
-    return SolveResult(True, optimal, models, cautious, time.perf_counter() - t0)
+    cautious = (sorted(s.arguments[0].string for s in last if s.name == "take" and s.arguments[1].number == 1)
+                if cautious_done and last else None)
+    grad_proven = optimal or (grad_lb is not None and models and models[0].grad == grad_lb)
+    return SolveResult(True, optimal, models, cautious, time.perf_counter() - t0, timed_out=not optimal,
+                       graduation_proven=bool(grad_proven))

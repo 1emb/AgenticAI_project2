@@ -199,13 +199,15 @@ Status = Literal[
     "not_eligible",  # student status is not active
     "denied",  # requester may not see this student's record
     "needs_input",  # required request fields missing
+    "timeout",  # solver found no plan within the time limit (not proof of infeasibility)
+    "error",  # independent validator disagrees with the solver (a bug)
 ]
 
 
 class PlannedCourse(TypedDict):
     course_code: str
     credit_hours: float
-    category: str | None  # degree_requirement.category, None = counts only toward total credits
+    category: str | None  # degree_requirement.category; "free_elective" = generic slot toward total credits
     crn: str | None  # only for terms with published lectures
     is_retake: bool
 

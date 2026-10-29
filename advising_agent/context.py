@@ -36,6 +36,8 @@ class Context:
     last_term_gpa: float | None = None
     standing: str = "good"
     assumptions: list[str] = field(default_factory=list)
+    candidates: set[str] = field(default_factory=set)  # courses the solver may plan
+    placeholders: list[str] = field(default_factory=list)  # generic free-elective slots
 
 
 def project_terms(last: TermRow | None, n: int, include_summer: bool) -> list[TermRow]:
@@ -81,8 +83,12 @@ def build_context(req: AdvisingRequest, data: DataTools, policy: PolicyTools) ->
 
     courses = {c["code"]: c for c in data.get_courses() if c["is_active"]}
     plan_rows, cat_rows = data.get_degree_plan(student["program_code"])
-    published_codes = [t["code"] for t in terms if not t["is_projected"]]
-    lectures = [l for l in data.get_lectures(published_codes) if not l["is_cancelled"]]
+    stored_codes = [t["code"] for t in terms if not t["is_projected"]]
+    lectures = [l for l in data.get_lectures(stored_codes) if not l["is_cancelled"]]
+    with_lectures = {l["term_code"] for l in lectures}
+    for t in terms:  # a stored term without lecture rows has no published schedule yet: plan it as projected
+        if not t["is_projected"] and t["code"] not in with_lectures:
+            t["is_projected"] = True
     hist = {h["course_code"]: set(h["term_types"]) for h in data.get_offering_history(list(courses))}
 
     ctx = Context(req, student, program, params, points, current, terms, courses, data.get_prerequisites(),
@@ -118,6 +124,8 @@ def build_context(req: AdvisingRequest, data: DataTools, policy: PolicyTools) ->
     if params["probation_rule"] == "last_term_gpa_below_program_min" and ctx.last_term_gpa is not None:
         ctx.standing = "probation" if ctx.last_term_gpa < float(program["min_gpa"]) else "good"
 
+    select_candidates(ctx)
+
     if ctx.in_progress:
         ctx.assumptions.append("Courses in progress are assumed passed with at least the prerequisite minimum.")
     ctx.assumptions.append("Every planned course is assumed passed with at least the prerequisite minimum.")
@@ -127,3 +135,37 @@ def build_context(req: AdvisingRequest, data: DataTools, policy: PolicyTools) ->
     if any(l["seats_taken"] is None for l in lectures):
         ctx.assumptions.append("Seat counts are unknown (no enrollment data), so sections are not checked for being full.")
     return ctx
+
+
+FREE_ELECTIVE_CREDITS = 3.0
+
+
+def select_candidates(ctx: Context) -> None:
+    """Limit the search to degree-plan courses, their prerequisites (transitively) and preferred courses.
+    If those cannot reach the program's total credits, add generic free-elective slots. Without this, every
+    catalog course is a choice and optimality proofs on a 200-course catalog exceed the time limit."""
+    pre: dict[str, set[str]] = {}
+    for p in ctx.prereqs:
+        pre.setdefault(p["course_code"], set()).add(p["required_course_code"])
+    todo = [r["course_code"] for r in ctx.degree_plan]
+    todo += [p["course_code"] for p in ctx.request.get("preferences", {}).get("prefer_courses", [])]
+    cand: set[str] = set()
+    while todo:
+        c = todo.pop()
+        if c in cand or c not in ctx.courses:
+            continue
+        cand.add(c)
+        todo.extend(pre.get(c, ()))
+    ctx.candidates = cand
+    done = {c for c, p in ctx.best_points.items() if p > 0} | ctx.in_progress
+    reachable = sum(float(ctx.courses[c]["credit_hours"]) for c in cand | done if c in ctx.courses)
+    deficit = float(ctx.program["total_credits_required"]) - reachable
+    k = max(0, int(-(-deficit // FREE_ELECTIVE_CREDITS)))  # ceil
+    for i in range(1, k + 1):
+        code = f"FREE ELECTIVE {i}"
+        ctx.courses[code] = {"code": code, "title": "Free elective", "credit_hours": FREE_ELECTIVE_CREDITS,
+                             "level": "lower_division", "is_active": True}
+        ctx.placeholders.append(code)
+    if k:
+        ctx.assumptions.append(f"{k} free-elective slot(s) of {FREE_ELECTIVE_CREDITS:g} credits stand for any "
+                               "course without prerequisites; the student picks them later.")

@@ -177,14 +177,14 @@ td code { white-space: nowrap; }
       <tr><td><code>allowed</code></td><td>First field, as in <code>data/testset</code>. <code>false</code> only for <code>denied</code>.</td></tr>
       <tr><td><code>status</code></td><td>See the status table below.</td></tr>
       <tr><td><code>plans[]</code></td><td>Optimal plans: <code>rank</code>, <code>graduation_term_code</code>, <code>terms[]</code> (term code and name, <code>is_projected</code>, credits, courses with category, CRN for published terms, <code>is_retake</code>), <code>total_credits_after</code>, <code>penalties</code>, <code>violations</code> (always empty unless the validator disagrees).</td></tr>
-      <tr><td><code>earliest_graduation_term_code</code></td><td>Graduation term of the best plan under the constraints that were kept.</td></tr>
-      <tr><td><code>must_take_next_term[]</code></td><td>Courses in next term of <i>every</i> plan that graduates as early as possible (ASP cautious consequences). The most useful single fact for the student.</td></tr>
+      <tr><td><code>earliest_graduation_term_code</code></td><td>Graduation term of the best plan, only when it is proven earliest (by the solver or by the counting bound); otherwise <code>null</code> while <code>plans</code> still holds a valid plan.</td></tr>
+      <tr><td><code>must_take_next_term[]</code></td><td>Courses in next term of <i>every</i> plan that graduates as early as possible (ASP cautious consequences). <code>null</code> when the computation did not finish in time: an unfinished cautious set is a superset, so it is never reported.</td></tr>
       <tr><td><code>remaining</code></td><td>Before the plan: required courses left, category credits, credits earned and required, cumulative GPA, program minimum GPA, standing.</td></tr>
       <tr><td><code>relaxed[]</code>, <code>blockers[]</code>, <code>assumptions[]</code></td><td>What was relaxed to find a plan; why there is none; what the plan assumes.</td></tr>
       <tr><td><code>citations[]</code></td><td>Policy passages behind the parameters.</td></tr>
       <tr><td><code>explanation</code></td><td>Prose. A template by default; an optional LLM may rephrase it but must not change courses, terms, CRNs or numbers.</td></tr>
       <tr><td><code>registration_handoff</code></td><td>First-term CRNs when that term is published. The Router passes them to the Registration agent only if the user asks to register; Registration validates again and asks for confirmation.</td></tr>
-      <tr><td><code>solver</code></td><td>Engine, whether optimality was proven, time, plans found.</td></tr>
+      <tr><td><code>solver</code></td><td><code>optimal</code> (all objective levels proven), <code>graduation_proven</code>, <code>must_take_proven</code>, seconds, plans found.</td></tr>
     </tbody>
   </table></div>
   <h3>Statuses</h3>
@@ -199,6 +199,7 @@ td code { white-space: nowrap; }
       <tr><td><code>not_eligible</code></td><td>Student status is not <code>active</code>.</td></tr>
       <tr><td><code>denied</code></td><td>A student asked about another student, or an instructor about someone who is not an advisee.</td></tr>
       <tr><td><code>needs_input</code></td><td>A required request field is missing.</td></tr>
+      <tr><td><code>timeout</code></td><td>The solver found no plan within the time limit. This is not a proof that no plan exists, so nothing is relaxed.</td></tr>
       <tr><td><code>error</code></td><td>The independent validator disagrees with the solver. This is a bug, not a student problem.</td></tr>
     </tbody>
   </table></div>
@@ -250,6 +251,8 @@ td code { white-space: nowrap; }
       <tr><td><code>prereq(C,G,R,M)</code>, <code>repeat_below_prereq_min</code></td><td><code>course_prerequisite</code>, policy</td></tr>
       <tr><td><code>required(C)</code>, <code>req_course(K,C)</code>, <code>cat_min(K,N)</code>, <code>total_credits(N)</code></td><td><code>degree_requirement</code>, <code>program_category_requirement</code>, <code>program</code></td></tr>
       <tr><td><code>max_load(N)</code>, <code>min_load(N)</code>, <code>target(T)</code>, <code>prefer(C,W)</code>, <code>avoid(C,W)</code>, <code>bad_slot(T,N,W)</code></td><td>policy and request</td></tr>
+      <tr><td><code>placeholder(C)</code>, <code>ph_order(C1,C2)</code></td><td>generic free-elective slots when the degree-plan courses cannot reach the total credits</td></tr>
+      <tr><td><code>earliest(C,E)</code>, <code>latest(C,L)</code>, <code>grad_lb(L)</code></td><td>redundant bounds computed in Python (prerequisite depth, offering pattern, credits needed / cap); they prune the search and never remove a valid plan</td></tr>
     </tbody>
   </table></div>
   <h3>Hard constraints</h3>
@@ -275,6 +278,21 @@ td code { white-space: nowrap; }
     <li><b>Alternatives:</b> clingo enumerates optimal models (<code>--opt-mode=optN</code>, projected on the shown atoms). With all five objectives the optimum is often unique, so <code>plans_found</code> is often 1; dropping objective 5 gives more alternatives.</li>
     <li><b>Independent check:</b> <code>validate.py</code> re-checks every plan in plain Python without using the encoding. The Registration agent can reuse it for a single term.</li>
   </ul>
+  <h3>Performance and what makes it fast</h3>
+  <ul>
+    <li><b>Candidate courses:</b> only degree-plan courses, their prerequisites (transitively) and preferred courses are choices. If they cannot reach the program's total credits, generic "FREE ELECTIVE n" slots of 3 credits fill the gap, used in order to avoid symmetric plans.</li>
+    <li><b>Counting check before solving:</b> if the credits still needed exceed the per-term cap times the usable terms, the horizon is infeasible without a solver call. The same count gives <code>grad_lb</code>, so the graduation term is proven as soon as a plan reaches it. Proving such bounds inside the solver is a pigeonhole argument, which CDCL solvers handle badly.</li>
+    <li><b>Time limit:</b> 10 s for the main solve and 10 s for the cautious run. On timeout the best plan found so far is returned, validated and flagged.</li>
+    <li><b>A stored term without lecture rows</b> is planned as projected (its schedule is not published yet).</li>
+  </ul>
+  <div class="scroll"><table>
+    <thead><tr><th>Test instance</th><th>Size</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Fixture (10 requests)</td><td>16 courses, 4 terms</td><td>All optimal, proven, under 0.1 s each</td></tr>
+      <tr><td>Synthetic BS, 120 credits, horizon 8</td><td>200-course catalog, 214 prerequisite rows, 45 required courses, 16 done, 116 candidates</td><td>Valid 7-term plan in 20 s; graduation term proven (6 terms fail the counting check); tie-break objectives and <code>must_take_next_term</code> not proven in time</td></tr>
+      <tr><td>Same, horizon 6</td><td></td><td>Horizon proven too short instantly; extended by 1 term; same 7-term plan</td></tr>
+    </tbody>
+  </table></div>
   <h3>Known limits</h3>
   <ul>
     <li>Projected terms assume the past offering pattern holds; sections and seats are only checked in published terms.</li>
@@ -286,7 +304,7 @@ td code { white-space: nowrap; }
 
 <section id="tests">
   <h2>8. Test cases</h2>
-  <p><code>fixtures/example_requests.json</code> holds 10 requests with expected results. They cover a hard target that cannot be met, a plan with no target, an advisor allowed, an instructor denied, a student asking about another student, a suspended student, a horizon that is too short, a credit cap that is too low, a request with no preferences, and a missing field. Run <code>pytest advising_agent/tests -q</code>.</p>
+  <p><code>fixtures/example_requests.json</code> holds 10 requests with expected results. They cover a hard target that cannot be met, a plan with no target, an advisor allowed, an instructor denied, a student asking about another student, a suspended student, a horizon that is too short, a credit cap that is too low, a request with no preferences, and a missing field. Run <code>pytest advising_agent/tests -q</code>. <code>tests/test_scale.py</code> is an opt-in stress test on a generated 200-course, 120-credit program (<code>RUN_SLOW=1 pytest advising_agent/tests -q</code>, 10 to 20 s); it checks that the plan is valid and the graduation term is proven.</p>
   <p>Proposed shape for <code>data/testset</code> (persona student, intent <code>plan_graduation</code>), following its verification contract:</p>
 <pre>"answer": {"allowed": true, "status": "ok",
            "earliest_graduation_term": "Fall 2028",
@@ -307,12 +325,13 @@ td code { white-space: nowrap; }
   agent.py            AdvisingAgent.handle(request): access, relaxation ladder, response
   fixture_tools.py    DataTools / PolicyTools over the JSON fixture
   fixtures/           example_db.json (row shapes of the 12 tables + enrollment), example_requests.json
-  tests/              pytest over the fixture requests
+  tests/              pytest over the fixture requests; test_scale.py is the opt-in stress test
   docs/               this page; design/ holds the system mindmap and process flow
 
 pip install clingo pytest
 python -m advising_agent.run_example adv-001
-pytest advising_agent/tests -q</pre>
+pytest advising_agent/tests -q
+RUN_SLOW=1 pytest advising_agent/tests -q    # adds the stress test</pre>
 </section>
 
 </main>

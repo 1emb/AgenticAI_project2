@@ -67,6 +67,11 @@ class Builder:
         phrase, name = term_phrase(self.rng, term, current)
         return term, current, {"term": phrase, "term_name": name, "term_code": term["code"]}
 
+    @staticmethod
+    def crn_templates(templates: list[str], term: dict, current: dict) -> list[str]:
+        """CRNs restart at 10001 every term, so a CRN question about any term but the current one must name the term."""
+        return templates if term["code"] == current["code"] else [t for t in templates if "{term" in t]
+
     # ------------------------------------------------------------------ catalog
     PREREQ = ["What are the prerequisites for {course}?", "What do I need to have taken before {course}?", "Does {course} have any prerequisites?",
               "Which courses are required before I can take {course} ({title})?", "Is there a prerequisite for {course}?"]
@@ -122,13 +127,14 @@ class Builder:
         return self.case("lecture_options", "catalog", st, as_of, q, question, paras, {"course": course, **slots}, {"lectures": lectures}, ref, discrete)
 
     MEETING = ["When does CRN {crn} meet?", "Where is CRN {crn} held {term}?", "What are the meeting days and times for CRN {crn}?",
-               "Which room is CRN {crn} in, and when does it meet?"]
+               "Which room is CRN {crn} in, and when does it meet?", "When does CRN {crn} meet {term}?", "What are the meeting days and times for CRN {crn} {term}?",
+               "Which room is CRN {crn} in {term}, and when does it meet?"]
 
     def lecture_meeting(self, uid: str, term_code: str, crn: str, as_of: datetime = DEFAULT_AS_OF) -> dict:
         q, st = self.start(uid)
         term, current, slots = self.term_slots(q, term_code, as_of)
         l = Q.lecture(q, term_code, crn)
-        question, paras = pick(self.rng, self.MEETING, crn=crn, **slots)
+        question, paras = pick(self.rng, self.crn_templates(self.MEETING, term, current), crn=crn, **slots)
         discrete = {"crn": crn, "course": l["course_code"], "term": term["name"], "is_cancelled": l["is_cancelled"], "days": l["days"],
                     "start": l["start_time"], "end": l["end_time"], "room": l["room"], "instructor": l["instructor"]}
         ref = (f"CRN {crn} is {l['course_code']} ({l['title']}) in {term['name']}, {fmt_meeting(l['days'], l['start_time'], l['end_time'], l['room'])}, taught by {l['instructor']}"
@@ -148,13 +154,14 @@ class Builder:
                else f"{course} is not offered in {term['name']}.")
         return self.case("who_teaches", "catalog", st, as_of, q, question, paras, {"course": course, **slots}, {"lectures": lectures}, ref, discrete)
 
-    CAPACITY = ["What's the capacity of CRN {crn}?", "How many seats does CRN {crn} have in total?", "How big is the {course} section CRN {crn} {term}?"]
+    CAPACITY = ["What's the capacity of CRN {crn}?", "How many seats does CRN {crn} have in total?", "How big is the {course} section CRN {crn} {term}?",
+                "What's the capacity of CRN {crn} {term}?", "How many seats does CRN {crn} have {term}?"]
 
     def capacity(self, uid: str, term_code: str, crn: str, as_of: datetime = DEFAULT_AS_OF) -> dict:
         q, st = self.start(uid)
         term, current, slots = self.term_slots(q, term_code, as_of)
         l = Q.lecture(q, term_code, crn)
-        question, paras = pick(self.rng, self.CAPACITY, crn=crn, course=l["course_code"], **slots)
+        question, paras = pick(self.rng, self.crn_templates(self.CAPACITY, term, current), crn=crn, course=l["course_code"], **slots)
         discrete = {"crn": crn, "course": l["course_code"], "term": term["name"], "capacity": l["capacity"]}
         ref = f"CRN {crn} ({l['course_code']}, {term['name']}) has a capacity of {l['capacity']} seats."
         return self.case("capacity", "catalog", st, as_of, q, question, paras, {"crn": crn, "course": l["course_code"], **slots}, {"lecture": l}, ref, discrete)

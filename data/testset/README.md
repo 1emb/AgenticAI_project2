@@ -17,8 +17,10 @@ seeded Python generator over ordered rows, never SQL `random()`).
 
 ## What is in the sets now
 
-Generated 2026-10-28 from `data/seed/` (12-table schema, no enrollment table yet). Counts are of distinct cases;
-each case also has two paraphrases.
+Generated from `data/seed/` (12-table schema, no enrollment table yet): professor 2026-10-28, student regenerated
+2026-10-30 (CRN questions about another term now name the term; a target whose name another person shares is referred
+to by ID; `course_department` carries the department name and code). Counts are of distinct cases; each case also has
+two paraphrases (one student case has a single paraphrase because only one wording fits its target).
 
 | Persona | Cases | Distinct users | Clock | Access-control cases |
 |---|---|---|---|---|
@@ -97,6 +99,8 @@ each case also has two paraphrases.
 The current term is the term whose `start_date`..`end_date` contains the clock's date; during a break it is the next
 term by `start_date` (so on 2026-12-20 the current term is Spring 2027). "Next semester" and "last semester" are the
 terms with `sequence` one higher and one lower. Cancelled lectures (`is_cancelled`) never count as offered or taught.
+CRNs restart at 10001 every term, so a question that names a CRN and no term means the current term; cases about another
+term's CRN always name the term.
 
 ## Verification contract
 Answers are checked by a program, never by reading prose. The agent under test returns a JSON `answer` for the case's
@@ -129,7 +133,7 @@ The schema has no permission table; the rule is stated here and implemented by t
 All shapes below are preceded by `allowed: true`.
 Catalog:
 - `prerequisites`: `course`, `has_prerequisites`, `groups[[{course, min_grade}]]`. Groups are AND; alternatives inside a group are OR.
-- `course_info`: `course`, `title`, `credit_hours`, `level` (`lower_division`, `upper_division`, `graduate`), `is_active`, `department` (name).
+- `course_info`: `course`, `title`, `credit_hours`, `level` (`lower_division`, `upper_division`, `graduate`), `is_active`, `department` (name), `department_code`.
 - `course_offered`: `course`, `term`, `offered`, `crns[]` (non-cancelled lectures), `is_active` (false for a retired course).
 - `lecture_options`: `course`, `term`, `sections[]` (`crn`, `section_number`, `days`, `start`, `end`, `room`, `instructor`, `capacity`).
 - `lecture_meeting`: `crn`, `course`, `term`, `is_cancelled`, `days`, `start`, `end`, `room`, `instructor`.
@@ -152,7 +156,7 @@ Access control:
 - `access_denied`: `allowed: false`, `reason` (`other_student_record`, `student_list_not_permitted`, `instructor_private_record`),
   `target` (`university_id`, or `program` code for a list). `access_partial`: the same plus `own_answer` with the permitted
   part (`instructor` of the CRN, or the student's own `program`). `access_allowed`: `allowed: true` plus the public fact
-  (`instructor`; `instructor`, `email`; `instructor`, `rank`, `department`; `days`, `start`, `end`, `room`; `prerequisites[[codes]]`; `capacity`; `department` code of a course).
+  (`instructor`; `instructor`, `email`; `instructor`, `rank`, `department`; `days`, `start`, `end`, `room`; `prerequisites[[codes]]`; `capacity`; `department` name and `department_code` of a course).
 
 ## Professor answer shapes
 All shapes below are preceded by `allowed: true`.

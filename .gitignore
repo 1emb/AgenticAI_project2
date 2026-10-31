@@ -6,3 +6,5 @@ __pycache__/
 # full-size dataset (~150 MB); regenerate with scripts/seed.py --dump
 data/seed_csv/
 data/*.log
+# grading runs (scripts/grade.py)
+runs/

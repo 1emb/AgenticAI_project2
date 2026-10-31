@@ -1,7 +1,7 @@
-# Registrar replacement: data layer
+# Registrar replacement
 
 Agentic system that takes over the functions of a university registrar office. This repository holds the domain
-definition, the PostgreSQL schema, and the test sets for the agents.
+definition, the PostgreSQL schema, the test sets, and the agent itself (`registrar/agent/`, student persona so far).
 
 The schema was rebuilt on 2026-10-28 around natural keys and a two-major scope (BS Computer Science and BS
 Engineering, plus an MS in each for graduate students). The dataset is a static snapshot committed as one CSV per
@@ -15,6 +15,8 @@ registrar/db.py     engine / session (reads .env)            docs/schema.html  v
 registrar/seed/     dataset generator; catalog.py holds the  data/seed/        the dataset, one CSV per table
                     hand-written courses and degree plans    scripts/          seed.py, load_seed.py, make_testset.py, init_db.py
 registrar/testset/  question -> SQL -> answer generators     data/testset/     English test cases (see its README)
+registrar/agent/    the agent: classify, extract, resolve,   scripts/          ask.py (one question), grade.py (a test set),
+                    permission check, per-intent programs                      serve_llm.sh (local vLLM server)
 db/                 start.sh / stop.sh / psql.sh             alembic/          migrations
 pgdata/             Postgres 18 cluster (port 5433)
 ```
@@ -114,6 +116,37 @@ plans, the calendar and teaching schedules; everything that needs enrollment (re
 grade statistics) is listed as pending in each persona's `questions.md`. Formats, clocks, the permission model and
 the verification contract are in [data/testset/README.md](data/testset/README.md).
 
+## Agent
+`registrar/agent/` answers a student's English question in four stages; the first two are calls to a local LLM, the rest is
+plain Python over the database:
+
+1. **Classify** (`llm.py`): the model may only reply with one of the question types in `intents.py` (15 student intents,
+   `person_info`, `student_list`, `unknown`); vLLM's `structured_outputs.choice` enforces that, and the token logprobs give a
+   confidence. Access control is not a question type: "What is Raj Martinez's phone number?" classifies as `person_info`.
+2. **Extract** (`llm.py`): given the type, the model fills that type's slot schema (`structured_outputs.json`) with
+   *mentions*, phrases copied from the question: `{"course_mention": "Capstone Design I", "term_mention": "next spring"}`.
+   It never writes database keys.
+3. **Resolve** (`resolve.py`): Python turns mentions into keys with the database and the case clock: the title becomes
+   `ENG 4910`, "next spring" under a November 2026 clock becomes term `202710`, a name becomes a university id. Each
+   resolution carries a status (`ok`, `none`, `not_found`, `ambiguous`), so a wrong answer is traceable to its stage.
+4. **Program** (`programs.py`): one function per intent applies the permission rule from `data/testset/README.md` and
+   runs the SQL from `registrar/testset/queries.py`, returning the discrete answer shape the test set grades.
+
+Model: Qwen3.5-27B served by vLLM 0.32 on one H100 (`scripts/serve_llm.sh`; weights under
+`/home/sheshnagnobackup/mnguyen/models`, outside the repo). `.env` holds `LLM_BASE_URL` and `LLM_MODEL`.
+
+```bash
+./db/start.sh && scripts/serve_llm.sh &                       # Postgres and the model server, from your own terminal
+python scripts/ask.py --uid 800260544 "Who teaches CS 2230 this fall?"     # one question, full trace
+python scripts/ask.py --case stu-prerequisites-001                         # a test case, with its expected answer
+python scripts/grade.py --persona student --paraphrases                    # the whole set; per-stage accuracy, failures, runs/*.jsonl
+```
+
+The grader scores each question three times: the intent, the resolved slots against the case's `slots`, and the answer
+under the verification contract. The prose reply (turning the answer into English) is not built yet; it cannot change
+the graded answer.
+
 ## Next steps
-1. The agent itself, graded against `data/testset/` (the schema and data are frozen for it).
-2. When the schema reopens: `enrollment` table, proposed as (`term_code`, `crn`, `student_university_id`) with `status` (enrolled/dropped/withdrawn) and `grade` FK `grade_scale`; then the pending intents (registration, transcripts, GPA, rosters, grade statistics) and the administrator persona.
+1. Grade the student agent, fix what the failures show, then the professor persona (same pipeline, its own intents).
+2. The prose reply stage, and a chat interface.
+3. When the schema reopens: `enrollment` table, proposed as (`term_code`, `crn`, `student_university_id`) with `status` (enrolled/dropped/withdrawn) and `grade` FK `grade_scale`; then the pending intents (registration, transcripts, GPA, rosters, grade statistics) and the administrator persona.

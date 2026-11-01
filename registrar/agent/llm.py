@@ -1,7 +1,9 @@
-"""Two calls to a local vLLM server (OpenAI-compatible API), each constrained so the model can only answer in the shape asked for.
+"""Calls to a local vLLM server (OpenAI-compatible API). The two pipeline calls are constrained so the model can only answer in the
+shape asked for; the reply stage (reply.py) uses the free-text complete().
 
 - classify(): the reply must be one of the intent labels (`structured_outputs.choice`); the token logprobs give a confidence.
 - extract(): the reply must match the intent's slot JSON schema (`structured_outputs.json`); values are phrases copied from the question.
+- complete(): plain chat completion, temperature 0, thinking off; used to turn the discrete answer into English.
 
 Settings come from .env: LLM_BASE_URL (default http://localhost:8000/v1) and LLM_MODEL (the served model name).
 """
@@ -71,12 +73,13 @@ class Client:
         self.timeout = timeout
 
     # ---- transport ----
-    def _chat(self, messages: list[dict], *, max_tokens: int, structured: dict, logprobs: bool = False) -> LLMResult:
+    def _chat(self, messages: list[dict], *, max_tokens: int, structured: dict | None = None, logprobs: bool = False) -> LLMResult:
         body = {
             "model": self.model, "messages": messages, "temperature": 0, "max_tokens": max_tokens,
-            "structured_outputs": structured,
             "chat_template_kwargs": {"enable_thinking": False},
         }
+        if structured is not None:
+            body["structured_outputs"] = structured
         if logprobs:
             body["logprobs"] = True
         req = urllib.request.Request(f"{self.base_url}/chat/completions", data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
@@ -101,6 +104,10 @@ class Client:
                 return [m["id"] for m in json.load(r)["data"]]
         except (urllib.error.URLError, OSError) as e:
             raise LLMError(f"cannot reach {self.base_url}: {e}") from None
+
+    def complete(self, system: str, user: str, *, max_tokens: int = 200) -> LLMResult:
+        """Free-text reply (reply stage)."""
+        return self._chat([{"role": "system", "content": system}, {"role": "user", "content": user}], max_tokens=max_tokens)
 
     # ---- stage 1 ----
     def classify(self, question: str, labels: list[str] = LABELS) -> tuple[str, LLMResult]:

@@ -16,7 +16,10 @@ registrar/seed/     dataset generator; catalog.py holds the  data/seed/        t
                     hand-written courses and degree plans    scripts/          seed.py, load_seed.py, make_testset.py, init_db.py
 registrar/testset/  question -> SQL -> answer generators     data/testset/     English test cases (see its README)
 registrar/agent/    the agent: classify, extract, resolve,   scripts/          ask.py (one question), grade.py (a test set),
-                    permission check, per-intent programs                      serve_llm.sh (local vLLM server)
+                    permission check, per-intent programs,                     serve_llm.sh (local vLLM server), ui.py (web chat)
+                    English reply
+registrar/ui/       FastAPI web chat: app.py + static/index.html         runs/             chat.jsonl (interactive test log), grading runs
+registrar/chatlog.py  append-only log of interactive questions and verdicts  scripts/          review.py (summarise the log)
 db/                 start.sh / stop.sh / psql.sh             alembic/          migrations
 pgdata/             Postgres 18 cluster (port 5433)
 ```
@@ -131,22 +134,50 @@ plain Python over the database:
    resolution carries a status (`ok`, `none`, `not_found`, `ambiguous`), so a wrong answer is traceable to its stage.
 4. **Program** (`programs.py`): one function per intent applies the permission rule from `data/testset/README.md` and
    runs the SQL from `registrar/testset/queries.py`, returning the discrete answer shape the test set grades.
+5. **Reply** (`reply.py`, optional, added 2026-11-01): a third LLM call turns the discrete answer into one to three English
+   sentences. The model sees only the question and the answer's facts, with dates, times and weekdays already formatted in Python;
+   a refusal's `target` (the other person's id) is removed first, and the text is checked for it afterwards. If the model fails,
+   a fixed sentence built from the answer shape is used. The reply never changes the graded answer; `grade.py --reply` scans it for
+   `must_not_mention` values (0 leaks on the 152 student cases, 2026-11-01).
 
 Model: Qwen3.5-27B served by vLLM 0.32 on one H100 (`scripts/serve_llm.sh`; weights under
 `/home/sheshnagnobackup/mnguyen/models`, outside the repo). `.env` holds `LLM_BASE_URL` and `LLM_MODEL`.
 
 ```bash
 ./db/start.sh && scripts/serve_llm.sh &                       # Postgres and the model server, from your own terminal
-python scripts/ask.py --uid 800260544 "Who teaches CS 2230 this fall?"     # one question, full trace
+python scripts/ask.py --uid 800260544 "Who teaches CS 2230 this fall?"     # one question, full trace and English reply
 python scripts/ask.py --case stu-prerequisites-001                         # a test case, with its expected answer
 python scripts/grade.py --persona student --paraphrases                    # the whole set; per-stage accuracy, failures, runs/*.jsonl
+python scripts/grade.py --persona student --reply                          # also write replies and fail any that leak a protected value
+python scripts/ui.py                                                       # web chat at http://127.0.0.1:8080
 ```
 
 The grader scores each question three times: the intent, the resolved slots against the case's `slots`, and the answer
-under the verification contract. The prose reply (turning the answer into English) is not built yet; it cannot change
-the graded answer.
+under the verification contract. With `--reply` the English reply is written too and scanned for `must_not_mention` values.
+
+### Web chat (`scripts/ui.py`)
+A single page served by FastAPI (`registrar/ui/`): choose the student from the 300 in the database (filter by name, ID or
+program), choose the clock (the five test-set clocks, or any UTC datetime), ask, and read the reply. Each reply expands to show
+how it was produced: intent and confidence, the mentions, each resolution with its status, the graded answer, the SQL and the
+per-stage timings. Refusals are marked. From a laptop, forward the port (`ssh -L 8080:localhost:8080 <host>`) and open
+`http://localhost:8080`. There is no login; the student is a choice, since this is a simulation.
+
+### Test log (`runs/chat.jsonl`)
+Every question asked through the web chat or `scripts/ask.py` is appended to `runs/chat.jsonl` (`registrar/chatlog.py`;
+path overridable with `CHAT_LOG`): who asked, the clock, the question, and the whole trace, including the reply, the SQL
+and timings. Under each answer the page has verdict buttons (correct, wrong, should have refused, should have answered)
+and a note; they append verdict records to the same file, latest wins. The History view lists everything recorded,
+filterable by text, intent, outcome, verdict and student, and opens any row's full trace with its verdict controls.
+`grade.py` runs are not logged there; they keep their own `runs/<persona>-<timestamp>.jsonl`.
+
+```bash
+python scripts/review.py                     # counts by outcome, verdict and intent; what was judged wrong; errors; slowest
+python scripts/review.py --list unjudged     # or: wrong | should_refuse | should_answer | refused | error | all
+python scripts/review.py --csv runs/chat.csv # one row per question, for a spreadsheet
+```
+`runs/` is git-ignored, so the log stays on this machine.
 
 ## Next steps
-1. Grade the student agent, fix what the failures show, then the professor persona (same pipeline, its own intents).
-2. The prose reply stage, and a chat interface.
+1. The professor persona (same pipeline, its own intents), then a persona switch in the web chat.
+2. Multi-turn chat: the UI sends each question alone today, so "and next spring?" has no context.
 3. When the schema reopens: `enrollment` table, proposed as (`term_code`, `crn`, `student_university_id`) with `status` (enrolled/dropped/withdrawn) and `grade` FK `grade_scale`; then the pending intents (registration, transcripts, GPA, rosters, grade statistics) and the administrator persona.

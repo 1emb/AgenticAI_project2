@@ -3,7 +3,7 @@
     trace = answer_question(conn, llm, question, university_id, as_of)
 
 Stages: classify (LLM, label only) -> extract (LLM, mentions only) -> resolve (Python, mentions to keys) -> program (Python,
-permission rule + SQL). The trace keeps the label and its confidence, the mentions, each resolution with its status, the SQL run,
+permission rule + SQL). reply.write_reply() adds the optional fifth stage, English prose from the answer. The trace keeps the label and its confidence, the mentions, each resolution with its status, the SQL run,
 timings and the error of the stage that failed, if any.
 """
 from __future__ import annotations
@@ -31,6 +31,7 @@ class Trace:
     mentions: dict = field(default_factory=dict)
     resolved: dict = field(default_factory=dict)       # slot -> {value, status, note}
     answer: dict | None = None
+    reply: str | None = None                            # English reply (reply.py), when asked for
     error: str | None = None
     failed_stage: str | None = None
     sql: list = field(default_factory=list)

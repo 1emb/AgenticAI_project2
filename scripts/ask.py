@@ -3,8 +3,10 @@
     python scripts/ask.py --uid 800260544 "Who teaches CS 2230 this fall?"
     python scripts/ask.py --uid 800260544 --as-of 2026-12-20T18:00Z --intent who_teaches "..."   # skip the classifier
     python scripts/ask.py --case stu-prerequisites-001                                          # run a test case
+    python scripts/ask.py --uid 800260544 --no-reply "..."                                      # skip the English reply (one LLM call fewer)
 
-Needs Postgres (./db/start.sh) and the vLLM server (scripts/serve_llm.sh) running.
+Needs Postgres (./db/start.sh) and the vLLM server (scripts/serve_llm.sh) running. Every question is appended to runs/chat.jsonl
+(scripts/review.py summarises it) unless --no-log is given.
 """
 import argparse
 import json
@@ -16,6 +18,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from registrar.agent.llm import Client, LLMError  # noqa: E402
 from registrar.agent.pipeline import answer_question  # noqa: E402
+from registrar.agent.reply import write_reply  # noqa: E402
+from registrar.chatlog import record  # noqa: E402
 from registrar.db import DATABASE_URL  # noqa: E402
 from registrar.testset.common import DEFAULT_AS_OF, Encoder, connect  # noqa: E402
 
@@ -45,6 +49,8 @@ def main():
     ap.add_argument("--intent", help="skip the classifier and use this intent")
     ap.add_argument("--case", help="run this test case's question (and print its expected answer)")
     ap.add_argument("--sql", action="store_true", help="also print the SQL that was run")
+    ap.add_argument("--no-reply", action="store_true", help="do not write the English reply (stage 5)")
+    ap.add_argument("--no-log", action="store_true", help="do not append the question to runs/chat.jsonl")
     args = ap.parse_args()
 
     expected = None
@@ -62,6 +68,10 @@ def main():
         raise SystemExit(f"LLM server: {e}\nstart it with scripts/serve_llm.sh")
     with connect(DATABASE_URL.replace("postgresql+psycopg://", "postgresql://")) as conn:
         t = answer_question(conn, llm, args.question, args.uid, parse_clock(args.as_of), intent_override=args.intent)
+    if not args.no_reply:
+        write_reply(llm, t)
+    if not args.no_log:
+        record(t, "ask.py")
     d = t.to_dict()
     if not args.sql:
         d.pop("sql")

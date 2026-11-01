@@ -5,6 +5,7 @@
     python scripts/grade.py --intent who_teaches --limit 5    # a slice
     python scripts/grade.py --out runs/student.jsonl          # per-question results (default runs/<persona>-<timestamp>.jsonl)
     python scripts/grade.py --llm-only                        # no database: classify + extract only, graded on the intent
+    python scripts/grade.py --reply                           # also write the English reply and scan it for must_not_mention values
 
 Per question it reports: intent correct, slots correct (resolved keys against the case's slots), answer correct (the verification
 contract in data/testset/README.md), and which stage failed. Access-control cases are graded on the intent their scenario
@@ -27,6 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from registrar.agent.intents import BY_NAME, UNKNOWN  # noqa: E402
 from registrar.agent.llm import Client, LLMError  # noqa: E402
 from registrar.agent.pipeline import answer_question  # noqa: E402
+from registrar.agent.reply import write_reply  # noqa: E402
 from registrar.db import DATABASE_URL  # noqa: E402
 from registrar.testset.common import Encoder, connect  # noqa: E402
 
@@ -137,7 +139,7 @@ def run_llm_only(llm: Client, case: dict, question: str, which: str) -> dict:
             "timings": {"classify_s": round(res.latency_s, 3)}}
 
 
-def run_one(llm: Client, case: dict, question: str, which: str) -> dict:
+def run_one(llm: Client, case: dict, question: str, which: str, reply: bool = False) -> dict:
     as_of = datetime.fromisoformat(case["as_of"])
     try:
         t = answer_question(conn(), llm, question, case["student"]["university_id"], as_of)
@@ -147,12 +149,20 @@ def run_one(llm: Client, case: dict, question: str, which: str) -> dict:
     got_slots = {k: v["value"] for k, v in t.resolved.items() if k in exp_slots}
     slot_diffs = {k: (got_slots.get(k), v) for k, v in exp_slots.items() if norm(got_slots.get(k)) != norm(v)}
     answer_ok, why = grade_answer(t.answer, case["answer"])
-    return {
+    out = {
         "id": case["id"], "which": which, "question": question, "expected_intent": exp_int, "intent": t.intent, "intent_confidence": t.intent_confidence,
         "intent_ok": t.intent == exp_int, "mentions": t.mentions, "resolved": t.resolved, "expected_slots": exp_slots, "slot_diffs": slot_diffs,
         "slots_ok": not slot_diffs, "answer": t.answer, "expected_answer": case["answer"], "answer_ok": answer_ok, "answer_why": why,
         "error": t.error, "failed_stage": t.failed_stage, "timings": t.timings,
     }
+    if reply:
+        # the verification contract: the prose of an access-control case must not carry any protected value
+        text = write_reply(llm, t)
+        leaked = [m for m in case.get("must_not_mention") or [] if m.lower() in text.lower()]
+        out.update({"reply": text, "leaked": leaked})
+        if leaked:
+            out["answer_ok"], out["answer_why"] = False, f"reply mentions protected value(s) {leaked}"
+    return out
 
 
 def main():
@@ -165,6 +175,7 @@ def main():
     ap.add_argument("--out")
     ap.add_argument("--quiet", action="store_true", help="do not list failures")
     ap.add_argument("--llm-only", action="store_true", help="classify and extract only; needs no database")
+    ap.add_argument("--reply", action="store_true", help="also write the English reply (stage 5) and fail a case whose reply leaks a must_not_mention value")
     args = ap.parse_args()
 
     cases = [json.loads(l) for l in open(ROOT / "data" / "testset" / args.persona / "cases.jsonl")]
@@ -184,7 +195,7 @@ def main():
     print(f"model {llm.model} at {llm.base_url} (served: {', '.join(models)}); {len(jobs)} questions, {args.workers} workers")
     t0 = time.perf_counter()
     with ThreadPoolExecutor(args.workers) as ex:
-        results = list(ex.map(lambda j: (run_llm_only if args.llm_only else run_one)(llm, *j), jobs))
+        results = list(ex.map(lambda j: run_llm_only(llm, *j) if args.llm_only else run_one(llm, *j, reply=args.reply), jobs))
     elapsed = time.perf_counter() - t0
 
     out = Path(args.out) if args.out else ROOT / "runs" / f"{args.persona}-{datetime.now():%Y%m%d-%H%M%S}.jsonl"
@@ -222,6 +233,8 @@ def main():
                 print(f"    slots {json.dumps(r['slot_diffs'], cls=Encoder, ensure_ascii=False)}")
             if r.get("answer_why"):
                 print(f"    answer {r['answer_why']}")
+            if r.get("leaked"):
+                print(f"    reply {r['reply']}")
             if r.get("error"):
                 print(f"    error {r['error']}")
 

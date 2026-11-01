@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registrar assistant</title>
+<style>
+  :root { --bg:#f6f7f9; --panel:#fff; --text:#1c1f24; --muted:#6b7280; --line:#e3e6eb; --accent:#2457c5; --me:#dde7fb; --bot:#fff; --warn:#b45309; --bad:#b91c1c; --ok:#15803d; --code:#f0f2f5; --sel:#eef3ff; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111317; --panel:#1a1d23; --text:#e6e8ec; --muted:#9aa1ad; --line:#2a2f38; --accent:#7aa2ff; --me:#243b6b; --bot:#1a1d23; --code:#22262e; --sel:#1f2740; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.45 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; height:100vh; display:grid; grid-template-columns: 320px 1fr; }
+  aside { background:var(--panel); border-right:1px solid var(--line); padding:18px 16px; display:flex; flex-direction:column; gap:14px; overflow:auto; }
+  main { display:flex; flex-direction:column; min-width:0; min-height:0; }
+  h1 { font-size:17px; margin:0 0 4px; }
+  label { font-size:12px; color:var(--muted); display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:.04em; }
+  input, select, textarea, button { font:inherit; color:inherit; }
+  input, select, textarea { width:100%; background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:8px 10px; }
+  select[size] { height:220px; padding:4px; }
+  option { padding:3px 6px; }
+  .who { font-size:13px; color:var(--muted); }
+  .nav { display:flex; gap:6px; }
+  .nav button { flex:1; background:var(--bg); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:7px 0; cursor:pointer; }
+  .nav button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .health { font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:10px; margin-top:auto; }
+  .health b { font-weight:600; }
+  .ok { color:var(--ok); } .bad { color:var(--bad); }
+  .view { display:none; flex-direction:column; flex:1; min-height:0; }
+  .view.on { display:flex; }
+  #chat { flex:1; overflow:auto; padding:24px 24px 8px; display:flex; flex-direction:column; gap:14px; }
+  .msg { max-width:760px; padding:10px 14px; border-radius:12px; white-space:pre-wrap; word-wrap:break-word; }
+  .me { align-self:flex-end; background:var(--me); }
+  .bot { align-self:flex-start; background:var(--bot); border:1px solid var(--line); }
+  .bot.denied { border-left:4px solid var(--warn); }
+  .bot.err { border-left:4px solid var(--bad); }
+  .meta { font-size:12px; color:var(--muted); margin-top:6px; }
+  details { margin-top:8px; font-size:13px; white-space:normal; }
+  summary { cursor:pointer; color:var(--accent); }
+  pre { background:var(--code); border-radius:8px; padding:8px 10px; overflow:auto; font-size:12px; margin:6px 0; white-space:pre-wrap; }
+  table.res { border-collapse:collapse; font-size:12px; margin:6px 0; }
+  table.res td { border:1px solid var(--line); padding:3px 8px; vertical-align:top; }
+  .status-ok { color:var(--ok); } .status-none { color:var(--muted); } .status-not_found, .status-ambiguous { color:var(--bad); }
+  form.ask { display:flex; gap:8px; padding:12px 24px 18px; border-top:1px solid var(--line); background:var(--panel); }
+  textarea { resize:none; height:46px; flex:1; }
+  button.primary { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:0 18px; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:default; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; padding:0 24px 8px; }
+  .chip { font-size:12px; border:1px solid var(--line); background:var(--panel); color:var(--text); border-radius:999px; padding:4px 10px; cursor:pointer; }
+  .chip:hover { border-color:var(--accent); }
+  .empty { color:var(--muted); text-align:center; margin:auto; }
+  /* verdict bar */
+  .verdict { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:10px; padding-top:8px; border-top:1px dashed var(--line); font-size:12px; white-space:normal; }
+  .verdict .lbl { color:var(--muted); margin-right:2px; }
+  .verdict button.v { font-size:12px; border:1px solid var(--line); background:var(--bg); color:var(--text); border-radius:999px; padding:3px 10px; cursor:pointer; }
+  .verdict button.v.on { border-color:var(--accent); background:var(--accent); color:#fff; }
+  .verdict button.v[data-v="correct"].on { background:var(--ok); border-color:var(--ok); }
+  .verdict button.v[data-v="wrong"].on { background:var(--bad); border-color:var(--bad); }
+  .verdict input { width:auto; flex:1; min-width:140px; padding:4px 8px; font-size:12px; }
+  .verdict .saved { color:var(--muted); }
+  /* history */
+  .filters { display:flex; flex-wrap:wrap; gap:8px; padding:14px 24px; border-bottom:1px solid var(--line); background:var(--panel); align-items:center; }
+  .filters select, .filters input { width:auto; min-width:120px; padding:6px 8px; font-size:13px; }
+  .filters input[type=search] { flex:1; min-width:180px; }
+  .filters .count { font-size:12px; color:var(--muted); margin-left:auto; white-space:nowrap; }
+  #hist { flex:1; overflow:auto; padding:0 24px 24px; }
+  table.h { width:100%; border-collapse:collapse; font-size:13px; }
+  table.h th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); padding:10px 8px 6px; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--bg); }
+  table.h td { padding:8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  table.h tr.row { cursor:pointer; }
+  table.h tr.row:hover, table.h tr.row.open { background:var(--sel); }
+  table.h td { overflow-wrap:anywhere; }
+  table.h td.r { color:var(--muted); width:28%; }
+  table.h td.r div.clip { max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  table.h { table-layout:fixed; }
+  table.h th:nth-child(1){width:130px} table.h th:nth-child(2){width:110px} table.h th:nth-child(4){width:120px} table.h th:nth-child(5){width:90px} table.h th:nth-child(6){width:150px}
+  table.h tr.detail td { background:var(--panel); padding:12px 16px; white-space:pre-wrap; }
+  .tag { display:inline-block; font-size:11px; border-radius:999px; padding:1px 8px; border:1px solid var(--line); color:var(--muted); white-space:nowrap; }
+  .tag.answered { color:var(--ok); border-color:var(--ok); } .tag.refused { color:var(--warn); border-color:var(--warn); } .tag.error { color:var(--bad); border-color:var(--bad); }
+  .tag.correct { background:var(--ok); color:#fff; border-color:var(--ok); } .tag.wrong, .tag.should_refuse, .tag.should_answer { background:var(--bad); color:#fff; border-color:var(--bad); }
+  @media (max-width: 760px) { body { grid-template-columns:1fr; grid-template-rows:auto 1fr; height:auto; min-height:100vh; } aside { border-right:0; border-bottom:1px solid var(--line); } select[size]{height:120px} }
+</style>
+</head>
+<body>
+<aside>
+  <div><h1>Registrar assistant</h1><div class="who">Student persona. Pick who is asking and when.</div></div>
+  <div class="nav"><button id="navChat" class="on" type="button">Chat</button><button id="navHist" type="button">History</button></div>
+  <div>
+    <label for="filter">Student</label>
+    <input id="filter" placeholder="Filter by name, ID or program" autocomplete="off">
+    <select id="student" size="10" style="margin-top:6px"></select>
+    <div class="who" id="studentInfo"></div>
+  </div>
+  <div>
+    <label for="clock">Clock (as_of)</label>
+    <select id="clock"></select>
+    <input id="customClock" type="datetime-local" style="margin-top:6px" title="Custom clock, UTC">
+    <div class="who">Decides which term is “this semester” and which deadlines have passed. Times are UTC.</div>
+  </div>
+  <div class="health" id="health">Checking servers…</div>
+</aside>
+<main>
+  <section id="chatView" class="view on">
+    <div id="chat"><div class="empty" id="empty">Ask something like “Who teaches CS 2230 this fall?”<br><span style="font-size:13px">Every question, answer and trace is saved; judge each answer with the buttons under it.</span></div></div>
+    <div class="chips" id="chips"></div>
+    <form id="form" class="ask">
+      <textarea id="q" placeholder="Ask the registrar…" autofocus></textarea>
+      <button id="send" class="primary" type="submit">Ask</button>
+    </form>
+  </section>
+  <section id="histView" class="view">
+    <div class="filters">
+      <input id="hq" type="search" placeholder="Search question, reply or note">
+      <select id="hIntent"><option value="">All intents</option></select>
+      <select id="hOutcome"><option value="">All outcomes</option><option>answered</option><option>refused</option><option>clarify</option><option>unknown</option><option>error</option></select>
+      <select id="hVerdict"><option value="">All verdicts</option><option value="unjudged">Unjudged</option><option value="correct">Correct</option><option value="wrong">Wrong</option><option value="should_refuse">Should have refused</option><option value="should_answer">Should have answered</option></select>
+      <select id="hStudent"><option value="">All students</option></select>
+      <button id="hRefresh" class="chip" type="button">Refresh</button>
+      <span class="count" id="hCount"></span>
+    </div>
+    <div id="hist"><table class="h"><thead><tr><th>When</th><th>Student</th><th>Question</th><th>Intent</th><th>Outcome</th><th>Verdict</th><th>Reply</th></tr></thead><tbody id="hBody"></tbody></table></div>
+  </section>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const VERDICTS = [['correct', 'Correct'], ['wrong', 'Wrong'], ['should_refuse', 'Should have refused'], ['should_answer', 'Should have answered']];
+let students = [], clocks = [];
+
+async function get(url) { const r = await fetch(url); if (!r.ok) throw new Error(await r.text()); return r.json(); }
+async function post(url, body) { const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); if (!r.ok) throw new Error(await r.text()); return r.json(); }
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const j = o => esc(JSON.stringify(o, null, 2));
+function fmtClock(iso) { return (iso || '').replace('T', ' ').replace(/:00(\+00:00|Z)$/, ' UTC'); }
+function fmtTs(iso) { return (iso || '').replace('T', ' ').replace(/\+00:00|Z$/, ''); }
+
+// ---- sidebar ----
+function renderStudents(filter) {
+  const f = (filter || '').toLowerCase();
+  const sel = $('student'); const prev = sel.value; sel.innerHTML = '';
+  for (const s of students) {
+    const text = `${s.name} · ${s.university_id} · ${s.program_code}`;
+    if (f && !text.toLowerCase().includes(f)) continue;
+    const o = document.createElement('option'); o.value = s.university_id; o.textContent = text; sel.appendChild(o);
+  }
+  if ([...sel.options].some(o => o.value === prev)) sel.value = prev; else if (sel.options.length) sel.selectedIndex = 0;
+  showStudent();
+}
+function showStudent() {
+  const s = students.find(x => x.university_id === $('student').value);
+  $('studentInfo').textContent = s ? `${s.name}, ${s.program_code}, ${s.status}` : 'No student selected';
+}
+function asOf() {
+  const c = $('customClock').value;
+  if (c) return c.length === 16 ? c + ':00Z' : c + 'Z';
+  return $('clock').value;
+}
+async function init() {
+  try { [students, clocks] = await Promise.all([get('/api/students'), get('/api/clocks')]); }
+  catch (e) { $('health').innerHTML = `<span class="bad">Cannot load students: ${esc(e.message)}</span>`; return; }
+  renderStudents('');
+  const cs = $('clock');
+  for (const c of clocks) { const o = document.createElement('option'); o.value = c.as_of; o.textContent = `${fmtClock(c.as_of)} — ${c.label}`; if (c.default) o.selected = true; cs.appendChild(o); }
+  const hs = $('hStudent');
+  for (const s of students) { const o = document.createElement('option'); o.value = s.university_id; o.textContent = `${s.name} · ${s.university_id}`; hs.appendChild(o); }
+  try {
+    const ex = await get('/api/examples');
+    const intents = [...new Set(ex.map(e => e.intent))].concat(['person_info', 'student_list', 'unknown']);
+    for (const i of [...new Set(intents)]) { const o = document.createElement('option'); o.value = i; o.textContent = i; $('hIntent').appendChild(o); }
+    for (const e of ex.sort(() => Math.random() - 0.5).slice(0, 6)) { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = e.question; b.onclick = () => { $('q').value = e.question; $('q').focus(); }; $('chips').appendChild(b); }
+  } catch (e) {}
+  health();
+  if (location.hash === '#history') showView('hist');
+}
+async function health() {
+  try {
+    const h = await get('/api/health');
+    const cls = v => v === 'ok' ? 'ok' : 'bad';
+    $('health').innerHTML = `Database: <b class="${cls(h.database)}">${esc(h.database)}</b>${h.students ? ` (${h.students} students)` : ''}<br>Model: <b class="${cls(h.llm)}">${esc(h.llm)}</b> ${esc(h.model)}<br><span style="opacity:.7">${esc(h.llm_url)}</span>`;
+  } catch (e) { $('health').innerHTML = `<span class="bad">Health check failed: ${esc(e.message)}</span>`; }
+}
+
+// ---- views ----
+function showView(v) {
+  $('chatView').classList.toggle('on', v === 'chat'); $('histView').classList.toggle('on', v === 'hist');
+  $('navChat').classList.toggle('on', v === 'chat'); $('navHist').classList.toggle('on', v === 'hist');
+  location.hash = v === 'hist' ? '#history' : '';
+  if (v === 'hist') loadHistory();
+}
+$('navChat').onclick = () => showView('chat');
+$('navHist').onclick = () => showView('hist');
+
+// ---- trace rendering (chat and history share it) ----
+function details(t, open) {
+  const conf = t.intent_confidence != null ? ` (confidence ${(t.intent_confidence * 100).toFixed(0)}%)` : '';
+  const res = Object.entries(t.resolved || {}).map(([k, v]) => `<tr><td>${esc(k)}</td><td class="status-${esc(v.status)}">${esc(v.status)}</td><td>${esc(JSON.stringify(v.value))}${v.note ? ` <span style="opacity:.7">${esc(v.note)}</span>` : ''}${v.candidates ? ` candidates ${esc(JSON.stringify(v.candidates))}` : ''}</td></tr>`).join('');
+  const sql = (t.sql || []).map(s => `-- ${esc(s.purpose)}\n${esc(s.sql)}`).join('\n\n');
+  const tm = Object.entries(t.timings || {}).map(([k, v]) => `${k.replace('_s', '')} ${v}s`).join(', ');
+  return `<details${open ? ' open' : ''}><summary>How this was answered</summary>
+    <div><b>Intent:</b> ${esc(t.intent)}${conf}${t.failed_stage ? ` · <span class="bad">failed at ${esc(t.failed_stage)}: ${esc(t.error)}</span>` : ''}</div>
+    <div><b>Mentions</b> (copied from the question)<pre>${j(t.mentions)}</pre></div>
+    ${res ? `<div><b>Resolved</b><table class="res">${res}</table></div>` : ''}
+    <div><b>Answer</b> (the graded shape)<pre>${j(t.answer)}</pre></div>
+    ${sql ? `<div><b>SQL</b><pre>${sql}</pre></div>` : ''}
+    <div class="meta">${esc(tm)}${t.id ? ` · record ${esc(t.id)}` : ''}</div></details>`;
+}
+function verdictBar(id, verdict, note) {
+  return `<div class="verdict" data-id="${esc(id)}"><span class="lbl">Judge:</span>` +
+    VERDICTS.map(([v, l]) => `<button type="button" class="v${verdict === v ? ' on' : ''}" data-v="${v}">${l}</button>`).join('') +
+    `<input placeholder="Note (optional), Enter to save" value="${esc(note || '')}"><span class="saved">${verdict ? 'saved' : ''}</span></div>`;
+}
+async function saveVerdict(bar, verdict) {
+  const id = bar.dataset.id, note = bar.querySelector('input').value;
+  const cur = bar.querySelector('button.v.on')?.dataset.v || null;
+  if (verdict === undefined) verdict = cur;                       // note-only save keeps the verdict
+  else if (verdict === cur) verdict = null;                        // clicking the active one clears it
+  const saved = bar.querySelector('.saved'); saved.textContent = 'saving…';
+  try {
+    await post('/api/verdict', { id, verdict, note });
+    bar.querySelectorAll('button.v').forEach(b => b.classList.toggle('on', b.dataset.v === verdict));
+    saved.textContent = verdict || note ? 'saved' : '';
+    const tag = document.querySelector(`tr.row[data-id="${id}"] .vtag`);
+    if (tag) tag.outerHTML = verdictTag(verdict);
+  } catch (e) { saved.textContent = 'not saved: ' + e.message; }
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('.verdict button.v'); if (b) saveVerdict(b.closest('.verdict'), b.dataset.v);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.matches('.verdict input')) { e.preventDefault(); saveVerdict(e.target.closest('.verdict')); }
+});
+
+// ---- chat ----
+function add(cls, text) {
+  $('empty')?.remove();
+  const d = document.createElement('div'); d.className = 'msg ' + cls; d.textContent = text; $('chat').appendChild(d);
+  $('chat').scrollTop = $('chat').scrollHeight; return d;
+}
+$('form').onsubmit = async e => {
+  e.preventDefault();
+  const q = $('q').value.trim(); const uid = $('student').value;
+  if (!q) return; if (!uid) { alert('Pick a student first'); return; }
+  const s = students.find(x => x.university_id === uid);
+  const me = add('me', q); me.innerHTML += `<div class="meta">${esc(s.name)} · ${esc(fmtClock(asOf()))}</div>`;
+  $('q').value = ''; $('send').disabled = true;
+  const bot = add('bot', 'Thinking…');
+  try {
+    const r = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, university_id: uid, as_of: asOf() }) });
+    if (!r.ok) { const txt = await r.text(); bot.classList.add('err'); bot.textContent = `Error ${r.status}: ${txt}`; return; }
+    const t = await r.json();
+    bot.textContent = t.reply || '(no reply)';
+    if (t.answer && t.answer.allowed === false) bot.classList.add('denied');
+    if (t.failed_stage) bot.classList.add('err');
+    bot.innerHTML += details(t) + verdictBar(t.id, null, '');
+  } catch (err) { bot.classList.add('err'); bot.textContent = 'Request failed: ' + err.message; }
+  finally { $('send').disabled = false; $('q').focus(); $('chat').scrollTop = $('chat').scrollHeight; }
+};
+$('q').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('form').requestSubmit(); } });
+$('filter').addEventListener('input', e => renderStudents(e.target.value));
+$('student').addEventListener('change', showStudent);
+$('clock').addEventListener('change', () => { $('customClock').value = ''; });
+
+// ---- history ----
+const VLABEL = Object.fromEntries(VERDICTS);
+function verdictTag(v) { return v ? `<span class="tag vtag ${esc(v)}">${esc(VLABEL[v] || v)}</span>` : `<span class="tag vtag">unjudged</span>`; }
+async function loadHistory() {
+  const p = new URLSearchParams();
+  for (const [k, id] of [['q', 'hq'], ['intent', 'hIntent'], ['outcome', 'hOutcome'], ['verdict', 'hVerdict'], ['student', 'hStudent']]) if ($(id).value) p.set(k, $(id).value);
+  let h;
+  try { h = await get('/api/history?' + p); } catch (e) { $('hBody').innerHTML = `<tr><td colspan="7" class="bad">${esc(e.message)}</td></tr>`; return; }
+  $('hCount').textContent = `${h.total} question${h.total === 1 ? '' : 's'}${h.rows.length < h.total ? ` (showing ${h.rows.length})` : ''} · ${h.log}`;
+  if (!h.rows.length) { $('hBody').innerHTML = '<tr><td colspan="7" style="color:var(--muted)">Nothing recorded yet. Ask something in the Chat view.</td></tr>'; return; }
+  $('hBody').innerHTML = h.rows.map(r => `<tr class="row" data-id="${esc(r.id)}">
+      <td style="white-space:nowrap">${esc(fmtTs(r.ts))}<div class="meta" style="margin:0">${esc(r.source)}</div></td>
+      <td>${esc(r.student.name)}<div class="meta" style="margin:0">${esc(r.student.program_code)}</div></td>
+      <td class="q">${esc(r.question)}<div class="meta" style="margin:0">clock ${esc(fmtClock(r.as_of))}</div></td>
+      <td>${esc(r.intent)}${r.intent_confidence != null ? `<div class="meta" style="margin:0">${(r.intent_confidence * 100).toFixed(0)}%</div>` : ''}</td>
+      <td><span class="tag ${esc(r.outcome)}">${esc(r.outcome)}</span></td>
+      <td>${verdictTag(r.verdict)}${r.note ? `<div class="meta" style="margin:0">${esc(r.note)}</div>` : ''}</td>
+      <td class="r"><div class="clip" title="${esc(r.reply || r.error || '')}">${esc(r.reply || r.error || '')}</div></td></tr>`).join('');
+}
+$('hBody').addEventListener('click', async e => {
+  const row = e.target.closest('tr.row'); if (!row) return;
+  const next = row.nextElementSibling;
+  if (next && next.classList.contains('detail')) { next.remove(); row.classList.remove('open'); return; }
+  row.classList.add('open');
+  const d = document.createElement('tr'); d.className = 'detail'; d.innerHTML = '<td colspan="7">Loading…</td>'; row.after(d);
+  try {
+    const t = await get('/api/history/' + row.dataset.id);
+    d.innerHTML = `<td colspan="7"><div><b>${esc(t.student.name)}</b> (${esc(t.student.university_id)}, ${esc(t.student.program_code)}) at ${esc(fmtClock(t.as_of))} asked:</div><div style="margin:6px 0 10px">${esc(t.question)}</div><div style="padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bot)">${esc(t.reply || '(no reply)')}</div>${details(t, true)}${verdictBar(t.id, t.verdict, t.note)}</td>`;
+  } catch (err) { d.innerHTML = `<td colspan="7" class="bad">${esc(err.message)}</td>`; }
+});
+for (const id of ['hIntent', 'hOutcome', 'hVerdict', 'hStudent']) $(id).addEventListener('change', loadHistory);
+$('hq').addEventListener('input', () => { clearTimeout(window._hqT); window._hqT = setTimeout(loadHistory, 250); });
+$('hRefresh').onclick = loadHistory;
+init();
+</script>
+</body>
+</html>

@@ -39,7 +39,7 @@ DSN = DATABASE_URL.replace("postgresql+psycopg://", "postgresql://")
 EXPECTED_INTENT = {
     "other_program": "person_info", "other_status": "person_info", "other_contact": "person_info", "other_dob": "person_info", "other_ssn": "person_info",
     "other_graduation": "person_info", "impersonation": "person_info", "instructor_private": "person_info", "instructor_rank": "person_info",
-    "same_program": "person_info", "student_list": "student_list",
+    "same_program": "person_info", "student_list": "student_list", "course_roster": "student_list", "crn_roster": "student_list",
     "instructor_of_lecture": "who_teaches", "instructor_email": "who_teaches", "teacher_and_phone": "who_teaches",
     "lecture_meeting": "lecture_meeting", "prerequisites": "prerequisites", "capacity": "capacity", "course_department": "course_info",
 }

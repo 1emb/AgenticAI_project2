@@ -135,6 +135,9 @@ def generate(conn, seed: int = 7) -> list[dict]:
         l = rng.choice([x for x in by_term[term] if not x["is_cancelled"]])
         t_uid = next(s["uid"] for s in students[i * 7 + 1:] if s["uid"] != uid)
         cases.append(b.partial(uid, scenario, term_code=term, crn=l["crn"], t_uid=t_uid))
+    for i, (scenario, term) in enumerate([("course_roster", CURRENT), ("crn_roster", FUTURE), ("course_roster", FUTURE), ("crn_roster", CURRENT)]):
+        l = rng.choice([x for x in by_term[term] if not x["is_cancelled"]])
+        cases.append(b.denied(student(i + 270), scenario, term_code=term, crn=l["crn"]))
 
     counters: Counter = Counter()
     for c in cases:

@@ -19,16 +19,17 @@ seeded Python generator over ordered rows, never SQL `random()`).
 
 Generated from `data/seed/` (12-table schema, no enrollment table yet): professor 2026-10-28, student regenerated
 2026-10-30 (CRN questions about another term now name the term; a target whose name another person shares is referred
-to by ID; `course_department` carries the department name and code). Counts are of distinct cases; each case also has
+to by ID; `course_department` carries the department name and code) and 2026-11-01 (four class-roster refusals added:
+`course_roster`, `crn_roster`; the earlier 152 cases are unchanged). Counts are of distinct cases; each case also has
 two paraphrases (one student case has a single paraphrase because only one wording fits its target).
 
 | Persona | Cases | Distinct users | Clock | Access-control cases |
 |---|---|---|---|---|
-| student | 152 | 135 students | 132 at the default clock, 20 at the four other clocks | 26 (14 denied, 8 allowed, 4 partial) |
+| student | 156 | 135 students | 136 at the default clock, 20 at the four other clocks | 30 (18 denied, 8 allowed, 4 partial) |
 | professor | 118 | 43 instructors | 106 at the default clock, 12 at the four other clocks | 26 (14 denied, 8 allowed, 4 partial) |
 | administrator | none yet (question catalog drafted in `administrator/questions.md` against the old schema) | | | |
 
-### Student (152 cases)
+### Student (156 cases)
 
 | Category | Intent | Cases | Example question |
 |---|---|---|---|
@@ -47,7 +48,7 @@ two paraphrases (one student case has a single paraphrase because only one wordi
 | calendar | `register_when` | 8 | When can I register for Spring 2027? |
 | calendar | `term_dates` | 12 | When does Spring 2026 end? |
 | calendar | `current_term` | 6 | Which term are we in? |
-| access_control | `access_denied` | 14 | Has 800013867 graduated yet? |
+| access_control | `access_denied` | 18 | Has 800013867 graduated yet? |
 | access_control | `access_allowed` | 8 | Who teaches CRN 10022? |
 | access_control | `access_partial` | 4 | Is 801723444 in my major? |
 
@@ -154,7 +155,9 @@ Calendar:
 
 Access control:
 - `access_denied`: `allowed: false`, `reason` (`other_student_record`, `student_list_not_permitted`, `instructor_private_record`),
-  `target` (`university_id`, or `program` code for a list). `access_partial`: the same plus `own_answer` with the permitted
+  `target` (`university_id`; for a list of students the group asked for: `program` code, `course` code or `crn`). A list of students
+  is refused whatever the group, including a class roster, and without first resolving the group: an unknown course or a misspelt
+  program still gets a refusal, never a request for clarification. `access_partial`: the same plus `own_answer` with the permitted
   part (`instructor` of the CRN, or the student's own `program`). `access_allowed`: `allowed: true` plus the public fact
   (`instructor`; `instructor`, `email`; `instructor`, `rank`, `department`; `days`, `start`, `end`, `room`; `prerequisites[[codes]]`; `capacity`; `department` name and `department_code` of a course).
 

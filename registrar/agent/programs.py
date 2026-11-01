@@ -197,8 +197,23 @@ def person_info(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
 
 
 def student_list(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
-    code = need("program", r["program"])
-    return denied("student_list_not_permitted", {"program": code})
+    """Always refused. Nothing has to resolve first: a roster for an unknown course or a misspelt program is still a refusal, not a
+    request for clarification. The target says which group was asked for: CRN, course, program (when one was named), or the words used."""
+    if r["crn"].ok:
+        target = {"crn": r["crn"].value}
+        if r["term"].ok:
+            target["term"] = r["term"].value["name"]
+    elif r["course"].status != "none":
+        target = {"course": r["course"].value} if r["course"].value else {"group": r["course"].note}
+        if r["course"].ok and r["term"].ok:
+            target["term"] = r["term"].value["name"]
+    elif r["program"].ok and not (r["program"].note or "").startswith("default"):
+        target = {"program": r["program"].value}
+    elif r["program"].status in ("not_found", "ambiguous"):
+        target = {"group": r["program"].note}
+    else:
+        target = {"group": "students"}
+    return denied("student_list_not_permitted", target)
 
 
 def unknown(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:

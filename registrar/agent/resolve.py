@@ -162,8 +162,10 @@ def program(q: QueryLog, mention: str | None, own_program_code: str) -> Resolved
     """A program name, code, or a subject word ('computer science') -> program code. 'my program'/none -> the asker's own program."""
     m = _clean(mention).lower()
     rows = q.rows("programs", "SELECT code, name, degree, department_code FROM program ORDER BY code")
-    if not m or re.search(r"\b(my|our)\b", m):
-        return Resolved(own_program_code, "ok", note="default: the asker's own program")
+    if not m:
+        return Resolved(own_program_code, "ok", note="default: no program named, taking the asker's own")
+    if re.search(r"\b(my|our)\b", m):
+        return Resolved(own_program_code, "ok", note="the asker's own program")
     exact = [r for r in rows if r["code"].lower() == m or r["name"].lower() == m]
     if len(exact) == 1:
         return Resolved(exact[0]["code"], "ok")

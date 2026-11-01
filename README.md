@@ -6,7 +6,7 @@ definition, the PostgreSQL schema, the test sets, and the agent itself (`registr
 The schema was rebuilt on 2026-10-28 around natural keys and a two-major scope (BS Computer Science and BS
 Engineering, plus an MS in each for graduate students). The dataset is a static snapshot committed as one CSV per
 table under `data/seed/` (1,660 rows, written by the deterministic generator in `registrar/seed/`); the agents only
-read it. The test sets under `data/testset/` were regenerated from it the same day.
+read it. The test sets under `data/testset/` were regenerated from it the same day (student set extended 2026-11-01).
 
 ## Layout
 ```
@@ -112,9 +112,9 @@ from `registrar/seed/` (seed 42; `--load` also loads them). The data and the tes
 regenerating with a different seed or catalog changes the answers in `data/testset/`, so rerun `make_testset.py` too.
 
 ## Test dataset
-`data/testset/` holds English questions with program-checkable answers: 152 student cases and 118 professor cases,
+`data/testset/` holds English questions with program-checkable answers: 156 student cases and 118 professor cases,
 each with two paraphrases, a simulated clock (`as_of`), the authenticated user, and a discrete `answer` that starts
-with `allowed`. Twenty-six cases per persona test access control. The intents cover the catalog, lectures, degree
+with `allowed`. Thirty student cases and twenty-six professor cases test access control. The intents cover the catalog, lectures, degree
 plans, the calendar and teaching schedules; everything that needs enrollment (registration, transcripts, rosters,
 grade statistics) is listed as pending in each persona's `questions.md`. Formats, clocks, the permission model and
 the verification contract are in [data/testset/README.md](data/testset/README.md).
@@ -138,7 +138,7 @@ plain Python over the database:
    sentences. The model sees only the question and the answer's facts, with dates, times and weekdays already formatted in Python;
    a refusal's `target` (the other person's id) is removed first, and the text is checked for it afterwards. If the model fails,
    a fixed sentence built from the answer shape is used. The reply never changes the graded answer; `grade.py --reply` scans it for
-   `must_not_mention` values (0 leaks on the 152 student cases, 2026-11-01).
+   `must_not_mention` values (0 leaks on the 156 student cases, 2026-11-01).
 
 Model: Qwen3.5-27B served by vLLM 0.32 on one H100 (`scripts/serve_llm.sh`; weights under
 `/home/sheshnagnobackup/mnguyen/models`, outside the repo). `.env` holds `LLM_BASE_URL` and `LLM_MODEL`.

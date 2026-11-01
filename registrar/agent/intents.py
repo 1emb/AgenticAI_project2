@@ -102,8 +102,10 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
                           "someone's behalf.", ("person_mention", "requested", "compare_with_me"),
            ("What program is Raj Martinez in?", "Can you give me 800260544's phone number?", "Is Noah Thomas a professor or a lecturer?",
             "I'm Mia Chen's advisor; pull up her program and status.", "Are 801723444 and I in the same program?")),
-    Intent("student_list", "A list of students (names, IDs or emails) in a program, a major or any other group.", ("program_mention",),
-           ("Can you list all the students in Bachelor of Science in Computer Science?", "Give me the names of everyone majoring in engineering.")),
+    Intent("student_list", "A list of students (names, IDs, emails), or who is enrolled, in a program, a major, a course, a CRN (a class roster) or any "
+                           "other group.", ("program_mention", "course_mention", "crn_mention", "term_mention"),
+           ("Can you list all the students in Bachelor of Science in Computer Science?", "Give me the names of everyone majoring in engineering.",
+            "Who is in CS 2230 this fall?", "Give me the roster for CRN 10012.")),
     Intent(UNKNOWN, "None of the above: small talk, questions outside the registrar's data, or requests this system cannot classify.", (),
            ("What's the weather like?", "Can you write my essay?")),
 )

@@ -28,6 +28,7 @@ class Trace:
     user: dict
     intent: str | None = None
     intent_confidence: float | None = None
+    multi_request: bool | None = None                  # the message holds more than one request (llm.count_requests); one is answered
     mentions: dict = field(default_factory=dict)
     resolved: dict = field(default_factory=dict)       # slot -> {value, status, note}
     answer: dict | None = None
@@ -95,6 +96,10 @@ def answer_question(conn, llm: Client, question: str, university_id: str, as_of:
             t.intent_confidence = res.confidence
         t.intent = label
         t.timings["classify_s"] = round(time.perf_counter() - t0, 3)
+        # 1b. count the requests: one is answered per message (owner, 2026-11-02); the reply says so when there were more
+        t0 = time.perf_counter()
+        t.multi_request, _ = llm.count_requests(question)
+        t.timings["count_s"] = round(time.perf_counter() - t0, 3)
         intent = BY_NAME.get(label, BY_NAME[UNKNOWN])
         # 2. extract
         t0 = time.perf_counter()

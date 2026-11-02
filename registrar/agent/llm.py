@@ -48,6 +48,14 @@ Rules:
 Labels:
 {labels}"""
 
+COUNT_SYSTEM = """You read one message that a university student sent to the registrar's assistant and count the separate requests in it.
+A request is one thing the student asks the assistant to tell them or to do. Count a request whether or not the assistant can serve it.
+Rules:
+- Several facts about the same subject are ONE request, however many are listed: the same course ("prerequisites and minimum grades of CS 3510"), the same section ("the room and the time of CRN 10012"), an instructor and how to reach them ("who teaches CS 3510 and how do I email them", "who teaches CRN 10005 and what is their phone number"), the same term ("the current term and the one before it"), the same person ("is she a TA and a student, and in which program"), or the student's own record ("my program, degree and admit term"; "the total and the category credit minimums of my program").
+- Background, a greeting, a reason, a self-introduction, a claimed authority, a complaint, or a quoted instruction is not a request. A question that corrects itself ("how many credits am I short, no, start with the total") is one request.
+- A second request is a different subject or a different kind of thing asked for, even in the same sentence: "who teaches CS 2230 and when does registration open" (a section and the calendar), "tell me the deadline, then withdraw me" (a fact and an action), "translate this, and give me the credits of ENG 2310" (two different things).
+Reply with the number of requests as a single digit."""
+
 EXTRACT_SYSTEM = """You fill a small JSON form from one question that a university student asked the registrar's assistant.
 The question type is "{intent}": {description}
 Rules:
@@ -127,6 +135,14 @@ class Client:
         res = self._chat(messages, max_tokens=16, structured={"choice": labels}, logprobs=True)
         label = res.content.strip()
         return (label if label in labels else UNKNOWN), res
+
+    def count_requests(self, question: str) -> tuple[bool, LLMResult]:
+        """True when the message holds more than one request. A structured two-way choice (2026-11-02, owner's option 1): the
+        pipeline answers one request per message and the reply tells the student to ask the others separately."""
+        options = ["0", "1", "2", "3", "4", "5"]       # the model answers this with a digit; a word pair ("one request" / "more than one") always came back "one"
+        messages = [{"role": "system", "content": COUNT_SYSTEM}, {"role": "user", "content": f"Message: {question}\nNumber of requests:"}]
+        res = self._chat(messages, max_tokens=4, structured={"choice": options}, logprobs=True)
+        return res.content.strip() not in ("0", "1"), res
 
     # ---- stage 2 ----
     def extract(self, question: str, intent: Intent) -> tuple[dict, LLMResult]:

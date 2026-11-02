@@ -301,7 +301,14 @@ def r_missing(a, t):
     return lead + SLOT_QUESTION.get(slot, "Please ask again with a little more detail.")
 
 
+MULTI_REQUEST = " You asked more than one thing; I handle one request per message, so please ask the rest separately."
+
+
 def render(t: Trace) -> str:
+    return _render_one(t) + (MULTI_REQUEST if getattr(t, "multi_request", False) else "")
+
+
+def _render_one(t: Trace) -> str:
     a = t.answer
     if a is None:
         return "I couldn't complete that lookup. Please try again."

@@ -121,7 +121,11 @@ the verification contract are in [data/testset/README.md](data/testset/README.md
 
 ## Agent
 `registrar/agent/` answers a student's English question in four stages; the first two are calls to a local LLM, the rest is
-plain Python over the database:
+plain Python over the database. One request is answered per message (owner, 2026-11-02): a third small LLM call,
+`count_requests`, answers "how many requests?" with a digit (a word pair such as "one request / more than one" always came back
+"one"), and when it says more than one the reply ends with "You asked more than one thing; I handle one request per message, so
+please ask the rest separately." Measured on the Codex sets: every tagged two-request row flagged (25/25 dev, 60/60 and 107/108
+acceptance), fewer than one untagged row in a hundred flagged too, none of the 156 graded student questions. The classifier still decides which request is answered:
 
 1. **Classify** (`llm.py`): the model may only reply with one of the 18 labels in `intents.py`: 17 answerable question types,
    `student_list` (always refused), and `unknown` for everything else. `unknown` covers greetings and nonsense but also every

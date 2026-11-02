@@ -197,7 +197,7 @@ function details(t, open) {
   const sql = (t.sql || []).map(s => `-- ${esc(s.purpose)}\n${esc(s.sql)}`).join('\n\n');
   const tm = Object.entries(t.timings || {}).map(([k, v]) => `${k.replace('_s', '')} ${v}s`).join(', ');
   return `<details${open ? ' open' : ''}><summary>How this was answered</summary>
-    <div><b>Intent:</b> ${esc(t.intent)}${conf}${t.failed_stage ? ` · <span class="bad">failed at ${esc(t.failed_stage)}: ${esc(t.error)}</span>` : ''}</div>
+    <div><b>Intent:</b> ${esc(t.intent)}${conf}${t.multi_request ? ' · <span class="bad">more than one request; one answered</span>' : ''}${t.failed_stage ? ` · <span class="bad">failed at ${esc(t.failed_stage)}: ${esc(t.error)}</span>` : ''}</div>
     <div><b>Mentions</b> (copied from the question)<pre>${j(t.mentions)}</pre></div>
     ${res ? `<div><b>Resolved</b><table class="res">${res}</table></div>` : ''}
     <div><b>Answer</b> (the graded shape)<pre>${j(t.answer)}</pre></div>

@@ -151,14 +151,19 @@ def my_program(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
 
 # ---- calendar ----------------------------------------------------------------------------------------------------------------------------
 def register_when(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
-    """With no term named, registration means the next term (the current one is already under way)."""
+    """With no term named, registration means the next term (the current one is already under way). Individual registration
+    appointments / time tickets are not modeled (README, 2026-10-28); a question about the asker's own is answered with the general
+    window and own_appointment=True so the reply can say so (owner, 2026-11-02: "irl the database would have it or not")."""
     if r["term"].ok and r["term"].note and r["term"].note.startswith("default"):
         cur = Q.current_term(q, as_of)
         term = Q.term_by_sequence(q, cur["sequence"] + 1)
     else:
         term = need("term", r["term"])
     is_open = term["registration_opens"] <= as_of.date() <= term["add_deadline"]
-    return {"allowed": True, "term": term["name"], "registration_opens": term["registration_opens"], "add_deadline": term["add_deadline"], "is_open": is_open}
+    out = {"allowed": True, "term": term["name"], "registration_opens": term["registration_opens"], "add_deadline": term["add_deadline"], "is_open": is_open}
+    if "own_appointment" in r and r["own_appointment"].value:
+        out["own_appointment"] = True
+    return out
 
 
 def term_dates(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:

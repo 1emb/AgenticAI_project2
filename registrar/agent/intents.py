@@ -41,6 +41,9 @@ SLOTS: dict[str, dict] = {
                                  "(also birthday, age); 'social security number' (also SSN, last four); 'expected graduation' (when they graduate); "
                                  "'rank or title' (professor, lecturer); 'department'; 'hire date' (when hired); 'whole record' only when the question asks "
                                  "for the record itself or does not name any specific thing."},
+    "own_appointment": {"type": "boolean", "description": "true when the question asks for the asker's own registration appointment or "
+                                                            "time ticket ('my time ticket', 'my registration appointment', 'when is my slot to "
+                                                            "register'); false for the general registration window."},
     "compare_with_me": {"type": "boolean", "description": "true when the question compares the person with the asker: 'same program as me', "
                                                           "'in my major', 'same degree plan as mine'."},
     "program_mention": {**_STR, "description": "The program or major as written: 'Bachelor of Science in Computer Science', 'computer science', "
@@ -110,8 +113,9 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
            ("Which degree program is recorded for me?", "What is my registrar student status?", "Which term is listed as my expected graduation?",
             "What admit term is on my profile?")),
     Intent("register_when", "The general registration window for a term: its opening date, closing/add deadline, or whether that window is open at the "
-                            "supplied clock. Includes whether one can register yet or still register. This is not an individual appointment, an "
-                            "enrollment action, or a personal eligibility check.", ("term_mention",),
+                            "supplied clock. Includes whether one can register yet or still register, and a request for the asker's own "
+                            "registration appointment or time ticket (individual tickets are not recorded; the general window is the answer). "
+                            "This is not an enrollment action or a personal eligibility check.", ("term_mention", "own_appointment"),
            ("When does registration begin for the coming term?", "When does the spring registration window close?",
             "Is registration open for next semester?", "Can I still register for this term?")),
     Intent("term_dates", "A term's academic calendar date: first or last day of classes, add deadline, drop-without-W deadline, withdrawal-with-W "
@@ -141,7 +145,7 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
             "Who is in CS 2230 this fall?", "Give me the roster for CRN 10012.")),
     Intent(UNKNOWN, "Anything the listed capabilities do not cover: a greeting, thanks, nonsense, an unrelated request; personal records this "
                     "assistant does not hold (holds, grades, GPA, transcripts, degree audits or progress, waitlists, seats left or enrollment "
-                    "counts, registration appointments or time tickets, enrollment verification, the asker's own enrollment, schedule, "
+                    "counts, enrollment verification, the asker's own enrollment, schedule, "
                     "completed courses or earned credits, personal eligibility); carrying out add, drop, swap or withdraw; other offices "
                     "(tuition, balances, payment plans, refunds, financial aid, scholarships, parking, housing, dining, IT accounts, "
                     "instructor office hours, advising appointments); and registrar-adjacent data not held here (a prose description of "

@@ -212,7 +212,8 @@ def r_my_program(a, t):
 
 
 def r_register_when(a, t):
-    s = f"Registration for {a['term']} opens {_d(a['registration_opens'])} and closes {_d(a['add_deadline'])}, the add deadline."
+    s = ("I don't have individual registration appointments or time tickets. " if a.get("own_appointment") else "") + \
+        f"Registration for {a['term']} opens {_d(a['registration_opens'])} and closes {_d(a['add_deadline'])}, the add deadline."
     if a.get("is_open"):
         return s + " It is open now."
     today = t.as_of.date()

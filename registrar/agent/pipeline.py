@@ -68,6 +68,8 @@ def resolve_all(q: QueryLog, intent: Intent, mentions: dict, as_of: datetime, st
         r["person"] = resolve.person(q, get("person_mention"))
     if "requested" in intent.slots:
         r["requested"] = Resolved([REQUESTED_VALUES[v] for v in get("requested") or [] if v in REQUESTED_VALUES], "ok")
+    if "own_appointment" in intent.slots:
+        r["own_appointment"] = Resolved(bool(get("own_appointment")), "ok")
     if "compare_with_me" in intent.slots:
         r["compare_with_me"] = Resolved(bool(get("compare_with_me")), "ok")
     if "program_mention" in intent.slots:

@@ -126,7 +126,7 @@ plain Python over the database:
 1. **Classify** (`llm.py`): the model may only reply with one of the 18 labels in `intents.py`: 17 answerable question types,
    `student_list` (always refused), and `unknown` for everything else. `unknown` covers greetings and nonsense but also every
    registrar matter this assistant has no data or power for (holds, grades, GPA, transcripts, degree audits, waitlists, seats
-   left, time tickets, enrollment verification, the asker's own enrollment records, eligibility checks, carrying out
+   left, enrollment verification, the asker's own enrollment records, eligibility checks, carrying out
    add/drop/swap/withdraw) and every service that is not the registrar's (tuition, financial aid, parking, housing, dining, IT,
    instructor office hours, advising); its reply is one fixed "I don't know what you are talking about" sentence plus the scope
    sentence. Two referral labels with topic slots and an office table (`not_in_data`, `outside_registrar`, 2026-11-02, Codex design
@@ -135,7 +135,8 @@ plain Python over the database:
    Access control is not a question type: "What is Raj Martinez's phone number?" classifies as `person_info`. Each label's
    description says what it covers and which neighbouring questions belong elsewhere; the classifier rules in `CLASSIFY_SYSTEM`
    settle the boundaries that matter most: "can I take/register for COURSE" unqualified is `course_offered`, "yet/still/now" cues
-   are `register_when`, add/drop/withdraw timing is `term_dates`, "add me / withdraw me" is an action (`unknown`), and a
+   are `register_when` (so is "my time ticket": individual appointments are not recorded, the reply gives the general window and
+   says so), add/drop/withdraw timing is `term_dates`, "add me / withdraw me" is an action (`unknown`), and a
    message with two independent requests is classified by the first one in textual order.
 2. **Extract** (`llm.py`): given the type, the model fills that type's slot schema (`structured_outputs.json`) with
    *mentions*, phrases copied from the question: `{"course_mention": "Capstone Design I", "term_mention": "next spring"}`.

@@ -26,7 +26,7 @@
 {"question": "Is there a tuition hold blocking me?", "expected_intent": "unknown", "reason": "Asks about a hold, not an amount owed."}
 {"question": "How much tuition do I still owe?", "expected_intent": "unknown", "reason": "Balance question for student accounts."}
 {"question": "Can you issue an enrollment verification letter?", "expected_intent": "unknown", "reason": "Registrar document service."}
-{"question": "What is my Spring registration appointment?", "expected_intent": "unknown", "reason": "Individual appointment, not general registration."}
+{"question": "What is my Spring registration appointment?", "expected_intent": "register_when", "reason": "Own time ticket: answered with the general window plus a disclaimer (owner, 2026-11-02)."}
 {"question": "Please book an advising appointment for next week.", "expected_intent": "unknown", "reason": "Advising service; no booking is performed."}
 {"question": "What are Professor Scott's office hours?", "expected_intent": "unknown", "reason": "Instructor office hours, not teaching assignment."}
 {"question": "Who teaches CS 2230, and what's their email?", "expected_intent": "who_teaches", "reason": "One supported instructor/contact task."}

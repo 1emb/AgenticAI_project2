@@ -134,12 +134,14 @@ The schema has no permission table; the rule is stated here and implemented by t
   is refused; their email is treated as the student's and withheld.
 - Out of scope is not a permission matter (2026-11-02). Everything the 17 answerable labels and `student_list` do not cover is
   `unknown`: registrar matters with no data behind them here (holds, grades, GPA, transcripts, degree audits, waitlists, seats
-  left, time tickets, enrollment verification, the asker's own enrollment records, eligibility checks, performing
+  left, enrollment verification, the asker's own enrollment records, eligibility checks, performing
   add/drop/swap/withdraw), other offices (tuition, financial aid, parking, housing, dining, IT, instructor office hours, advising
   appointments), greetings and nonsense. The answer is `{allowed: true, unknown: true}` and the reply is the fixed "I don't know
   what you are talking about" sentence plus the scope sentence. No referral or office is given (owner's decision, 2026-11-02; the
   referral-label implementation is in commit `c436eef`). The classifier is evaluated on these questions with
-  `scripts/grade.py --cases <file>` over `data/testset/classifier/`.
+  `scripts/grade.py --cases <file>` over `data/testset/classifier/`. One carve-out (owner, 2026-11-02): "what is my time ticket /
+  registration appointment" is `register_when`; the answer is the general window with `own_appointment: true`, and the reply opens
+  with "I don't have individual registration appointments or time tickets."
 
 ## Student answer shapes
 All shapes below are preceded by `allowed: true`.

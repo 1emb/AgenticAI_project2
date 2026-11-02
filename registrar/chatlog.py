@@ -83,7 +83,7 @@ def load(path: Path = None) -> list[dict]:
 
 
 def outcome(r: dict) -> str:
-    """answered | refused | clarify | referred | unknown | error, from the recorded answer."""
+    """answered | refused | clarify | unknown | error, from the recorded answer."""
     a = r.get("answer")
     if r.get("error") and not a:
         return "error"
@@ -95,6 +95,4 @@ def outcome(r: dict) -> str:
         return "clarify"
     if a.get("unknown"):
         return "unknown"
-    if a.get("referral"):
-        return "referred"
     return "answered"

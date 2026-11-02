@@ -111,7 +111,7 @@
     <div class="filters">
       <input id="hq" type="search" placeholder="Search question, reply or note">
       <select id="hIntent"><option value="">All intents</option></select>
-      <select id="hOutcome"><option value="">All outcomes</option><option>answered</option><option>refused</option><option>clarify</option><option>referred</option><option>unknown</option><option>error</option></select>
+      <select id="hOutcome"><option value="">All outcomes</option><option>answered</option><option>refused</option><option>clarify</option><option>unknown</option><option>error</option></select>
       <select id="hVerdict"><option value="">All verdicts</option><option value="unjudged">Unjudged</option><option value="correct">Correct</option><option value="wrong">Wrong</option><option value="should_refuse">Should have refused</option><option value="should_answer">Should have answered</option></select>
       <select id="hBy"><option value="">Any judge</option><option value="owner">Judged by me</option><option value="codex">Judged by Codex</option></select>
       <select id="hStudent"><option value="">All students</option></select>
@@ -164,7 +164,7 @@ async function init() {
   for (const s of students) { const o = document.createElement('option'); o.value = s.university_id; o.textContent = `${s.name} · ${s.university_id}`; hs.appendChild(o); }
   try {
     const ex = await get('/api/examples');
-    const intents = [...new Set(ex.map(e => e.intent))].concat(['person_info', 'student_list', 'not_in_data', 'outside_registrar', 'unknown']);
+    const intents = [...new Set(ex.map(e => e.intent))].concat(['person_info', 'student_list', 'unknown']);
     for (const i of [...new Set(intents)]) { const o = document.createElement('option'); o.value = i; o.textContent = i; $('hIntent').appendChild(o); }
     for (const e of ex.sort(() => Math.random() - 0.5).slice(0, 6)) { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = e.question; b.onclick = () => { $('q').value = e.question; $('q').focus(); }; $('chips').appendChild(b); }
   } catch (e) {}

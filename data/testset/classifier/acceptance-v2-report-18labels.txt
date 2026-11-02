@@ -1,0 +1,34 @@
+model qwen3.5-27b at http://localhost:8000/v1 (served: qwen3.5-27b); 600 questions, 8 workers
+run 1: 594/600 labels correct
+run 2: 594/600 labels correct
+
+0 predictions differ between the 2 runs.
+
+expected -> predicted (off-diagonal only)
+  lecture_meeting    -> unknown            1
+  register_when      -> term_dates         1
+  current_term       -> unknown            1
+  unknown            -> capacity           1
+  unknown            -> lecture_meeting    1
+  unknown            -> course_info        1
+
+label              n  recall  precision
+capacity            30  30/30    30/31
+course_in_plan      30  30/30    30/30
+course_info         30  30/30    30/31
+course_offered      30  30/30    30/30
+current_term        30  29/30    29/29
+degree_credits      30  30/30    30/30
+degree_required     30  30/30    30/30
+lecture_meeting     30  29/30    29/30
+lecture_options     30  30/30    30/30
+my_program          30  30/30    30/30
+person_info         30  30/30    30/30
+plan_term           30  30/30    30/30
+prerequisites       30  30/30    30/30
+register_when       30  29/30    29/29
+student_list        30  30/30    30/30
+term_dates          30  30/30    30/31
+unknown             90  87/90    87/89
+who_teaches         30  30/30    30/30
+

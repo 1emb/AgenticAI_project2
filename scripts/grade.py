@@ -128,10 +128,9 @@ def conn():
     return _local.conn
 
 
-def run_llm_only(llm: Client, case: dict, question: str, which: str, classify_only: bool = False, topics: bool = False) -> dict:
+def run_llm_only(llm: Client, case: dict, question: str, which: str, classify_only: bool = False) -> dict:
     """Stages 1 and 2 without a database: the intent is graded, the mentions are shown next to the case's slots. With classify_only
-    (the --cases mode) stage 2 is skipped, so an extraction failure cannot count against the classifier; with topics as well, the
-    referral topic is chosen for rows that carry expected_topic and scored separately (topic_ok)."""
+    (the --cases mode) stage 2 is skipped, so an extraction failure cannot count against the classifier."""
     exp_int = expected_intent(case)
     out = {"id": case["id"], "which": which, "question": question, "expected_intent": exp_int, "slots_ok": False, "answer_ok": False}
     try:
@@ -139,11 +138,6 @@ def run_llm_only(llm: Client, case: dict, question: str, which: str, classify_on
         mentions = {} if classify_only else llm.extract(question, BY_NAME.get(label, BY_NAME[UNKNOWN]))[0]
         out.update(intent=label, intent_confidence=res.confidence, intent_ok=label == exp_int, mentions=mentions, expected_slots=expected_slots(case),
                    timings={"classify_s": round(res.latency_s, 3)})
-        if topics and case.get("expected_topic") is not None:
-            intent = BY_NAME.get(label if label == exp_int else exp_int)       # score the topic choice given the right label
-            picked = llm.extract(question, intent)[0] if intent.slots else {}
-            got = next(iter(picked.values()), None)
-            out.update(expected_topic=case["expected_topic"], topic=got, topic_ok=got == case["expected_topic"])
     except LLMError as e:
         out.update(error=str(e), intent_ok=False)
     return out
@@ -187,7 +181,6 @@ def main():
     ap.add_argument("--llm-only", action="store_true", help="classify and extract only; needs no database")
     ap.add_argument("--cases", help="JSONL of {question, expected_intent[, id, reason]} rows instead of the persona test set: classification only, no extraction, no database")
     ap.add_argument("--confusion", action="store_true", help="with --cases: print the confusion matrix and per-label recall/precision")
-    ap.add_argument("--topics", action="store_true", help="with --cases: also choose the referral topic for rows with expected_topic and score it")
     ap.add_argument("--repeat", type=int, default=1, help="with --cases: run the whole set N times and report predictions that differ between runs")
     ap.add_argument("--reply", action="store_true", help="also write the English reply (stage 5) and fail a case whose reply leaks a must_not_mention value")
     args = ap.parse_args()
@@ -219,7 +212,7 @@ def main():
     runs = []
     for i in range(max(1, args.repeat)):
         with ThreadPoolExecutor(args.workers) as ex:
-            runs.append(list(ex.map(lambda j: run_llm_only(llm, *j, classify_only=bool(args.cases), topics=args.topics) if args.llm_only
+            runs.append(list(ex.map(lambda j: run_llm_only(llm, *j, classify_only=bool(args.cases)) if args.llm_only
                                     else run_one(llm, *j, reply=args.reply), jobs)))
         if args.repeat > 1:
             print(f"run {i + 1}: {sum(r['intent_ok'] for r in runs[-1])}/{len(jobs)} labels correct")
@@ -230,13 +223,6 @@ def main():
         print(f"\n{len(diffs)} predictions differ between the {len(runs)} runs" + (":" if diffs else "."))
         for rid, q, labels in diffs:
             print(f"  {rid}: {labels}  {q[:90]}")
-    if args.cases and args.topics:
-        tr = [r for r in results if "topic_ok" in r]
-        if tr:
-            print(f"\ntopic choice: {sum(r['topic_ok'] for r in tr)}/{len(tr)} correct")
-            for r in tr:
-                if not r["topic_ok"]:
-                    print(f"  {r['id']}: expected '{r['expected_topic']}' got '{r['topic']}'  {r['question'][:80]}")
     if args.cases and args.confusion:
         from collections import Counter
         pairs = Counter((r["expected_intent"], r.get("intent") or "ERROR") for r in results)

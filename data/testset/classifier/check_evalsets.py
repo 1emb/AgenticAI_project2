@@ -18,7 +18,7 @@ import subprocess
 import sys
 import unicodedata
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]   # data/testset/classifier/ -> repo root (the file was written in runs/codex/)
 OUT = ROOT / "runs/codex"
 TAGS = set("typo title long two_task action_vs_info own_id incidental_person ta_student authority_claim nonexistent missing_slot crn break_clock contrast_pair greeting".split())
 COURSE_LABELS = {"prerequisites", "course_info", "course_offered", "lecture_options", "who_teaches", "capacity", "course_in_plan", "student_list"}
@@ -37,14 +37,10 @@ def spec():
     tree = ast.parse((ROOT / "registrar/agent/intents.py").read_text())
     labels, examples, enums = [], [], {}
     for node in ast.walk(tree):
-        if isinstance(node, ast.Assign):
-            for target in node.targets:
-                if isinstance(target, ast.Name) and target.id in {"REGISTRAR_TOPIC_VALUES", "OUTSIDE_TOPIC_VALUES"}:
-                    enums[target.id] = ast.literal_eval(node.value)
         if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "Intent":
             labels.append("unknown" if isinstance(node.args[0], ast.Name) else ast.literal_eval(node.args[0]))
             examples.extend(ast.literal_eval(node.args[3]))
-    assert len(labels) == 20
+    assert len(labels) == 18   # 2026-11-02: not_in_data and outside_registrar folded into unknown
     return labels, examples, enums
 
 
@@ -112,12 +108,7 @@ def audit_rows(rows, prefix, count, labels, enums, sources, strict=True):
             long_counts.append(n)
             if not 80 <= n <= 200:
                 errors.append(f"{ident}: long tag has {n} words")
-        enum_name = {"not_in_data": "REGISTRAR_TOPIC_VALUES", "outside_registrar": "OUTSIDE_TOPIC_VALUES"}.get(label)
-        if enum_name:
-            if row.get("expected_topic") not in enums[enum_name]:
-                errors.append(f"{ident}: invalid/missing readable topic")
-            per_topic[(label, row.get("expected_topic"))] += 1
-        elif "expected_topic" in row:
+        if "expected_topic" in row:
             errors.append(f"{ident}: unexpected topic")
         all_s = shingles(question) | shingles(reason) | shingles(question + " " + reason) | shingles(json.dumps(row, ensure_ascii=False))
         for name, index in indexes.items():
@@ -127,16 +118,12 @@ def audit_rows(rows, prefix, count, labels, enums, sources, strict=True):
         if len(rows) != len(labels)*count:
             errors.append(f"{prefix}: wrong row count {len(rows)}")
         for label in labels:
-            if per_label[label] != count:
-                errors.append(f"{prefix}: {label} has {per_label[label]}, needs {count}")
+            needed = count * 3 if label == "unknown" else count   # unknown absorbed the two referral labels' rows
+            if per_label[label] != needed:
+                errors.append(f"{prefix}: {label} has {per_label[label]}, needs {needed}")
         for label in COURSE_LABELS:
             if titles[label] < count/3:
                 errors.append(f"{prefix}: insufficient titles for {label}")
-        for label, key in [("not_in_data", "REGISTRAR_TOPIC_VALUES"), ("outside_registrar", "OUTSIDE_TOPIC_VALUES")]:
-            for topic in enums[key]:
-                minimum = 2 if prefix == "acc" else 1
-                if per_topic[label, topic] < minimum:
-                    errors.append(f"{prefix}: insufficient coverage for {label}/{topic}")
         if prefix == "acc":
             for tag in ["typo", "long", "two_task", "action_vs_info"]:
                 if per_tag[tag] < 60:
@@ -151,7 +138,6 @@ def audit_rows(rows, prefix, count, labels, enums, sources, strict=True):
     return {
         "rows": len(rows), "per_label": dict(sorted(per_label.items())),
         "per_tag": {t: per_tag[t] for t in sorted(TAGS)},
-        "per_topic": {label: {topic: n for (lab, topic), n in sorted(per_topic.items()) if lab == label} for label in ["not_in_data", "outside_registrar"]},
         "title_counts": dict(sorted(titles.items())),
         "families": len({r["family_id"] for r in rows}),
         "long_word_range": [min(long_counts), max(long_counts)] if long_counts else [],
@@ -207,8 +193,8 @@ def negative_controls():
         r = audit_rows([row], 'dev', 12, labels, enums, {name: [text]}, strict=False)
         assert r['source_overlap_rows'][name] == 1, name
         passed.append(name)
-    bad = dict(id='dev-001', question='Please calculate a garden fence length.', expected_intent='not_in_data', reason='Invalid closed topic control.', tags=[], family_id='fam-control', spec_version='2026-11-02', expected_topic='holds_code_that_is_not_readable')
-    assert any('invalid/missing readable topic' in e for e in audit_rows([bad], 'dev', 12, labels, enums, {}, strict=False)['errors'])
+    bad = dict(id='dev-001', question='Please calculate a garden fence length.', expected_intent='unknown', reason='Stray topic control.', tags=[], family_id='fam-control', spec_version='2026-11-02', expected_topic='holds')
+    assert any('unexpected topic' in e for e in audit_rows([bad], 'dev', 12, labels, enums, {}, strict=False)['errors'])
     bad['expected_intent'] = 'invented_label'
     assert any('invalid label' in e for e in audit_rows([bad], 'dev', 12, labels, enums, {}, strict=False)['errors'])
     return {'normalization': 'passed', 'known_source_leaks_detected': passed, 'invalid_topic_and_label_detected': True}

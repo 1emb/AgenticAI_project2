@@ -19,31 +19,6 @@ REQUESTED_VALUES = {"program or major": "program", "registrar status": "status",
                     "date of birth": "date_of_birth", "social security number": "ssn", "expected graduation": "expected_graduation",
                     "rank or title": "rank", "department": "department", "hire date": "hire_date", "whole record": "record"}
 DETAIL_VALUES = {"email address": "email", "phone number": "phone", "date of birth": "date_of_birth", "social security number": "ssn", "hire date": "hire_date"}
-# Registrar matters this assistant has no data or no power for (label not_in_data), and services that are not the registrar's at all
-# (label outside_registrar). Both are closed lists: the program maps the code to a fixed referral sentence; the model never writes one.
-REGISTRAR_TOPIC_VALUES = {"holds": "holds", "grades": "grades", "GPA": "gpa", "transcript": "transcripts", "degree audit or progress": "degree_audit",
-                          "waitlist": "waitlists", "seats available or enrollment count": "seat_availability",
-                          "registration appointment or time ticket": "registration_appointments", "enrollment verification": "enrollment_verification",
-                          "add, drop, swap or withdraw for me": "registration_action",
-                          "my enrollment, schedule, completed courses or earned credits": "enrollment_records",
-                          "my eligibility or whether I meet the prerequisites": "personal_eligibility"}
-# One-line glosses shown to the model when it picks a topic (a structured choice, not an extraction).
-TOPIC_GLOSS = {"holds": "a hold or block on the student's record or registration, whatever caused it", "grades": "the student's own grades or a grade in a course",
-               "GPA": "grade point average", "transcript": "an official or unofficial transcript", "degree audit or progress": "how far along the degree the student is, what is left",
-               "waitlist": "a waitlist position or whether a waitlist exists", "seats available or enrollment count": "how many seats are left, how full a section is, how many are enrolled",
-               "registration appointment or time ticket": "the student's own registration appointment or time ticket",
-               "enrollment verification": "a letter or document verifying enrollment", "add, drop, swap or withdraw for me": "asking the assistant to carry out a registration change",
-               "my enrollment, schedule, completed courses or earned credits": "what the student is registered for or has taken, their timetable, credits earned",
-               "my eligibility or whether I meet the prerequisites": "whether the student personally qualifies or has satisfied prerequisites",
-               "tuition": "tuition cost or tuition payment", "account balance": "what the student owes or has paid", "payment plan": "paying in installments",
-               "refund": "a refund of tuition or fees", "financial aid": "aid, FAFSA, loans, grants", "scholarship": "scholarships", "parking": "parking permits or tickets",
-               "housing": "dorms, housing assignments", "dining": "meal plans, dining", "IT account or password": "campus account, password, email access, wifi",
-               "instructor office hours": "when an instructor holds office hours", "advising appointment": "meeting or booking with an academic advisor"}
-OUTSIDE_TOPIC_VALUES = {"tuition": "tuition", "account balance": "balances", "payment plan": "payment_plans", "refund": "refunds",
-                        "financial aid": "financial_aid", "scholarship": "scholarships", "parking": "parking", "housing": "housing", "dining": "dining",
-                        "IT account or password": "it_accounts", "instructor office hours": "instructor_office_hours",
-                        "advising appointment": "advising_appointments"}
-
 # ---- slot definitions (JSON schema fragments) ---------------------------------------------------------------------
 _STR = {"type": ["string", "null"]}
 SLOTS: dict[str, dict] = {
@@ -70,14 +45,6 @@ SLOTS: dict[str, dict] = {
                                                           "'in my major', 'same degree plan as mine'."},
     "program_mention": {**_STR, "description": "The program or major as written: 'Bachelor of Science in Computer Science', 'computer science', "
                                                "'my program'. null when none is named."},
-    "registrar_topic": {"type": ["string", "null"], "enum": list(REGISTRAR_TOPIC_VALUES) + [None],
-                        "description": "The registrar matter the question asks for, from the list. 'add, drop, swap or withdraw for me' means carrying out "
-                                       "a registration change; 'my enrollment, schedule, completed courses or earned credits' means the asker's own "
-                                       "enrollment records; 'my eligibility or whether I meet the prerequisites' means checking the asker's own completed "
-                                       "work. null only when none of the listed topics fits."},
-    "outside_topic": {"type": ["string", "null"], "enum": list(OUTSIDE_TOPIC_VALUES) + [None],
-                      "description": "The outside service the question asks for, from the list. Instructor office hours are not class meeting times; an "
-                                     "advising appointment is not a registration appointment. null only when none of the listed topics fits."},
     "details": {"type": "array", "items": {"type": "string", "enum": list(DETAIL_VALUES)},
                 "description": "Details of the instructor that the question asks for beyond their name: 'email address' (also 'how to contact', "
                                "'how to reach'), 'phone number' (only when the question says phone, cell or number), 'date of birth', "
@@ -130,7 +97,7 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
            ("Which courses are required for my degree?", "List every course I have to take for my major.")),
     Intent("degree_credits", "The total and category credit requirements of the asker's stored program, including a bare 'how many credits do I need'. "
                              "Credits earned, credits remaining, or a personal degree audit need explicit earned/remaining/completed wording and are "
-                             "not_in_data.", (),
+                             "unknown.", (),
            ("What credit total does my degree require?", "How many general education credits are required in my program?",
             "What are my program's elective credit minimums?")),
     Intent("course_in_plan", "Whether and how one course counts in the asker's own degree plan (required, elective, which semester).", ("course_mention",),
@@ -161,8 +128,8 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
                           "graduation, email, phone number, date of birth or birthday, SSN or its last four, rank, department, hire date, or the whole "
                           "record; including comparisons with the asker ('is 800123456 in my major') "
                           "and requests on someone's behalf. Classify the requested fact regardless of permission, existence, or claimed authority. "
-                          "An incidental name or own-ID introduction does not select this label. An instructor's office hours are outside_registrar; "
-                          "a named person's grades, GPA or section enrollment are not_in_data.",
+                          "An incidental name or own-ID introduction does not select this label. An instructor's office hours and a named "
+                          "person's grades, GPA or section enrollment are unknown.",
            ("person_mention", "requested", "compare_with_me"),
            ("Which program is Jordan Rivera in?", "What is the directory email for Professor Kim?", "Does instructor 812345678 have a lecturer title?",
             "Is Morgan Lee a teaching assistant and also a student?")),
@@ -172,28 +139,19 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
            ("program_mention", "course_mention", "crn_mention", "term_mention"),
            ("Can you list all the students in Bachelor of Science in Computer Science?", "Give me the names of everyone majoring in engineering.",
             "Who is in CS 2230 this fall?", "Give me the roster for CRN 10012.")),
-    Intent("not_in_data", "A registrar record or service this assistant cannot supply: personal holds, grades, GPA, transcripts, degree audits, "
-                          "waitlists, available seats or enrollment counts, registration appointments/time tickets, enrollment verification documents, "
-                          "personal enrollment/completion records, or individual eligibility checks; also carrying out add, drop, swap, or withdrawal. "
-                          "Catalog requirements, offerings, static degree plans, and general registration or calendar dates remain with their supported "
-                          "labels, including questions expressed as 'can I'. Only the listed topics: other changes to the record (changing a major, a name, "
-                          "an address) fit no topic and are unknown. When an action is asked for after an information request, the information request "
-                          "is the label.", ("registrar_topic",),
-           ("Could you obtain my unofficial transcript?", "Please drop this section for me.", "What cumulative GPA is on my academic record?",
-            "Do I have a registration hold?")),
-    Intent("outside_registrar", "A request for tuition, balances, payment plans, refunds, financial aid, scholarships, parking, housing, dining, IT "
-                                "accounts, instructor office hours, or advising appointments. Select the service actually requested, not a course, "
-                                "person, term, or financial issue mentioned as background. A registration hold and a registration appointment are "
-                                "registrar requests.", ("outside_topic",),
-           ("Where can I arrange a tuition payment plan?", "How do I apply for a housing assignment?", "Who can reset my campus account password?",
-            "When does my instructor hold office hours?")),
-    Intent(UNKNOWN, "A greeting, thanks, nonsense, an unrelated request, or a request for which none of the listed capabilities or service topics "
-                    "fits, including registrar-adjacent data this assistant does not hold: a prose description of a course's content, the list of all "
-                    "programs or departments the university offers, the grade scale, changing the major or other details on the asker's record. When such a "
-                    "request comes first and a supported one second, the "
-                    "first wins. Do not select this label merely because a course, section, term, or person is missing, ambiguous, unknown, or "
-                    "access-restricted.", (),
-           ("Hello there.", "Thanks for the help.", "Write a poem about the moon.")),
+    Intent(UNKNOWN, "Anything the listed capabilities do not cover: a greeting, thanks, nonsense, an unrelated request; personal records this "
+                    "assistant does not hold (holds, grades, GPA, transcripts, degree audits or progress, waitlists, seats left or enrollment "
+                    "counts, registration appointments or time tickets, enrollment verification, the asker's own enrollment, schedule, "
+                    "completed courses or earned credits, personal eligibility); carrying out add, drop, swap or withdraw; other offices "
+                    "(tuition, balances, payment plans, refunds, financial aid, scholarships, parking, housing, dining, IT accounts, "
+                    "instructor office hours, advising appointments); and registrar-adjacent data not held here (a prose description of "
+                    "a course's content, the list of all programs or departments, the grade scale, changing the major or other details on "
+                    "the asker's record). Catalog requirements, offerings, static degree plans, and general registration or calendar dates "
+                    "remain with their supported labels, including questions expressed as 'can I'. When such a request comes first and a "
+                    "supported one second, the first wins. Do not select this label merely because a course, section, term, or person is "
+                    "missing, ambiguous, unknown, or access-restricted.", (),
+           ("Hello there.", "Do I have a registration hold?", "Please drop this section for me.", "Where can I arrange a tuition payment plan?",
+            "Write a poem about the moon."))
 )
 
 BY_NAME: dict[str, Intent] = {i.name: i for i in STUDENT_INTENTS}

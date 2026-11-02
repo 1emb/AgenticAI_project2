@@ -233,26 +233,6 @@ def unknown(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     return {"allowed": True, "unknown": True}
 
 
-# Referrals (2026-11-02). The topic comes from a closed list the extractor chose from; the office is fixed here, never written by a
-# model. Office names are a placeholder policy for this synthetic university (Codex design review, section 5) pending the owner's word.
-REGISTRAR_OFFICE = "the Registrar's Office"
-OUTSIDE_OFFICE = {"tuition": "Student Accounts (the Bursar)", "balances": "Student Accounts (the Bursar)", "payment_plans": "Student Accounts (the Bursar)",
-                  "refunds": "Student Accounts (the Bursar)", "financial_aid": "the Financial Aid Office", "scholarships": "the Financial Aid Office",
-                  "parking": "the Parking and Transportation Office", "housing": "the Housing Office", "dining": "Dining Services",
-                  "it_accounts": "the IT Help Desk", "instructor_office_hours": "the instructor", "advising_appointments": "Academic Advising"}
-
-
-def not_in_data(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
-    """A registrar matter with no data or no power behind it here: say so and refer to the registrar. allowed=True means a referral
-    may be given, not that anything was looked up or done."""
-    return {"allowed": True, "referral": "registrar", "topic": r["topic"].value, "office": REGISTRAR_OFFICE}
-
-
-def outside_registrar(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
-    topic = r["topic"].value
-    return {"allowed": True, "referral": "outside", "topic": topic, "office": OUTSIDE_OFFICE.get(topic)}
-
-
 PROGRAMS = {f.__name__: f for f in (prerequisites, course_info, course_offered, lecture_options, lecture_meeting, who_teaches, capacity, degree_required,
                                     degree_credits, course_in_plan, plan_term, my_program, register_when, term_dates, current_term, person_info,
-                                    student_list, not_in_data, outside_registrar, unknown)}
+                                    student_list, unknown)}

@@ -132,14 +132,14 @@ The schema has no permission table; the rule is stated here and implemented by t
 - A TA is both an instructor and a student (decided 2026-11-02, Codex design review): their directory entry (name, rank,
   department) is public and is given back as `own_answer` even when the student part of the same question (status, program)
   is refused; their email is treated as the student's and withheld.
-- Out of scope is not a permission matter (2026-11-02). The agent has two referral labels: `not_in_data` for registrar matters
-  with no data behind them here (holds, grades, GPA, transcripts, degree audits, waitlists, seats left, time tickets,
-  enrollment verification, the asker's own enrollment records, eligibility checks, and performing add/drop/swap/withdraw) and
-  `outside_registrar` for other offices (tuition, balances, payment plans, refunds, financial aid, scholarships, parking,
-  housing, dining, IT accounts, instructor office hours, advising appointments). The answer is
-  `{allowed: true, referral, topic, office}` with a fixed office table in `registrar/agent/programs.py`; office names are a
-  placeholder policy for this synthetic university. These labels are not in the graded sets; the classifier is evaluated on them
-  with `scripts/grade.py --cases <file>` (see `data/testset/classifier/` once the Codex-written sets are in).
+- Out of scope is not a permission matter (2026-11-02). Everything the 17 answerable labels and `student_list` do not cover is
+  `unknown`: registrar matters with no data behind them here (holds, grades, GPA, transcripts, degree audits, waitlists, seats
+  left, time tickets, enrollment verification, the asker's own enrollment records, eligibility checks, performing
+  add/drop/swap/withdraw), other offices (tuition, financial aid, parking, housing, dining, IT, instructor office hours, advising
+  appointments), greetings and nonsense. The answer is `{allowed: true, unknown: true}` and the reply is the fixed "I don't know
+  what you are talking about" sentence plus the scope sentence. No referral or office is given (owner's decision, 2026-11-02; the
+  referral-label implementation is in commit `c436eef`). The classifier is evaluated on these questions with
+  `scripts/grade.py --cases <file>` over `data/testset/classifier/`.
 
 ## Student answer shapes
 All shapes below are preceded by `allowed: true`.

@@ -42,7 +42,7 @@ def main():
     ap.add_argument("--intent")
     ap.add_argument("--source", help="ui or ask.py")
     ap.add_argument("--by", help="only questions whose current verdict is from this judge (owner, codex)")
-    ap.add_argument("--list", choices=list(VERDICTS) + ["unjudged", "refused", "error", "clarify", "referred", "unknown", "all"], help="print the matching questions")
+    ap.add_argument("--list", choices=list(VERDICTS) + ["unjudged", "refused", "error", "clarify", "unknown", "all"], help="print the matching questions")
     ap.add_argument("--csv", help="write every (filtered) question to this CSV")
     args = ap.parse_args()
 

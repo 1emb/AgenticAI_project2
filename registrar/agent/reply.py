@@ -31,25 +31,6 @@ REFUSALS = {
     "instructor_private_record": "I can't share an instructor's private personal details (phone number, date of birth, SSN, hire date).",
     "student_list_not_permitted": "I can't provide lists of students, whether by program, course or section.",
 }
-# not_in_data: one fixed sentence pair per topic (Codex design review, section 5). Nothing here is looked up; 'office' comes from the program.
-NOT_IN_DATA = {
-    "holds": "I don't have hold information. Contact {office} about any hold on your record.",
-    "grades": "I don't have your grades. Contact {office} for help with grades.",
-    "gpa": "I don't have your GPA. Contact {office} for help with your academic record.",
-    "transcripts": "I can't obtain or send transcripts. Contact {office} about requesting a transcript.",
-    "degree_audit": "I don't have degree-audit or progress data. Contact {office} for a degree audit.",
-    "waitlists": "I don't have waitlist information. Contact {office} for help with waitlists.",
-    "seat_availability": "I don't have enrollment counts, so I can't say how many seats are left. Contact {office} for seat availability.",
-    "registration_appointments": "I don't have individual registration appointments or time tickets. Contact {office} about your registration appointment.",
-    "enrollment_verification": "I can't issue an enrollment verification. Contact {office} about requesting one.",
-    "registration_action": "I can't make registration changes (adding, dropping, swapping or withdrawing). Contact {office} for help with registration changes.",
-    "enrollment_records": "I don't have your enrollment records (registered or completed courses, your schedule, earned credits). Contact {office} for help with them.",
-    "personal_eligibility": "I can't check your completed work or eligibility. Contact {office} for help with that.",
-    None: "I don't have that part of your record. Contact {office} for help with it.",
-}
-OUTSIDE_TOPIC = {"tuition": "tuition", "balances": "account balances", "payment_plans": "payment plans", "refunds": "refunds", "financial_aid": "financial aid",
-                 "scholarships": "scholarships", "parking": "parking", "housing": "housing", "dining": "dining", "it_accounts": "IT accounts",
-                 "instructor_office_hours": "office hours", "advising_appointments": "advising appointments"}
 SCOPE = "I can help with the course catalog, class schedules, degree plans, the academic calendar and your own registrar record."
 EVENT_PHRASE = {
     "classes_begin": "Classes in {term} begin {date}.",
@@ -68,7 +49,6 @@ SLOT_QUESTION = {
     "person": "Who do you mean? Give me the person's full name or university ID.",
     "program": "Which program do you mean?",
 }
-
 
 def _d(v) -> str:
     """A date, datetime or ISO string -> 'Oct 23, 2026'."""
@@ -268,18 +248,7 @@ def r_person_info(a, t):
 
 
 def r_unknown(a, t):
-    return "I'm not able to help with that. " + SCOPE
-
-
-def r_referral(a, t):
-    if a.get("referral") == "registrar":
-        return NOT_IN_DATA.get(a.get("topic"), NOT_IN_DATA[None]).format(office=a["office"])
-    topic, office = a.get("topic"), a.get("office")
-    if topic == "instructor_office_hours":
-        return "Office hours are not in the registrar's data; the class meeting times are. Please ask the instructor."
-    if topic and office:
-        return f"I don't have {OUTSIDE_TOPIC[topic]} information. Contact {office} for help with {OUTSIDE_TOPIC[topic]}."
-    return "That is not something the registrar handles. " + SCOPE
+    return "I don't know what you are talking about. " + SCOPE
 
 
 def _rank(rank: str | None) -> str:
@@ -292,7 +261,7 @@ WRITERS = {
     "lecture_meeting": r_lecture_meeting, "who_teaches": r_who_teaches, "capacity": r_capacity, "degree_required": r_degree_required,
     "degree_credits": r_degree_credits, "course_in_plan": r_course_in_plan, "plan_term": r_plan_term, "my_program": r_my_program,
     "register_when": r_register_when, "term_dates": r_term_dates, "current_term": r_current_term, "person_info": r_person_info,
-    "not_in_data": r_referral, "outside_registrar": r_referral, "unknown": r_unknown,
+    "unknown": r_unknown,
 }
 
 

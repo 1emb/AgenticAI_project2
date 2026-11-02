@@ -50,6 +50,7 @@ def main():
     ap.add_argument("--case", help="run this test case's question (and print its expected answer)")
     ap.add_argument("--sql", action="store_true", help="also print the SQL that was run")
     ap.add_argument("--no-reply", action="store_true", help="do not write the English reply (stage 5)")
+    ap.add_argument("--llm-reply", action="store_true", help="render the reply with the model instead of the deterministic writer (comparison only)")
     ap.add_argument("--no-log", action="store_true", help="do not append the question to runs/chat.jsonl")
     args = ap.parse_args()
 
@@ -69,7 +70,7 @@ def main():
     with connect(DATABASE_URL.replace("postgresql+psycopg://", "postgresql://")) as conn:
         t = answer_question(conn, llm, args.question, args.uid, parse_clock(args.as_of), intent_override=args.intent)
     if not args.no_reply:
-        write_reply(llm, t)
+        write_reply(llm, t, mode="llm" if args.llm_reply else "render")
     if not args.no_log:
         record(t, "ask.py")
     d = t.to_dict()

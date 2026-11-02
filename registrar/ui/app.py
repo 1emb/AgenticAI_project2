@@ -47,12 +47,14 @@ class Ask(BaseModel):
     university_id: str
     as_of: str | None = None
     reply: bool = True
+    reply_mode: str = "render"       # render (deterministic, default) | llm (comparison only)
 
 
 class Verdict(BaseModel):
     id: str
     verdict: str | None = None       # correct | wrong | should_refuse | should_answer | null to clear
     note: str | None = None
+    by: str = "owner"                # who judged; the page always says owner
 
 
 def _dump(o) -> JSONResponse:
@@ -126,7 +128,7 @@ def ask(body: Ask):
     except psycopg.Error as e:
         raise HTTPException(503, f"database: {e}".split("\n")[0])
     if body.reply:
-        write_reply(llm, t)
+        write_reply(llm, t, mode=body.reply_mode)
     rid = chatlog.record(t, "ui")
     return _dump({**t.to_dict(), "id": rid})
 
@@ -134,7 +136,7 @@ def ask(body: Ask):
 @app.post("/api/verdict")
 def verdict(body: Verdict):
     try:
-        return chatlog.record_verdict(body.id, body.verdict, body.note)
+        return chatlog.record_verdict(body.id, body.verdict, body.note, body.by)
     except ValueError as e:
         raise HTTPException(400, str(e))
 
@@ -143,14 +145,16 @@ def _lean(r: dict) -> dict:
     st = r.get("student") or {}
     return {"id": r["id"], "ts": r["ts"], "source": r.get("source"), "student": st, "as_of": r.get("as_of"), "question": r.get("question"),
             "intent": r.get("intent"), "intent_confidence": r.get("intent_confidence"), "outcome": chatlog.outcome(r), "reply": r.get("reply"),
-            "error": r.get("error"), "verdict": r.get("verdict"), "note": r.get("note"), "total_s": round(sum((r.get("timings") or {}).values()), 2)}
+            "error": r.get("error"), "verdict": r.get("verdict"), "note": r.get("note"), "verdict_by": r.get("verdict_by"), "total_s": round(sum((r.get("timings") or {}).values()), 2)}
 
 
 @app.get("/api/history")
 def history(student: str | None = None, intent: str | None = None, verdict: str | None = None, outcome: str | None = None,
-            q: str | None = None, since: str | None = None, limit: int = 500):
-    """Newest first. verdict=unjudged selects rows without one."""
+            q: str | None = None, since: str | None = None, by: str | None = None, limit: int = 500):
+    """Newest first. verdict=unjudged selects rows without one; by=codex selects rows whose current verdict came from that judge."""
     rows = chatlog.load()
+    if by:
+        rows = [r for r in rows if (r.get("verdict_by") or "") == by]
     if student:
         rows = [r for r in rows if (r.get("student") or {}).get("university_id") == student]
     if intent:

@@ -129,6 +129,17 @@ The schema has no permission table; the rule is stated here and implemented by t
   "the dean asked me") changes nothing.
 - Professors have no roster relationship yet (no enrollment table), so every student record is off limits to them in
   this set. Once enrollment exists, roster fields for their own sections become visible, as in the earlier contract.
+- A TA is both an instructor and a student (decided 2026-11-02, Codex design review): their directory entry (name, rank,
+  department) is public and is given back as `own_answer` even when the student part of the same question (status, program)
+  is refused; their email is treated as the student's and withheld.
+- Out of scope is not a permission matter (2026-11-02). The agent has two referral labels: `not_in_data` for registrar matters
+  with no data behind them here (holds, grades, GPA, transcripts, degree audits, waitlists, seats left, time tickets,
+  enrollment verification, the asker's own enrollment records, eligibility checks, and performing add/drop/swap/withdraw) and
+  `outside_registrar` for other offices (tuition, balances, payment plans, refunds, financial aid, scholarships, parking,
+  housing, dining, IT accounts, instructor office hours, advising appointments). The answer is
+  `{allowed: true, referral, topic, office}` with a fixed office table in `registrar/agent/programs.py`; office names are a
+  placeholder policy for this synthetic university. These labels are not in the graded sets; the classifier is evaluated on them
+  with `scripts/grade.py --cases <file>` (see `data/testset/classifier/` once the Codex-written sets are in).
 
 ## Student answer shapes
 All shapes below are preceded by `allowed: true`.
@@ -157,7 +168,9 @@ Access control:
 - `access_denied`: `allowed: false`, `reason` (`other_student_record`, `student_list_not_permitted`, `instructor_private_record`),
   `target` (`university_id`; for a list of students the group asked for: `program` code, `course` code or `crn`). A list of students
   is refused whatever the group, including a class roster, and without first resolving the group: an unknown course or a misspelt
-  program still gets a refusal, never a request for clarification. `access_partial`: the same plus `own_answer` with the permitted
+  program still gets a refusal, never a request for clarification. Likewise (decided 2026-11-02) a question about another
+  person who cannot be identified (first name only, misspelt, unknown ID) is refused, with `target.not_identified` carrying
+  the resolver's note; only a question purely about an instructor's public role (rank, department) gets a clarification. `access_partial`: the same plus `own_answer` with the permitted
   part (`instructor` of the CRN, or the student's own `program`). `access_allowed`: `allowed: true` plus the public fact
   (`instructor`; `instructor`, `email`; `instructor`, `rank`, `department`; `days`, `start`, `end`, `room`; `prerequisites[[codes]]`; `capacity`; `department` name and `department_code` of a course).
 

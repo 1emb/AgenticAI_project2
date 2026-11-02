@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from registrar.chatlog import LOG_PATH, VERDICTS, load, outcome  # noqa: E402
 
 COLS = ["id", "ts", "source", "student_id", "student_name", "program", "as_of", "question", "intent", "intent_confidence", "outcome",
-        "reply", "answer", "mentions", "resolved", "error", "failed_stage", "total_s", "verdict", "note"]
+        "reply", "answer", "mentions", "resolved", "error", "failed_stage", "total_s", "verdict", "verdict_by", "note"]
 
 
 def flat(r: dict) -> dict:
@@ -31,7 +31,7 @@ def flat(r: dict) -> dict:
         "answer": json.dumps(r.get("answer"), ensure_ascii=False), "mentions": json.dumps(r.get("mentions"), ensure_ascii=False),
         "resolved": json.dumps({k: v.get("value") for k, v in (r.get("resolved") or {}).items()}, ensure_ascii=False),
         "error": r.get("error"), "failed_stage": r.get("failed_stage"), "total_s": round(sum((r.get("timings") or {}).values()), 2),
-        "verdict": r.get("verdict"), "note": r.get("note"),
+        "verdict": r.get("verdict"), "verdict_by": r.get("verdict_by"), "note": r.get("note"),
     }
 
 
@@ -41,7 +41,8 @@ def main():
     ap.add_argument("--since", help="ISO date or datetime; only questions asked from then on")
     ap.add_argument("--intent")
     ap.add_argument("--source", help="ui or ask.py")
-    ap.add_argument("--list", choices=list(VERDICTS) + ["unjudged", "refused", "error", "clarify", "unknown", "all"], help="print the matching questions")
+    ap.add_argument("--by", help="only questions whose current verdict is from this judge (owner, codex)")
+    ap.add_argument("--list", choices=list(VERDICTS) + ["unjudged", "refused", "error", "clarify", "referred", "unknown", "all"], help="print the matching questions")
     ap.add_argument("--csv", help="write every (filtered) question to this CSV")
     args = ap.parse_args()
 
@@ -52,6 +53,8 @@ def main():
         rows = [r for r in rows if r.get("intent") == args.intent]
     if args.source:
         rows = [r for r in rows if r.get("source") == args.source]
+    if args.by:
+        rows = [r for r in rows if (r.get("verdict_by") or "") == args.by]
     if not rows:
         print(f"nothing in {args.log or LOG_PATH}" + (" matching the filters" if args.since or args.intent or args.source else ""))
         return
@@ -72,7 +75,7 @@ def main():
             print(f"- [{r['ts'][:16]}] {st.get('name')} ({st.get('program_code')}) asked: {r['question']}")
             print(f"    intent {r.get('intent')} -> {outcome(r)}; reply: {r.get('reply')}")
             if r.get("verdict") or r.get("note"):
-                print(f"    verdict {r.get('verdict')}" + (f": {r['note']}" if r.get("note") else ""))
+                print(f"    verdict {r.get('verdict')} (by {r.get('verdict_by') or '-'})" + (f": {r['note']}" if r.get("note") else ""))
             if r.get("error"):
                 print(f"    error ({r.get('failed_stage')}): {r['error']}")
         return
@@ -93,6 +96,7 @@ def main():
     print(f"{'unjudged':15} {n - len(judged):5d}")
     if judged:
         print(f"correct among judged: {sum(r['verdict'] == 'correct' for r in judged) / len(judged):.0%}")
+        print("judged by: " + ", ".join(f"{k} {v}" for k, v in Counter(r.get('verdict_by') or 'owner' for r in judged).most_common()))
 
     by: dict[str, list] = defaultdict(list)
     for r in rows:

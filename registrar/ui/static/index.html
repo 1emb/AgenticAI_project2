@@ -75,6 +75,7 @@
   table.h tr.detail td { background:var(--panel); padding:12px 16px; white-space:pre-wrap; }
   .tag { display:inline-block; font-size:11px; border-radius:999px; padding:1px 8px; border:1px solid var(--line); color:var(--muted); white-space:nowrap; }
   .tag.answered { color:var(--ok); border-color:var(--ok); } .tag.refused { color:var(--warn); border-color:var(--warn); } .tag.error { color:var(--bad); border-color:var(--bad); }
+  table.h td .note3 { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
   .tag.correct { background:var(--ok); color:#fff; border-color:var(--ok); } .tag.wrong, .tag.should_refuse, .tag.should_answer { background:var(--bad); color:#fff; border-color:var(--bad); }
   @media (max-width: 760px) { body { grid-template-columns:1fr; grid-template-rows:auto 1fr; height:auto; min-height:100vh; } aside { border-right:0; border-bottom:1px solid var(--line); } select[size]{height:120px} }
 </style>
@@ -110,8 +111,9 @@
     <div class="filters">
       <input id="hq" type="search" placeholder="Search question, reply or note">
       <select id="hIntent"><option value="">All intents</option></select>
-      <select id="hOutcome"><option value="">All outcomes</option><option>answered</option><option>refused</option><option>clarify</option><option>unknown</option><option>error</option></select>
+      <select id="hOutcome"><option value="">All outcomes</option><option>answered</option><option>refused</option><option>clarify</option><option>referred</option><option>unknown</option><option>error</option></select>
       <select id="hVerdict"><option value="">All verdicts</option><option value="unjudged">Unjudged</option><option value="correct">Correct</option><option value="wrong">Wrong</option><option value="should_refuse">Should have refused</option><option value="should_answer">Should have answered</option></select>
+      <select id="hBy"><option value="">Any judge</option><option value="owner">Judged by me</option><option value="codex">Judged by Codex</option></select>
       <select id="hStudent"><option value="">All students</option></select>
       <button id="hRefresh" class="chip" type="button">Refresh</button>
       <span class="count" id="hCount"></span>
@@ -162,7 +164,7 @@ async function init() {
   for (const s of students) { const o = document.createElement('option'); o.value = s.university_id; o.textContent = `${s.name} · ${s.university_id}`; hs.appendChild(o); }
   try {
     const ex = await get('/api/examples');
-    const intents = [...new Set(ex.map(e => e.intent))].concat(['person_info', 'student_list', 'unknown']);
+    const intents = [...new Set(ex.map(e => e.intent))].concat(['person_info', 'student_list', 'not_in_data', 'outside_registrar', 'unknown']);
     for (const i of [...new Set(intents)]) { const o = document.createElement('option'); o.value = i; o.textContent = i; $('hIntent').appendChild(o); }
     for (const e of ex.sort(() => Math.random() - 0.5).slice(0, 6)) { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = e.question; b.onclick = () => { $('q').value = e.question; $('q').focus(); }; $('chips').appendChild(b); }
   } catch (e) {}
@@ -201,10 +203,11 @@ function details(t, open) {
     ${sql ? `<div><b>SQL</b><pre>${sql}</pre></div>` : ''}
     <div class="meta">${esc(tm)}${t.id ? ` · record ${esc(t.id)}` : ''}</div></details>`;
 }
-function verdictBar(id, verdict, note) {
+function verdictBar(id, verdict, note, by) {
+  const who = verdict ? (by && by !== 'owner' ? `judged by ${esc(by)}; click to overrule` : 'saved') : '';
   return `<div class="verdict" data-id="${esc(id)}"><span class="lbl">Judge:</span>` +
     VERDICTS.map(([v, l]) => `<button type="button" class="v${verdict === v ? ' on' : ''}" data-v="${v}">${l}</button>`).join('') +
-    `<input placeholder="Note (optional), Enter to save" value="${esc(note || '')}"><span class="saved">${verdict ? 'saved' : ''}</span></div>`;
+    `<input placeholder="Note (optional), Enter to save" value="${esc(note || '')}"><span class="saved">${who}</span></div>`;
 }
 async function saveVerdict(bar, verdict) {
   const id = bar.dataset.id, note = bar.querySelector('input').value;
@@ -213,11 +216,11 @@ async function saveVerdict(bar, verdict) {
   else if (verdict === cur) verdict = null;                        // clicking the active one clears it
   const saved = bar.querySelector('.saved'); saved.textContent = 'saving…';
   try {
-    await post('/api/verdict', { id, verdict, note });
+    await post('/api/verdict', { id, verdict, note, by: 'owner' });
     bar.querySelectorAll('button.v').forEach(b => b.classList.toggle('on', b.dataset.v === verdict));
     saved.textContent = verdict || note ? 'saved' : '';
     const tag = document.querySelector(`tr.row[data-id="${id}"] .vtag`);
-    if (tag) tag.outerHTML = verdictTag(verdict);
+    if (tag) tag.outerHTML = verdictTag(verdict, 'owner');
   } catch (e) { saved.textContent = 'not saved: ' + e.message; }
 }
 document.addEventListener('click', e => {
@@ -259,10 +262,10 @@ $('clock').addEventListener('change', () => { $('customClock').value = ''; });
 
 // ---- history ----
 const VLABEL = Object.fromEntries(VERDICTS);
-function verdictTag(v) { return v ? `<span class="tag vtag ${esc(v)}">${esc(VLABEL[v] || v)}</span>` : `<span class="tag vtag">unjudged</span>`; }
+function verdictTag(v, by) { return v ? `<span class="tag vtag ${esc(v)}">${esc(VLABEL[v] || v)}${by && by !== 'owner' ? ' · ' + esc(by) : ''}</span>` : `<span class="tag vtag">unjudged</span>`; }
 async function loadHistory() {
   const p = new URLSearchParams();
-  for (const [k, id] of [['q', 'hq'], ['intent', 'hIntent'], ['outcome', 'hOutcome'], ['verdict', 'hVerdict'], ['student', 'hStudent']]) if ($(id).value) p.set(k, $(id).value);
+  for (const [k, id] of [['q', 'hq'], ['intent', 'hIntent'], ['outcome', 'hOutcome'], ['verdict', 'hVerdict'], ['student', 'hStudent'], ['by', 'hBy']]) if ($(id).value) p.set(k, $(id).value);
   let h;
   try { h = await get('/api/history?' + p); } catch (e) { $('hBody').innerHTML = `<tr><td colspan="7" class="bad">${esc(e.message)}</td></tr>`; return; }
   $('hCount').textContent = `${h.total} question${h.total === 1 ? '' : 's'}${h.rows.length < h.total ? ` (showing ${h.rows.length})` : ''} · ${h.log}`;
@@ -273,7 +276,7 @@ async function loadHistory() {
       <td class="q">${esc(r.question)}<div class="meta" style="margin:0">clock ${esc(fmtClock(r.as_of))}</div></td>
       <td>${esc(r.intent)}${r.intent_confidence != null ? `<div class="meta" style="margin:0">${(r.intent_confidence * 100).toFixed(0)}%</div>` : ''}</td>
       <td><span class="tag ${esc(r.outcome)}">${esc(r.outcome)}</span></td>
-      <td>${verdictTag(r.verdict)}${r.note ? `<div class="meta" style="margin:0">${esc(r.note)}</div>` : ''}</td>
+      <td>${verdictTag(r.verdict, r.verdict_by)}${r.note ? `<div class="meta note3" style="margin:0" title="${esc(r.note)}">${esc(r.note)}</div>` : ''}</td>
       <td class="r"><div class="clip" title="${esc(r.reply || r.error || '')}">${esc(r.reply || r.error || '')}</div></td></tr>`).join('');
 }
 $('hBody').addEventListener('click', async e => {
@@ -284,10 +287,10 @@ $('hBody').addEventListener('click', async e => {
   const d = document.createElement('tr'); d.className = 'detail'; d.innerHTML = '<td colspan="7">Loading…</td>'; row.after(d);
   try {
     const t = await get('/api/history/' + row.dataset.id);
-    d.innerHTML = `<td colspan="7"><div><b>${esc(t.student.name)}</b> (${esc(t.student.university_id)}, ${esc(t.student.program_code)}) at ${esc(fmtClock(t.as_of))} asked:</div><div style="margin:6px 0 10px">${esc(t.question)}</div><div style="padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bot)">${esc(t.reply || '(no reply)')}</div>${details(t, true)}${verdictBar(t.id, t.verdict, t.note)}</td>`;
+    d.innerHTML = `<td colspan="7"><div><b>${esc(t.student.name)}</b> (${esc(t.student.university_id)}, ${esc(t.student.program_code)}) at ${esc(fmtClock(t.as_of))} asked:</div><div style="margin:6px 0 10px">${esc(t.question)}</div><div style="padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bot)">${esc(t.reply || '(no reply)')}</div>${details(t, true)}${verdictBar(t.id, t.verdict, t.note, t.verdict_by)}</td>`;
   } catch (err) { d.innerHTML = `<td colspan="7" class="bad">${esc(err.message)}</td>`; }
 });
-for (const id of ['hIntent', 'hOutcome', 'hVerdict', 'hStudent']) $(id).addEventListener('change', loadHistory);
+for (const id of ['hIntent', 'hOutcome', 'hVerdict', 'hStudent', 'hBy']) $(id).addEventListener('change', loadHistory);
 $('hq').addEventListener('input', () => { clearTimeout(window._hqT); window._hqT = setTimeout(loadHistory, 250); });
 $('hRefresh').onclick = loadHistory;
 init();

@@ -118,12 +118,14 @@ def who_teaches(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
 def degree_required(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     rows = [x for x in Q.plan(q, st["program_code"]) if x["is_required"]]
     return {"allowed": True, "program": st["program_code"], "required": [x["course_code"] for x in rows],
-            "required_credits": num(sum(x["credit_hours"] for x in rows))}
+            "required_credits": num(sum(x["credit_hours"] for x in rows)),
+            # extra fields for the renderer (the grader ignores them): the credits of the required courses are not the degree total
+            "program_name": st["program_name"], "total_credits_required": st["total_credits_required"]}
 
 
 def degree_credits(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     return {"allowed": True, "program": st["program_code"], "total_credits_required": st["total_credits_required"],
-            "minimums": Q.category_minimums(q, st["program_code"])}
+            "minimums": Q.category_minimums(q, st["program_code"]), "program_name": st["program_name"]}
 
 
 def course_in_plan(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
@@ -131,13 +133,14 @@ def course_in_plan(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     row = Q.plan_course(q, st["program_code"], code)
     return {"allowed": True, "program": st["program_code"], "course": code, "in_plan": row is not None,
             "category": row["category"] if row else None, "is_required": row["is_required"] if row else None,
-            "suggested_term_number": row["suggested_term_number"] if row else None}
+            "suggested_term_number": row["suggested_term_number"] if row else None, "program_name": st["program_name"]}
 
 
 def plan_term(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     n = need("term_number", r["term_number"])
     rows = [x for x in Q.plan(q, st["program_code"]) if x["suggested_term_number"] == n]
-    return {"allowed": True, "program": st["program_code"], "term_number": n, "courses": [x["course_code"] for x in rows]}
+    return {"allowed": True, "program": st["program_code"], "term_number": n, "courses": [x["course_code"] for x in rows],
+            "credits": num(sum(x["credit_hours"] for x in rows)), "program_name": st["program_name"]}
 
 
 def my_program(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
@@ -171,24 +174,34 @@ def current_term(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     cur = Q.current_term(q, as_of)
     nxt, prev = Q.term_by_sequence(q, cur["sequence"] + 1), Q.term_by_sequence(q, cur["sequence"] - 1)
     return {"allowed": True, "term": cur["name"], "next_term": nxt["name"] if nxt else None, "previous_term": prev["name"] if prev else None,
-            "in_session": cur["start_date"] <= as_of.date() <= cur["end_date"]}
+            "in_session": cur["start_date"] <= as_of.date() <= cur["end_date"], "start_date": cur["start_date"]}
 
 
 # ---- people ------------------------------------------------------------------------------------------------------------------------------------
 def person_info(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     """Another student: refused (own program given back when the question compares). An instructor: directory fields answered,
     private fields refused. A TA is both: student fields are a student record, the rest follows the instructor rule. The asker
-    themself: their own record. A name shared by several people is refused as well; the private data of any of them is off limits."""
+    themself: their own record. A name shared by several people is refused as well; the private data of any of them is off limits.
+    A person who cannot be identified at all is refused too, unless only an instructor's public role is asked about."""
     res = r["person"]
-    if res.status == "ambiguous":
-        return denied("other_student_record", {"university_ids": res.candidates}, None)
-    p = need("person", res)
     requested = set(r["requested"].value or [])
     compare = bool(r["compare_with_me"].value)
+    if res.status == "ambiguous":
+        return denied("other_student_record", {"university_ids": res.candidates}, None)
+    if res.status == "not_found" and not (requested and requested <= {"rank", "department"}):
+        # Decided 2026-11-02: a request about another person's record is refused even when the person cannot be identified
+        # (first name only, misspelt, unknown ID); asking "which Layla?" would turn the refusal into a lookup service. Only a
+        # question purely about an instructor's public role (rank, department) gets a clarification instead.
+        return denied("other_student_record", {"not_identified": res.note}, {"program": st["program_code"]} if compare else None)
+    p = need("person", res)
     if p["university_id"] == st["university_id"]:
         return my_program(q, r, st, as_of)
     if p["is_student"] and (compare or requested & STUDENT_FIELDS or not p["is_instructor"] or requested <= {"record"}):
-        return denied("other_student_record", {"university_id": p["university_id"]}, {"program": st["program_code"]} if compare else None)
+        own = {"program": st["program_code"]} if compare else {}
+        if p["is_instructor"] and requested & {"rank", "department"}:      # a TA's public role is directory data; only the student part is private
+            ins = Q.instructor_public(q, p["university_id"])
+            own.update({"instructor": ins["name"], "rank": ins["rank"], "department": ins["department_code"]})
+        return denied("other_student_record", {"university_id": p["university_id"]}, own or None)
     ins = Q.instructor_public(q, p["university_id"])
     public = {"instructor": ins["name"], "rank": ins["rank"], "department": ins["department_code"], "email": ins["email"]}
     if requested & PRIVATE_PERSON:
@@ -220,6 +233,26 @@ def unknown(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     return {"allowed": True, "unknown": True}
 
 
+# Referrals (2026-11-02). The topic comes from a closed list the extractor chose from; the office is fixed here, never written by a
+# model. Office names are a placeholder policy for this synthetic university (Codex design review, section 5) pending the owner's word.
+REGISTRAR_OFFICE = "the Registrar's Office"
+OUTSIDE_OFFICE = {"tuition": "Student Accounts (the Bursar)", "balances": "Student Accounts (the Bursar)", "payment_plans": "Student Accounts (the Bursar)",
+                  "refunds": "Student Accounts (the Bursar)", "financial_aid": "the Financial Aid Office", "scholarships": "the Financial Aid Office",
+                  "parking": "the Parking and Transportation Office", "housing": "the Housing Office", "dining": "Dining Services",
+                  "it_accounts": "the IT Help Desk", "instructor_office_hours": "the instructor", "advising_appointments": "Academic Advising"}
+
+
+def not_in_data(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
+    """A registrar matter with no data or no power behind it here: say so and refer to the registrar. allowed=True means a referral
+    may be given, not that anything was looked up or done."""
+    return {"allowed": True, "referral": "registrar", "topic": r["topic"].value, "office": REGISTRAR_OFFICE}
+
+
+def outside_registrar(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
+    topic = r["topic"].value
+    return {"allowed": True, "referral": "outside", "topic": topic, "office": OUTSIDE_OFFICE.get(topic)}
+
+
 PROGRAMS = {f.__name__: f for f in (prerequisites, course_info, course_offered, lecture_options, lecture_meeting, who_teaches, capacity, degree_required,
                                     degree_credits, course_in_plan, plan_term, my_program, register_when, term_dates, current_term, person_info,
-                                    student_list, unknown)}
+                                    student_list, not_in_data, outside_registrar, unknown)}

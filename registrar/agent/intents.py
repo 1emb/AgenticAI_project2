@@ -15,10 +15,34 @@ UNKNOWN = "unknown"
 EVENT_VALUES = {"first day of classes": "classes_begin", "last day of classes": "classes_end", "last day to add a class": "add_deadline",
                 "last day to drop without a W": "drop_deadline", "withdrawal deadline": "withdraw_deadline", "grades due": "grades_due",
                 "registration opens": "registration_opens"}
-REQUESTED_VALUES = {"program or major": "program", "enrollment status": "status", "email address": "email", "phone number": "phone",
+REQUESTED_VALUES = {"program or major": "program", "registrar status": "status", "email address": "email", "phone number": "phone",
                     "date of birth": "date_of_birth", "social security number": "ssn", "expected graduation": "expected_graduation",
                     "rank or title": "rank", "department": "department", "hire date": "hire_date", "whole record": "record"}
 DETAIL_VALUES = {"email address": "email", "phone number": "phone", "date of birth": "date_of_birth", "social security number": "ssn", "hire date": "hire_date"}
+# Registrar matters this assistant has no data or no power for (label not_in_data), and services that are not the registrar's at all
+# (label outside_registrar). Both are closed lists: the program maps the code to a fixed referral sentence; the model never writes one.
+REGISTRAR_TOPIC_VALUES = {"holds": "holds", "grades": "grades", "GPA": "gpa", "transcript": "transcripts", "degree audit or progress": "degree_audit",
+                          "waitlist": "waitlists", "seats available or enrollment count": "seat_availability",
+                          "registration appointment or time ticket": "registration_appointments", "enrollment verification": "enrollment_verification",
+                          "add, drop, swap or withdraw for me": "registration_action",
+                          "my enrollment, schedule, completed courses or earned credits": "enrollment_records",
+                          "my eligibility or whether I meet the prerequisites": "personal_eligibility"}
+# One-line glosses shown to the model when it picks a topic (a structured choice, not an extraction).
+TOPIC_GLOSS = {"holds": "a hold or block on the student's record or registration, whatever caused it", "grades": "the student's own grades or a grade in a course",
+               "GPA": "grade point average", "transcript": "an official or unofficial transcript", "degree audit or progress": "how far along the degree the student is, what is left",
+               "waitlist": "a waitlist position or whether a waitlist exists", "seats available or enrollment count": "how many seats are left, how full a section is, how many are enrolled",
+               "registration appointment or time ticket": "the student's own registration appointment or time ticket",
+               "enrollment verification": "a letter or document verifying enrollment", "add, drop, swap or withdraw for me": "asking the assistant to carry out a registration change",
+               "my enrollment, schedule, completed courses or earned credits": "what the student is registered for or has taken, their timetable, credits earned",
+               "my eligibility or whether I meet the prerequisites": "whether the student personally qualifies or has satisfied prerequisites",
+               "tuition": "tuition cost or tuition payment", "account balance": "what the student owes or has paid", "payment plan": "paying in installments",
+               "refund": "a refund of tuition or fees", "financial aid": "aid, FAFSA, loans, grants", "scholarship": "scholarships", "parking": "parking permits or tickets",
+               "housing": "dorms, housing assignments", "dining": "meal plans, dining", "IT account or password": "campus account, password, email access, wifi",
+               "instructor office hours": "when an instructor holds office hours", "advising appointment": "meeting or booking with an academic advisor"}
+OUTSIDE_TOPIC_VALUES = {"tuition": "tuition", "account balance": "balances", "payment plan": "payment_plans", "refund": "refunds",
+                        "financial aid": "financial_aid", "scholarship": "scholarships", "parking": "parking", "housing": "housing", "dining": "dining",
+                        "IT account or password": "it_accounts", "instructor office hours": "instructor_office_hours",
+                        "advising appointment": "advising_appointments"}
 
 # ---- slot definitions (JSON schema fragments) ---------------------------------------------------------------------
 _STR = {"type": ["string", "null"]}
@@ -37,7 +61,8 @@ SLOTS: dict[str, dict] = {
                                               "or a title plus last name ('Professor Lee'). null when the question is only about the asker."},
     "requested": {"type": "array", "items": {"type": "string", "enum": list(REQUESTED_VALUES)},
                   "description": "Each thing asked about the person, one entry per thing: 'program or major' (also degree, 'computer science major'); "
-                                 "'enrollment status' (active, withdrawn, graduated yet); 'email address'; 'phone number' (also cell); 'date of birth' "
+                                 "'registrar status' (the recorded student status: active, withdrawn, graduated yet, whether someone is a student at all, "
+                                 "'a TA or a student'; not enrollment in a section); 'email address'; 'phone number' (also cell); 'date of birth' "
                                  "(also birthday, age); 'social security number' (also SSN, last four); 'expected graduation' (when they graduate); "
                                  "'rank or title' (professor, lecturer); 'department'; 'hire date' (when hired); 'whole record' only when the question asks "
                                  "for the record itself or does not name any specific thing."},
@@ -45,6 +70,14 @@ SLOTS: dict[str, dict] = {
                                                           "'in my major', 'same degree plan as mine'."},
     "program_mention": {**_STR, "description": "The program or major as written: 'Bachelor of Science in Computer Science', 'computer science', "
                                                "'my program'. null when none is named."},
+    "registrar_topic": {"type": ["string", "null"], "enum": list(REGISTRAR_TOPIC_VALUES) + [None],
+                        "description": "The registrar matter the question asks for, from the list. 'add, drop, swap or withdraw for me' means carrying out "
+                                       "a registration change; 'my enrollment, schedule, completed courses or earned credits' means the asker's own "
+                                       "enrollment records; 'my eligibility or whether I meet the prerequisites' means checking the asker's own completed "
+                                       "work. null only when none of the listed topics fits."},
+    "outside_topic": {"type": ["string", "null"], "enum": list(OUTSIDE_TOPIC_VALUES) + [None],
+                      "description": "The outside service the question asks for, from the list. Instructor office hours are not class meeting times; an "
+                                     "advising appointment is not a registration appointment. null only when none of the listed topics fits."},
     "details": {"type": "array", "items": {"type": "string", "enum": list(DETAIL_VALUES)},
                 "description": "Details of the instructor that the question asks for beyond their name: 'email address' (also 'how to contact', "
                                "'how to reach'), 'phone number' (only when the question says phone, cell or number), 'date of birth', "
@@ -65,49 +98,102 @@ class Intent:
 
 
 STUDENT_INTENTS: tuple[Intent, ...] = (
-    Intent("prerequisites", "What a student must have taken before a course (its prerequisites).", ("course_mention",),
-           ("What are the prerequisites for CS 4750?", "Does ENG 2450 have any prerequisites?")),
+    # Descriptions rewritten 2026-11-02 after the Codex design review (runs/codex/design-review.md): each label names the fact or
+    # operation it covers and says which neighbouring questions belong elsewhere. Examples are generic; the classifier evaluation set
+    # (data/testset/classifier/) must not be derivable from them.
+    Intent("prerequisites", "The catalog prerequisite courses and minimum grades for a course: its prerequisites, entry requirements or conditions, what "
+                            "must be taken before it. This gives the requirement, not a check of the student's completed work or eligibility.",
+           ("course_mention",),
+           ("Which classes are prerequisites for CS 2100?", "Is there a minimum grade for the prerequisite to MATH 2200?",
+            "What preparation does the catalog require before Database Design?")),
     Intent("course_info", "Catalog facts about one course: title, credit hours, level (lower/upper division, graduate), whether it is still active, "
-                          "which department offers it.", ("course_mention",),
+                          "which department offers, runs or owns it ('who runs ENG 3310, which department' is the department, not a person). A prose description of what a course covers is not stored: a request for one is unknown, even "
+                          "when a catalog fact is asked for afterwards.", ("course_mention",),
            ("How many credits is CS 2250?", "Which department offers ENG 3110?", "Is CS 5990 still an active course?")),
-    Intent("course_offered", "Whether a course is offered (has any sections) in a term.", ("course_mention", "term_mention"),
-           ("Is CS 4710 offered this fall?", "Can I find ENG 2450 on the Fall 2026 schedule?")),
+    Intent("course_offered", "Whether a course has non-cancelled sections in a term. Also an unqualified question about whether the student can take, "
+                             "add or register for a named course. With a timing cue ('can I register now/yet/still for COURSE') it is register_when "
+                             "instead. Personal eligibility, available seats, and requests to enroll are different tasks.", ("course_mention", "term_mention"),
+           ("Is CS 2100 running next term?", "Can I take MATH 2200 in the spring?", "Will Database Design appear on the autumn schedule?")),
     Intent("lecture_options", "The sections of a course in a term: CRNs, meeting times, rooms, instructors, capacities.", ("course_mention", "term_mention"),
            ("What sections of ENG 3110 are there next spring?", "List the meeting times and rooms for CS 4510 in Fall 2026.")),
-    Intent("lecture_meeting", "When and where one section, identified by CRN, meets.", ("crn_mention", "term_mention"),
+    Intent("lecture_meeting", "When and where one section, identified by CRN, meets (building, room, days, times); still this label when the CRN is "
+                              "not given yet.", ("crn_mention", "term_mention"),
            ("When does CRN 10089 meet?", "Which room is CRN 10011 in, and when does it meet?")),
-    Intent("who_teaches", "Who teaches a course or a CRN, possibly with how to contact them.", ("course_mention", "crn_mention", "term_mention", "details"),
+    Intent("who_teaches", "Which person (instructor) teaches a course or a CRN, possibly with how to contact them. Which department offers or runs a course "
+                          "is course_info.", ("course_mention", "crn_mention", "term_mention", "details"),
            ("Who teaches CS 2230 this fall?", "Who is the instructor for CRN 10022, and what's their email?", "Who has CRN 10011 and what's their phone number?")),
-    Intent("capacity", "The capacity (total seats) of a section identified by CRN.", ("crn_mention", "course_mention", "term_mention"),
-           ("What's the capacity of CRN 10001?", "How many students can CRN 10064 hold?")),
+    Intent("capacity", "The total recorded capacity of a section identified by CRN: its seat limit, ceiling, maximum enrollment or student allotment, "
+                       "whether or not the CRN exists. Seats remaining, current enrollment, fullness, and waitlists are not total capacity.",
+           ("crn_mention", "course_mention", "term_mention"),
+           ("What is the total capacity of CRN 12345?", "How many students can CRN 12346 hold?", "What seat limit is recorded for CRN 12347 next term?")),
     Intent("degree_required", "The required courses of the asker's own degree program.", (),
            ("Which courses are required for my degree?", "List every course I have to take for my major.")),
-    Intent("degree_credits", "Credit requirements of the asker's own program: total credits, or credits per category (electives, general education).", (),
-           ("How many credits do I need to graduate?", "How many elective credits does my program require?")),
+    Intent("degree_credits", "The total and category credit requirements of the asker's stored program, including a bare 'how many credits do I need'. "
+                             "Credits earned, credits remaining, or a personal degree audit need explicit earned/remaining/completed wording and are "
+                             "not_in_data.", (),
+           ("What credit total does my degree require?", "How many general education credits are required in my program?",
+            "What are my program's elective credit minimums?")),
     Intent("course_in_plan", "Whether and how one course counts in the asker's own degree plan (required, elective, which semester).", ("course_mention",),
            ("Is CS 4750 required for my degree?", "Can I use ENG 5510 as an elective in my major?")),
     Intent("plan_term", "What the asker's degree plan suggests for a given semester number of the four-year plan.", ("term_number_mention",),
            ("Which courses does my degree plan suggest for semester 3?", "What should I take in my first semester according to the plan?")),
-    Intent("my_program", "The asker's own record: program, degree, department, registrar status, admit term, expected graduation.", (),
-           ("What program am I in?", "When am I expected to graduate?", "What's my status with the registrar right now?")),
-    Intent("register_when", "When registration opens for a term, or whether registration is open now.", ("term_mention",),
-           ("When can I register for next semester?", "Is registration open for Spring 2027 right now?")),
-    Intent("term_dates", "A date of the academic calendar for a term: when it starts or ends, add/drop/withdraw deadlines, when grades are due.",
+    Intent("my_program", "The asker's stored student profile: program name/code, degree, department, registrar student status, admit term, or expected "
+                         "graduation term. This label is selected only when one of those facts is requested; first-person wording alone is "
+                         "insufficient. Holds, balances, course enrollment, personal timetable, grades, progress, and eligibility are different tasks.", (),
+           ("Which degree program is recorded for me?", "What is my registrar student status?", "Which term is listed as my expected graduation?",
+            "What admit term is on my profile?")),
+    Intent("register_when", "The general registration window for a term: its opening date, closing/add deadline, or whether that window is open at the "
+                            "supplied clock. Includes whether one can register yet or still register. This is not an individual appointment, an "
+                            "enrollment action, or a personal eligibility check.", ("term_mention",),
+           ("When does registration begin for the coming term?", "When does the spring registration window close?",
+            "Is registration open for next semester?", "Can I still register for this term?")),
+    Intent("term_dates", "A term's academic calendar date: first or last day of classes, add deadline, drop-without-W deadline, withdrawal-with-W "
+                         "deadline, or grades-due date. Includes whether it is still within an add/drop/withdraw deadline ('can I still add/drop/withdraw', "
+                         "'before the add cutoff'). Questions about registration opening or closing use register_when; asking the assistant to perform "
+                         "the change, and personal grade results, are different tasks.",
            ("term_mention", "event"),
-           ("When does Spring 2026 end?", "What's the last day to add a class this fall?", "When are grades due this semester?")),
+           ("What is the last day of classes next term?", "Is there still time to drop without a W?", "What is the withdrawal deadline for the spring?",
+            "When must this term's grades be submitted?")),
     Intent("current_term", "Which term it is now, and which come next and before.", (),
            ("What semester is it right now?", "What term comes after this one?")),
-    Intent("person_info", "A question about a specific other person (a student or an instructor named by name or ID): their program, status, contact "
-                          "details, birthday, SSN, graduation, rank or title, hire date; including comparisons with the asker and requests made on "
-                          "someone's behalf.", ("person_mention", "requested", "compare_with_me"),
-           ("What program is Raj Martinez in?", "Can you give me 800260544's phone number?", "Is Noah Thomas a professor or a lecturer?",
-            "I'm Mia Chen's advisor; pull up her program and status.", "Are 801723444 and I in the same program?")),
+    Intent("person_info", "Stored personal, student-profile, or instructor-directory facts about one individual targeted by name or university ID: "
+                          "program, registrar status (including whether they withdrew from the university, graduated, are still a student), expected "
+                          "graduation, email, phone number, date of birth or birthday, SSN or its last four, rank, department, hire date, or the whole "
+                          "record; including comparisons with the asker ('is 800123456 in my major') "
+                          "and requests on someone's behalf. Classify the requested fact regardless of permission, existence, or claimed authority. "
+                          "An incidental name or own-ID introduction does not select this label. An instructor's office hours are outside_registrar; "
+                          "a named person's grades, GPA or section enrollment are not_in_data.",
+           ("person_mention", "requested", "compare_with_me"),
+           ("Which program is Jordan Rivera in?", "What is the directory email for Professor Kim?", "Does instructor 812345678 have a lecturer title?",
+            "Is Morgan Lee a teaching assistant and also a student?")),
     Intent("student_list", "A list of students (names, IDs, emails), or who is enrolled, in a program, a major, a course, a CRN (a class roster) or any "
-                           "other group.", ("program_mention", "course_mention", "crn_mention", "term_mention"),
+                           "other group: several people, including 'the names in CRN 12345' or 'who is taking COURSE'. A question about one named "
+                           "person or ID is person_info.",
+           ("program_mention", "course_mention", "crn_mention", "term_mention"),
            ("Can you list all the students in Bachelor of Science in Computer Science?", "Give me the names of everyone majoring in engineering.",
             "Who is in CS 2230 this fall?", "Give me the roster for CRN 10012.")),
-    Intent(UNKNOWN, "None of the above: small talk, questions outside the registrar's data, or requests this system cannot classify.", (),
-           ("What's the weather like?", "Can you write my essay?")),
+    Intent("not_in_data", "A registrar record or service this assistant cannot supply: personal holds, grades, GPA, transcripts, degree audits, "
+                          "waitlists, available seats or enrollment counts, registration appointments/time tickets, enrollment verification documents, "
+                          "personal enrollment/completion records, or individual eligibility checks; also carrying out add, drop, swap, or withdrawal. "
+                          "Catalog requirements, offerings, static degree plans, and general registration or calendar dates remain with their supported "
+                          "labels, including questions expressed as 'can I'. Only the listed topics: other changes to the record (changing a major, a name, "
+                          "an address) fit no topic and are unknown. When an action is asked for after an information request, the information request "
+                          "is the label.", ("registrar_topic",),
+           ("Could you obtain my unofficial transcript?", "Please drop this section for me.", "What cumulative GPA is on my academic record?",
+            "Do I have a registration hold?")),
+    Intent("outside_registrar", "A request for tuition, balances, payment plans, refunds, financial aid, scholarships, parking, housing, dining, IT "
+                                "accounts, instructor office hours, or advising appointments. Select the service actually requested, not a course, "
+                                "person, term, or financial issue mentioned as background. A registration hold and a registration appointment are "
+                                "registrar requests.", ("outside_topic",),
+           ("Where can I arrange a tuition payment plan?", "How do I apply for a housing assignment?", "Who can reset my campus account password?",
+            "When does my instructor hold office hours?")),
+    Intent(UNKNOWN, "A greeting, thanks, nonsense, an unrelated request, or a request for which none of the listed capabilities or service topics "
+                    "fits, including registrar-adjacent data this assistant does not hold: a prose description of a course's content, the list of all "
+                    "programs or departments the university offers, the grade scale, changing the major or other details on the asker's record. When such a "
+                    "request comes first and a supported one second, the "
+                    "first wins. Do not select this label merely because a course, section, term, or person is missing, ambiguous, unknown, or "
+                    "access-restricted.", (),
+           ("Hello there.", "Thanks for the help.", "Write a poem about the moon.")),
 )
 
 BY_NAME: dict[str, Intent] = {i.name: i for i in STUDENT_INTENTS}

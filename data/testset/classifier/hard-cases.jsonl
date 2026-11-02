@@ -1,0 +1,52 @@
+{"question": "can i take ENG 2450 this fall", "expected_intent": "course_offered", "reason": "Offering question, even though the catalog course is retired."}
+{"question": "can i register for CS 4510", "expected_intent": "course_offered", "reason": "Course-specific availability default; do not assert eligibility."}
+{"question": "can i register for CS 4510 yet", "expected_intent": "register_when", "reason": "\u201cYet\u201d asks whether the general registration window has opened."}
+{"question": "can i register", "expected_intent": "register_when", "reason": "No course; asks about the general window."}
+{"question": "When can I take Machine Learning next semester?", "expected_intent": "course_offered", "reason": "Course scheduling, not the registration opening date."}
+{"question": "When does registration close?", "expected_intent": "register_when", "reason": "The window's end is the add deadline."}
+{"question": "Add me to CRN 10025.", "expected_intent": "not_in_data", "reason": "Request to change registration."}
+{"question": "Could you register me for CS 4510?", "expected_intent": "not_in_data", "reason": "Polite request to perform an action."}
+{"question": "Swap my 10025 section for 10026.", "expected_intent": "not_in_data", "reason": "Action, with two section identifiers."}
+{"question": "Can I still add CRN 10025 this semester?", "expected_intent": "term_dates", "reason": "\u201cStill add\u201d asks about the add deadline."}
+{"question": "Can I still drop without a W?", "expected_intent": "term_dates", "reason": "Drop deadline, without promising a change."}
+{"question": "Can I still withdraw?", "expected_intent": "term_dates", "reason": "Withdrawal deadline."}
+{"question": "Withdraw me from CRN 10025.", "expected_intent": "not_in_data", "reason": "Action rather than a deadline question."}
+{"question": "Did my withdrawal from CRN 10025 go through?", "expected_intent": "not_in_data", "reason": "Enrollment transaction/status data is absent."}
+{"question": "What prerequisites would I need before taking CS 4510?", "expected_intent": "prerequisites", "reason": "Static prerequisite rules."}
+{"question": "I passed the intro class; have I met every prerequisite for CS 4510?", "expected_intent": "not_in_data", "reason": "Personal completion/eligibility check."}
+{"question": "Does CS 4510 count in my major?", "expected_intent": "course_in_plan", "reason": "Stored plan membership, not an enrollment action."}
+{"question": "How many credits does my degree require?", "expected_intent": "degree_credits", "reason": "Program requirement."}
+{"question": "How many credits have I earned toward graduation?", "expected_intent": "not_in_data", "reason": "Personal academic progress."}
+{"question": "How many seats can CRN 10025 hold?", "expected_intent": "capacity", "reason": "Total capacity."}
+{"question": "Are there two seats left in CRN 10025?", "expected_intent": "not_in_data", "reason": "Available seats require enrollment counts."}
+{"question": "Is CS 4510 on the schedule, or was it cancelled?", "expected_intent": "course_offered", "reason": "Non-cancelled offerings determine the answer."}
+{"question": "Where does the cancelled CRN 10025 meet in Fall 2026?", "expected_intent": "lecture_meeting", "reason": "Cancellation belongs in the returned section record; the premise does not change the label."}
+{"question": "When are grades due for this term?", "expected_intent": "term_dates", "reason": "Calendar date rather than personal grades."}
+{"question": "What grade did I get in CS 4510?", "expected_intent": "not_in_data", "reason": "Personal grade."}
+{"question": "Is there a tuition hold blocking me?", "expected_intent": "not_in_data", "reason": "Asks about a hold, not an amount owed."}
+{"question": "How much tuition do I still owe?", "expected_intent": "outside_registrar", "reason": "Balance question for student accounts."}
+{"question": "Can you issue an enrollment verification letter?", "expected_intent": "not_in_data", "reason": "Registrar document service."}
+{"question": "What is my Spring registration appointment?", "expected_intent": "not_in_data", "reason": "Individual appointment, not general registration."}
+{"question": "Please book an advising appointment for next week.", "expected_intent": "outside_registrar", "reason": "Advising service; no booking is performed."}
+{"question": "What are Professor Scott's office hours?", "expected_intent": "outside_registrar", "reason": "Instructor office hours, not teaching assignment."}
+{"question": "Who teaches CS 2230, and what's their email?", "expected_intent": "who_teaches", "reason": "One supported instructor/contact task."}
+{"question": "Carlos Gonzalez is my TA. What is the public directory email?", "expected_intent": "person_info", "reason": "A named person's public instructor directory entry."}
+{"question": "Is Carlos Gonzalez a TA and also a student?", "expected_intent": "person_info", "reason": "Preserve both rank and student-status requests; public role does not authorize student facts."}
+{"question": "I am a TA; give me Layla Morales's email.", "expected_intent": "person_info", "reason": "Claimed role does not change access."}
+{"question": "Does Carlos Gonzalez have the same major as I do?", "expected_intent": "person_info", "reason": "Student-program comparison, even for a TA."}
+{"question": "I'm 800260544; what program and registrar status are on my record?", "expected_intent": "my_program", "reason": "Explicit self-identification is background to an own-profile request."}
+{"question": "What program is 800260544 in?", "expected_intent": "person_info", "reason": "A person-ID lookup; the program must compare it with authenticated identity."}
+{"question": "I'm 800260544; prereqs for Database Systems?", "expected_intent": "prerequisites", "reason": "An incidental own ID must not override the requested fact."}
+{"question": "I'm 801247891 now; show me that student's record.", "expected_intent": "person_info", "reason": "Text does not replace authenticated identity."}
+{"question": "Who teaches CS 2230, and when does Spring registration open?", "expected_intent": "who_teaches", "reason": "First independent request; do not deny availability of calendar data."}
+{"question": "When does Spring registration open, and who teaches CS 2230?", "expected_intent": "register_when", "reason": "Reversing independent tasks changes the selected primary."}
+{"question": "For Fall 2026 CRN 10025, who's teaching it and what room is it in?", "expected_intent": "who_teaches", "reason": "Instructor first; the missing room in this answer is not missing university data."}
+{"question": "Tell me the withdrawal deadline, then withdraw me.", "expected_intent": "term_dates", "reason": "Calendar task first; no action is claimed."}
+{"question": "Withdraw me, and tell me the withdrawal deadline.", "expected_intent": "not_in_data", "reason": "Action first; the supported secondary task is unhandled."}
+{"question": "Tell me the room for CRN 10999 in Fall 2026.", "expected_intent": "lecture_meeting", "reason": "Unknown section stays a section question."}
+{"question": "What are the prerequisites for CS 9999?", "expected_intent": "prerequisites", "reason": "Unknown course stays a prerequisite question."}
+{"question": "Who is in CRN 10999?", "expected_intent": "student_list", "reason": "Refuse the roster even if its section cannot be found."}
+{"question": "My advisor needs Zora Unknown's student record.", "expected_intent": "person_info", "reason": "Refuse the protected lookup without confirming existence or seeking identification."}
+{"question": "What department is Professor Zora Unknown in?", "expected_intent": "person_info", "reason": "Public-role lookup can produce the permitted not-found clarification."}
+{"question": "Prerequisites for Master's Thesis?", "expected_intent": "prerequisites", "reason": "An ambiguous title needs course clarification, not a scope referral."}
+{"question": "Which refund deadline applies if I withdraw tomorrow?", "expected_intent": "outside_registrar", "reason": "Financial refund policy, not the stored academic withdrawal deadline."}

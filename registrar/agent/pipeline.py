@@ -15,7 +15,7 @@ from datetime import datetime
 from ..testset import queries as Q
 from ..testset.common import DEFAULT_AS_OF, QueryLog
 from . import resolve
-from .intents import BY_NAME, DETAIL_VALUES, EVENT_VALUES, REQUESTED_VALUES, UNKNOWN, Intent
+from .intents import BY_NAME, DETAIL_VALUES, EVENT_VALUES, REQUESTED_VALUES, UNKNOWN, Intent, REGISTRAR_TOPIC_VALUES, OUTSIDE_TOPIC_VALUES
 from .llm import Client, LLMError
 from .programs import PROGRAMS, Missing
 from .resolve import Resolved
@@ -74,6 +74,12 @@ def resolve_all(q: QueryLog, intent: Intent, mentions: dict, as_of: datetime, st
         r["program"] = resolve.program(q, get("program_mention"), st["program_code"])
     if "details" in intent.slots:
         r["details"] = Resolved([DETAIL_VALUES[v] for v in get("details") or [] if v in DETAIL_VALUES], "ok")
+    if "registrar_topic" in intent.slots:
+        v = get("registrar_topic")
+        r["topic"] = Resolved(REGISTRAR_TOPIC_VALUES[v], "ok") if v in REGISTRAR_TOPIC_VALUES else Resolved(None, "not_found", note="no listed topic")
+    if "outside_topic" in intent.slots:
+        v = get("outside_topic")
+        r["topic"] = Resolved(OUTSIDE_TOPIC_VALUES[v], "ok") if v in OUTSIDE_TOPIC_VALUES else Resolved(None, "not_found", note="no listed topic")
     return r
 
 

@@ -123,9 +123,20 @@ the verification contract are in [data/testset/README.md](data/testset/README.md
 `registrar/agent/` answers a student's English question in four stages; the first two are calls to a local LLM, the rest is
 plain Python over the database:
 
-1. **Classify** (`llm.py`): the model may only reply with one of the question types in `intents.py` (15 student intents,
-   `person_info`, `student_list`, `unknown`); vLLM's `structured_outputs.choice` enforces that, and the token logprobs give a
-   confidence. Access control is not a question type: "What is Raj Martinez's phone number?" classifies as `person_info`.
+1. **Classify** (`llm.py`): the model may only reply with one of the 20 labels in `intents.py`: 17 answerable question types,
+   `student_list` (always refused), and two referral labels added 2026-11-02 after the Codex design review
+   (`runs/codex/design-review.md`): `not_in_data` for registrar matters this assistant has no data or no power for (holds, grades,
+   GPA, transcripts, degree audits, waitlists, seats left, time tickets, enrollment verification, the asker's own enrollment
+   records, eligibility checks, and carrying out add/drop/swap/withdraw) and `outside_registrar` for services that are not the
+   registrar's (tuition and balances, financial aid, parking, housing, dining, IT accounts, instructor office hours, advising).
+   Both carry a closed topic slot; the program maps the topic to a fixed referral sentence and office, so the model never writes
+   one. `unknown` is left for greetings, nonsense and requests that fit no label. vLLM's `structured_outputs.choice` enforces the
+   label set, and the token logprobs give a confidence (kept for diagnosis only; misclassifications have scored 0.99).
+   Access control is not a question type: "What is Raj Martinez's phone number?" classifies as `person_info`. Each label's
+   description says what it covers and which neighbouring questions belong elsewhere; the classifier rules in `CLASSIFY_SYSTEM`
+   settle the boundaries that matter most: "can I take/register for COURSE" unqualified is `course_offered`, "yet/still/now" cues
+   are `register_when`, add/drop/withdraw timing is `term_dates`, "add me / withdraw me" is an action (`not_in_data`), and a
+   message with two independent requests is classified by the first one in textual order.
 2. **Extract** (`llm.py`): given the type, the model fills that type's slot schema (`structured_outputs.json`) with
    *mentions*, phrases copied from the question: `{"course_mention": "Capstone Design I", "term_mention": "next spring"}`.
    It never writes database keys.
@@ -134,11 +145,13 @@ plain Python over the database:
    resolution carries a status (`ok`, `none`, `not_found`, `ambiguous`), so a wrong answer is traceable to its stage.
 4. **Program** (`programs.py`): one function per intent applies the permission rule from `data/testset/README.md` and
    runs the SQL from `registrar/testset/queries.py`, returning the discrete answer shape the test set grades.
-5. **Reply** (`reply.py`, optional, added 2026-11-01): a third LLM call turns the discrete answer into one to three English
-   sentences. The model sees only the question and the answer's facts, with dates, times and weekdays already formatted in Python;
-   a refusal's `target` (the other person's id) is removed first, and the text is checked for it afterwards. If the model fails,
-   a fixed sentence built from the answer shape is used. The reply never changes the graded answer; `grade.py --reply` scans it for
-   `must_not_mention` values (0 leaks on the 156 student cases, 2026-11-01).
+5. **Reply** (`reply.py`, 2026-11-01, made deterministic 2026-11-02): one writer per intent turns the discrete answer into one to
+   three English sentences; refusals and clarifying questions are fixed sentences. No model is involved, so the reply can neither
+   invent a fact nor leak one, and it costs nothing (the whole pipeline runs in about 0.2 s per question against 1.3 s with a model
+   reply). The earlier LLM rendering is kept for comparison only (`ask.py --llm-reply`, `reply_mode: "llm"` in the web API). The
+   change followed the 90-question Codex run (`runs/codex/phase2-report.md`): in every case where the English was wrong the JSON
+   answer was right; the model had turned AND into OR, "not in your plan" into "yes", and invented "no holds" and "no longer
+   enrolled". `grade.py --reply` scans the reply for `must_not_mention` values (0 leaks on the 156 student cases).
 
 Model: Qwen3.5-27B served by vLLM 0.32 on one H100 (`scripts/serve_llm.sh`; weights under
 `/home/sheshnagnobackup/mnguyen/models`, outside the repo). `.env` holds `LLM_BASE_URL` and `LLM_MODEL`.
@@ -166,8 +179,11 @@ per-stage timings. Refusals are marked. From a laptop, forward the port (`ssh -L
 Every question asked through the web chat or `scripts/ask.py` is appended to `runs/chat.jsonl` (`registrar/chatlog.py`;
 path overridable with `CHAT_LOG`): who asked, the clock, the question, and the whole trace, including the reply, the SQL
 and timings. Under each answer the page has verdict buttons (correct, wrong, should have refused, should have answered)
-and a note; they append verdict records to the same file, latest wins. The History view lists everything recorded,
-filterable by text, intent, outcome, verdict and student, and opens any row's full trace with its verdict controls.
+and a note; they append verdict records to the same file, latest wins. Each verdict says who judged (`by`: owner from the
+page, or a judge name such as `codex` for verdicts imported with `scripts/import_verdicts.py <file> --by codex`); the
+History view marks imported verdicts with the judge's name and can filter by judge, and clicking overrules them. The
+History view lists everything recorded, filterable by text, intent, outcome, verdict, judge and student, and opens any
+row's full trace with its verdict controls.
 `grade.py` runs are not logged there; they keep their own `runs/<persona>-<timestamp>.jsonl`.
 
 ```bash

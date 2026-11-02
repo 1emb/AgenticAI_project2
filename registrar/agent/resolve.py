@@ -15,7 +15,7 @@ from ..testset.common import QueryLog
 ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6, "seventh": 7, "eighth": 8,
             "1st": 1, "2nd": 2, "3rd": 3, "4th": 4, "5th": 5, "6th": 6, "7th": 7, "8th": 8}
 SEASONS = {"fall": "fall", "autumn": "fall", "spring": "spring", "summer": "summer"}
-TERM_WORDS = r"(?:semester|term|session)"
+TERM_WORDS = r"(?:semester|sem|term|session)"
 
 
 @dataclass
@@ -64,8 +64,10 @@ def current_term(q: QueryLog, as_of: datetime) -> dict:
 
 
 def term(q: QueryLog, mention: str | None, as_of: datetime, default_current: bool = True) -> Resolved:
-    """'this fall', 'next semester', 'last term', 'in Fall 2026', 'the Spring 2027 schedule', '2026 fall' -> a term row.
-    With no mention the current term is returned (status 'ok', note 'default'), unless default_current is False."""
+    """'this fall', 'next semester', 'next sem', 'last term', 'in Fall 2026', 'the Spring 2027 schedule', '2026 fall' -> a term row.
+    A bare season ('spring', 'for fall') is the current term when it is that season, else the next term of that season
+    (added 2026-11-02 after the realistic test run). With no mention the current term is returned (status 'ok', note
+    'default'), unless default_current is False."""
     terms = all_terms(q)
     cur = current_term(q, as_of)
     by_seq = {t["sequence"]: t for t in terms}
@@ -101,6 +103,13 @@ def term(q: QueryLog, mention: str | None, as_of: datetime, default_current: boo
             else:
                 hit = next((t for t in reversed(terms) if t["sequence"] < cur["sequence"] and t["term_type"] == season), None)
             return Resolved(hit, "ok") if hit else Resolved(None, "not_found", note=f"no term before {cur['name']}")
+    bare = re.search(r"\b(fall|autumn|spring|summer)\b", m)
+    if bare:
+        season = SEASONS[bare.group(1)]
+        if cur["term_type"] == season:
+            return Resolved(cur, "ok", note=f"'{m}': the current term is a {season}")
+        nxt = next((t for t in terms if t["sequence"] > cur["sequence"] and t["term_type"] == season), None)
+        return Resolved(nxt, "ok", note=f"'{m}': the next {season} after {cur['name']}") if nxt else Resolved(None, "not_found", note=f"no {season} after {cur['name']}")
     if re.search(r"\b(now|right now|currently|today|at the moment)\b", m):
         return Resolved(cur, "ok")
     return Resolved(None, "not_found", note=f"cannot read a term in '{mention}'")

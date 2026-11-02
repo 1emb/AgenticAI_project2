@@ -46,6 +46,8 @@ EXPECTED_INTENT = {
 
 
 def expected_intent(case: dict) -> str:
+    if "expected_intent" in case:                 # a classifier eval row (--cases): the label is given directly
+        return case["expected_intent"]
     if case["intent"].startswith("access_"):
         return EXPECTED_INTENT[case["slots"]["scenario"]]
     return case["intent"]
@@ -53,7 +55,7 @@ def expected_intent(case: dict) -> str:
 
 def expected_slots(case: dict) -> dict:
     """The keys the resolver must reach, from the case's slots."""
-    s, out = case["slots"], {}
+    s, out = case.get("slots") or {}, {}
     if "course" in s and "crn" not in s:          # with a CRN the course is derived, not mentioned
         out["course"] = s["course"]
     if "crn" in s:
@@ -68,7 +70,7 @@ def expected_slots(case: dict) -> dict:
         out["person"] = s["t_uid"]
     if "i_uid" in s:
         out["person"] = s["i_uid"]
-    if case["answer"].get("target", {}).get("program"):
+    if (case.get("answer") or {}).get("target", {}).get("program"):
         out["program"] = case["answer"]["target"]["program"]
     return out
 
@@ -126,17 +128,25 @@ def conn():
     return _local.conn
 
 
-def run_llm_only(llm: Client, case: dict, question: str, which: str) -> dict:
-    """Stages 1 and 2 without a database: the intent is graded, the mentions are shown next to the case's slots."""
+def run_llm_only(llm: Client, case: dict, question: str, which: str, classify_only: bool = False, topics: bool = False) -> dict:
+    """Stages 1 and 2 without a database: the intent is graded, the mentions are shown next to the case's slots. With classify_only
+    (the --cases mode) stage 2 is skipped, so an extraction failure cannot count against the classifier; with topics as well, the
+    referral topic is chosen for rows that carry expected_topic and scored separately (topic_ok)."""
     exp_int = expected_intent(case)
+    out = {"id": case["id"], "which": which, "question": question, "expected_intent": exp_int, "slots_ok": False, "answer_ok": False}
     try:
         label, res = llm.classify(question)
-        mentions, _ = llm.extract(question, BY_NAME.get(label, BY_NAME[UNKNOWN]))
+        mentions = {} if classify_only else llm.extract(question, BY_NAME.get(label, BY_NAME[UNKNOWN]))[0]
+        out.update(intent=label, intent_confidence=res.confidence, intent_ok=label == exp_int, mentions=mentions, expected_slots=expected_slots(case),
+                   timings={"classify_s": round(res.latency_s, 3)})
+        if topics and case.get("expected_topic") is not None:
+            intent = BY_NAME.get(label if label == exp_int else exp_int)       # score the topic choice given the right label
+            picked = llm.extract(question, intent)[0] if intent.slots else {}
+            got = next(iter(picked.values()), None)
+            out.update(expected_topic=case["expected_topic"], topic=got, topic_ok=got == case["expected_topic"])
     except LLMError as e:
-        return {"id": case["id"], "which": which, "question": question, "error": str(e), "expected_intent": exp_int, "intent_ok": False, "slots_ok": False, "answer_ok": False}
-    return {"id": case["id"], "which": which, "question": question, "expected_intent": exp_int, "intent": label, "intent_confidence": res.confidence,
-            "intent_ok": label == exp_int, "mentions": mentions, "expected_slots": expected_slots(case), "slots_ok": False, "answer_ok": False,
-            "timings": {"classify_s": round(res.latency_s, 3)}}
+        out.update(error=str(e), intent_ok=False)
+    return out
 
 
 def run_one(llm: Client, case: dict, question: str, which: str, reply: bool = False) -> dict:
@@ -175,10 +185,22 @@ def main():
     ap.add_argument("--out")
     ap.add_argument("--quiet", action="store_true", help="do not list failures")
     ap.add_argument("--llm-only", action="store_true", help="classify and extract only; needs no database")
+    ap.add_argument("--cases", help="JSONL of {question, expected_intent[, id, reason]} rows instead of the persona test set: classification only, no extraction, no database")
+    ap.add_argument("--confusion", action="store_true", help="with --cases: print the confusion matrix and per-label recall/precision")
+    ap.add_argument("--topics", action="store_true", help="with --cases: also choose the referral topic for rows with expected_topic and score it")
+    ap.add_argument("--repeat", type=int, default=1, help="with --cases: run the whole set N times and report predictions that differ between runs")
     ap.add_argument("--reply", action="store_true", help="also write the English reply (stage 5) and fail a case whose reply leaks a must_not_mention value")
     args = ap.parse_args()
 
-    cases = [json.loads(l) for l in open(ROOT / "data" / "testset" / args.persona / "cases.jsonl")]
+    if args.cases:
+        args.llm_only = True
+        cases = [json.loads(l) for l in open(args.cases) if l.strip()]
+        for i, c in enumerate(cases, 1):
+            c.setdefault("id", f"eval-{i}")
+            c.setdefault("intent", c["expected_intent"])
+            c.setdefault("paraphrases", [])
+    else:
+        cases = [json.loads(l) for l in open(ROOT / "data" / "testset" / args.persona / "cases.jsonl")]
     if args.intent:
         cases = [c for c in cases if c["intent"] == args.intent]
     if args.limit:
@@ -194,9 +216,41 @@ def main():
         raise SystemExit(f"LLM server: {e}\nstart it with scripts/serve_llm.sh")
     print(f"model {llm.model} at {llm.base_url} (served: {', '.join(models)}); {len(jobs)} questions, {args.workers} workers")
     t0 = time.perf_counter()
-    with ThreadPoolExecutor(args.workers) as ex:
-        results = list(ex.map(lambda j: run_llm_only(llm, *j) if args.llm_only else run_one(llm, *j, reply=args.reply), jobs))
+    runs = []
+    for i in range(max(1, args.repeat)):
+        with ThreadPoolExecutor(args.workers) as ex:
+            runs.append(list(ex.map(lambda j: run_llm_only(llm, *j, classify_only=bool(args.cases), topics=args.topics) if args.llm_only
+                                    else run_one(llm, *j, reply=args.reply), jobs)))
+        if args.repeat > 1:
+            print(f"run {i + 1}: {sum(r['intent_ok'] for r in runs[-1])}/{len(jobs)} labels correct")
+    results = runs[0]
     elapsed = time.perf_counter() - t0
+    if len(runs) > 1:
+        diffs = [(rs[0]["id"], rs[0]["question"], [r.get("intent") for r in rs]) for rs in zip(*runs) if len({r.get("intent") for r in rs}) > 1]
+        print(f"\n{len(diffs)} predictions differ between the {len(runs)} runs" + (":" if diffs else "."))
+        for rid, q, labels in diffs:
+            print(f"  {rid}: {labels}  {q[:90]}")
+    if args.cases and args.topics:
+        tr = [r for r in results if "topic_ok" in r]
+        if tr:
+            print(f"\ntopic choice: {sum(r['topic_ok'] for r in tr)}/{len(tr)} correct")
+            for r in tr:
+                if not r["topic_ok"]:
+                    print(f"  {r['id']}: expected '{r['expected_topic']}' got '{r['topic']}'  {r['question'][:80]}")
+    if args.cases and args.confusion:
+        from collections import Counter
+        pairs = Counter((r["expected_intent"], r.get("intent") or "ERROR") for r in results)
+        labels = sorted({e for e, _ in pairs} | {g for _, g in pairs})
+        print("\nexpected -> predicted (off-diagonal only)")
+        for (e, g), n in sorted(pairs.items(), key=lambda x: -x[1]):
+            if e != g:
+                print(f"  {e:18} -> {g:18} {n}")
+        print("\nlabel              n  recall  precision")
+        for lab in labels:
+            n = sum(v for (e, _), v in pairs.items() if e == lab)
+            tp = pairs.get((lab, lab), 0)
+            pred = sum(v for (_, g), v in pairs.items() if g == lab)
+            print(f"{lab:18} {n:3d}  {tp}/{n}{'':4}{tp}/{pred}")
 
     out = Path(args.out) if args.out else ROOT / "runs" / f"{args.persona}-{datetime.now():%Y%m%d-%H%M%S}.jsonl"
     out.parent.mkdir(parents=True, exist_ok=True)

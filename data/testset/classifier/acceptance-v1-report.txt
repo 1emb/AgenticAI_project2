@@ -1,0 +1,40 @@
+model qwen3.5-27b at http://localhost:8000/v1 (served: qwen3.5-27b); 600 questions, 8 workers
+run 1: 594/600 labels correct
+run 2: 594/600 labels correct
+
+0 predictions differ between the 2 runs.
+
+topic choice: 60/60 correct
+
+expected -> predicted (off-diagonal only)
+  prerequisites      -> not_in_data        1
+  lecture_meeting    -> not_in_data        1
+  capacity           -> not_in_data        1
+  course_in_plan     -> not_in_data        1
+  person_info        -> student_list       1
+  unknown            -> not_in_data        1
+
+label              n  recall  precision
+capacity            30  29/30    29/29
+course_in_plan      30  29/30    29/29
+course_info         30  30/30    30/30
+course_offered      30  30/30    30/30
+current_term        30  30/30    30/30
+degree_credits      30  30/30    30/30
+degree_required     30  30/30    30/30
+lecture_meeting     30  29/30    29/29
+lecture_options     30  30/30    30/30
+my_program          30  30/30    30/30
+not_in_data         30  30/30    30/35
+outside_registrar   30  30/30    30/30
+person_info         30  29/30    29/29
+plan_term           30  30/30    30/30
+prerequisites       30  29/30    29/29
+register_when       30  30/30    30/30
+student_list        30  30/30    30/31
+term_dates          30  30/30    30/30
+unknown             30  29/30    29/29
+who_teaches         30  30/30    30/30
+
+intent                n  intent   slots  answer
+74s, 0.1s per question; results in runs/classifier-acceptance-run.jsonl

@@ -124,7 +124,10 @@ the verification contract are in [data/testset/README.md](data/testset/README.md
 plain Python over the database. One request is answered per message (owner, 2026-11-02): a third small LLM call,
 `count_requests`, answers "how many requests?" with a digit (a word pair such as "one request / more than one" always came back
 "one"), and when it says more than one the reply ends with "You asked more than one thing; I handle one request per message, so
-please ask the rest separately." Measured on the Codex sets: every tagged two-request row flagged (25/25 dev, 60/60 and 107/108
+please ask the rest separately." When the counter says more than one and the classifier says `unknown`, a restricted second
+choice (`rescue_label`: the servable labels plus "none of these") asks which label covers any request in the message; the
+classifier reads one request per message well and two badly, and wording changes to its rule only moved the misses around, so
+the split is structural. Measured on the Codex sets: every tagged two-request row flagged (25/25 dev, 60/60 and 107/108
 acceptance), fewer than one untagged row in a hundred flagged too, none of the 156 graded student questions. The classifier still decides which request is answered:
 
 1. **Classify** (`llm.py`): the model may only reply with one of the 18 labels in `intents.py`: 17 answerable question types,
@@ -141,7 +144,9 @@ acceptance), fewer than one untagged row in a hundred flagged too, none of the 1
    settle the boundaries that matter most: "can I take/register for COURSE" unqualified is `course_offered`, "yet/still/now" cues
    are `register_when` (so is "my time ticket": individual appointments are not recorded, the reply gives the general window and
    says so), add/drop/withdraw timing is `term_dates`, "add me / withdraw me" is an action (`unknown`), and a
-   message with two independent requests is classified by the first one in textual order.
+   message with two independent requests is classified by the one this assistant can serve (owner, 2026-11-02, after five of
+   the seven blind-set misses were the model doing exactly that against the earlier first-in-textual-order rule); when both can
+   be served, the first in textual order wins, and the reply says that only one request was handled.
 2. **Extract** (`llm.py`): given the type, the model fills that type's slot schema (`structured_outputs.json`) with
    *mentions*, phrases copied from the question: `{"course_mention": "Capstone Design I", "term_mention": "next spring"}`.
    It never writes database keys.

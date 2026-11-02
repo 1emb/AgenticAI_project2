@@ -14,7 +14,7 @@ UNKNOWN = "unknown"
 # ---- closed vocabularies: readable value -> code used by the programs and the test set ----------------------------
 EVENT_VALUES = {"first day of classes": "classes_begin", "last day of classes": "classes_end", "last day to add a class": "add_deadline",
                 "last day to drop without a W": "drop_deadline", "withdrawal deadline": "withdraw_deadline", "grades due": "grades_due",
-                "registration opens": "registration_opens"}
+                "registration opens": "registration_opens", "registration closes, ends, or its dates": "registration_window"}
 REQUESTED_VALUES = {"program or major": "program", "registrar status": "status", "email address": "email", "phone number": "phone",
                     "date of birth": "date_of_birth", "social security number": "ssn", "expected graduation": "expected_graduation",
                     "rank or title": "rank", "department": "department", "hire date": "hire_date", "whole record": "record"}
@@ -31,7 +31,8 @@ SLOTS: dict[str, dict] = {
     "event": {"type": ["string", "null"], "enum": list(EVENT_VALUES) + [None],
               "description": "Which calendar date is asked for. 'first day of classes' = when the term starts or begins; 'last day of classes' = when the "
                              "term ends or is over; 'last day to add a class'; 'last day to drop without a W'; 'withdrawal deadline' = last day to withdraw "
-                             "with a W; 'grades due' = when grades are in; 'registration opens'. null when no date is asked for."},
+                             "with a W; 'grades due' = when grades are in; 'registration opens'; 'registration closes, ends, or its dates' = when registration "
+                             "ends, the registration end date, or the registration dates in general. null when no date is asked for."},
     "person_mention": {**_STR, "description": "The other person exactly as written: a full name ('Raj Martinez'), a 9-digit university ID ('800260544') "
                                               "or a title plus last name ('Professor Lee'). null when the question is only about the asker."},
     "requested": {"type": "array", "items": {"type": "string", "enum": list(REQUESTED_VALUES)},
@@ -143,7 +144,7 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
            ("program_mention", "course_mention", "crn_mention", "term_mention"),
            ("Can you list all the students in Bachelor of Science in Computer Science?", "Give me the names of everyone majoring in engineering.",
             "Who is in CS 2230 this fall?", "Give me the roster for CRN 10012.")),
-    Intent(UNKNOWN, "Anything the listed capabilities do not cover: a greeting, thanks, nonsense, an unrelated request; personal records this "
+    Intent(UNKNOWN, "Only when no part of the message asks for something another label covers. Anything the listed capabilities do not cover: a greeting, thanks, nonsense, an unrelated request; personal records this "
                     "assistant does not hold (holds, grades, GPA, transcripts, degree audits or progress, waitlists, seats left or enrollment "
                     "counts, enrollment verification, the asker's own enrollment, schedule, "
                     "completed courses or earned credits, personal eligibility); carrying out add, drop, swap or withdraw; other offices "
@@ -151,8 +152,8 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
                     "instructor office hours, advising appointments); and registrar-adjacent data not held here (a prose description of "
                     "a course's content, the list of all programs or departments, the grade scale, changing the major or other details on "
                     "the asker's record). Catalog requirements, offerings, static degree plans, and general registration or calendar dates "
-                    "remain with their supported labels, including questions expressed as 'can I'. When such a request comes first and a "
-                    "supported one second, the first wins. Do not select this label merely because a course, section, term, or person is "
+                    "remain with their supported labels, including questions expressed as 'can I'. A message that also contains a request a "
+                    "supported label covers takes that label, whichever comes first. Do not select this label merely because a course, section, term, or person is "
                     "missing, ambiguous, unknown, or access-restricted.", (),
            ("Hello there.", "Do I have a registration hold?", "Please drop this section for me.", "Where can I arrange a tuition payment plan?",
             "Write a poem about the moon."))

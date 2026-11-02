@@ -168,7 +168,7 @@ def register_when(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
 
 def term_dates(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     event = need("event", r["event"])
-    if event == "registration_opens":
+    if event in ("registration_opens", "registration_window"):     # a registration question under the term_dates label: same answer as register_when
         return register_when(q, r, st, as_of)
     term = need("term", r["term"])
     d = term[EVENTS[event]]

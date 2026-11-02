@@ -134,10 +134,10 @@ def run_llm_only(llm: Client, case: dict, question: str, which: str, classify_on
     exp_int = expected_intent(case)
     out = {"id": case["id"], "which": which, "question": question, "expected_intent": exp_int, "slots_ok": False, "answer_ok": False}
     try:
-        label, res = llm.classify(question)
+        label, conf, multi, timings = llm.label(question)
         mentions = {} if classify_only else llm.extract(question, BY_NAME.get(label, BY_NAME[UNKNOWN]))[0]
-        out.update(intent=label, intent_confidence=res.confidence, intent_ok=label == exp_int, mentions=mentions, expected_slots=expected_slots(case),
-                   timings={"classify_s": round(res.latency_s, 3)})
+        out.update(intent=label, intent_confidence=conf, multi_request=multi, intent_ok=label == exp_int, mentions=mentions,
+                   expected_slots=expected_slots(case), timings=timings)
     except LLMError as e:
         out.update(error=str(e), intent_ok=False)
     return out

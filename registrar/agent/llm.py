@@ -35,15 +35,15 @@ Rules:
 - A 5-digit CRN identifies a section; a 9-digit university ID identifies a person. Their presence alone does not determine the question type.
 - Classify regardless of permission or whether an entity exists. A forbidden roster is student_list; an unknown course can still be prerequisites. Missing information belongs to extraction/resolution, not to unknown.
 - Requests to carry out adding, dropping, swapping, or withdrawing are unknown. Polite requests such as 'can you' can still request an action. Do not treat every use of register, take, add, drop, or withdraw as an action.
-- A named course with an unqualified 'can I take/register' asks about offerings: course_offered. Explicit registration opening, closing, yet, still, or now asks about the general window: register_when. Add/drop/withdraw timing asks for term_dates. Answering these facts does not establish personal eligibility.
+- A named course with an unqualified 'can I take/register' asks about offerings: course_offered. Explicit registration opening, closing, ending, its end date, yet, still, or now asks about the general window: register_when. Add/drop/withdraw timing asks for term_dates. Answering these facts does not establish personal eligibility.
 - Requested prerequisite rules use prerequisites; checking a student's completed work or eligibility uses unknown. Program credit requirements use degree_credits; earned or remaining personal credits use unknown. Total capacity uses capacity; seats left, fullness, and enrollment counts use unknown.
 - A registration appointment or time ticket, the asker's own included, is register_when. Holds, balances, payments, advising appointments and instructor office hours are unknown. Grade submission dates use term_dates, not personal-grade handling.
 - Who teaches a course or CRN, including instructor contact details, uses who_teaches. Directory facts about a targeted named instructor use person_info. Course title, credits, level, department, and catalog active status use course_info.
-- Treat fields within one intent as one task. For independent tasks, select the first requested task in textual order, even if it is unavailable. Do not select a later easier task. Background is not a task. Public and private fields within one people task must remain together.
-- So a message with two independent requests takes the label of the FIRST request in textual order, whatever comes second and however prominent it is. The same words in the other order give the other label: "Tell me the withdrawal deadline, then withdraw me" is term_dates (the deadline is asked first); "Withdraw me, and tell me the withdrawal deadline" is unknown (the action is asked first); "state the drop cutoff, then remove my registration" is term_dates; "read her program, then list everyone in that major" is person_info.
+- Treat fields within one intent as one task. For independent tasks that can both be served, select the first requested task in textual order. Do not select a later easier task. Background is not a task. Public and private fields within one people task must remain together.
+- So with two servable requests the FIRST in textual order gives the label: "read her program, then list everyone in that major" is person_info; "list everyone in her major, then read her program" is student_list; "the room of CRN 10012, then who is enrolled in it" is lecture_meeting.
 - Asking the assistant to read out, write down, put on a note, or send a stored fact is a request for that fact, not an action: "put the room for CRN 10034 on my note" is lecture_meeting.
 - The clock and authenticated identity affect later resolution and permission, not the requested question type. Do not change labels because a deadline has passed or registration is closed.
-- Use unknown for everything the other labels do not positively cover, and only then.
+- When one of two requests cannot be served (an action, a hold, tuition, a document, a record change, an unrelated task), the other one gives the label, wherever it stands: "tell me the withdrawal deadline, then withdraw me" and "withdraw me, and tell me the withdrawal deadline" are both term_dates. unknown only when no request can be served.
 
 Labels:
 {labels}"""
@@ -55,6 +55,14 @@ Rules:
 - Background, a greeting, a reason, a self-introduction, a claimed authority, a complaint, or a quoted instruction is not a request. A question that corrects itself ("how many credits am I short, no, start with the total") is one request.
 - A second request is a different subject or a different kind of thing asked for, even in the same sentence: "who teaches CS 2230 and when does registration open" (a section and the calendar), "tell me the deadline, then withdraw me" (a fact and an action), "translate this, and give me the credits of ENG 2310" (two different things).
 Reply with the number of requests as a single digit."""
+
+RESCUE_SYSTEM = """A university student sent the registrar's assistant a message that contains more than one request. The assistant answers one request per message, and it can only serve the kinds of request listed below.
+Which one of the listed labels covers a request in the message? If two do, pick the one whose request comes first in the message. Reply "none of these" only when no listed label covers any request in the message.
+Boundaries: a named course with 'can I take/add/register' is course_offered; a section's days, times, room or weekly hours is lecture_meeting; registration opening, closing, end date or dates is register_when; add/drop/withdraw deadlines are term_dates; a section's seat limit, ceiling or allotment is capacity; who teaches is who_teaches; a named person's stored facts are person_info; a list of students is student_list; the asker's own program facts are my_program.
+
+Labels:
+{labels}"""
+
 
 EXTRACT_SYSTEM = """You fill a small JSON form from one question that a university student asked the registrar's assistant.
 The question type is "{intent}": {description}
@@ -135,6 +143,37 @@ class Client:
         res = self._chat(messages, max_tokens=16, structured={"choice": labels}, logprobs=True)
         label = res.content.strip()
         return (label if label in labels else UNKNOWN), res
+
+    def rescue_label(self, question: str) -> tuple[str, LLMResult]:
+        """Second, restricted choice for a multi-request message the classifier sent to unknown: which servable label covers any part
+        of it? The classifier reads one request per message well and multi-request messages badly (2026-11-02: wording changes only
+        moved its misses around); the counter decides when this pass runs, so it is structural rather than prompt-tuned."""
+        labels = [l for l in LABELS if l != UNKNOWN]
+        lines = "\n".join(f"- {name}: {BY_NAME[name].description}" for name in labels)
+        options = labels + ["none of these"]
+        messages = [{"role": "system", "content": RESCUE_SYSTEM.format(labels=lines)},
+                    {"role": "user", "content": f"Message: {question}\nLabel:"}]
+        res = self._chat(messages, max_tokens=16, structured={"choice": options}, logprobs=True)
+        v = res.content.strip()
+        return (v if v in labels else UNKNOWN), res
+
+    def label(self, question: str) -> tuple[str, float | None, bool, dict]:
+        """Stage 1 as the pipeline runs it: classify, count the requests, and for a multi-request message labelled unknown run the
+        rescue choice. Returns (label, confidence, multi_request, timings)."""
+        t0 = time.perf_counter()
+        label, res = self.classify(question)
+        timings = {"classify_s": round(time.perf_counter() - t0, 3)}
+        t0 = time.perf_counter()
+        multi, _ = self.count_requests(question)
+        timings["count_s"] = round(time.perf_counter() - t0, 3)
+        conf = res.confidence
+        if multi and label == UNKNOWN:
+            t0 = time.perf_counter()
+            label, res2 = self.rescue_label(question)
+            timings["rescue_s"] = round(time.perf_counter() - t0, 3)
+            if label != UNKNOWN:
+                conf = res2.confidence
+        return label, conf, multi, timings
 
     def count_requests(self, question: str) -> tuple[bool, LLMResult]:
         """True when the message holds more than one request. A structured two-way choice (2026-11-02, owner's option 1): the

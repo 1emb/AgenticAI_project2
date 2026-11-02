@@ -54,4 +54,8 @@ they move into `dev.jsonl` and a fresh blind acceptance file is needed for the n
 
 | 2026-11-02 | `acceptance-v3.jsonl` (Codex, spec 2026-11-02c, sha256 `879bd427…`, 90 `unknown` rows, 180 two-request rows) | servable-request-wins; classify + counter + rescue (intents.py `97025a8b…`, llm.py `6cd39c30…`) | **594/600 on both runs, identical.** `unknown` 90/90 (no out-of-scope row pulled into a label). Misses: register_when→term_dates ×3, lecture_meeting→term_dates, course_in_plan→plan_term, my_program→unknown. Two clauses still fail: `register_when` recall 27/30 (90%), and one answerable row sent to `unknown`. The three register_when rows get the registration window anyway, since term_dates answers registration events through register_when. Matrix in `acceptance-v3-report.txt`, Codex's construction report in `codex-acceptance-v3-report.md`. Misses not read; v3 is blind. |
 
-Next decision (owner): accept v3 as the benchmark (594/600, two soft clauses failed), or read its six misses (spends v3).
+v3 spent the same day: the owner asked to see the six misses; they are in `dev.jsonl` as `dev-from-acc-v3-*` (dev is now 259
+rows). Three were real (a long action-first two-request row, "which numbered semester suggests COURSE" as plan_term, "the
+qualification recorded for me" as unknown) and three were the register_when/term_dates boundary, which the term_dates program
+answers through register_when anyway. Definitions changed after reading them: plan_term says a course's own semester is
+course_in_plan; my_program lists "qualification" as the degree. The next blind claim needs a v4.

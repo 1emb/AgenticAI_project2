@@ -42,6 +42,8 @@ EXPECTED_INTENT = {
     "same_program": "person_info", "student_list": "student_list", "course_roster": "student_list", "crn_roster": "student_list",
     "instructor_of_lecture": "who_teaches", "instructor_email": "who_teaches", "teacher_and_phone": "who_teaches",
     "lecture_meeting": "lecture_meeting", "prerequisites": "prerequisites", "capacity": "capacity", "course_department": "course_info",
+    # 2026-11-02: "is X a student" refused uniformly; TA / instructor rank with the student half
+    "instructor_is_student": "person_info", "ta_or_student": "person_info", "instructor_rank_and_student": "person_info",
 }
 
 

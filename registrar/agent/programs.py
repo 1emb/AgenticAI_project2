@@ -188,7 +188,10 @@ def person_info(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     """Another student: refused (own program given back when the question compares). An instructor: directory fields answered,
     private fields refused. A TA is both: student fields are a student record, the rest follows the instructor rule. The asker
     themself: their own record. A name shared by several people is refused as well; the private data of any of them is off limits.
-    A person who cannot be identified at all is refused too, unless only an instructor's public role is asked about."""
+    A person who cannot be identified at all is refused too, unless only an instructor's public role is asked about.
+    Whether a named person is a student is itself a student-record fact (owner, 2026-11-02): a status/program/graduation request
+    about anyone but the asker is refused the same way whether or not that person has a student record, so the refusal cannot
+    reveal who is a student. The public instructor role (rank, department) asked in the same breath is still given back."""
     res = r["person"]
     requested = set(r["requested"].value or [])
     compare = bool(r["compare_with_me"].value)
@@ -202,14 +205,18 @@ def person_info(q: QueryLog, r: dict, st: dict, as_of: datetime) -> dict:
     p = need("person", res)
     if p["university_id"] == st["university_id"]:
         return my_program(q, r, st, as_of)
-    if p["is_student"] and (compare or requested & STUDENT_FIELDS or not p["is_instructor"] or requested <= {"record"}):
+    # a TA's email is the student's email (data/testset/README.md): asking for it is a student-record request, and it is not listed
+    student_part = compare or requested & STUDENT_FIELDS or (p["is_student"] and (not p["is_instructor"] or requested <= {"record"} or "email" in requested))
+    if student_part:
         own = {"program": st["program_code"]} if compare else {}
         if p["is_instructor"] and requested & {"rank", "department"}:      # a TA's public role is directory data; only the student part is private
             ins = Q.instructor_public(q, p["university_id"])
             own.update({"instructor": ins["name"], "rank": ins["rank"], "department": ins["department_code"]})
         return denied("other_student_record", {"university_id": p["university_id"]}, own or None)
     ins = Q.instructor_public(q, p["university_id"])
-    public = {"instructor": ins["name"], "rank": ins["rank"], "department": ins["department_code"], "email": ins["email"]}
+    public = {"instructor": ins["name"], "rank": ins["rank"], "department": ins["department_code"]}
+    if not p["is_student"]:
+        public["email"] = ins["email"]
     if requested & PRIVATE_PERSON:
         return denied("instructor_private_record", {"university_id": p["university_id"]}, public if requested & PUBLIC_INSTRUCTOR else None)
     return {"allowed": True, **public}

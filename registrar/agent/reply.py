@@ -27,7 +27,7 @@ from .pipeline import Trace
 # deterministic renderer
 # ---------------------------------------------------------------------------------------------------------------------------------
 REFUSALS = {
-    "other_student_record": "I can't share another student's record.",
+    "other_student_record": "I can't share another person's student record, or whether they have one.",
     "instructor_private_record": "I can't share an instructor's private personal details (phone number, date of birth, SSN, hire date).",
     "student_list_not_permitted": "I can't provide lists of students, whether by program, course or section.",
 }

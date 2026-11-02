@@ -112,7 +112,7 @@ from `registrar/seed/` (seed 42; `--load` also loads them). The data and the tes
 regenerating with a different seed or catalog changes the answers in `data/testset/`, so rerun `make_testset.py` too.
 
 ## Test dataset
-`data/testset/` holds English questions with program-checkable answers: 156 student cases and 118 professor cases,
+`data/testset/` holds English questions with program-checkable answers: 161 student cases and 118 professor cases,
 each with two paraphrases, a simulated clock (`as_of`), the authenticated user, and a discrete `answer` that starts
 with `allowed`. Thirty student cases and twenty-six professor cases test access control. The intents cover the catalog, lectures, degree
 plans, the calendar and teaching schedules; everything that needs enrollment (registration, transcripts, rosters,
@@ -128,7 +128,7 @@ please ask the rest separately." When the counter says more than one and the cla
 choice (`rescue_label`: the servable labels plus "none of these") asks which label covers any request in the message; the
 classifier reads one request per message well and two badly, and wording changes to its rule only moved the misses around, so
 the split is structural. Measured on the Codex sets: every tagged two-request row flagged (25/25 dev, 60/60 and 107/108
-acceptance), fewer than one untagged row in a hundred flagged too, none of the 156 graded student questions. The classifier still decides which request is answered:
+acceptance), fewer than one untagged row in a hundred flagged too, none of the 161 graded student questions. The classifier still decides which request is answered:
 
 1. **Classify** (`llm.py`): the model may only reply with one of the 18 labels in `intents.py`: 17 answerable question types,
    `student_list` (always refused), and `unknown` for everything else. `unknown` covers greetings and nonsense but also every
@@ -163,7 +163,7 @@ acceptance), fewer than one untagged row in a hundred flagged too, none of the 1
    reply). The earlier LLM rendering is kept for comparison only (`ask.py --llm-reply`, `reply_mode: "llm"` in the web API). The
    change followed the 90-question Codex run (`runs/codex/phase2-report.md`): in every case where the English was wrong the JSON
    answer was right; the model had turned AND into OR, "not in your plan" into "yes", and invented "no holds" and "no longer
-   enrolled". `grade.py --reply` scans the reply for `must_not_mention` values (0 leaks on the 156 student cases).
+   enrolled". `grade.py --reply` scans the reply for `must_not_mention` values (0 leaks on the 161 student cases).
 
 Model: Qwen3.5-27B served by vLLM 0.32 on one H100 (`scripts/serve_llm.sh`; weights under
 `/home/sheshnagnobackup/mnguyen/models`, outside the repo). `.env` holds `LLM_BASE_URL` and `LLM_MODEL`.

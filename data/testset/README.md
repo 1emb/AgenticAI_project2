@@ -25,11 +25,11 @@ two paraphrases (one student case has a single paraphrase because only one wordi
 
 | Persona | Cases | Distinct users | Clock | Access-control cases |
 |---|---|---|---|---|
-| student | 156 | 135 students | 136 at the default clock, 20 at the four other clocks | 30 (18 denied, 8 allowed, 4 partial) |
+| student | 161 | 139 students | 141 at the default clock, 20 at the four other clocks | 35 (20 denied, 8 allowed, 7 partial) |
 | professor | 118 | 43 instructors | 106 at the default clock, 12 at the four other clocks | 26 (14 denied, 8 allowed, 4 partial) |
 | administrator | none yet (question catalog drafted in `administrator/questions.md` against the old schema) | | | |
 
-### Student (156 cases)
+### Student (161 cases)
 
 | Category | Intent | Cases | Example question |
 |---|---|---|---|
@@ -48,9 +48,9 @@ two paraphrases (one student case has a single paraphrase because only one wordi
 | calendar | `register_when` | 8 | When can I register for Spring 2027? |
 | calendar | `term_dates` | 12 | When does Spring 2026 end? |
 | calendar | `current_term` | 6 | Which term are we in? |
-| access_control | `access_denied` | 18 | Has 800013867 graduated yet? |
+| access_control | `access_denied` | 20 | Has 800013867 graduated yet? |
 | access_control | `access_allowed` | 8 | Who teaches CRN 10022? |
-| access_control | `access_partial` | 4 | Is 801723444 in my major? |
+| access_control | `access_partial` | 7 | Is 801723444 in my major? |
 
 ### Professor (118 cases)
 
@@ -89,7 +89,7 @@ two paraphrases (one student case has a single paraphrase because only one wordi
 | `persona` | `student` or `professor` |
 | `category` / `intent` | see the answer shapes below |
 | `as_of` | The simulated clock, ISO 8601 UTC. Every question has one. The system under test is set to this moment; it decides which term is "this semester", whether registration is open and whether a deadline has passed. When the user names no time, the clock is the default, **2026-11-20 18:00 UTC**: Fall 2026 in progress (add, drop and withdraw deadlines passed, grades due Dec 15 ahead), Spring 2027 registration open since Nov 2. |
-| `as_of_is_default` | `true` when `as_of` is the default clock. Other clocks appear only where the default cannot produce the scenario: **2026-10-19 16:00** (Fall withdraw deadline still ahead, Spring 2027 registration not yet open), **2026-12-03 15:30** (late Fall, classes end Dec 11 ahead), **2026-12-20 18:00** (winter break: Fall 2026 is over, so the current term resolves to Spring 2027 and Fall 2026 is "last semester"), **2027-01-20 18:00** (Spring 2027 in session, add deadline Jan 22 ahead, Fall 2027 is "next semester"). |
+| `as_of_is_default` | `true` when `as_of` is the default clock. Other clocks appear only where the default cannot produce the scenario: **2026-10-19 16:00** (Fall withdraw deadline still ahead, Spring 2027 registration not yet open), **2026-12-03 15:30** (late Fall, classes end Dec 11 ahead), **2026-12-20 18:00** (winter break: Fall 2026 is over, so the current term resolves to Spring 2027, Fall 2026 is "last semester", and "next semester" is also Spring 2027, the coming term, owner's decision 2026-11-02), **2027-01-20 18:00** (Spring 2027 in session, add deadline Jan 22 ahead, Fall 2027 is "next semester"). |
 | `student` / `professor` | The authenticated user. Student: `university_id`, `name`, `email`, `program_code`, `status`. Professor: `university_id`, `name`, `email`, `department`, `rank`. The question never states the user's own ID. |
 | `question`, `paraphrases` | The question and two alternative phrasings with the same answer. |
 | `slots` | Entities the question refers to (course, CRN, term, day, event, other person's ID, scenario). `term` is the phrase used ("this semester", "in Fall 2026"); `term_code` is what it must resolve to. |
@@ -131,7 +131,11 @@ The schema has no permission table; the rule is stated here and implemented by t
   this set. Once enrollment exists, roster fields for their own sections become visible, as in the earlier contract.
 - A TA is both an instructor and a student (decided 2026-11-02, Codex design review): their directory entry (name, rank,
   department) is public and is given back as `own_answer` even when the student part of the same question (status, program)
-  is refused; their email is treated as the student's and withheld.
+  is refused; their email is treated as the student's and withheld. Whether a named person is a student is itself a
+  student-record fact (owner, 2026-11-02): "is X a student" about anyone but the asker gets the same refusal whether X has a
+  student record or not, so the refusal cannot reveal who is a student. "Is X a TA or a student" therefore gives the public
+  rank and refuses the status part for a TA and for a pure instructor alike (`ta_or_student`, `instructor_rank_and_student`,
+  `instructor_is_student` scenarios).
 - Out of scope is not a permission matter (2026-11-02). Everything the 17 answerable labels and `student_list` do not cover is
   `unknown`: registrar matters with no data behind them here (holds, grades, GPA, transcripts, degree audits, waitlists, seats
   left, enrollment verification, the asker's own enrollment records, eligibility checks, performing

@@ -64,7 +64,7 @@ class Builder:
     def term_slots(self, q: QueryLog, term_code: str, as_of: datetime) -> tuple[dict, dict, dict]:
         current = Q.current_term(q, as_of)
         term = current if term_code == current["code"] else Q.term_by_code(q, term_code)
-        phrase, name = term_phrase(self.rng, term, current)
+        phrase, name = term_phrase(self.rng, term, current, as_of)
         return term, current, {"term": phrase, "term_name": name, "term_code": term["code"]}
 
     @staticmethod
@@ -242,8 +242,9 @@ class Builder:
     def register_when(self, uid: str, as_of: datetime = DEFAULT_AS_OF, term_code: str | None = None) -> dict:
         q, st = self.start(uid)
         current = Q.current_term(q, as_of)
-        if term_code is None:
-            term = Q.term_by_sequence(q, current["sequence"] + 1)
+        if term_code is None:   # "next semester": the term after the current one in session, the coming (current) term during a break
+            in_session = current["start_date"] <= as_of.date() <= current["end_date"]
+            term = Q.term_by_sequence(q, current["sequence"] + 1) if in_session else current
             slots = {"term": "next semester", "term_name": term["name"], "term_code": term["code"]}
             question, paras = pick(self.rng, self.REGISTER_NEXT)
         else:

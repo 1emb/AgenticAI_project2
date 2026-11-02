@@ -92,11 +92,15 @@ def term(q: QueryLog, mention: str | None, as_of: datetime, default_current: boo
             nxt = next((t for t in terms if t["sequence"] > cur["sequence"] and t["term_type"] == season), None)
             return Resolved(nxt, "ok", note=f"'{m}': current term is {cur['name']}, taking the next {season}") if nxt else Resolved(None, "not_found")
         if word in ("next", "upcoming", "coming"):
+            # During a break the "current" term is the coming one (it has not started), and "next semester" means that coming term,
+            # not the one after it (owner, 2026-11-02: "coming term"). In session, "next" is the term after the current one.
+            step = 1 if cur["start_date"] <= as_of.date() <= cur["end_date"] else 0
             if season is None:
-                hit = by_seq.get(cur["sequence"] + 1)
+                hit = by_seq.get(cur["sequence"] + step)
             else:
-                hit = next((t for t in terms if t["sequence"] > cur["sequence"] and t["term_type"] == season), None)
-            return Resolved(hit, "ok") if hit else Resolved(None, "not_found", note=f"no term after {cur['name']}")
+                hit = next((t for t in terms if t["sequence"] >= cur["sequence"] + step and t["term_type"] == season), None)
+            return Resolved(hit, "ok", note=None if step else f"'{m}' during the break before {cur['name']}: the coming term") \
+                if hit else Resolved(None, "not_found", note=f"no term after {cur['name']}")
         if word in ("last", "previous"):
             if season is None:
                 hit = by_seq.get(cur["sequence"] - 1)

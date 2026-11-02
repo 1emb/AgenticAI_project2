@@ -15,9 +15,10 @@ QUOTA = {
     "register_when": 8, "term_dates": 12, "current_term": 6,
 }
 DENIED_PLAN = ["other_program", "other_status", "other_contact", "other_dob", "other_ssn", "other_graduation", "impersonation", "student_list",
-               "instructor_private", "other_contact", "impersonation", "student_list", "instructor_private", "other_ssn"]
+               "instructor_private", "other_contact", "impersonation", "student_list", "instructor_private", "other_ssn",
+               "instructor_is_student", "instructor_is_student"]
 ALLOWED_PLAN = ["instructor_of_lecture", "instructor_email", "instructor_rank", "lecture_meeting", "prerequisites", "capacity", "course_department", "instructor_of_lecture"]
-PARTIAL_PLAN = ["teacher_and_phone", "same_program", "teacher_and_phone", "same_program"]
+PARTIAL_PLAN = ["teacher_and_phone", "same_program", "teacher_and_phone", "same_program", "ta_or_student", "instructor_rank_and_student", "ta_or_student"]
 CLOCKS = [DEFAULT_AS_OF, DEFAULT_AS_OF, DEFAULT_AS_OF, SNAPSHOT, AS_OF_LATE, AS_OF_BREAK, AS_OF_SPRING]
 
 
@@ -46,6 +47,8 @@ def generate(conn, seed: int = 7) -> list[dict]:
     cancelled = [l for l in lectures if l["is_cancelled"]]
     instructors = fetch(conn, "SELECT university_id AS uid FROM instructor WHERE is_active ORDER BY university_id")
     rng.shuffle(instructors)
+    tas = fetch(conn, "SELECT i.university_id AS uid FROM instructor i JOIN student s USING (university_id) ORDER BY 1")
+    pure_instructors = [i for i in instructors if i["uid"] not in {t["uid"] for t in tas}]
 
     def student(i: int) -> str:
         return active[i % len(active)]["uid"]
@@ -120,7 +123,7 @@ def generate(conn, seed: int = 7) -> list[dict]:
     for i, scenario in enumerate(DENIED_PLAN):
         uid = student(i + 230)
         t_uid = next(s["uid"] for s in students[i * 3:] if s["uid"] != uid) if scenario not in ("student_list", "instructor_private") else None
-        i_uid = instructors[i % len(instructors)]["uid"] if scenario == "instructor_private" else None
+        i_uid = instructors[i % len(instructors)]["uid"] if scenario == "instructor_private" else pure_instructors[i % len(pure_instructors)]["uid"] if scenario == "instructor_is_student" else None
         cases.append(b.denied(uid, scenario, t_uid=t_uid, i_uid=i_uid))
     for i, scenario in enumerate(ALLOWED_PLAN):
         uid = student(i + 250)
@@ -134,7 +137,8 @@ def generate(conn, seed: int = 7) -> list[dict]:
         term = CURRENT if i % 2 == 0 else FUTURE
         l = rng.choice([x for x in by_term[term] if not x["is_cancelled"]])
         t_uid = next(s["uid"] for s in students[i * 7 + 1:] if s["uid"] != uid)
-        cases.append(b.partial(uid, scenario, term_code=term, crn=l["crn"], t_uid=t_uid))
+        i_uid = tas[i % len(tas)]["uid"] if scenario == "ta_or_student" else pure_instructors[(i + 3) % len(pure_instructors)]["uid"] if scenario == "instructor_rank_and_student" else None
+        cases.append(b.partial(uid, scenario, term_code=term, crn=l["crn"], t_uid=t_uid, i_uid=i_uid))
     for i, (scenario, term) in enumerate([("course_roster", CURRENT), ("crn_roster", FUTURE), ("course_roster", FUTURE), ("crn_roster", CURRENT)]):
         l = rng.choice([x for x in by_term[term] if not x["is_cancelled"]])
         cases.append(b.denied(student(i + 270), scenario, term_code=term, crn=l["crn"]))

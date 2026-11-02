@@ -37,11 +37,12 @@ SLOTS: dict[str, dict] = {
                                               "or a title plus last name ('Professor Lee'). null when the question is only about the asker."},
     "requested": {"type": "array", "items": {"type": "string", "enum": list(REQUESTED_VALUES)},
                   "description": "Each thing asked about the person, one entry per thing: 'program or major' (also degree, 'computer science major'); "
-                                 "'registrar status' (the recorded student status: active, withdrawn, graduated yet, whether someone is a student at all, "
-                                 "'a TA or a student'; not enrollment in a section); 'email address'; 'phone number' (also cell); 'date of birth' "
+                                 "'registrar status' (the recorded student status: active, withdrawn, graduated yet, whether someone is a student at all or "
+                                 "still enrolled as one; not enrollment in a section); 'email address'; 'phone number' (also cell); 'date of birth' "
                                  "(also birthday, age); 'social security number' (also SSN, last four); 'expected graduation' (when they graduate); "
-                                 "'rank or title' (professor, lecturer); 'department'; 'hire date' (when hired); 'whole record' only when the question asks "
-                                 "for the record itself or does not name any specific thing."},
+                                 "'rank or title' (professor, lecturer, instructor, TA, teaching assistant); 'department'; 'hire date' (when hired); "
+                                 "'whole record' only when the question asks for the record itself or does not name any specific thing. 'Is X a TA or "
+                                 "a student', 'a professor or a student' asks two things: 'rank or title' and 'registrar status'."},
     "own_appointment": {"type": "boolean", "description": "true when the question asks for the asker's own registration appointment or "
                                                             "time ticket ('my time ticket', 'my registration appointment', 'when is my slot to "
                                                             "register'); false for the general registration window."},
@@ -106,9 +107,10 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
             "What are my program's elective credit minimums?")),
     Intent("course_in_plan", "Whether and how one course counts in the asker's own degree plan (required, elective, which semester).", ("course_mention",),
            ("Is CS 4750 required for my degree?", "Can I use ENG 5510 as an elective in my major?")),
-    Intent("plan_term", "What the asker's degree plan suggests for a given semester number of the four-year plan.", ("term_number_mention",),
+    Intent("plan_term", "The courses the asker's degree plan suggests for a given semester number of the four-year plan. Which semester "
+                        "a named course falls in is course_in_plan.", ("term_number_mention",),
            ("Which courses does my degree plan suggest for semester 3?", "What should I take in my first semester according to the plan?")),
-    Intent("my_program", "The asker's stored student profile: program name/code, degree, department, registrar student status, admit term, or expected "
+    Intent("my_program", "The asker's stored student profile: program name/code, degree or qualification, department, registrar student status, admit term, or expected "
                          "graduation term. This label is selected only when one of those facts is requested; first-person wording alone is "
                          "insufficient. Holds, balances, course enrollment, personal timetable, grades, progress, and eligibility are different tasks.", (),
            ("Which degree program is recorded for me?", "What is my registrar student status?", "Which term is listed as my expected graduation?",

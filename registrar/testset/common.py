@@ -66,12 +66,17 @@ def pick(rng: random.Random, templates: list[str], k: int = 3, **slots) -> tuple
     return rendered[0], rendered[1:]
 
 
-def term_phrase(rng: random.Random, term: dict, current: dict) -> tuple[str, str]:
-    """(phrase, name): how a person refers to the term, as a phrase that follows a verb ("... in Fall 2024", "... this semester")."""
+def term_phrase(rng: random.Random, term: dict, current: dict, as_of: datetime | None = None) -> tuple[str, str]:
+    """(phrase, name): how a person refers to the term, as a phrase that follows a verb ("... in Fall 2024", "... this semester").
+    During a break (the clock before the current term's first day) the current term is the coming one, and "next semester" means
+    it too (owner, 2026-11-02); the term after it then has no relative phrase."""
     opts = [f"in {term['name']}", f"in {term['name']}"]
+    in_session = as_of is None or current["start_date"] <= as_of.date() <= current["end_date"]
     if term["code"] == current["code"]:
         opts += ["this semester", f"this {term['term_type']}", "this term"]
-    elif term["sequence"] == current["sequence"] + 1:
+        if not in_session:
+            opts += ["next semester", f"next {term['term_type']}", "next term"]
+    elif term["sequence"] == current["sequence"] + 1 and in_session:
         opts += ["next semester", f"next {term['term_type']}", "next term"]
     elif term["sequence"] == current["sequence"] - 1:
         opts += ["last semester", f"last {term['term_type']}", "last term"]

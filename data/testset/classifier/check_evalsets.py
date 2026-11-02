@@ -20,7 +20,7 @@ import unicodedata
 
 ROOT = Path(__file__).resolve().parents[3]   # data/testset/classifier/ -> repo root (the file was written in runs/codex/)
 OUT = ROOT / "runs/codex"
-TAGS = set("typo title long two_task action_vs_info own_id incidental_person ta_student authority_claim nonexistent missing_slot crn break_clock contrast_pair greeting from_acceptance_v1 from_acceptance_v2".split())
+TAGS = set("typo title long two_task action_vs_info own_id incidental_person ta_student authority_claim nonexistent missing_slot crn break_clock contrast_pair greeting from_acceptance_v1 from_acceptance_v2 from_acceptance_v3".split())
 COURSE_LABELS = {"prerequisites", "course_info", "course_offered", "lecture_options", "who_teaches", "capacity", "course_in_plan", "student_list"}
 
 

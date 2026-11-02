@@ -84,7 +84,8 @@ def term_phrase(rng: random.Random, term: dict, current: dict, as_of: datetime |
 
 
 def num(v):
-    if isinstance(v, Decimal):
+    """Decimal or float -> int when integral (15.0 -> 15), else float; anything else unchanged."""
+    if isinstance(v, (Decimal, float)):
         f = float(v)
         return int(f) if f.is_integer() else f
     return v

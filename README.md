@@ -5,15 +5,16 @@ definition, the PostgreSQL schema, the test sets, and the agent itself (`registr
 
 The schema was rebuilt on 2026-10-28 around natural keys and a two-major scope (BS Computer Science and BS
 Engineering, plus an MS in each for graduate students). The dataset is a static snapshot committed as one CSV per
-table under `data/seed/` (1,660 rows, written by the deterministic generator in `registrar/seed/`); the agents only
-read it. The test sets under `data/testset/` were regenerated from it the same day (student set extended 2026-11-01).
+table under `data/seed/` (8,826 rows, written by the deterministic generator in `registrar/seed/`); the agents only
+read it. The test sets under `data/testset/` are regenerated from it (student set extended 2026-11-01, and 2026-11-02 with
+the enrollment table).
 
 ## Layout
 ```
-registrar/models/   SQLAlchemy 2.0 models (12 tables)       docs/domain.md    what the registrar does, data, users
+registrar/models/   SQLAlchemy 2.0 models (14 tables)       docs/domain.md    what the registrar does, data, users
 registrar/db.py     engine / session (reads .env)            docs/schema.html  visual schema reference with example rows
 registrar/seed/     dataset generator; catalog.py holds the  data/seed/        the dataset, one CSV per table
-                    hand-written courses and degree plans    scripts/          seed.py, load_seed.py, make_testset.py, init_db.py
+                    courses and plans, records.py enrollment scripts/          seed.py, load_seed.py, check_seed.py, make_testset.py, init_db.py
 registrar/testset/  question -> SQL -> answer generators     data/testset/     English test cases (see its README)
 registrar/agent/    the agent: classify, extract, resolve,   scripts/          ask.py (one question), grade.py (a test set),
                     permission check, per-intent programs,                     serve_llm.sh (local vLLM server), ui.py (web chat)
@@ -30,16 +31,18 @@ Not in git: `pgdata/` and `.env` (copy `.env.example`).
 Visual reference, one section per table with example rows that follow the same people across tables:
 https://claude.ai/artifact/8XjEo8BMjePpb2vcKgHUye (the same page is saved as [docs/schema.html](docs/schema.html)).
 
-PostgreSQL 18, SQLAlchemy 2.0 models in `registrar/models/`. 12 tables. Natural keys throughout: a human is identified
+PostgreSQL 18, SQLAlchemy 2.0 models in `registrar/models/`. 14 tables. Natural keys throughout: a human is identified
 by `university_id`, a course by its catalog code, a term by its six-digit code, a lecture by term plus CRN.
 Enums are VARCHAR with CHECK constraints (see `registrar/models/enums.py`); adding a value needs an Alembic migration.
-Enrollment (student x lecture with grade) is deliberately not modeled yet.
+Enrollment (student x lecture with status and grade) and transfer credit were added on 2026-11-02 (`records.py`, Alembic
+revision `64244b3c17e8`).
 
 In one paragraph: `person` (keyed by `university_id`) carries name, DOB, sex, SSN, phone, email. `student` and
 `instructor` share that key and add their profiles; a student points at one `program`, an instructor at one
 `department`. `course` and `course_prerequisite` are the catalog; `degree_requirement` and
 `program_category_requirement` say what each program needs; `lecture` is a course offered in an `academic_term` by one
-instructor with its meeting pattern. `grade_scale` maps letter grades to grade points.
+instructor with its meeting pattern. `grade_scale` maps letter grades to grade points. `enrollment` is one student in one
+lecture with a status and a grade; `transfer_credit` is a course accepted from another institution.
 
 ### People (`people.py`)
 | Table | Key | Columns |
@@ -76,17 +79,32 @@ One lecture has one instructor and one weekly meeting pattern.
 |---|---|---|
 | `grade_scale` | `letter` (A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F, W, I) | `points` (4.0 down to 0.0; null for W and I) |
 
-Reference data: the initial migration inserts the 14 rows. `course_prerequisite.min_grade` points here, and so will
-the enrollment grade. "C- or better" means points >= 1.7. GPA = sum(points x credit hours) / sum(credit hours) over
+Reference data: the initial migration inserts the 14 rows. `course_prerequisite.min_grade` points here, and so does
+`enrollment.grade`. "C- or better" means points >= 1.7. GPA = sum(points x credit hours) / sum(credit hours) over
 rows with points; a grade earns credit when points > 0, so F, W and I earn nothing.
+
+### Records (`records.py`)
+| Table | Key | Columns |
+|---|---|---|
+| `enrollment` | (`term_code`, `crn`, `student_university_id`); (`term_code`, `crn`) FK `lecture`, the student FK `student` | `status` (enrolled, completed, withdrawn), `grade` FK `grade_scale`, nullable. CHECK `status_grade`: enrolled has no grade, withdrawn has W, completed has any other grade. |
+| `transfer_credit` | (`student_university_id`, `course_code`) | `credit_hours`, `accepted_term_code` FK `academic_term`. A course accepted from another institution: it meets prerequisites and earns credit, has no grade and stays outside the GPA. |
+
+Added 2026-11-02. One row per student per section: `enrolled` while the term is in progress or still ahead (Fall 2026 and the
+Spring 2027 registrations), `completed` with a letter grade or I once posted, `withdrawn` with W. A student who repeats a course
+has one row per attempt. Rules the agent applies (`registrar/agent/programs.py`): a course is passed at the first grade with
+points > 0 and earns its credits once; a grade of C (2.0) or better cannot be repeated (`PASS_TO_REPEAT`); a prerequisite is met
+by a grade at or above `min_grade`, by a transfer credit, or, for the coming term, by a current enrollment in it; MS students
+have no prerequisite checks; the seats taken in a section are its non-withdrawn rows; Fall 2026 grades are not posted whatever
+the clock, because the dataset is a snapshot. GPA = sum(points x credit hours) / sum(credit hours) over graded rows (W and I
+excluded); a term's GPA uses that term's rows only.
 
 ### Conventions
 - No surrogate integer ids. Foreign keys carry the natural key of the parent, so `student.program_code` is readable without a join.
 - Timestamps are not yet needed; every date column is a policy date, stored as `date`.
 - Column defaults are server defaults (`is_active`, `is_cancelled`, `is_required`, `min_gpa`, `min_grade`, `group_number`), so raw SQL and COPY loads may omit them.
 - The current term is not stored; a stored flag would contradict the per-case clock in the test sets. Rule (noted 2026-10-28): the current term is the one whose `start_date` <= clock <= `end_date`. When the clock falls in a break between terms, the current term is the next one by `start_date`, because students then ask about the coming term; the term that just ended is "last semester". Example: on 2026-12-20, after Fall 2026 ends on 2026-12-11, "my schedule" means Spring 2027 and "my grades last semester" means Fall 2026.
-- Not modeled for now (decided 2026-10-28): enrollment, academic standing history (derive from term GPA against `program.min_gpa` when needed), registration appointments, holds and waitlists. Old test cases that depend on them are dropped at regeneration.
-- Whether a lecture is full is not stored. It comes from enrollment counted against `capacity`; `is_cancelled` is the only stored state.
+- Not modeled (decided 2026-10-28; enrollment and transfer credit added 2026-11-02): academic standing history (derive from term GPA against `program.min_gpa` when needed), registration appointments, holds and waitlists.
+- Whether a lecture is full is not stored: it is the count of `enrollment` rows whose status is not `withdrawn` against `capacity`; `is_cancelled` is the only stored state.
 - `rank` on `instructor` is free text on purpose. Promote it to an enum once the set is settled.
 - The initial migration is frozen because it carries the `grade_scale` rows. Further schema changes are new Alembic revisions (`alembic revision --autogenerate`).
 
@@ -96,7 +114,7 @@ conda activate /home/sheshnagnobackup/mnguyen/envs/registrar
 ./db/start.sh                     # starts Postgres on localhost:5433 (TCP only, no unix socket)
 ./db/psql.sh                      # psql into the registrar database
 alembic upgrade head              # create the tables and the grade_scale rows
-python scripts/load_seed.py       # load data/seed/*.csv (empties the eleven data tables first)
+python scripts/load_seed.py       # load data/seed/*.csv (empties the thirteen data tables first)
 ```
 Connection string: `postgresql+psycopg://registrar@localhost:5433/registrar` (in `.env` as `DATABASE_URL`).
 To rebuild from scratch: `dropdb -h localhost -p 5433 -U registrar registrar && createdb -h localhost -p 5433 -U registrar registrar`,
@@ -104,19 +122,33 @@ then `alembic upgrade head`. `python scripts/init_db.py --drop` creates the tabl
 and without the grade_scale rows.
 
 ## Dataset
-`data/seed/` is the whole dataset: 10 departments, 4 programs, 20 terms (Fall 2021 to Spring 2031), 339 people
-(300 students: 150 BSCS, 120 BSENG, 15 MSCS, 15 MSENG; 45 instructors, six of them MS students working as TAs),
-72 courses (two retired), 73 prerequisite rows, 97 degree-plan rows, 6 category minimums and 694 lectures over
-Fall 2024 to Spring 2027. Every value is synthetic. `python scripts/seed.py` regenerates the CSVs byte for byte
-from `registrar/seed/` (seed 42; `--load` also loads them). The data and the test sets are frozen together:
-regenerating with a different seed or catalog changes the answers in `data/testset/`, so rerun `make_testset.py` too.
+`data/seed/` is the whole dataset: 10 departments, 4 programs, 20 terms (Fall 2021 to Spring 2031), 349 people
+(300 students: 150 BSCS, 120 BSENG, 15 MSCS, 15 MSENG; 55 instructors, six of them MS students working as TAs and ten
+former instructors who only taught before Fall 2024), 72 courses (two retired), 73 prerequisite rows, 97 degree-plan
+rows, 6 category minimums, 1,402 lectures over Fall 2021 to Spring 2027, 6,155 enrollment rows and 283 transfer
+credits. Every value is synthetic. `python scripts/seed.py` regenerates the CSVs byte for byte from `registrar/seed/`
+(seed 42; `--load` also loads them); `python scripts/check_seed.py` checks the loaded records against the rules in
+`registrar/seed/records.py` (prerequisites, capacities, time clashes, graduation, status against GPA) and prints a
+profile. The data and the test sets are frozen together: regenerating with a different seed or catalog changes the
+answers in `data/testset/`, so rerun `make_testset.py` too.
+
+Enrollment history (added 2026-11-02): every student has a term-by-term record consistent with their status, admit term
+and degree plan: completed terms with grades, Fall 2026 in progress (no grades posted, whatever the clock), a Spring 2027
+registration for about half of the active students; retakes of failed required courses, prerequisites honoured by an
+earlier grade or a transfer credit, section capacities and time clashes respected (TAs' teaching slots included);
+graduated students have complete records at or above the program's minimum GPA, suspended and dismissed students fall
+below it. Ten student rows changed with the rebuild because graduation now needs seven completed terms (six for transfer
+students): nine six-term "graduates" became active students expected to graduate in Spring 2027, and one graduation
+moved from Fall 2026 to Spring 2026. The data is append-only: the six lecture terms from Fall 2024 are byte-identical to
+the previous snapshot; the earlier terms, the former instructors and the records were generated after them.
 
 ## Test dataset
-`data/testset/` holds English questions with program-checkable answers: 161 student cases and 118 professor cases,
+`data/testset/` holds English questions with program-checkable answers: 208 student cases and 118 professor cases,
 each with two paraphrases, a simulated clock (`as_of`), the authenticated user, and a discrete `answer` that starts
-with `allowed`. Thirty student cases and twenty-six professor cases test access control. The intents cover the catalog, lectures, degree
-plans, the calendar and teaching schedules; everything that needs enrollment (registration, transcripts, rosters,
-grade statistics) is listed as pending in each persona's `questions.md`. Formats, clocks, the permission model and
+with `allowed`. Forty student cases and twenty-six professor cases test access control. The student intents cover the
+catalog, lectures, degree plans, the calendar and, since 2026-11-02, the student's own record: schedule, registration
+eligibility, transcript, GPA and degree progress. The professor set still covers teaching schedules and the catalog;
+its roster and grade-statistics intents are listed as pending in its `questions.md`. Formats, clocks, the permission model and
 the verification contract are in [data/testset/README.md](data/testset/README.md).
 
 ## Agent
@@ -128,20 +160,22 @@ please ask the rest separately." When the counter says more than one and the cla
 choice (`rescue_label`: the servable labels plus "none of these") asks which label covers any request in the message; the
 classifier reads one request per message well and two badly, and wording changes to its rule only moved the misses around, so
 the split is structural. Measured on the Codex sets: every tagged two-request row flagged (25/25 dev, 60/60 and 107/108
-acceptance), fewer than one untagged row in a hundred flagged too, none of the 161 graded student questions. The classifier still decides which request is answered:
+acceptance), fewer than one untagged row in a hundred flagged too, none of the 161 graded student questions of the time. The classifier still decides which request is answered:
 
-1. **Classify** (`llm.py`): the model may only reply with one of the 18 labels in `intents.py`: 17 answerable question types,
-   `student_list` (always refused), and `unknown` for everything else. `unknown` covers greetings and nonsense but also every
-   registrar matter this assistant has no data or power for (holds, grades, GPA, transcripts, degree audits, waitlists, seats
-   left, enrollment verification, the asker's own enrollment records, eligibility checks, carrying out
-   add/drop/swap/withdraw) and every service that is not the registrar's (tuition, financial aid, parking, housing, dining, IT,
+1. **Classify** (`llm.py`): the model may only reply with one of the 23 labels in `intents.py`: 22 answerable question types (17 about the
+   catalog, degree plans and the calendar, and since 2026-11-02 five about the asker's own record: `my_schedule`, `can_register`,
+   `my_transcript`, `my_gpa`, `degree_progress`), `student_list` (always refused), and `unknown` for everything else. `unknown`
+   covers greetings and nonsense but also every registrar matter this assistant has no data or power for (holds, waitlists,
+   enrollment verification, official transcripts sent to a third party, carrying out add/drop/swap/withdraw) and every service that is not the registrar's (tuition, financial aid, parking, housing, dining, IT,
    instructor office hours, advising); its reply is one fixed "I don't know what you are talking about" sentence plus the scope
    sentence. Two referral labels with topic slots and an office table (`not_in_data`, `outside_registrar`, 2026-11-02, Codex design
    review) were tried and folded back into `unknown` the same day, owner's decision, see commit `c436eef` for the implementation.
    vLLM's `structured_outputs.choice` enforces the label set, and the token logprobs give a confidence (kept for diagnosis only; misclassifications have scored 0.99).
    Access control is not a question type: "What is Raj Martinez's phone number?" classifies as `person_info`. Each label's
    description says what it covers and which neighbouring questions belong elsewhere; the classifier rules in `CLASSIFY_SYSTEM`
-   settle the boundaries that matter most: "can I take/register for COURSE" unqualified is `course_offered`, "yet/still/now" cues
+   settle the boundaries that matter most: "can I take/register for/add COURSE or CRN", "am I eligible", "do I meet the
+   prerequisites" is `can_register` (an information-only check of the registration rules: status, window, offering, prerequisites,
+   not already passed, seats, time clash; the reply says it is not a registration), "yet/still/now" cues without a course
    are `register_when` (so is "my time ticket": individual appointments are not recorded, the reply gives the general window and
    says so), add/drop/withdraw timing is `term_dates`, "add me / withdraw me" is an action (`unknown`), and a
    message with two independent requests is classified by the one this assistant can serve (owner, 2026-11-02, after five of
@@ -163,7 +197,7 @@ acceptance), fewer than one untagged row in a hundred flagged too, none of the 1
    reply). The earlier LLM rendering is kept for comparison only (`ask.py --llm-reply`, `reply_mode: "llm"` in the web API). The
    change followed the 90-question Codex run (`runs/codex/phase2-report.md`): in every case where the English was wrong the JSON
    answer was right; the model had turned AND into OR, "not in your plan" into "yes", and invented "no holds" and "no longer
-   enrolled". `grade.py --reply` scans the reply for `must_not_mention` values (0 leaks on the 161 student cases).
+   enrolled". `grade.py --reply` scans the reply for `must_not_mention` values (0 leaks on the 208 student cases and their paraphrases).
 
 Model: Qwen3.5-27B served by vLLM 0.32 on one H100 (`scripts/serve_llm.sh`; weights under
 `/home/sheshnagnobackup/mnguyen/models`, outside the repo). `.env` holds `LLM_BASE_URL` and `LLM_MODEL`.
@@ -209,4 +243,6 @@ python scripts/review.py --csv runs/chat.csv # one row per question, for a sprea
 ## Next steps
 1. The professor persona (same pipeline, its own intents), then a persona switch in the web chat.
 2. Multi-turn chat: the UI sends each question alone today, so "and next spring?" has no context.
-3. When the schema reopens: `enrollment` table, proposed as (`term_code`, `crn`, `student_university_id`) with `status` (enrolled/dropped/withdrawn) and `grade` FK `grade_scale`; then the pending intents (registration, transcripts, GPA, rosters, grade statistics) and the administrator persona.
+3. On the enrollment table (2026-11-02): the professor's roster intents (who is in my section, enrollment counts, grade
+   distributions), the administrator persona, and a `my_schedule` check for one CRN ("am I still in CRN 10025"). Still not
+   modeled: holds, waitlists, time tickets, carrying out registration changes.

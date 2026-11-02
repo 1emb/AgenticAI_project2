@@ -43,6 +43,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 800225025,Owen,Nair,2007-09-17,M,344-37-7445,,onair@nmsu.example
 800226001,Ethan,Jackson,1997-11-19,M,776-54-0762,,ejackson@nmsu.example
 800237918,Brandon,Johnson,2003-09-04,M,027-95-3049,575-555-7340,bjohnson@nmsu.example
+800240356,Samuel,Lopez,1978-10-06,M,416-76-3133,575-555-3100,slopez@nmsu.example
 800241536,Aisha,Wilson,2002-12-12,F,415-03-5322,575-555-8538,awilson@nmsu.example
 800250724,Ethan,Thomas,2006-05-24,M,761-69-3034,575-555-8933,ethomas@nmsu.example
 800257189,Samuel,Maestas,2005-02-26,M,139-10-7407,575-555-8292,smaestas@nmsu.example
@@ -52,6 +53,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 800272149,Lily,Chen,2006-09-14,F,627-12-1078,575-555-8842,lchen@nmsu.example
 800276707,David,Nelson,2005-11-26,M,526-54-7485,575-555-8575,dnelson@nmsu.example
 800277478,Mia,Lee,2003-07-07,F,741-74-9441,575-555-8749,mlee@nmsu.example
+800277764,Elena,Johnson,1979-12-02,F,729-06-3783,,ejohnson2@nmsu.example
 800280881,Ana,Green,2007-01-13,F,271-94-5993,575-555-6995,agreen@nmsu.example
 800282352,Clara,Nguyen,1997-10-16,F,511-01-8690,575-555-8091,cnguyen@nmsu.example
 800284350,Riley,Gomez,2006-11-05,X,769-53-0972,,rgomez@nmsu.example
@@ -86,6 +88,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 800434442,Priya,Martinez,2007-05-06,F,602-19-6526,,pmartinez@nmsu.example
 800439799,Mia,Maestas,1995-12-21,F,640-92-4761,575-555-3173,mmaestas2@nmsu.example
 800455646,Liam,Lee,2007-04-27,M,773-08-2296,575-555-5739,llee@nmsu.example
+800457463,Layla,Ortiz,1979-12-04,F,284-15-9414,575-555-4443,lortiz2@nmsu.example
 800462297,Kayla,Wright,2007-03-23,F,460-76-4558,575-555-1106,kwright@nmsu.example
 800469730,Rachel,Li,1995-07-22,F,686-44-8505,575-555-2560,rli@nmsu.example
 800474289,Brandon,Zhang,2003-10-20,M,827-55-9191,,bzhang@nmsu.example
@@ -93,6 +96,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 800482325,Hiroshi,Mendoza,1994-03-12,M,079-66-4601,575-555-4062,hmendoza@nmsu.example
 800482384,Ethan,Martin,2006-05-25,M,389-73-4027,575-555-6530,emartin@nmsu.example
 800489918,Hiroshi,Jones,2006-03-04,M,077-26-2231,575-555-2785,hjones@nmsu.example
+800498937,Victoria,Chen,1981-04-27,F,061-56-3458,575-555-7364,vchen@nmsu.example
 800504499,Rafael,White,2005-09-12,M,585-54-3069,575-555-2402,rwhite@nmsu.example
 800506160,Ava,Flores,2008-12-16,F,738-53-8005,575-555-4937,aflores@nmsu.example
 800508471,Clara,Smith,2007-01-04,F,052-86-8701,575-555-4814,csmith@nmsu.example
@@ -109,6 +113,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 800596302,James,Zhang,2007-05-28,M,481-62-7217,575-555-1841,jzhang@nmsu.example
 800601701,Maria,Anderson,2006-08-15,F,216-56-9503,575-555-6279,manderson@nmsu.example
 800603202,Chen,Perez,2007-04-05,M,615-40-5762,575-555-9313,cperez2@nmsu.example
+800606229,Raj,Kim,1988-03-10,M,209-53-1810,,rkim@nmsu.example
 800611211,Ahmed,Thomas,2007-04-11,M,753-89-8045,,athomas@nmsu.example
 800615393,Lily,Rodriguez,2006-05-17,F,207-06-3269,575-555-6170,lrodriguez@nmsu.example
 800615670,Isaiah,Harris,1999-02-22,M,224-97-8692,575-555-1144,iharris@nmsu.example
@@ -131,6 +136,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 800691411,Isaiah,Ramirez,2007-06-03,M,097-72-6334,575-555-3463,iramirez@nmsu.example
 800695696,Arjun,Lopez,2003-06-02,M,629-26-2138,575-555-3907,alopez@nmsu.example
 800705237,Natalie,Ramirez,2007-11-23,F,284-82-5328,575-555-5278,nramirez2@nmsu.example
+800715877,Aisha,Diaz,1985-06-11,F,212-58-2366,575-555-3019,adiaz3@nmsu.example
 800719027,Emily,Hall,2000-05-27,F,302-58-2186,575-555-9393,ehall@nmsu.example
 800722529,Isabella,Scott,2001-02-16,F,718-09-8867,,iscott@nmsu.example
 800730438,Brianna,Mitchell,2005-06-03,F,488-13-7179,575-555-8412,bmitchell@nmsu.example
@@ -178,6 +184,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 801006220,Samuel,Thomas,2003-07-13,M,358-72-4481,575-555-9899,sthomas@nmsu.example
 801015737,Zoe,Park,2000-08-11,F,354-43-9043,575-555-7180,zpark@nmsu.example
 801025060,Grace,Clark,2007-08-19,F,609-58-2910,,gclark@nmsu.example
+801025325,Aiden,Carter,1978-08-06,M,281-56-0802,575-555-8099,acarter@nmsu.example
 801028870,Brandon,Adams,2007-07-06,M,234-46-9061,,badams@nmsu.example
 801031859,Aiden,Wright,2008-09-14,M,062-19-4585,575-555-4792,awright2@nmsu.example
 801032684,Isabella,Mendoza,2003-04-04,F,144-92-6705,575-555-4209,imendoza@nmsu.example
@@ -216,6 +223,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 801229099,Ahmed,Young,1986-02-18,M,206-67-0252,575-555-2124,ayoung2@nmsu.example
 801231741,Jacob,Wright,2006-08-20,M,761-94-2532,575-555-2622,jwright@nmsu.example
 801237672,Jessica,Begay,2005-05-04,F,087-87-2195,575-555-4908,jbegay2@nmsu.example
+801238934,Gabriela,Young,1975-12-14,F,422-75-4714,575-555-3042,gyoung@nmsu.example
 801241295,Layla,Torres,2008-04-10,F,582-08-7127,575-555-3141,ltorres2@nmsu.example
 801241719,Ethan,Torres,2004-11-20,M,708-81-3979,575-555-5941,etorres@nmsu.example
 801245036,Jose,Morales,2004-02-28,M,232-67-7292,575-555-6629,jmorales@nmsu.example
@@ -250,6 +258,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 801412066,Elena,Nguyen,2005-07-03,F,054-23-3657,575-555-1752,enguyen@nmsu.example
 801416058,Miguel,Mitchell,1969-01-08,M,491-62-3453,575-555-7732,mmitchell@nmsu.example
 801426291,Zoe,Hill,2003-03-14,F,530-45-2103,575-555-3981,zhill@nmsu.example
+801426722,Riley,Pham,1984-03-07,X,282-57-3303,,rpham2@nmsu.example
 801429655,Jacob,Romero,2005-08-23,M,787-71-0441,,jromero@nmsu.example
 801429839,Wei,Li,2006-10-22,M,812-24-2786,575-555-7267,wli@nmsu.example
 801432801,Daniel,Lewis,2005-05-09,M,437-23-5800,575-555-4066,dlewis@nmsu.example
@@ -281,6 +290,7 @@ university_id,first_name,last_name,date_of_birth,sex,ssn,phone,email
 801617806,Emily,Reyes,2002-05-23,F,031-43-7035,575-555-2046,ereyes@nmsu.example
 801627697,Renata,Maestas,1996-03-06,F,743-25-4820,575-555-2220,rmaestas3@nmsu.example
 801634036,Wei,Walker,2006-04-19,M,087-93-9168,,wwalker@nmsu.example
+801647722,James,Campbell,1978-05-21,M,781-68-1070,575-555-6699,jcampbell@nmsu.example
 801648903,Brianna,Ramirez,2002-02-12,F,518-21-6815,575-555-7609,bramirez@nmsu.example
 801649436,Ethan,Morales,2006-03-09,M,553-47-8698,575-555-5465,emorales@nmsu.example
 801650231,Carlos,Wilson,1961-07-13,M,703-39-9938,575-555-8170,cwilson@nmsu.example

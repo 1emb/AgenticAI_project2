@@ -50,6 +50,7 @@ SLOT_QUESTION = {
     "event": "Please ask again and say which date you need: the first or last day of classes, the add, drop or withdrawal deadline, or when grades are due.",
     "person": "Please ask again and include the person's full name or university ID.",
     "program": "Please ask again and include the program.",
+    "day": "Please ask again and name the weekday, or say 'today' or 'tomorrow'.",
 }
 
 def _d(v) -> str:
@@ -74,7 +75,7 @@ def _days(days: str) -> str:
 
 
 def _n(v):
-    return num(v) if isinstance(v, Decimal) else v
+    return num(v) if isinstance(v, (Decimal, float)) else v
 
 
 def _status(s: str) -> str:
@@ -158,7 +159,131 @@ def r_who_teaches(a, t):
 
 
 def r_capacity(a, t):
-    return f"CRN {a['crn']} ({a['course']}, {a['term']}) has a recorded capacity of {a['capacity']} seats. I don't have enrollment counts, so I can't say how many are left."
+    s = f"CRN {a['crn']} ({a['course']}, {a['term']}) has a capacity of {a['capacity']} seats"
+    if a.get("enrolled") is None:
+        return s + "."
+    s += f"; {a['enrolled']} {'is' if a['enrolled'] == 1 else 'are'} taken and {a['seats_left']} {'is' if a['seats_left'] == 1 else 'are'} left."
+    if a.get("is_cancelled"):
+        s += " The section is cancelled."
+    elif a.get("is_full"):
+        s += " It is full."
+    return s
+
+
+# ---- own record (enrollment, 2026-11-02) ----
+def _meeting(days, start, end, room) -> str:
+    s = f"{_days(days)} {_t(start)}-{_t(end)}" if days and start else "time not listed"
+    return s + (f" in {room}" if room else "")
+
+
+def _mine(sec: dict) -> str:
+    s = f"{sec['course']}" + (f" {sec['title']}" if sec.get("title") else "") + f" (CRN {sec['crn']}" + (f", {_n(sec['credit_hours'])} cr)" if sec.get("credit_hours") is not None else ")")
+    s += ", " + _meeting(sec.get("days"), sec.get("start"), sec.get("end"), sec.get("room"))
+    return s + (f" with {sec['instructor']}" if sec.get("instructor") else "")
+
+
+def r_my_schedule(a, t):
+    verb = {"past": "took", "current": "are enrolled in", "future": "are registered for"}.get(a.get("when"), "are enrolled in")
+    if "day" in a:
+        if not a.get("has_classes"):
+            return f"You have no classes on {a['day']}s in {a['term']}."
+        items = "; ".join(f"{m['course']} (CRN {m['crn']}) {_t(m['start'])}-{_t(m['end'])}" + (f" in {m['room']}" if m.get("room") else "") for m in a["meetings"])
+        return f"On {a['day']}s in {a['term']} you have {items}."
+    secs = a.get("sections") or []
+    if not secs:
+        return f"You have no sections on record for {a['term']}."
+    n = len(secs)
+    return f"In {a['term']} you {verb} {n} section{'s' if n != 1 else ''} ({_n(a['credits'])} credits): " + "; ".join(_mine(x) for x in secs) + "."
+
+
+REASON_TEXT = {
+    "status_not_active": "your registrar status is {status}, so you cannot register",
+    "registration_not_open": "registration for {term} has not opened yet (it opens {opens})",
+    "registration_closed": "registration for {term} closed on {deadline}",
+    "not_offered": "{what} has no open section in {term}",
+    "prerequisites_not_met": "you have not met its prerequisites (still needed: {missing})",
+    "already_completed": "you have already completed {course} (grade {grade}), and a course passed with C or better cannot be repeated",
+    "already_enrolled": "you are already enrolled in {course} in {term} (CRN {enrolled})",
+    "no_seats": "every section is full",
+    "time_clash": "every section with seats left overlaps your other classes that term",
+}
+NOT_A_REGISTRATION = " This is a check of the registration rules, not a registration."
+
+
+def r_can_register(a, t):
+    what = f"CRN {a['crn']} ({a['course']})" if a.get("crn") else a["course"]
+    if a["eligible"]:
+        open_secs = [x for x in a.get("sections") or [] if x["seats_left"] > 0 and not x["clash"]]
+        s = f"Yes, you can register for {what} in {a['term']}: registration is open, you meet the prerequisites, and seats are left"
+        s += " in " + fmt_list(f"CRN {x['crn']} ({x['seats_left']})" for x in open_secs) + "." if open_secs else "."
+        if a.get("prerequisites_in_progress"):
+            s += " Your prerequisites are met through courses still in progress, so they must be passed first."
+        return s + NOT_A_REGISTRATION
+    missing = " and ".join(" or ".join(g) for g in a.get("missing_prerequisites") or []) or "see the catalog"
+    fields = dict(status=_status(a.get("status")), term=a["term"], opens=_d(a.get("registration_opens")), deadline=_d(a.get("add_deadline")), what=what,
+                  course=a["course"], missing=missing, grade=a.get("best_grade") or "passing grade", enrolled=", ".join(a.get("enrolled_crns") or []))
+    reasons = [REASON_TEXT.get(code, code).format(**fields) for code in a.get("reasons") or []]
+    return f"No, you cannot register for {what} in {a['term']}: " + "; ".join(reasons) + "." + NOT_A_REGISTRATION
+
+
+def _grade_word(c: dict) -> str:
+    if c.get("grade"):
+        return c["grade"]
+    return "in progress" if c.get("status") == "enrolled" else "no grade"
+
+
+def r_my_transcript(a, t):
+    if "attempts" in a:
+        code = a["course"]
+        if not a.get("taken"):
+            return f"{code} is not on your record."
+        parts = (["accepted as transfer credit"] if a.get("transfer_credit") else []) + [f"{x['term']}: {_grade_word(x)}" for x in a["attempts"]]
+        return f"{code} on your record: " + "; ".join(parts) + "."
+    if "courses" in a:
+        if not a["courses"]:
+            return f"You have no courses on record for {a['term']}."
+        s = f"Your {a['term']} record: " + fmt_list(f"{c['course']} {_grade_word(c)}" for c in a["courses"]) + "."
+        if a.get("term_gpa") is not None:
+            s += f" Term GPA {a['term_gpa']:.2f}."
+        elif a.get("in_progress"):
+            s += " Grades are not posted yet."
+        return s
+    terms = a.get("terms") or []
+    if not terms and not a.get("transfer_credits"):
+        return "You have no courses on your record yet."
+    s = "Your transcript. " + " ".join(f"{x['term']}: " + ", ".join(f"{c['course']} {_grade_word(c)}" for c in x["courses"]) + "." for x in terms)
+    if a.get("transfer_credits"):
+        s += " Transfer credit: " + fmt_list(c["course"] for c in a["transfer_credits"]) + f" ({_n(sum(c['credit_hours'] for c in a['transfer_credits']))} credits)."
+    s += f" Credits earned: {_n(a['credits_earned'])}."
+    return s + (f" Cumulative GPA: {a['gpa']:.2f}." if a.get("gpa") is not None else " No GPA yet.")
+
+
+def r_my_gpa(a, t):
+    cum = f"Your cumulative GPA is {a['gpa']:.2f} over {_n(a['graded_credits'])} graded credits" if a.get("gpa") is not None else "You have no graded credits yet, so no GPA is on record"
+    if "term" in a:
+        if a.get("term_gpa") is None:
+            why = " yet; its courses are still in progress" if a.get("in_progress") else "" if a.get("has_rows") else "; nothing is on record for that term"
+            return f"You have no graded credits in {a['term']}{why}. {cum}."
+        return f"Your {a['term']} GPA is {a['term_gpa']:.2f} over {_n(a['term_graded_credits'])} graded credits. {cum}."
+    s = cum + f". You have earned {_n(a['credits_earned'])} credits"
+    return s + (f", including {_n(a['transfer_credits'])} transfer credits." if a.get("transfer_credits") else ".")
+
+
+def r_degree_progress(a, t):
+    s = f"Toward the {_prog(a)} you have earned {_n(a['credits_earned'])} of {_n(a['credits_required'])} credits ({_n(a['credits_remaining'])} remaining)."
+    rem = a.get("required_remaining") or []
+    prog = a.get("in_progress") or []
+    if rem and set(rem) == set(prog):
+        s += f" Required courses still to pass: {fmt_list(rem)}, in progress now."
+    elif rem:
+        s += f" Required courses still to pass: {fmt_list(rem)}." + (f" You are taking {fmt_list(prog)} now." if prog else "")
+    else:
+        s += " Every required course is passed."
+    cats = a.get("categories") or {}
+    if cats:
+        s += " " + fmt_list(f"{k.replace('_', ' ')}: {_n(v['earned'])} of {_n(v['required'])} credits" for k, v in cats.items()) + "."
+    s += f" Your GPA is {a['gpa']:.2f} against a program minimum of {a['min_gpa']:.2f}." if a.get("gpa") is not None else " You have no GPA yet."
+    return s + (" Every requirement is met." if a.get("complete") else "")
 
 
 def _prog(a) -> str:
@@ -263,6 +388,7 @@ WRITERS = {
     "prerequisites": r_prerequisites, "course_info": r_course_info, "course_offered": r_course_offered, "lecture_options": r_lecture_options,
     "lecture_meeting": r_lecture_meeting, "who_teaches": r_who_teaches, "capacity": r_capacity, "degree_required": r_degree_required,
     "degree_credits": r_degree_credits, "course_in_plan": r_course_in_plan, "plan_term": r_plan_term, "my_program": r_my_program,
+    "my_schedule": r_my_schedule, "can_register": r_can_register, "my_transcript": r_my_transcript, "my_gpa": r_my_gpa, "degree_progress": r_degree_progress,
     "register_when": r_register_when, "term_dates": r_term_dates, "current_term": r_current_term, "person_info": r_person_info,
     "unknown": r_unknown,
 }

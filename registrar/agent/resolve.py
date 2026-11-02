@@ -119,6 +119,30 @@ def term(q: QueryLog, mention: str | None, as_of: datetime, default_current: boo
     return Resolved(None, "not_found", note=f"cannot read a term in '{mention}'")
 
 
+# ---- weekday ------------------------------------------------------------------------------------------------------------
+DAYS = {"monday": "M", "mon": "M", "tuesday": "T", "tue": "T", "tues": "T", "wednesday": "W", "wed": "W", "thursday": "R", "thu": "R", "thur": "R",
+        "thurs": "R", "friday": "F", "fri": "F", "saturday": "S", "sat": "S", "sunday": "U", "sun": "U"}
+DAY_NAME = {"M": "Monday", "T": "Tuesday", "W": "Wednesday", "R": "Thursday", "F": "Friday", "S": "Saturday", "U": "Sunday"}
+WEEKDAY_CODE = "MTWRFSU"       # datetime.weekday(): Monday = 0
+
+
+def day(mention: str | None, as_of: datetime) -> Resolved:
+    """'Monday', 'Mondays', 'on Wed', 'today', 'tomorrow' -> {code: 'M', name: 'Monday'}; today/tomorrow come from the clock."""
+    m = _clean(mention).lower()
+    if not m:
+        return Resolved()
+    if re.search(r"\btoday\b", m):
+        code = WEEKDAY_CODE[as_of.weekday()]
+        return Resolved({"code": code, "name": DAY_NAME[code]}, "ok", note=f"today ({as_of.date()}) is a {DAY_NAME[code]}")
+    if re.search(r"\btomorrow\b", m):
+        code = WEEKDAY_CODE[(as_of.weekday() + 1) % 7]
+        return Resolved({"code": code, "name": DAY_NAME[code]}, "ok", note=f"tomorrow ({as_of.date()} + 1) is a {DAY_NAME[code]}")
+    for word, code in DAYS.items():
+        if re.search(rf"\b{word}s?\b", m):
+            return Resolved({"code": code, "name": DAY_NAME[code]}, "ok")
+    return Resolved(None, "not_found", note=f"cannot read a weekday in '{mention}'")
+
+
 # ---- crn / numbers -------------------------------------------------------------------------------------------------------
 def crn(mention: str | None) -> Resolved:
     m = re.search(r"\b(\d{5})\b", _clean(mention))

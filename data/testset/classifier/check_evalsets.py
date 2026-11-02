@@ -40,7 +40,7 @@ def spec():
         if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "Intent":
             labels.append("unknown" if isinstance(node.args[0], ast.Name) else ast.literal_eval(node.args[0]))
             examples.extend(ast.literal_eval(node.args[3]))
-    assert len(labels) == 18   # 2026-11-02: not_in_data and outside_registrar folded into unknown
+    assert len(labels) == 23   # 2026-11-02: not_in_data and outside_registrar folded into unknown; five own-record labels added with the enrollment table
     return labels, examples, enums
 
 

@@ -1,28 +1,28 @@
-{"question": "can i take ENG 2450 this fall", "expected_intent": "course_offered", "reason": "Offering question, even though the catalog course is retired."}
-{"question": "can i register for CS 4510", "expected_intent": "course_offered", "reason": "Course-specific availability default; do not assert eligibility."}
-{"question": "can i register for CS 4510 yet", "expected_intent": "register_when", "reason": "\u201cYet\u201d asks whether the general registration window has opened."}
+{"question": "can i take ENG 2450 this fall", "expected_intent": "can_register", "reason": "Named course with 'can I take' is an eligibility check; the retired course comes back as not offered."}
+{"question": "can i register for CS 4510", "expected_intent": "can_register", "reason": "Named course: the eligibility check (offered, window, prerequisites, seats), not bare availability."}
+{"question": "can i register for CS 4510 yet", "expected_intent": "can_register", "reason": "A named course wins over 'yet'; the check includes whether the window is open."}
 {"question": "can i register", "expected_intent": "register_when", "reason": "No course; asks about the general window."}
 {"question": "When can I take Machine Learning next semester?", "expected_intent": "course_offered", "reason": "Course scheduling, not the registration opening date."}
 {"question": "When does registration close?", "expected_intent": "register_when", "reason": "The window's end is the add deadline."}
 {"question": "Add me to CRN 10025.", "expected_intent": "unknown", "reason": "Request to change registration."}
 {"question": "Could you register me for CS 4510?", "expected_intent": "unknown", "reason": "Polite request to perform an action."}
 {"question": "Swap my 10025 section for 10026.", "expected_intent": "unknown", "reason": "Action, with two section identifiers."}
-{"question": "Can I still add CRN 10025 this semester?", "expected_intent": "term_dates", "reason": "\u201cStill add\u201d asks about the add deadline."}
+{"question": "Can I still add CRN 10025 this semester?", "expected_intent": "can_register", "reason": "A named CRN with 'can I still add' is the eligibility check, which reports a closed window."}
 {"question": "Can I still drop without a W?", "expected_intent": "term_dates", "reason": "Drop deadline, without promising a change."}
 {"question": "Can I still withdraw?", "expected_intent": "term_dates", "reason": "Withdrawal deadline."}
 {"question": "Withdraw me from CRN 10025.", "expected_intent": "unknown", "reason": "Action rather than a deadline question."}
-{"question": "Did my withdrawal from CRN 10025 go through?", "expected_intent": "unknown", "reason": "Enrollment transaction/status data is absent."}
+{"question": "Did my withdrawal from CRN 10025 go through?", "expected_intent": "my_schedule", "reason": "Own enrollment state for a section: the schedule shows whether the CRN is still there."}
 {"question": "What prerequisites would I need before taking CS 4510?", "expected_intent": "prerequisites", "reason": "Static prerequisite rules."}
-{"question": "I passed the intro class; have I met every prerequisite for CS 4510?", "expected_intent": "unknown", "reason": "Personal completion/eligibility check."}
+{"question": "I passed the intro class; have I met every prerequisite for CS 4510?", "expected_intent": "can_register", "reason": "Whether the asker meets a named course's prerequisites: eligibility check."}
 {"question": "Does CS 4510 count in my major?", "expected_intent": "course_in_plan", "reason": "Stored plan membership, not an enrollment action."}
 {"question": "How many credits does my degree require?", "expected_intent": "degree_credits", "reason": "Program requirement."}
-{"question": "How many credits have I earned toward graduation?", "expected_intent": "unknown", "reason": "Personal academic progress."}
+{"question": "How many credits have I earned toward graduation?", "expected_intent": "degree_progress", "reason": "Credits earned on the asker's own record."}
 {"question": "How many seats can CRN 10025 hold?", "expected_intent": "capacity", "reason": "Total capacity."}
-{"question": "Are there two seats left in CRN 10025?", "expected_intent": "unknown", "reason": "Available seats require enrollment counts."}
+{"question": "Are there two seats left in CRN 10025?", "expected_intent": "capacity", "reason": "Seats left in a CRN: capacity minus enrollment."}
 {"question": "Is CS 4510 on the schedule, or was it cancelled?", "expected_intent": "course_offered", "reason": "Non-cancelled offerings determine the answer."}
 {"question": "Where does the cancelled CRN 10025 meet in Fall 2026?", "expected_intent": "lecture_meeting", "reason": "Cancellation belongs in the returned section record; the premise does not change the label."}
 {"question": "When are grades due for this term?", "expected_intent": "term_dates", "reason": "Calendar date rather than personal grades."}
-{"question": "What grade did I get in CS 4510?", "expected_intent": "unknown", "reason": "Personal grade."}
+{"question": "What grade did I get in CS 4510?", "expected_intent": "my_transcript", "reason": "The asker's own grade in a named course."}
 {"question": "Is there a tuition hold blocking me?", "expected_intent": "unknown", "reason": "Asks about a hold, not an amount owed."}
 {"question": "How much tuition do I still owe?", "expected_intent": "unknown", "reason": "Balance question for student accounts."}
 {"question": "Can you issue an enrollment verification letter?", "expected_intent": "unknown", "reason": "Registrar document service."}

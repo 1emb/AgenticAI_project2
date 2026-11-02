@@ -6,6 +6,7 @@ from collections import Counter
 
 from psycopg.rows import dict_row
 
+from . import queries as Q
 from .common import AS_OF_BREAK, AS_OF_LATE, AS_OF_SPRING, CURRENT, DEFAULT_AS_OF, FUTURE, PREVIOUS, SNAPSHOT
 from .student_access import AccessBuilder
 
@@ -13,6 +14,8 @@ QUOTA = {
     "prerequisites": 12, "course_info": 8, "course_offered": 10, "lecture_options": 10, "lecture_meeting": 8, "who_teaches": 8, "capacity": 6,
     "degree_required": 8, "degree_credits": 8, "course_in_plan": 10, "plan_term": 6, "my_program": 6,
     "register_when": 8, "term_dates": 12, "current_term": 6,
+    # own record (enrollment and transfer credit, 2026-11-02); capacity gains 4 seats-left cases
+    "my_schedule": 8, "can_register": 10, "my_transcript": 8, "my_gpa": 6, "degree_progress": 6,
 }
 DENIED_PLAN = ["other_program", "other_status", "other_contact", "other_dob", "other_ssn", "other_graduation", "impersonation", "student_list",
                "instructor_private", "other_contact", "impersonation", "student_list", "instructor_private", "other_ssn",
@@ -142,6 +145,101 @@ def generate(conn, seed: int = 7) -> list[dict]:
     for i, (scenario, term) in enumerate([("course_roster", CURRENT), ("crn_roster", FUTURE), ("course_roster", FUTURE), ("crn_roster", CURRENT)]):
         l = rng.choice([x for x in by_term[term] if not x["is_cancelled"]])
         cases.append(b.denied(student(i + 270), scenario, term_code=term, crn=l["crn"]))
+
+    # ------------------------------------------------------------ own record (enrollment and transfer credit, 2026-11-02)
+    records = {}
+    for r in fetch(conn, "SELECT e.student_university_id AS uid, e.term_code, l.course_code, e.status, e.grade FROM enrollment e "
+                         "JOIN lecture l ON l.term_code = e.term_code AND l.crn = e.crn ORDER BY 1, 2, 3"):
+        records.setdefault(r["uid"], []).append(r)
+    history = [s for s in active if any(r["term_code"] < CURRENT and r["grade"] not in (None, "W") for r in records.get(s["uid"], []))]
+    registered_next = [s for s in active if any(r["term_code"] == FUTURE for r in records.get(s["uid"], []))]
+    transfers = [s for s in history if s["uid"] in {r["uid"] for r in fetch(conn, "SELECT DISTINCT student_university_id AS uid FROM transfer_credit")}]
+    graduated = [s for s in students if s["status"] == "graduated"]
+    newcomers = [s for s in active if s["uid"] not in {h["uid"] for h in history}]
+    suspended = [s for s in students if s["status"] in ("suspended", "dismissed") and records.get(s["uid"])]
+    plan_courses = {}
+    for r in plan_rows:
+        plan_courses.setdefault(r["program_code"], []).append(r["course_code"])
+
+    # schedule: this term, the coming term, last term, and two weekdays
+    for i in range(3):
+        cases.append(b.my_schedule(student(i + 280), CURRENT))
+    cases.append(b.my_schedule(registered_next[0]["uid"], FUTURE))
+    cases.append(b.my_schedule(registered_next[1]["uid"], FUTURE, AS_OF_BREAK))
+    cases.append(b.my_schedule(history[0]["uid"], PREVIOUS))
+    cases.append(b.my_schedule(student(286), CURRENT, day="M"))
+    cases.append(b.my_schedule(student(287), CURRENT, day="R"))
+
+    # the registration-rules check: searched for by outcome, so every reason appears
+    def reasons_of(uid, course, term_code, as_of=DEFAULT_AS_OF, crn=None):
+        q, st = b.start(uid)
+        return b.eligibility(q, st, course, Q.term_by_code(q, term_code), as_of, crn)["reasons"]
+
+    def find(pool, term_code, want, as_of=DEFAULT_AS_OF, courses=None):
+        for st in rng.sample(pool, len(pool)):
+            for c in courses or plan_courses[st["program_code"]]:
+                if want(reasons_of(st["uid"], c, term_code, as_of)):
+                    return st["uid"], c
+        raise RuntimeError("no (student, course) pair with the wanted outcome")
+
+    for _ in range(2):
+        uid, c = find(history, FUTURE, lambda r: r == [])
+        cases.append(b.can_register(uid, c, FUTURE))
+    uid, c = find(history, FUTURE, lambda r: r == [], AS_OF_SPRING)
+    cases.append(b.can_register(uid, c, FUTURE, AS_OF_SPRING))
+    for pool in (newcomers, history):
+        uid, c = find(pool, FUTURE, lambda r: r == ["prerequisites_not_met"])
+        cases.append(b.can_register(uid, c, FUTURE))
+    uid, c = find(history, FUTURE, lambda r: r == ["already_completed"])
+    cases.append(b.can_register(uid, c, FUTURE))
+    uid, c = find(grads, FUTURE, lambda r: r == ["not_offered"])
+    cases.append(b.can_register(uid, c, FUTURE))
+    uid, c = find(history, CURRENT, lambda r: r == ["registration_closed"])
+    cases.append(b.can_register(uid, c, CURRENT))
+    uid, c = find(suspended, FUTURE, lambda r: "status_not_active" in r)
+    cases.append(b.can_register(uid, c, FUTURE))
+    crn_pool = [l for l in by_term[FUTURE] if not l["is_cancelled"]]
+    found = next((st["uid"], l["crn"], l["course_code"]) for st in rng.sample(history, len(history)) for l in rng.sample(crn_pool, 12)
+                 if reasons_of(st["uid"], l["course_code"], FUTURE, crn=l["crn"]) == [])
+    cases.append(b.can_register(found[0], found[2], FUTURE, crn=found[1]))
+
+    # transcript: whole record, one term, one course
+    cases.append(b.my_transcript(history[1]["uid"]))
+    cases.append(b.my_transcript(transfers[0]["uid"]))
+    cases.append(b.my_transcript(graduated[0]["uid"]))
+    cases.append(b.my_transcript(history[2]["uid"], term_code=PREVIOUS))
+    cases.append(b.my_transcript(history[3]["uid"], term_code=CURRENT))
+    taken = next(r["course_code"] for r in records[history[4]["uid"]] if r["grade"] not in (None, "W"))
+    cases.append(b.my_transcript(history[4]["uid"], course=taken))
+    not_taken = next(c for c in plan_courses[history[5]["program_code"]] if c not in {r["course_code"] for r in records[history[5]["uid"]]})
+    cases.append(b.my_transcript(history[5]["uid"], course=not_taken))
+    in_progress = next(r["course_code"] for r in records[history[6]["uid"]] if r["term_code"] == CURRENT)
+    cases.append(b.my_transcript(history[6]["uid"], course=in_progress))
+
+    # GPA: cumulative (including a graduate and a first-term student with none), and one term
+    for st in (history[7], history[8], graduated[1], newcomers[0]):
+        cases.append(b.my_gpa(st["uid"]))
+    cases.append(b.my_gpa(history[9]["uid"], term_code=PREVIOUS))
+    cases.append(b.my_gpa(history[10]["uid"], term_code=CURRENT, as_of=AS_OF_BREAK))
+
+    # degree audit
+    for st in (history[11], history[12], history[13], graduated[2], newcomers[1], transfers[1]):
+        cases.append(b.degree_progress(st["uid"]))
+
+    # seats left (capacity intent), the full section included
+    full = fetch(conn, "SELECT e.term_code, e.crn FROM enrollment e JOIN lecture l ON l.term_code = e.term_code AND l.crn = e.crn "
+                       "WHERE e.status <> 'withdrawn' GROUP BY e.term_code, e.crn, l.capacity HAVING COUNT(*) >= l.capacity ORDER BY 1, 2")
+    if full:
+        cases.append(b.seats_left(student(300), full[0]["term_code"], full[0]["crn"]))
+    for i in range(3):
+        term = CURRENT if i % 2 == 0 else FUTURE
+        cases.append(b.seats_left(student(i + 301), term, rng.choice([x for x in by_term[term] if not x["is_cancelled"]])["crn"]))
+
+    # another student's schedule or grades
+    for i, scenario in enumerate(["other_schedule", "other_grades", "other_grades", "other_schedule", "other_grades"]):
+        uid = student(i + 310)
+        t_uid = next(s["uid"] for s in history[i * 5 + 14:] if s["uid"] != uid)
+        cases.append(b.denied(uid, scenario, t_uid=t_uid))
 
     counters: Counter = Counter()
     for c in cases:

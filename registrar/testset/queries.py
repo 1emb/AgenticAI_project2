@@ -155,3 +155,104 @@ def leak_program_students(q: QueryLog, program_code: str, exclude_uid: str, n: i
     return q.rows(LEAK + "students in the program", """
         SELECT s.university_id, p.email FROM student s JOIN person p ON p.university_id = s.university_id
         WHERE s.program_code = %(p)s AND s.university_id <> %(me)s ORDER BY s.university_id LIMIT %(n)s""", p=program_code, me=exclude_uid, n=n)
+
+
+# ---- enrollment records (2026-11-02) ----
+RECORD_SELECT = """
+    SELECT e.term_code, t.name AS term_name, t.sequence, e.crn, l.course_code, c.title, c.credit_hours, e.status, e.grade, g.points,
+           l.section_number, l.days, l.start_time, l.end_time, l.room, l.instructor_university_id, p.first_name || ' ' || p.last_name AS instructor
+    FROM enrollment e JOIN lecture l ON l.term_code = e.term_code AND l.crn = e.crn JOIN course c ON c.code = l.course_code
+    JOIN academic_term t ON t.code = e.term_code JOIN person p ON p.university_id = l.instructor_university_id
+    LEFT JOIN grade_scale g ON g.letter = e.grade"""
+
+
+def student_record(q: QueryLog, uid: str) -> list[dict]:
+    """Every enrollment row of the student with its lecture and grade points, oldest term first."""
+    return q.rows("the student's own enrollment records", RECORD_SELECT + " WHERE e.student_university_id = %(uid)s ORDER BY t.sequence, l.course_code, e.crn", uid=uid)
+
+
+def student_term_sections(q: QueryLog, uid: str, term_code: str) -> list[dict]:
+    return q.rows("the student's own sections in the term", RECORD_SELECT + " WHERE e.student_university_id = %(uid)s AND e.term_code = %(t)s ORDER BY e.crn",
+                  uid=uid, t=term_code)
+
+
+def transfer_credits(q: QueryLog, uid: str) -> list[dict]:
+    return q.rows("the student's own transfer credit", """
+        SELECT tc.course_code, c.title, tc.credit_hours, tc.accepted_term_code FROM transfer_credit tc JOIN course c ON c.code = tc.course_code
+        WHERE tc.student_university_id = %(uid)s ORDER BY tc.course_code""", uid=uid)
+
+
+def seats_taken(q: QueryLog, term_code: str, crn: str) -> int:
+    """Enrolled or completed rows count against capacity; withdrawn rows do not."""
+    return q.one("seats taken in the section (enrolled or completed rows)", """
+        SELECT COUNT(*) AS n FROM enrollment WHERE term_code = %(t)s AND crn = %(crn)s AND status <> 'withdrawn'""", t=term_code, crn=crn)["n"]
+
+
+def seats_by_crn(q: QueryLog, term_code: str, course_code: str) -> dict[str, int]:
+    rows = q.rows("seats taken per section of the course in the term", """
+        SELECT l.crn, COUNT(e.crn) FILTER (WHERE e.status <> 'withdrawn') AS n FROM lecture l
+        LEFT JOIN enrollment e ON e.term_code = l.term_code AND e.crn = l.crn
+        WHERE l.term_code = %(t)s AND l.course_code = %(c)s GROUP BY l.crn ORDER BY l.crn""", t=term_code, c=course_code)
+    return {r["crn"]: r["n"] for r in rows}
+
+
+def grade_points(q: QueryLog) -> dict[str, float | None]:
+    rows = q.rows("the grade scale", "SELECT letter, points FROM grade_scale ORDER BY points DESC NULLS LAST")
+    return {r["letter"]: (float(r["points"]) if r["points"] is not None else None) for r in rows}
+
+
+# ---- derived from the record (Python, so the rules stay in one place) ----
+def best_points(record: list[dict]) -> dict[str, float]:
+    """course -> best grade points among graded attempts (W and I carry none)."""
+    best: dict[str, float] = {}
+    for r in record:
+        if r["points"] is not None:
+            best[r["course_code"]] = max(best.get(r["course_code"], -1.0), float(r["points"]))
+    return best
+
+
+def gpa_of(rows: list[dict]) -> tuple[float | None, float]:
+    """(GPA, graded credits) over rows with points: sum(points x credits) / sum(credits)."""
+    pts = sum(float(r["points"]) * float(r["credit_hours"]) for r in rows if r["points"] is not None)
+    cr = sum(float(r["credit_hours"]) for r in rows if r["points"] is not None)
+    return (round(pts / cr, 2) if cr else None), cr
+
+
+def credits_earned(record: list[dict], transfer: list[dict]) -> float:
+    """A course earns its credits once, when a graded attempt has points above zero; transfer credit counts in full."""
+    earned = {r["course_code"]: float(r["credit_hours"]) for r in record if r["points"] is not None and float(r["points"]) > 0}
+    for t in transfer:
+        earned.setdefault(t["course_code"], float(t["credit_hours"]))
+    return sum(earned.values())
+
+
+def prerequisite_status(groups: list[list[dict]], best: dict[str, float], transfer: set[str], in_progress: set[str], points: dict[str, float | None],
+                        waived: bool = False) -> tuple[bool, list[list[str]], bool]:
+    """(met, groups not met as lists of course codes, met only through in-progress work). Transfer credit meets any minimum grade;
+    a master's student's prerequisites are presumed met (waived)."""
+    if waived:
+        return True, [], False
+    missing, via_progress = [], False
+    for g in groups:
+        done = any(m["course"] in transfer or best.get(m["course"], -1.0) >= (points.get(m["min_grade"]) or 0.0) for m in g)
+        if done:
+            continue
+        if any(m["course"] in in_progress for m in g):
+            via_progress = True
+            continue
+        missing.append([m["course"] for m in g])
+    return not missing, missing, via_progress
+
+
+# ---- protected values, fetched only to build leak markers ----
+def leak_roster(q: QueryLog, term_code: str, crn: str, n: int = 3) -> list[dict]:
+    return q.rows(LEAK + "students enrolled in the section", """
+        SELECT e.student_university_id, p.first_name || ' ' || p.last_name AS name, p.email FROM enrollment e JOIN person p ON p.university_id = e.student_university_id
+        WHERE e.term_code = %(t)s AND e.crn = %(crn)s AND e.status <> 'withdrawn' ORDER BY e.student_university_id LIMIT %(n)s""", t=term_code, crn=crn, n=n)
+
+
+def leak_course_roster(q: QueryLog, term_code: str, course_code: str, n: int = 3) -> list[dict]:
+    return q.rows(LEAK + "students enrolled in the course's sections", """
+        SELECT e.student_university_id, p.first_name || ' ' || p.last_name AS name, p.email FROM enrollment e JOIN lecture l ON l.term_code = e.term_code AND l.crn = e.crn
+        JOIN person p ON p.university_id = e.student_university_id
+        WHERE e.term_code = %(t)s AND l.course_code = %(c)s AND e.status <> 'withdrawn' ORDER BY e.student_university_id LIMIT %(n)s""", t=term_code, c=course_code, n=n)

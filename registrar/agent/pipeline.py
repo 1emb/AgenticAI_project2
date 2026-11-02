@@ -60,7 +60,9 @@ def resolve_all(q: QueryLog, intent: Intent, mentions: dict, as_of: datetime, st
     if "crn_mention" in intent.slots:
         r["crn"] = resolve.crn(get("crn_mention"))
     if "term_mention" in intent.slots:
-        r["term"] = resolve.term(q, get("term_mention"), as_of)
+        r["term"] = resolve.term(q, get("term_mention"), as_of, default_current=intent.name not in ("my_transcript", "my_gpa"))
+    if "day_mention" in intent.slots:
+        r["day"] = resolve.day(get("day_mention"), as_of)
     if "term_number_mention" in intent.slots:
         r["term_number"] = resolve.term_number(get("term_number_mention"))
     if "event" in intent.slots:

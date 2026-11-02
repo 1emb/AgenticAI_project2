@@ -1,8 +1,12 @@
 """Deterministic generator for the dataset: terms, people, students, instructors and lectures around the catalog.
 
 `generate(seed)` returns {table: [row dicts]} in the column order of csv_io.TABLES. The same seed gives the same rows.
-Scope: Fall 2021 to Spring 2031 on the calendar, lectures for Fall 2024 to Spring 2027, Fall 2026 in progress,
-Spring 2027 registration open from 2026-11-02. No summer terms.
+Scope: Fall 2021 to Spring 2031 on the calendar, lectures for Fall 2021 to Spring 2027, Fall 2026 in progress,
+Spring 2027 registration open from 2026-11-02. No summer terms. Enrollment and transfer credit come from records.py.
+
+Append-only history (2026-11-02): the six lecture terms Fall 2024 to Spring 2027 were generated first and their rows are
+frozen; the earlier terms, the former instructors who staff them, and the enrollment records are generated afterwards from
+the same stream (or their own), so the original rows never move.
 """
 from __future__ import annotations
 
@@ -10,10 +14,17 @@ import random
 from datetime import date, time, timedelta
 
 from . import catalog as C
+from .records import generate_records, overlaps
 
 LECTURE_TERMS = ["202480", "202510", "202580", "202610", "202680", "202710"]
+EARLIER_LECTURE_TERMS = ["202180", "202210", "202280", "202310", "202380", "202410"]   # added 2026-11-02 for the enrollment history
 CURRENT_TERM = "202680"
 MAX_SECTIONS_PER_INSTRUCTOR = 4
+# instructors who left before Fall 2024 (is_active false, no lecture after Spring 2024); without them the small departments cannot
+# staff Fall 2021 to Spring 2024: department, rank, hire year
+FORMER_INSTRUCTORS = [("ENGL", "lecturer", 2012), ("ENGL", "lecturer", 2008), ("PHYS", "lecturer", 2015), ("COMM", "adjunct", 2016),
+                      ("ECON", "assistant", 2017), ("PHIL", "lecturer", 2013), ("HIST", "adjunct", 2018), ("ENG", "associate", 2009),
+                      ("ENG", "lecturer", 2016), ("ENG", "adjunct", 2012)]
 
 FIRST_M = ["James", "Daniel", "Michael", "David", "Jose", "Luis", "Carlos", "Miguel", "Juan", "Andres", "Diego", "Mateo", "Ethan",
            "Noah", "Liam", "Aiden", "Tyler", "Brandon", "Kevin", "Ryan", "Marcus", "Isaiah", "Elijah", "Omar", "Ali", "Ahmed", "Wei",
@@ -74,11 +85,6 @@ def term_rows() -> list[dict]:
 def add_minutes(t: time, minutes: int) -> time:
     m = t.hour * 60 + t.minute + minutes
     return time(m // 60, m % 60)
-
-
-def overlaps(a: tuple, b: tuple) -> bool:
-    """Two (days, start, end) patterns conflict when they share a day and their times overlap."""
-    return bool(set(a[0]) & set(b[0])) and a[1] < b[2] and b[1] < a[2]
 
 
 class People:
@@ -164,12 +170,16 @@ def generate(seed: int = 42) -> dict[str, list[dict]]:
             terms_in = current_seq - admit_seq  # 0 for this fall's new students
             expected_seq = admit_seq + 7 - (2 if entry == "transfer" else 0)
             r = rng.random()
+            # 2026-11-02: graduation needs seven completed terms (the prerequisite chains take seven; six for a transfer student,
+            # who brings two semesters), and a graduate's expected term is the term they finished, which is over. Before, six-term
+            # entrants could be "graduated" with the in-progress term as their expected term: nine students moved to active and
+            # one graduate's term moved back one; no other row changed.
             if terms_in >= 8 and r < 0.70:
                 status = "graduated"
-                expected_seq = min(expected_seq, current_seq - 1) if expected_seq > current_seq - 1 else expected_seq
-            elif terms_in >= 6 and r < 0.35:
+                expected_seq = min(expected_seq, current_seq - 1)
+            elif terms_in >= (6 if entry == "transfer" else 7) and r < 0.35:
                 status = "graduated"
-                expected_seq = min(expected_seq, current_seq)
+                expected_seq = min(expected_seq, current_seq - 1)
             elif r > 0.92:
                 status = rng.choice(["withdrawn", "withdrawn", "leave_of_absence", "suspended", "dismissed"])
             else:
@@ -211,11 +221,33 @@ def generate(seed: int = 42) -> dict[str, list[dict]]:
                                     hire_date=date(hire_year, 8, 16)))
 
     # ---------------------------------------------------------------- lectures
+    lectures = lecture_rows(rng, LECTURE_TERMS, instructors, term_by_code)
+    # the former instructors and the earlier terms come after the frozen six terms, so those rows never change (append-only history)
+    for dept, rank, hire_year in FORMER_INSTRUCTORS:
+        p = people.add(sex(), hire_year - rng.randint(28, 40), phone_rate=0.8)
+        instructors.append(dict(university_id=p["university_id"], department_code=dept, rank=rank, is_active=False, hire_date=date(hire_year, 8, 16)))
+    lectures += lecture_rows(rng, EARLIER_LECTURE_TERMS, instructors, term_by_code)
+    lectures.sort(key=lambda l: (l["term_code"], int(l["crn"])))
+
+    people.rows.sort(key=lambda r: r["university_id"])
+    students.sort(key=lambda r: r["university_id"])
+    instructors.sort(key=lambda r: r["university_id"])
+    enrollment, transfer_credit = generate_records(seed, terms, students, lectures)
+    return {
+        "department": departments, "program": programs, "academic_term": terms, "person": people.rows, "student": students,
+        "instructor": instructors, "course": courses, "course_prerequisite": prereqs, "degree_requirement": degree_req,
+        "program_category_requirement": category_req, "lecture": lectures, "enrollment": enrollment, "transfer_credit": transfer_credit,
+    }
+
+
+def lecture_rows(rng: random.Random, term_codes: list[str], instructors: list[dict], term_by_code: dict) -> list[dict]:
+    """Sections for the given terms: instructors of the course's department who were hired by the term's start (and, if no longer
+    active, only up to Spring 2025), at most MAX_SECTIONS_PER_INSTRUCTOR each, no two of theirs overlapping, rooms likewise."""
     by_dept: dict[str, list[dict]] = {}
     for ins in instructors:
         by_dept.setdefault(ins["department_code"], []).append(ins)
     lectures: list[dict] = []
-    for term_code in LECTURE_TERMS:
+    for term_code in term_codes:
         term = term_by_code[term_code]
         crn = 10001
         load: dict[str, int] = {}
@@ -282,12 +314,4 @@ def generate(seed: int = 42) -> dict[str, list[dict]]:
                                      instructor_university_id=ins["university_id"], days=slot[0], start_time=slot[1], end_time=slot[2],
                                      room=room, capacity=rng.randrange(lo, hi + 1, 5), is_cancelled=rng.random() < 0.02))
                 crn += 1
-
-    people.rows.sort(key=lambda r: r["university_id"])
-    students.sort(key=lambda r: r["university_id"])
-    instructors.sort(key=lambda r: r["university_id"])
-    return {
-        "department": departments, "program": programs, "academic_term": terms, "person": people.rows, "student": students,
-        "instructor": instructors, "course": courses, "course_prerequisite": prereqs, "degree_requirement": degree_req,
-        "program_category_requirement": category_req, "lecture": lectures,
-    }
+    return lectures

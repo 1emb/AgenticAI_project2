@@ -26,7 +26,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 800121477,BSCS,active,first_time,resident,202480,202810
 800127113,BSCS,active,first_time,resident,202410,202780
 800172848,BSENG,active,first_time,resident,202380,202710
-800191312,BSCS,graduated,first_time,international,202380,202680
+800191312,BSCS,active,first_time,international,202380,202710
 800195933,BSCS,active,readmit,international,202580,202910
 800203767,BSCS,active,first_time,resident,202680,203010
 800204340,MSCS,active,first_time,resident,202680,202810
@@ -83,7 +83,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 800480089,BSCS,graduated,transfer,resident,202180,202410
 800482384,BSENG,active,first_time,international,202580,202910
 800489918,BSENG,active,first_time,resident,202680,203010
-800504499,BSCS,graduated,first_time,resident,202380,202680
+800504499,BSCS,active,first_time,resident,202380,202710
 800506160,BSCS,active,first_time,resident,202680,203010
 800508471,BSCS,active,first_time,nonresident,202580,202910
 800519556,BSCS,active,transfer,resident,202680,202910
@@ -112,7 +112,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 800647739,BSCS,active,transfer,resident,202580,202810
 800650972,BSCS,active,first_time,nonresident,202380,202710
 800657145,BSENG,graduated,first_time,resident,202180,202510
-800663071,BSCS,graduated,first_time,resident,202380,202680
+800663071,BSCS,active,first_time,resident,202380,202710
 800672417,MSCS,active,first_time,nonresident,202580,202710
 800674475,BSENG,active,first_time,international,202580,202910
 800686508,BSCS,suspended,first_time,resident,202480,202810
@@ -143,7 +143,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 800866642,BSCS,active,first_time,resident,202680,203010
 800869145,BSCS,graduated,first_time,nonresident,202180,202510
 800876368,BSCS,graduated,first_time,international,202210,202580
-800876892,BSCS,graduated,first_time,resident,202380,202680
+800876892,BSCS,active,first_time,resident,202380,202710
 800887384,BSCS,active,first_time,international,202580,202910
 800891581,BSCS,active,transfer,nonresident,202610,202880
 800899731,BSENG,leave_of_absence,first_time,nonresident,202680,203010
@@ -167,7 +167,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 801048739,BSCS,active,first_time,nonresident,202680,203010
 801050238,BSENG,active,first_time,nonresident,202680,203010
 801054671,BSCS,active,first_time,nonresident,202680,203010
-801058293,BSENG,graduated,first_time,resident,202380,202680
+801058293,BSENG,active,first_time,resident,202380,202710
 801059993,BSCS,active,first_time,international,202510,202880
 801061076,BSCS,suspended,first_time,nonresident,202580,202910
 801064646,BSCS,withdrawn,first_time,resident,202680,203010
@@ -187,7 +187,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 801201042,BSENG,active,first_time,nonresident,202680,203010
 801214081,BSCS,active,transfer,nonresident,202580,202810
 801217584,BSCS,active,first_time,nonresident,202680,203010
-801221508,BSCS,graduated,first_time,resident,202380,202680
+801221508,BSCS,active,first_time,resident,202380,202710
 801225109,BSCS,active,first_time,resident,202580,202910
 801227525,BSCS,active,first_time,resident,202680,203010
 801231741,BSCS,active,first_time,international,202580,202910
@@ -230,7 +230,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 801466884,BSCS,graduated,first_time,resident,202280,202610
 801471433,BSENG,active,first_time,nonresident,202580,202910
 801475705,BSCS,active,first_time,resident,202180,202710
-801476166,BSCS,graduated,readmit,resident,202380,202680
+801476166,BSCS,active,readmit,resident,202380,202710
 801477453,BSENG,active,first_time,resident,202610,202980
 801484575,BSENG,active,first_time,nonresident,202380,202710
 801523685,BSENG,active,first_time,nonresident,202610,202980
@@ -239,7 +239,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 801550465,BSCS,active,first_time,resident,202510,202880
 801562355,BSCS,active,transfer,international,202480,202710
 801562739,BSCS,active,first_time,resident,202680,203010
-801564066,BSCS,graduated,first_time,resident,202380,202680
+801564066,BSCS,active,first_time,resident,202380,202710
 801569233,BSENG,active,first_time,nonresident,202180,202780
 801585823,BSENG,active,first_time,resident,202580,202910
 801595460,MSENG,active,first_time,international,202580,202710
@@ -257,7 +257,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 801687553,BSCS,active,first_time,resident,202580,202910
 801694545,BSCS,withdrawn,first_time,resident,202480,202810
 801694916,BSCS,active,first_time,international,202480,202810
-801695870,BSENG,graduated,first_time,resident,202380,202680
+801695870,BSENG,active,first_time,resident,202380,202710
 801697598,BSENG,active,first_time,resident,202480,202810
 801706095,BSENG,active,transfer,resident,202410,202780
 801706171,BSCS,graduated,transfer,nonresident,202280,202510
@@ -266,7 +266,7 @@ university_id,program_code,status,entry_type,residency,admit_term_code,expected_
 801751608,BSENG,active,first_time,resident,202480,202810
 801760311,MSENG,active,first_time,international,202580,202710
 801762668,BSCS,active,first_time,resident,202480,202810
-801764991,BSENG,graduated,first_time,resident,202310,202680
+801764991,BSENG,graduated,first_time,resident,202310,202610
 801766944,BSENG,graduated,transfer,resident,202180,202410
 801775249,BSENG,active,transfer,resident,202580,202810
 801776567,BSENG,active,first_time,nonresident,202480,202810

@@ -44,6 +44,8 @@ EXPECTED_INTENT = {
     "lecture_meeting": "lecture_meeting", "prerequisites": "prerequisites", "capacity": "capacity", "course_department": "course_info",
     # 2026-11-02: "is X a student" refused uniformly; TA / instructor rank with the student half
     "instructor_is_student": "person_info", "ta_or_student": "person_info", "instructor_rank_and_student": "person_info",
+    # 2026-11-02, enrollment table: another student's schedule or grades
+    "other_schedule": "person_info", "other_grades": "person_info",
 }
 
 

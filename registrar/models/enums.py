@@ -52,3 +52,9 @@ class RequirementCategory(str, enum.Enum):
     CORE = "core"
     ELECTIVE = "elective"
     GENERAL_EDUCATION = "general_education"
+
+
+class EnrollmentStatus(str, enum.Enum):
+    ENROLLED = "enrolled"      # in progress or registered, no grade yet
+    COMPLETED = "completed"    # graded (a letter grade, or I)
+    WITHDRAWN = "withdrawn"    # left the section after the drop deadline: grade W

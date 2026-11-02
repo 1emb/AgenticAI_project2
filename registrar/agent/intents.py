@@ -111,7 +111,8 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
                              "degree_progress.", (),
            ("What credit total does my degree require?", "How many general education credits are required in my program?",
             "What are my program's elective credit minimums?")),
-    Intent("course_in_plan", "Whether and how one course counts in the asker's own degree plan (required, elective, which semester).", ("course_mention",),
+    Intent("course_in_plan", "Whether and how one course counts in the asker's own degree plan (required, elective, which semester), including "
+                           "'do I need to / have to / must I / should I take or register for COURSE'; whether they may register for it is can_register.", ("course_mention",),
            ("Is CS 4750 required for my degree?", "Can I use ENG 5510 as an elective in my major?")),
     Intent("plan_term", "The courses the asker's degree plan suggests for a given semester number of the four-year plan. Which semester "
                         "a named course falls in is course_in_plan.", ("term_number_mention",),
@@ -135,12 +136,12 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
                            "clash with their schedule; also 'am I eligible for', 'do I meet the prerequisites for', 'is there room for me in', 'can I "
                            "still get into'. Information only: asking the assistant to carry out the registration is unknown; the catalog's "
                            "prerequisite list alone is prerequisites; whether a course runs at all is course_offered; the window dates alone are "
-                           "register_when.", ("course_mention", "crn_mention", "term_mention"),
+                           "register_when; whether the course is required for their degree ('do I need to / should I register for it') is course_in_plan.", ("course_mention", "crn_mention", "term_mention"),
            ("Can I register for CS 2100 next spring?", "Am I eligible to take MATH 2200 this term?", "Do I meet the prerequisites for CRN 12345?",
             "Is there room for me in Database Design?")),
     Intent("my_transcript", "The asker's own academic record: the courses they have taken or completed, overall or in one term, with grades; the "
-                            "grade they got in a named course; whether or when they took a course; their transcript; credits earned so far. GPA alone "
-                            "is my_gpa; what is still needed for the degree is degree_progress; the sections they are taking now are my_schedule. "
+                            "grade they got in a named course; whether or when they took a course; their transcript. GPA alone is my_gpa; credits earned "
+                            "so far and what is still needed for the degree are degree_progress; the sections they are taking now are my_schedule. "
                             "Sending or issuing an official transcript, certificate or letter to someone else is a document service: unknown.",
            ("term_mention", "course_mention"),
            ("Give me my transcript.", "What grade did I get in CS 2100?", "Which courses did I complete last spring?", "Have I taken MATH 2200 already?")),
@@ -150,8 +151,8 @@ STUDENT_INTENTS: tuple[Intent, ...] = (
     Intent("degree_progress", "A degree audit of the asker's own program against their record: the required courses still unpassed, credits earned "
                               "against the total and the category minimums, credits remaining, whether the GPA meets the program minimum, whether "
                               "everything is complete; also 'what do I still need to graduate', 'how far along am I', 'am I on track', 'how many credits "
-                              "have I earned'. The plan on its own, without the asker's progress, is degree_required, degree_credits, course_in_plan or "
-                              "plan_term.", (),
+                              "have I earned', 'what should I take or register for next'. The plan on its own, without the asker's progress, is degree_required, degree_credits, course_in_plan or "
+                              "plan_term (for a stated semester number).", (),
            ("What do I still need to graduate?", "How many credits have I earned so far?", "Am I on track to finish my degree?",
             "Which required courses have I not passed yet?")),
     Intent("register_when", "The general registration window for a term: its opening date, closing/add deadline, or whether that window is open at the "

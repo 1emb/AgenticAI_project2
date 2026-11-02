@@ -39,6 +39,12 @@ def current_term(q: QueryLog, as_of: datetime) -> dict:
                  f"SELECT {TERM_COLS} FROM academic_term WHERE end_date >= %(d)s ORDER BY sequence LIMIT 1", d=as_of.date())
 
 
+def first_registrable_term(q: QueryLog, as_of: datetime) -> dict:
+    """The earliest term one can still register for: the first whose add deadline has not passed (owner, 2026-11-02)."""
+    return q.one("earliest term whose add deadline has not passed",
+                 f"SELECT {TERM_COLS} FROM academic_term WHERE add_deadline >= %(d)s ORDER BY sequence LIMIT 1", d=as_of.date())
+
+
 def term_by_code(q: QueryLog, code: str) -> dict:
     return q.one("term dates", f"SELECT {TERM_COLS} FROM academic_term WHERE code = %(code)s", code=code)
 

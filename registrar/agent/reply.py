@@ -188,8 +188,8 @@ def r_degree_credits(a, t):
 
 def r_course_in_plan(a, t):
     prog = a["program"]
-    if not a["in_plan"]:
-        return f"{a['course']} is not listed in the {prog} degree plan."
+    if not a["in_plan"]:    # policy sentence (owner, 2026-11-02): nothing behind it is looked up
+        return f"{a['course']} is not listed in the {prog} degree plan. Courses outside the plan need an advisor's approval to count as electives."
     cat = (a.get("category") or "").replace("_", " ")
     when = f", suggested for semester {a['suggested_term_number']}" if a.get("suggested_term_number") else ""
     if a.get("is_required"):

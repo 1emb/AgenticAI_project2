@@ -141,7 +141,11 @@ The schema has no permission table; the rule is stated here and implemented by t
   referral-label implementation is in commit `c436eef`). The classifier is evaluated on these questions with
   `scripts/grade.py --cases <file>` over `data/testset/classifier/`. One carve-out (owner, 2026-11-02): "what is my time ticket /
   registration appointment" is `register_when`; the answer is the general window with `own_appointment: true`, and the reply opens
-  with "I don't have individual registration appointments or time tickets."
+  with "I don't have individual registration appointments or time tickets." With no term named, "when can I register" means the
+  earliest term whose add deadline has not passed (owner, 2026-11-02), so during the winter break it is the coming Spring; an
+  explicit "next semester" still resolves through the term resolver. A course outside the asker's plan gets the fixed policy
+  sentence "Courses outside the plan need an advisor's approval to count as electives." A non-active registrar status is reported
+  as the bare fact (owner, 2026-11-02).
 
 ## Student answer shapes
 All shapes below are preceded by `allowed: true`.

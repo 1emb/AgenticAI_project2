@@ -147,7 +147,9 @@ plain Python over the database:
 4. **Program** (`programs.py`): one function per intent applies the permission rule from `data/testset/README.md` and
    runs the SQL from `registrar/testset/queries.py`, returning the discrete answer shape the test set grades.
 5. **Reply** (`reply.py`, 2026-11-01, made deterministic 2026-11-02): one writer per intent turns the discrete answer into one to
-   three English sentences; refusals and clarifying questions are fixed sentences. No model is involved, so the reply can neither
+   three English sentences; refusals and clarifications are fixed sentences. There is no conversation state (owner, 2026-11-02),
+   so a clarification tells the student to ask again with the missing piece included rather than asking a follow-up question
+   whose answer the next turn could not be matched to. No model is involved, so the reply can neither
    invent a fact nor leak one, and it costs nothing (the whole pipeline runs in about 0.2 s per question against 1.3 s with a model
    reply). The earlier LLM rendering is kept for comparison only (`ask.py --llm-reply`, `reply_mode: "llm"` in the web API). The
    change followed the 90-question Codex run (`runs/codex/phase2-report.md`): in every case where the English was wrong the JSON

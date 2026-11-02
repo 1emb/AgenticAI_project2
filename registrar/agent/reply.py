@@ -40,14 +40,16 @@ EVENT_PHRASE = {
     "withdraw_deadline": "The last day to withdraw from a class in {term} (with a W) is {date}.",
     "grades_due": "Grades for {term} are due {date}.",
 }
+# No conversation state is kept (owner, 2026-11-02): a clarification tells the student to ask again with the missing piece included,
+# because the next message is classified on its own and cannot be matched to this one.
 SLOT_QUESTION = {
-    "course": "Which course do you mean? A course code such as CS 2230, or its exact title, will do.",
-    "crn": "Which section do you mean? Give me its 5-digit CRN, and the term if it is not the current one.",
-    "term": "Which term do you mean? For example Fall 2026, or 'next spring'.",
-    "term_number": "Which semester of the plan do you mean, 1 through 8?",
-    "event": "Which date do you need: the first or last day of classes, the add, drop or withdrawal deadline, or when grades are due?",
-    "person": "Who do you mean? Give me the person's full name or university ID.",
-    "program": "Which program do you mean?",
+    "course": "Please ask again and include the course: a course code such as CS 2230, or its exact title.",
+    "crn": "Please ask again and include the section's 5-digit CRN, and the term if it is not the current one.",
+    "term": "Please ask again and include the term, for example Fall 2026 or 'next spring'.",
+    "term_number": "Please ask again and say which semester of the plan you mean, 1 through 8.",
+    "event": "Please ask again and say which date you need: the first or last day of classes, the add, drop or withdrawal deadline, or when grades are due.",
+    "person": "Please ask again and include the person's full name or university ID.",
+    "program": "Please ask again and include the program.",
 }
 
 def _d(v) -> str:
@@ -290,13 +292,13 @@ def r_missing(a, t):
     slot, status, note = a.get("slot"), a.get("status"), a.get("note")
     res = (t.resolved or {}).get(slot) or {}
     if status == "ambiguous" and res.get("candidates"):
-        return f"I found more than one match: {fmt_list(str(c) for c in res['candidates'])}. Which one do you mean?"
+        return f"I found more than one match: {fmt_list(str(c) for c in res['candidates'])}. Please ask again and say which one you mean."
     lead = ""
     if status == "not_found" and note:
         lead = note[0].upper() + note[1:] + ". "
         lead = re.sub(r"^No ", "I found no ", lead)
         lead = re.sub(r"^Cannot read a term in (.*)\. $", r"I could not read a term in \1. ", lead)
-    return lead + SLOT_QUESTION.get(slot, "Could you give me a little more detail?")
+    return lead + SLOT_QUESTION.get(slot, "Please ask again with a little more detail.")
 
 
 def render(t: Trace) -> str:

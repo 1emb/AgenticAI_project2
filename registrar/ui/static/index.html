@@ -169,6 +169,7 @@ async function init() {
     for (const e of ex.sort(() => Math.random() - 0.5).slice(0, 6)) { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = e.question; b.onclick = () => { $('q').value = e.question; $('q').focus(); }; $('chips').appendChild(b); }
   } catch (e) {}
   health();
+  loadRecall();
   if (location.hash === '#history') showView('hist');
 }
 async function health() {
@@ -242,7 +243,7 @@ $('form').onsubmit = async e => {
   if (!q) return; if (!uid) { alert('Pick a student first'); return; }
   const s = students.find(x => x.university_id === uid);
   const me = add('me', q); me.innerHTML += `<div class="meta">${esc(s.name)} · ${esc(fmtClock(asOf()))}</div>`;
-  $('q').value = ''; $('send').disabled = true;
+  remember(q); $('q').value = ''; $('send').disabled = true;
   const bot = add('bot', 'Thinking…');
   try {
     const r = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, university_id: uid, as_of: asOf() }) });
@@ -255,7 +256,26 @@ $('form').onsubmit = async e => {
   } catch (err) { bot.classList.add('err'); bot.textContent = 'Request failed: ' + err.message; }
   finally { $('send').disabled = false; $('q').focus(); $('chat').scrollTop = $('chat').scrollHeight; }
 };
-$('q').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('form').requestSubmit(); } });
+// Shell-style recall: Up walks back through earlier questions (this session first, then the saved log), Down walks forward and
+// finally restores the unsent draft. Only when the caret is on the first/last line, so multi-line editing still works.
+const recall = { list: [], pos: -1, draft: '' };
+function remember(q) { recall.list = [q, ...recall.list.filter(x => x !== q)]; recall.pos = -1; }
+async function loadRecall() {
+  try { const h = await get('/api/history?limit=300'); for (const r of h.rows.slice().reverse()) if (r.question) remember(r.question); } catch (e) {}
+}
+$('q').addEventListener('keydown', e => {
+  const ta = e.target;
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('form').requestSubmit(); return; }
+  if (e.key === 'ArrowUp' && !ta.value.slice(0, ta.selectionStart).includes('\n')) {
+    if (recall.pos + 1 >= recall.list.length) return;
+    if (recall.pos === -1) recall.draft = ta.value;
+    recall.pos += 1; ta.value = recall.list[recall.pos]; ta.setSelectionRange(ta.value.length, ta.value.length); e.preventDefault();
+  } else if (e.key === 'ArrowDown' && !ta.value.slice(ta.selectionStart).includes('\n')) {
+    if (recall.pos === -1) return;
+    recall.pos -= 1; ta.value = recall.pos === -1 ? recall.draft : recall.list[recall.pos]; ta.setSelectionRange(ta.value.length, ta.value.length); e.preventDefault();
+  }
+});
+$('q').addEventListener('input', () => { recall.pos = -1; });
 $('filter').addEventListener('input', e => renderStudents(e.target.value));
 $('student').addEventListener('change', showStudent);
 $('clock').addEventListener('change', () => { $('customClock').value = ''; });

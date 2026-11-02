@@ -175,7 +175,8 @@ under the verification contract. With `--reply` the English reply is written too
 A single page served by FastAPI (`registrar/ui/`): choose the student from the 300 in the database (filter by name, ID or
 program), choose the clock (the five test-set clocks, or any UTC datetime), ask, and read the reply. Each reply expands to show
 how it was produced: intent and confidence, the mentions, each resolution with its status, the graded answer, the SQL and the
-per-stage timings. Refusals are marked. From a laptop, forward the port (`ssh -L 8080:localhost:8080 <host>`) and open
+per-stage timings. Refusals are marked. In the question box, Up recalls earlier questions (this session first, then the
+saved log, newest first) and Down walks forward to the unsent draft, as in a shell. From a laptop, forward the port (`ssh -L 8080:localhost:8080 <host>`) and open
 `http://localhost:8080`. There is no login; the student is a choice, since this is a simulation.
 
 ### Test log (`runs/chat.jsonl`)

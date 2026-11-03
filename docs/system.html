@@ -111,7 +111,7 @@ alembic upgrade head                      # 12 tables + enrollment, advisor_assi
 python scripts/load_seed.py               # team seed (empties enrollment through CASCADE)
 python scripts/seed_enrollment.py --load  # 5,527 enrollments, 300 advisor assignments
 
-pytest -q                                 # 371 passed, 3 skipped (no model needed)
+pytest -q                                 # 377 passed, 3 skipped (no model needed)
 RUN_SLOW=1 pytest -q                      # + the slow advising stress tests
 
 # chat (any OpenAI-compatible endpoint; for qwen3 on Ollama prefer the native backend)
@@ -153,15 +153,36 @@ python scripts/eval_agents.py --persona professor</code></pre>
     <tbody>
       <tr><td>Team: student oracle, rules, loop, grader</td><td>unchanged by this work</td><td class="ok">191 / 191</td></tr>
       <tr><td>Professor oracle (<code>test_professor_tools.py</code>)</td><td>the tool a perfect agent would call reproduces every ground-truth answer</td><td class="ok">118 / 118</td></tr>
-      <tr><td>Administrator oracle (<code>test_admin_tools.py</code>)</td><td>tools (Python) agree with ground truth computed separately in SQL</td><td class="ok">35 / 35</td></tr>
-      <tr><td>Router and system (<code>test_router_and_system.py</code>)</td><td>role checks, tools per role, advising through the router, GPA against SQL, advisees only, no private fields</td><td class="ok">12 / 12</td></tr>
+      <tr><td>Administrator oracle (<code>test_admin_tools.py</code>)</td><td>tools (Python) agree with ground truth computed separately in SQL</td><td class="ok">35 / 35 (+2 input checks)</td></tr>
+      <tr><td>Router and system (<code>test_router_and_system.py</code>)</td><td>role checks, tools per role, advising through the router, GPA against SQL, advisees only, no private fields</td><td class="ok">15 / 15</td></tr>
       <tr><td>Policy (<code>test_policy.py</code>)</td><td>retrieval recall; handbook text equals params.json; grade points equal the database</td><td class="ok">3 / 3</td></tr>
       <tr><td>Advising (<code>advising_agent/tests</code>)</td><td>ASP planner scenarios, all four seed programs</td><td class="ok">12 / 12 (+3 slow, opt-in)</td></tr>
     </tbody>
   </table></div>
   <p style="margin-top:8px">Policy retrieval on its 30-question set: the right section is first for 26 and in the top 3 for 30. I wrote the questions knowing the handbook, so this is a sanity check, not an unbiased score.</p>
   <h3>With a model (live, <code>scripts/eval_agents.py</code>)</h3>
-  <div id="live"><p>LIVE_RESULTS_PLACEHOLDER</p></div>
+  <div id="live"><p>Model: qwen3 1.7B, <code>think: false</code>, CPU only (2 cores), through the router with every shared tool.
+  One case per intent. Runs 1 and 2 used the first case per intent, which the fixes were tuned on; the held-out run
+  used cases the fixes were never tuned on (the third case per intent for student and professor, the second for
+  administrator).</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Run</th><th>Student</th><th>Professor</th><th>Administrator</th><th>Total</th></tr></thead>
+    <tbody>
+      <tr><td>1. Baseline</td><td class="n">11 / 18</td><td class="n">9 / 17</td><td class="n">6 / 11</td><td class="n">26 / 46 (57%)</td></tr>
+      <tr><td>2. After fixes 1 to 3 (same cases)</td><td class="n">15 / 18</td><td class="n">12 / 17</td><td class="n">6 / 11</td><td class="n">33 / 46 (72%)</td></tr>
+      <tr><td>Held-out, all fixes except 6</td><td class="n">13 / 18</td><td class="n">13 / 17</td><td class="n">8 / 10</td><td class="n">34 / 45 (76%)</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:8px">Fixes the live runs led to:</p>
+  <ol>
+    <li>The loop drops tool arguments the tool does not declare. The small model added e.g. <code>course</code> to no-argument tools, and the calls failed.</li>
+    <li>The Ollama client retries when the model runner is killed (out of memory on this 7 GB machine); the server cache uses <code>q8_0</code>.</li>
+    <li>Admin tools validate and normalize <code>program</code> and <code>entry_type</code>; "all" was being treated as a program code.</li>
+    <li>Prompts and parameter descriptions say to add a filter only when the user names it.</li>
+    <li>The router's grounding check: a turn with no successful tool call gets one corrective message. A refusal's target is resolved from the question when the model leaves it out.</li>
+    <li>Admin tools normalize confused scope kinds, e.g. <code>course</code> with value <code>MATH</code> becomes subject MATH. Not yet measured live.</li>
+  </ol>
+  <p>The remaining held-out failures are the model's choices: a wrong tool (a calendar date for "is X offered"), a guessed course for a CRN question, or a wrong refusal reason. None is a crash, a leak or an invented number. Every graded value came from a tool. Expect higher scores with the team's 30B model.</p></div>
 </section>
 
 <section>

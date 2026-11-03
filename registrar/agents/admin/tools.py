@@ -80,6 +80,13 @@ class AdminTools:
         if re.fullmatch(r"(?i)(fall|spring|summer)\s+\d{4}|(this|last|next)\s+(fall|spring|summer|semester|term)", raw):
             term = term if term not in (None, "", "all") else raw
             raw, value = "", None
+        # A level word passed as the value ("lower-division") is the level scope.
+        lvl = re.sub(r"[\s_-]+", " ", raw.lower()).replace(" courses", "").replace(" level", "").strip()
+        if lvl in ("lower division", "lower", "upper division", "upper", "graduate", "grad"):
+            kind, value = "level", {"lower division": "lower_division", "lower": "lower_division",
+                                    "upper division": "upper_division", "upper": "upper_division",
+                                    "graduate": "graduate", "grad": "graduate"}[lvl]
+            raw = value
         # The value's shape settles a confused kind: a course code has a number, a subject code does not,
         # a program code is one of the programs.
         if raw.lower() in ("", "all", "any", "none", "every", "null"):
@@ -90,6 +97,8 @@ class AdminTools:
             kind = "program"
         elif kind in ("all", "course") and raw.isalpha():
             kind = "subject"
+        elif kind == "level":
+            pass
         t = self._term(term)
         v = None
         if kind == "course":

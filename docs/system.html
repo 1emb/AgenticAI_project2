@@ -180,8 +180,9 @@ python scripts/eval_agents.py --persona professor</code></pre>
     <li>Admin tools validate and normalize <code>program</code> and <code>entry_type</code>; "all" was being treated as a program code.</li>
     <li>Prompts and parameter descriptions say to add a filter only when the user names it.</li>
     <li>The router's grounding check: a turn with no successful tool call gets one corrective message. A refusal's target is resolved from the question when the model leaves it out.</li>
-    <li>Admin tools normalize confused scope kinds, e.g. <code>course</code> with value <code>MATH</code> becomes subject MATH. Not yet measured live.</li>
+    <li>Admin tools recover the scope from the value's shape: a course code has a number, a subject code doesn't; a term or level word passed as the value goes where it belongs.</li>
   </ol>
+  <p>Full administrator set (35 cases, all seen during tuning): <b>24 / 35</b> before fix 6. With fix 6 plus a rewritten admin prompt: <b>23 / 35</b>. The tool changes fixed 5 cases, but the new prompt broke 6: the model copied its placeholder (<code>&lt;SUBJ&gt; courses</code>) and its list of program codes into unrelated questions. The prompt was reverted and the tool changes kept. That final combination has not been re-measured live. On a 1.7B model, single runs differ by a few cases, so differences this small are within noise.</p>
   <p>The remaining held-out failures are the model's choices: a wrong tool (a calendar date for "is X offered"), a guessed course for a CRN question, or a wrong refusal reason. None is a crash, a leak or an invented number. Every graded value came from a tool. Expect higher scores with the team's 30B model.</p></div>
 </section>
 

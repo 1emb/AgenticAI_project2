@@ -87,3 +87,11 @@ def test_scope_inputs_recovered_from_value_shape(admin):
     assert c["scope"]["kind"] == "all" and c["unit"] == "section"
     d = t.enrollment_summary("course", "Spring 2027", "Spring 2027")["answer"]["scope"]
     assert d == {"kind": "all", "value": None, "term": "Spring 2027"}
+
+
+def test_level_words_as_value_mean_level_scope(admin):
+    t = admin("2026-11-20T18:00:00+00:00")
+    a = t.grade_distribution("course", "lower-division", "last spring")["answer"]
+    b = t.grade_distribution("level", "lower_division", "last spring")["answer"]
+    assert a == b and a["scope"]["kind"] == "level"
+    assert t.dfw_rate("course", "upper division courses", "Fall 2025")["answer"]["scope"]["value"] == "upper_division"

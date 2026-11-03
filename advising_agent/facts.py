@@ -198,11 +198,11 @@ def build_facts(ctx: Context, *, target: bool = True, use_load_pref: bool = True
 
 def graduation_lower_bound(ctx: Context, use_load_pref: bool = True) -> int:
     """Smallest term index the plan can end in, from credits still needed and the per-term cap.
-    Returned as len(terms) + 1 when even the full horizon is too short."""
+    Returned as len(terms) + 1 when even the full horizon is too short, and 0 when nothing is left to earn."""
     import math
     needed, first = _needed_and_first(ctx)
     if needed <= 1e-9:
-        return 1
+        return 0
     return first + math.ceil(needed / max_load(ctx, use_load_pref) - 1e-9) - 1
 
 

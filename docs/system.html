@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Registrar System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; component lanes; tables in scroll boxes. Palette shared with the project's design pages. */
+:root {
+  --bg: #eef1ec; --paper: #fbfcf9; --ink: #1f2a28; --muted: #5b6863; --rule: #cfd6cf; --chip: #e6ebe5;
+  --agent: #2c6a6e; --code: #4a7526; --user: #8a2d3b; --store: #9a6512; --ok: #4a7526; --bad: #8a2d3b; --warn: #9a6512;
+  --f-display: "Spectral", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c; --chip: #26302d;
+    --agent: #6cc3c6; --code: #9fcf6a; --user: #e07f8d; --store: #e0a94a; --ok: #9fcf6a; --bad: #e07f8d; --warn: #e0a94a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c; --chip: #26302d;
+  --agent: #6cc3c6; --code: #9fcf6a; --user: #e07f8d; --store: #e0a94a; --ok: #9fcf6a; --bad: #e07f8d; --warn: #e0a94a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14.5px/1.55 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px; }
+main { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+h1 { font: 600 30px/1.2 var(--f-display); margin: 0; text-wrap: balance; }
+h2 { font: 600 21px/1.25 var(--f-display); margin: 0 0 8px; text-wrap: balance; }
+h3 { font: 600 15px/1.3 var(--f-body); margin: 14px 0 6px; }
+p { margin: 0 0 8px; max-width: 74ch; }
+ul, ol { margin: 0 0 8px; padding-left: 20px; max-width: 78ch; }
+li { margin: 2px 0; }
+code { font-family: var(--f-mono); font-size: 12.5px; background: var(--chip); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+pre { margin: 0; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font: 12.5px/1.5 var(--f-mono); }
+pre code { background: none; padding: 0; }
+.lede { color: var(--muted); }
+.scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; font-size: 12px; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ok { color: var(--ok); font-weight: 600; } .bad { color: var(--bad); font-weight: 600; } .warn { color: var(--warn); font-weight: 600; }
+.arch { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.arch div { background: var(--paper); border: 1px solid var(--rule); border-top: 3px solid var(--c); border-radius: 8px; padding: 10px 12px; min-width: 0; }
+.arch b { display: block; } .arch span { color: var(--muted); font-size: 13px; }
+.arch .wide { grid-column: 1 / -1; }
+.tag { font: 500 10.5px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; border: 1px solid currentColor; border-radius: 999px; padding: 0 7px; white-space: nowrap; }
+.note { border-left: 3px solid var(--warn); padding: 6px 12px; background: var(--paper); border-radius: 0 6px 6px 0; max-width: 82ch; }
+@media (max-width: 760px) { .arch { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Agentic AI Registrar Office: full system</h1>
+  <p class="lede">How the parts fit, how to run them, and what was tested, on branch <code>advising-agent</code> of <code>1emb/AgenticAI_project2</code> (on top of the team's commit <code>b473fc9</code>, "Student Agent"). 2026-11-03.</p>
+</header>
+
+<section>
+  <h2>1. Architecture</h2>
+  <div class="arch">
+    <div class="wide" style="--c: var(--user)"><b>Login (role from the session)</b><span><code>scripts/registrar_chat.py --user ID [--role]</code>. The role is checked against the database; a TA with two roles picks one.</span></div>
+    <div class="wide" style="--c: var(--agent)"><b>Router</b> <span><code>registrar/agents/router.py</code>: builds the persona agent for the role and adds the shared tools.</span></div>
+    <div style="--c: var(--agent)"><b>Student agent</b><span>team (F. Ahmad): catalog, sections, degree plan, calendar, refusals. Added: transcript, GPA, <code>plan_my_degree</code>, <code>search_policy</code>.</span></div>
+    <div style="--c: var(--agent)"><b>Professor agent</b><span>new: teaching schedule, load, capacity, catalog, colleagues, refusals; advisees only via <code>plan_for_advisee</code>.</span></div>
+    <div style="--c: var(--agent)"><b>Administrator agent</b><span>new: grade distributions, DFW, extremes, withdrawals, fill, probation and at-risk lists, graduation candidates, headcount, cohorts.</span></div>
+    <div style="--c: var(--agent)"><b>Shared</b><span>Advising agent (ASP planner + validator, <code>advising_agent/</code>); Policy agent (handbook retrieval + parameters).</span></div>
+    <div class="wide" style="--c: var(--store)"><b>PostgreSQL</b><span>team's 12 tables and seed data, plus <code>enrollment</code> and <code>advisor_assignment</code> (new Alembic revision, synthetic data). The handbook and its parameters live in <code>data/policy/</code>.</span></div>
+  </div>
+  <h3>Design rules, kept from the team's Student agent</h3>
+  <ul>
+    <li><b>The model never types the graded answer.</b> Tools return the answer shape; the agent assembles it from tool results.</li>
+    <li><b>Permissions are enforced in the tools,</b> not in the prompt. No tool returns another student's record, a student list (except to the administrator), or private instructor fields. A refusal's target is recorded for grading and never shown to the model.</li>
+    <li><b>Numbers come from code:</b> GPA, statistics, standing and plans are computed in Python, SQL or ASP. Rule values come from <code>data/policy/params.json</code>; the handbook text supplies the citations, and a test checks that the two agree.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>2. What changed in the repo</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Part</th><th>Files</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Professor agent <span class="tag">new</span></td><td><code>registrar/agents/professor/</code></td><td>18 tools in the test-set answer shapes; same loop and answer assembly as the Student agent.</td></tr>
+      <tr><td>Administrator agent <span class="tag">new</span></td><td><code>registrar/agents/admin/</code></td><td>11 tools; the team's admin catalog adapted to this schema (see section 5).</td></tr>
+      <tr><td>Router and chat <span class="tag">new</span></td><td><code>registrar/agents/router.py</code>, <code>scripts/registrar_chat.py</code>, <code>data/policy/roles.json</code></td><td>Administrator account: <code>900000001</code> (synthetic).</td></tr>
+      <tr><td>Advising on Postgres <span class="tag">new</span></td><td><code>registrar/agents/advising.py</code>, <code>advising_agent/</code></td><td>SQL implementation of the Advising <code>DataTools</code> contract; tools for students and advisors.</td></tr>
+      <tr><td>Policy agent <span class="tag">new</span></td><td><code>registrar/agents/policy.py</code>, <code>data/policy/handbook.md</code>, <code>params.json</code></td><td>BM25 over 22 handbook sections; <code>search_policy</code> tool for every persona.</td></tr>
+      <tr><td>Student record tools <span class="tag">new</span></td><td><code>registrar/agents/records.py</code></td><td><code>get_my_transcript</code>, <code>get_my_gpa</code> (own record only).</td></tr>
+      <tr><td>Enrollment data <span class="tag">new</span></td><td><code>registrar/models/enrollment.py</code>, <code>alembic/versions/d67e9bad4b1e_*</code>, <code>registrar/seed/enrollment.py</code>, <code>scripts/seed_enrollment.py</code>, <code>data/seed_enrollment/</code></td><td>Deterministic generator (seed 7); see section 4.</td></tr>
+      <tr><td>Test sets <span class="tag">new</span></td><td><code>data/testset/administrator/cases.jsonl</code> (35), <code>data/testset/policy/cases.jsonl</code> (30), generator <code>registrar/testset/administrator.py</code></td><td>Admin ground truth is raw SQL, separate from the tools.</td></tr>
+      <tr><td>Ollama native client <span class="tag">new</span></td><td><code>registrar/agents/ollama_native.py</code></td><td>With <code>LLM_BACKEND=ollama-native</code>: Ollama's native API, which honors <code>think: false</code>. The OpenAI-compatible endpoint ignores it, so qwen3 reasons before every tool call.</td></tr>
+      <tr><td>Team code touched <span class="tag">small</span></td><td><code>loop.py</code> (<code>make_client</code>), <code>student/agent.py</code> (<code>extra_tools</code>), <code>models/__init__.py</code>, <code>pytest.ini</code></td><td>Backward compatible: the team's 191 tests pass unchanged.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>3. Run it</h2>
+<pre><code># database (README2 sections 2 to 4), then the new tables and data
+alembic upgrade head                      # 12 tables + enrollment, advisor_assignment
+python scripts/load_seed.py               # team seed (empties enrollment through CASCADE)
+python scripts/seed_enrollment.py --load  # 5,527 enrollments, 300 advisor assignments
+
+pytest -q                                 # 371 passed, 3 skipped (no model needed)
+RUN_SLOW=1 pytest -q                      # + the slow advising stress tests
+
+# chat (any OpenAI-compatible endpoint; for qwen3 on Ollama prefer the native backend)
+export LLM_BACKEND=ollama-native LLM_MODEL=qwen3-coder:30b
+python scripts/registrar_chat.py --user 801930214              # student
+python scripts/registrar_chat.py --user 801408626              # instructor
+python scripts/registrar_chat.py --user 900000001              # registrar administrator
+
+# live evaluation of the whole system
+python scripts/eval_agents.py --persona all --per-intent 1
+python scripts/eval_agents.py --persona professor</code></pre>
+</section>
+
+<section>
+  <h2>4. Synthetic enrollment data</h2>
+  <ul>
+    <li>Each student is simulated term by term from the admit term. Courses follow the degree plan's suggested order, then category courses, then free electives. A course is taken only when every prerequisite group is met at its minimum grade, and, from Fall 2024 on, only in a non-cancelled section with a free seat.</li>
+    <li>Grades come from a per-student ability, the student's status, the course level and occasional bad outcomes. Low grades and Fs are repeated, and about 3% of enrollments end in a W.</li>
+    <li>Graded through Spring 2026. Fall 2026 is in progress with no grades, and Spring 2027 has no rows, matching the test sets' default clock.</li>
+    <li>Terms before Fall 2024 have no lecture rows, so their enrollments have <code>crn</code> null. Adding older lectures would have changed the professor test set's teaching history.</li>
+  </ul>
+  <div class="scroll"><table>
+    <thead><tr><th>Check</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Sections over capacity; enrollments in cancelled sections</td><td class="ok">0; 0</td></tr>
+      <tr><td>Graduated students missing a required course</td><td class="ok">0 of 41</td></tr>
+      <tr><td>Graduated students short of the program's total credits</td><td class="warn">2 of 41: the seed marks them graduated after six terms, which needs more than 20 credits a term</td></tr>
+      <tr><td>Mean cumulative GPA by status</td><td>graduated 3.21, active 2.73, withdrawn 2.33, suspended 1.68, dismissed 1.24</td></tr>
+      <tr><td>Deterministic</td><td class="ok">same CSVs on every run</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>5. Test results</h2>
+  <h3>Without a model (deterministic, <code>pytest -q</code>)</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Test</th><th>What it proves</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Team: student oracle, rules, loop, grader</td><td>unchanged by this work</td><td class="ok">191 / 191</td></tr>
+      <tr><td>Professor oracle (<code>test_professor_tools.py</code>)</td><td>the tool a perfect agent would call reproduces every ground-truth answer</td><td class="ok">118 / 118</td></tr>
+      <tr><td>Administrator oracle (<code>test_admin_tools.py</code>)</td><td>tools (Python) agree with ground truth computed separately in SQL</td><td class="ok">35 / 35</td></tr>
+      <tr><td>Router and system (<code>test_router_and_system.py</code>)</td><td>role checks, tools per role, advising through the router, GPA against SQL, advisees only, no private fields</td><td class="ok">12 / 12</td></tr>
+      <tr><td>Policy (<code>test_policy.py</code>)</td><td>retrieval recall; handbook text equals params.json; grade points equal the database</td><td class="ok">3 / 3</td></tr>
+      <tr><td>Advising (<code>advising_agent/tests</code>)</td><td>ASP planner scenarios, all four seed programs</td><td class="ok">12 / 12 (+3 slow, opt-in)</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:8px">Policy retrieval on its 30-question set: the right section is first for 26 and in the top 3 for 30. I wrote the questions knowing the handbook, so this is a sanity check, not an unbiased score.</p>
+  <h3>With a model (live, <code>scripts/eval_agents.py</code>)</h3>
+  <div id="live"><p>LIVE_RESULTS_PLACEHOLDER</p></div>
+</section>
+
+<section>
+  <h2>6. Known issues and limits</h2>
+  <ul>
+    <li><b>Test-set conflict (professor):</b> <code>course_catalog</code> and the <code>access_allowed/prerequisites</code> scenario use the same question, "What are the prerequisites for X?", but expect different shapes under the same key: records with <code>min_grade</code> vs plain codes. A live agent can pass only one of the two. Fix in the generator: rename one key.</li>
+    <li><b>Test-set issue (student, found by the team):</b> CRN questions without a term that expect Spring 2027 at a Fall 2026 clock.</li>
+    <li><b>Administrator catalog:</b> written for an older 53-table schema. Colleges, gen-ed areas, waitlists, overrides, holds, incompletes and graduation applications don't exist here, so those intents are dropped. "Graduating" means "meets every requirement once this term's courses are passed".</li>
+    <li><b>Same author on both sides:</b> I wrote both the admin tools and the SQL ground truth. Agreement proves consistency, not that the rules are the ones the team wants. The rules are written in <code>registrar/agents/admin/tools.py</code> for review.</li>
+    <li><b>Synthetic handbook:</b> its numbers were chosen for this project and are not NMSU's. The prior-knowledge check from the design (rules that differ from what a model may know) still needs values that deliberately differ from NMSU's.</li>
+    <li><b>Advisors:</b> the professor test set treats "I'm their advisor" as a claim to refuse. With <code>advisor_assignment</code>, a real advisor may plan for their own advisees. No existing case targets a real advisee (checked), so no case changes.</li>
+    <li><b>The live model here</b> is qwen3 1.7B on 2 CPU cores, chosen because it fits. It is not the team's <code>qwen3-coder:30b</code>, so the live numbers are a floor for the system, not its expected accuracy.</li>
+  </ul>
+</section>
+</main>
+</body>
+</html>

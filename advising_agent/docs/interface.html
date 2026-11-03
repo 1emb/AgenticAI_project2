@@ -70,7 +70,7 @@ td code { white-space: nowrap; }
 
 <header>
   <h1>Advising Agent: interface and design</h1>
-  <p class="lede">What the Advising agent needs from the Router, the Data agent and the Policy agent, what it returns, and how its ASP planner works. The code in <code>advising_agent/contracts.py</code> is the typed version of this page; keep the two in sync. Last updated 2026-10-29 against the 12-table schema and seed data (commit 5ab1cda).</p>
+  <p class="lede">What the Advising agent needs from the Router, the Data agent and the Policy agent, what it returns, and how its ASP planner works. The code in <code>advising_agent/contracts.py</code> is the typed version of this page; keep the two in sync. Last updated 2026-11-03: integrated with the full system (see <code>docs/system.html</code> in the repo root).</p>
   <nav class="toc" aria-label="Contents">
     <a href="#role">1. Role</a><a href="#deps">2. Dependencies</a><a href="#in-router">3. From Router</a>
     <a href="#in-data">4. From Data agent</a><a href="#in-policy">5. From Policy agent</a><a href="#out">6. Output</a>
@@ -95,12 +95,12 @@ td code { white-space: nowrap; }
   <div class="scroll"><table>
     <thead><tr><th>Needed</th><th>Owner</th><th>State in repo</th><th>Impact</th></tr></thead>
     <tbody>
-      <tr><td><code>enrollment</code> table (term, CRN, student, status, grade)</td><td>Data</td><td>Not modeled; schema declared frozen for the agents (README, 5ab1cda)</td><td><span class="pill blocking">blocking</span> Without it there is no grade history, GPA or standing, so no plan for real students.</td></tr>
+      <tr><td><code>enrollment</code> table (term, CRN, student, status, grade)</td><td>Data</td><td>Added on branch <code>advising-agent</code>: Alembic revision d67e9bad4b1e and synthetic data (<code>scripts/seed_enrollment.py</code>)</td><td><span class="pill ready">ready</span> <code>registrar/agents/advising.py</code> implements DataTools with SQL on it.</td></tr>
       <tr><td>Seed data: catalog, prerequisites, degree plans, terms, lectures</td><td>Data</td><td>Done (commit 5ab1cda, <code>data/seed/</code>)</td><td><span class="pill ready">ready</span> <code>seed_tools.py</code> reads it; all four programs plan without validator violations.</td></tr>
-      <tr><td>Advisor assignment (advisor, student)</td><td>Data</td><td>No table. The professor question catalog mentions advisees.</td><td><span class="pill blocking">blocking</span> for advisors viewing advisees; students and admins work without it.</td></tr>
+      <tr><td>Advisor assignment (advisor, student)</td><td>Data</td><td>Added: table <code>advisor_assignment</code> (same revision)</td><td><span class="pill ready">ready</span> <code>plan_for_advisee</code> refuses anyone not assigned.</td></tr>
       <tr><td>Offering history per course and term type (derived view)</td><td>Data</td><td>Derivable from <code>lecture</code> + <code>academic_term</code></td><td><span class="pill needed">needed</span> Planning beyond published terms uses it.</td></tr>
       <tr><td>Seats taken per lecture</td><td>Data</td><td>Comes from enrollment</td><td><span class="pill needed">needed</span> Without it, full sections are not detected; the answer says so.</td></tr>
-      <tr><td>Policy parameters (credit cap, repeat rule, levels, probation) + citations</td><td>Policy</td><td>Handbook not written yet</td><td><span class="pill needed">needed</span> Placeholder values in the fixture.</td></tr>
+      <tr><td>Policy parameters (credit cap, repeat rule, levels, probation) + citations</td><td>Policy</td><td>Added: <code>data/policy/handbook.md</code> + <code>params.json</code>, served by <code>registrar/agents/policy.py</code></td><td><span class="pill ready">ready</span> A test checks that text and values agree.</td></tr>
       <tr><td>Corequisites</td><td>Data</td><td>No table</td><td><span class="pill ready">optional</span> Not modeled; easy to add to the encoding.</td></tr>
       <tr><td>Summer term code</td><td>Data</td><td>Only 80 (fall) and 10 (spring) are documented</td><td><span class="pill ready">confirm</span> Projected summer terms assume suffix 60.</td></tr>
     </tbody>
@@ -193,6 +193,7 @@ td code { white-space: nowrap; }
     <thead><tr><th>Status</th><th>When</th></tr></thead>
     <tbody>
       <tr><td><code>ok</code></td><td>A plan meets every hard constraint and the hard target, if one was given.</td></tr>
+      <tr><td><code>requirements_met</code></td><td>Every degree requirement is already met (courses in progress assumed passed); nothing to plan.</td></tr>
       <tr><td><code>target_infeasible</code></td><td>No plan meets the hard target; plans show the earliest feasible term.</td></tr>
       <tr><td><code>horizon_too_short</code></td><td>The requirements need more terms than requested; the horizon was extended (by up to 4 terms).</td></tr>
       <tr><td><code>load_infeasible</code></td><td>The student's own credit cap is too low even with more terms; plans use the policy cap.</td></tr>

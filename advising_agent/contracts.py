@@ -194,6 +194,7 @@ class PolicyTools(Protocol):
 # ----------------------------------------------------------------------------------------------------------------
 Status = Literal[
     "ok",  # plans satisfy every hard constraint
+    "requirements_met",  # every degree requirement is already met (courses in progress assumed passed)
     "target_infeasible",  # no plan meets the hard target; plans show the earliest feasible term
     "load_infeasible",  # student's max credits too low; plans use the policy cap instead
     "horizon_too_short",  # requirements need more terms than requested; plans use a longer horizon

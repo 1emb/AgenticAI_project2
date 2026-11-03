@@ -35,6 +35,8 @@ class AdvisingAgent:
             return {"request_id": req["request_id"], "allowed": True, "status": "not_eligible",
                     "blockers": [{"code": "student_not_active", "status": ctx.student["status"]}]}
 
+        if graduation_lower_bound(ctx) == 0 and not check_plan(ctx, {"terms": []}, max_load(ctx), None):
+            return self._answer(ctx, "requirements_met", None, [])  # nothing left to plan
         static = self._static_blockers(ctx)
         if static:
             return self._answer(ctx, "infeasible", None, [], blockers=static)

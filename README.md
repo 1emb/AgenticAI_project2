@@ -114,6 +114,17 @@ plans, the calendar and teaching schedules; everything that needs enrollment (re
 grade statistics) is listed as pending in each persona's `questions.md`. Formats, clocks, the permission model and
 the verification contract are in [data/testset/README.md](data/testset/README.md).
 
+## Full system (branch `advising-agent`)
+Router, Professor and Administrator agents, the Advising agent (ASP planner) and the Policy agent (handbook
+retrieval), plus synthetic `enrollment` and `advisor_assignment` tables. Architecture, how to run, and test results:
+[docs/system.html](docs/system.html). In short:
+```bash
+alembic upgrade head && python scripts/load_seed.py && python scripts/seed_enrollment.py --load
+pytest -q                                              # no model needed
+python scripts/registrar_chat.py --user 801930214      # student; instructors and 900000001 (admin) work too
+python scripts/eval_agents.py --persona all --per-intent 1
+```
+
 ## Next steps
 1. The agent itself, graded against `data/testset/` (the schema and data are frozen for it).
 2. When the schema reopens: `enrollment` table, proposed as (`term_code`, `crn`, `student_university_id`) with `status` (enrolled/dropped/withdrawn) and `grade` FK `grade_scale`; then the pending intents (registration, transcripts, GPA, rosters, grade statistics) and the administrator persona.

@@ -75,3 +75,15 @@ def test_confused_scope_kinds_are_normalized(admin):
     assert t.withdrawals("course", "all", "Fall 2025")["answer"]["scope"]["kind"] == "all"
     assert t.dfw_rate("subject", "MATH 1511")["answer"]["scope"] == {"kind": "course", "value": "MATH 1511", "term": None}
     assert t.withdrawals("course", "MATH", "Fall 2025")["answer"] == t.withdrawals("subject", "MATH", "Fall 2025")["answer"]
+
+
+def test_scope_inputs_recovered_from_value_shape(admin):
+    t = admin("2026-11-20T18:00:00+00:00")
+    a = t.grade_distribution("all", "ENGL 1110", "all")["answer"]["scope"]
+    assert a == {"kind": "course", "value": "ENGL 1110", "term": None}
+    b = t.grading_extremes("mean_gpa", "lowest", "course", "course", "Fall 2025")["answer"]
+    assert b["scope"] == {"kind": "all", "value": None, "term": "Fall 2025"}
+    c = t.grading_extremes("pct_a", "highest", "section", "section", "all", "last spring")["answer"]
+    assert c["scope"]["kind"] == "all" and c["unit"] == "section"
+    d = t.enrollment_summary("course", "Spring 2027", "Spring 2027")["answer"]["scope"]
+    assert d == {"kind": "all", "value": None, "term": "Spring 2027"}

@@ -11,6 +11,7 @@ Every computation is Python over ORM rows; data/testset/administrator/ ground tr
 """
 from __future__ import annotations
 
+import re
 import statistics
 from collections import Counter, defaultdict
 
@@ -70,16 +71,25 @@ class AdminTools:
 
     def _scope(self, kind: str, value: str | None, term: str | None) -> tuple[dict, callable]:
         kind = (kind or "all").lower()
+        if kind in ("section", "sections", "university", "everything"):
+            kind = "all"  # "section" is a unit, not a scope (grading_extremes has unit=section)
         if kind not in SCOPES:
             raise ToolError(f"scope_kind must be one of {', '.join(SCOPES)}.")
-        # The value's shape settles a confused kind: a course code has a number, a subject code does not.
         raw = str(value or "").strip()
+        # A term passed as the scope value ("Fall 2025") is the term.
+        if re.fullmatch(r"(?i)(fall|spring|summer)\s+\d{4}|(this|last|next)\s+(fall|spring|summer|semester|term)", raw):
+            term = term if term not in (None, "", "all") else raw
+            raw, value = "", None
+        # The value's shape settles a confused kind: a course code has a number, a subject code does not,
+        # a program code is one of the programs.
         if raw.lower() in ("", "all", "any", "none", "every", "null"):
             kind, value = ("all", None) if kind in ("course", "subject", "all") else (kind, value)
-        elif kind == "course" and raw.isalpha():
-            kind = "subject"
-        elif kind == "subject" and any(ch.isdigit() for ch in raw):
+        elif kind in ("all", "subject") and re.fullmatch(r"[A-Za-z]{2,5}\s*-?\s*\d{3,4}[A-Za-z]?", raw):
             kind = "course"
+        elif kind in ("all", "course") and raw.upper() in self.programs:
+            kind = "program"
+        elif kind in ("all", "course") and raw.isalpha():
+            kind = "subject"
         t = self._term(term)
         v = None
         if kind == "course":

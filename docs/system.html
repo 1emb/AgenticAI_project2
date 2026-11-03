@@ -109,9 +109,9 @@ td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
 <pre><code># database (README2 sections 2 to 4), then the new tables and data
 alembic upgrade head                      # 12 tables + enrollment, advisor_assignment
 python scripts/load_seed.py               # team seed (empties enrollment through CASCADE)
-python scripts/seed_enrollment.py --load  # 5,527 enrollments, 300 advisor assignments
+python scripts/seed_enrollment.py --load  # 5,464 enrollments, 300 advisor assignments
 
-pytest -q                                 # 377 passed, 3 skipped (no model needed)
+pytest -q                                 # 398 passed, 3 skipped (no model needed)
 RUN_SLOW=1 pytest -q                      # + the slow advising stress tests
 
 # chat (any OpenAI-compatible endpoint; for qwen3 on Ollama prefer the native backend)
@@ -138,15 +138,36 @@ python scripts/eval_agents.py --persona professor</code></pre>
     <tbody>
       <tr><td>Sections over capacity; enrollments in cancelled sections</td><td class="ok">0; 0</td></tr>
       <tr><td>Graduated students missing a required course</td><td class="ok">0 of 41</td></tr>
-      <tr><td>Graduated students short of the program's total credits</td><td class="warn">2 of 41: the seed marks them graduated after six terms, which needs more than 20 credits a term</td></tr>
-      <tr><td>Mean cumulative GPA by status</td><td>graduated 3.21, active 2.73, withdrawn 2.33, suspended 1.68, dismissed 1.24</td></tr>
+      <tr><td>Graduated students short of the program's total credits</td><td class="warn">4 of 41: the seed marks them graduated after very few terms; with conflict-free sections the generator cannot fit the credits</td></tr>
+      <tr><td>Mean cumulative GPA by status</td><td>graduated 3.34, active 2.83, withdrawn 2.64, suspended 1.66, dismissed 1.16</td></tr>
       <tr><td>Deterministic</td><td class="ok">same CSVs on every run</td></tr>
+      <tr><td>Overlapping sections for one student in one term</td><td class="ok">0</td></tr>
     </tbody>
   </table></div>
 </section>
 
 <section>
-  <h2>5. Test results</h2>
+  <h2>5. Writes to the database</h2>
+  <p>Students register, drop and withdraw; instructors post grades for their own sections. Code: <code>registrar/agents/registration.py</code>; rules: handbook 7.1 to 7.5.</p>
+  <ol>
+    <li><b>Request.</b> <code>request_registration</code>, <code>request_drop</code> or <code>request_grade</code> runs every rule in code and returns a pending change, a one-time code and a sentence for the user. Nothing is written.</li>
+    <li><b>Confirm.</b> The router shows that sentence as the reply, so the model cannot claim a change was made. A plain "yes" in the user's next message is confirmed by the router itself, not the model. Anything else ("yes, but switch sections", "cancel") goes to the model. A confirm in the same turn as the request is refused.</li>
+    <li><b>Write.</b> Every rule is checked again under a row lock on the section, so two users cannot take the last seat. The change and its <code>change_log</code> row are written in one transaction (new table, Alembic revision <code>22250c5ff9f0</code>).</li>
+  </ol>
+  <div class="scroll"><table>
+    <thead><tr><th>Change</th><th>Rules enforced</th></tr></thead>
+    <tbody>
+      <tr><td>Register</td><td>student active; between registration opening and the add deadline; one section per course; prerequisites at the minimum grade (a course in progress counts for the next term; MS waiver of 5.2); allowed level; repeat rule 2.1; no time conflict; section not cancelled; seat free; course load limit by standing. Blocker codes match the student test set's <code>can_add</code> codes.</td></tr>
+      <tr><td>Drop / withdraw</td><td>by the drop deadline: dropped, no record; by the withdraw deadline: W; after it: refused. Re-adding a dropped course works.</td></tr>
+      <tr><td>Post grade</td><td>own section only; student enrolled in it; from the last day of classes to the grade due date; A to F or I (W only through withdrawal). In the grading window, "this fall" means the term being graded, not the next term that the README break rule makes current.</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:8px">Tests: <code>tests/test_registration.py</code>, 19 tests in a rolled-back transaction. They cover the happy path with its log row, each blocker, the drop and withdraw dates, re-adding, grading window and ownership, the confirmation gate (same turn, non-affirmative, hedged yes, a code used twice), and two-turn conversations through the router. Live check with the model: a student registration and an instructor grade posting, each two turns, both completed correctly. In the grade case the model tried to confirm without asking and was refused.</p>
+  <p>Finding: the first write tests showed that the synthetic enrollment had 788 overlapping section pairs. The generator now avoids time conflicts (0 left), and the admin ground truth was regenerated.</p>
+</section>
+
+<section>
+  <h2>6. Test results</h2>
   <h3>Without a model (deterministic, <code>pytest -q</code>)</h3>
   <div class="scroll"><table>
     <thead><tr><th>Test</th><th>What it proves</th><th>Result</th></tr></thead>
@@ -187,12 +208,14 @@ python scripts/eval_agents.py --persona professor</code></pre>
 </section>
 
 <section>
-  <h2>6. Known issues and limits</h2>
+  <h2>7. Known issues and limits</h2>
   <ul>
     <li><b>Test-set conflict (professor):</b> <code>course_catalog</code> and the <code>access_allowed/prerequisites</code> scenario use the same question, "What are the prerequisites for X?", but expect different shapes under the same key: records with <code>min_grade</code> vs plain codes. A live agent can pass only one of the two. Fix in the generator: rename one key.</li>
     <li><b>Test-set issue (student, found by the team):</b> CRN questions without a term that expect Spring 2027 at a Fall 2026 clock.</li>
     <li><b>Administrator catalog:</b> written for an older 53-table schema. Colleges, gen-ed areas, waitlists, overrides, holds, incompletes and graduation applications don't exist here, so those intents are dropped. "Graduating" means "meets every requirement once this term's courses are passed".</li>
     <li><b>Same author on both sides:</b> I wrote both the admin tools and the SQL ground truth. Agreement proves consistency, not that the rules are the ones the team wants. The rules are written in <code>registrar/agents/admin/tools.py</code> for review.</li>
+    <li><b>Data regenerated after the live runs:</b> the live scores in section 6 were measured on the earlier enrollment data (with time conflicts). The admin ground truth was regenerated for the new data; the oracle tests pass on it.</li>
+    <li><b>Writes:</b> only students (register, drop, withdraw) and instructors (grades) can change data. Administrators have no write tools yet, and there are no grade changes after the due date, overrides or waitlists.</li>
     <li><b>Synthetic handbook:</b> its numbers were chosen for this project and are not NMSU's. The prior-knowledge check from the design (rules that differ from what a model may know) still needs values that deliberately differ from NMSU's.</li>
     <li><b>Advisors:</b> the professor test set treats "I'm their advisor" as a claim to refuse. With <code>advisor_assignment</code>, a real advisor may plan for their own advisees. No existing case targets a real advisee (checked), so no case changes.</li>
     <li><b>The live model here</b> is qwen3 1.7B on 2 CPU cores, chosen because it fits. It is not the team's <code>qwen3-coder:30b</code>, so the live numbers are a floor for the system, not its expected accuracy.</li>

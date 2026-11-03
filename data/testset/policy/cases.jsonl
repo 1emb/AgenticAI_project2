@@ -20,7 +20,7 @@
 {"id": "pol-020", "question": "Can a bachelor's student take a graduate course?", "expected_section": "6.1"}
 {"id": "pol-021", "question": "What is the difference between dropping a class and withdrawing?", "expected_section": "7.1"}
 {"id": "pol-022", "question": "When does registration close?", "expected_section": "7.1"}
-{"id": "pol-023", "question": "Can I register for a full section?", "expected_section": "7.2"}
+{"id": "pol-023", "question": "Can I register for a full section?", "expected_section": "7.5"}
 {"id": "pol-024", "question": "Do required gen-ed courses count toward the general education minimum?", "expected_section": "8.1"}
 {"id": "pol-025", "question": "What does a degree require?", "expected_section": "8.1"}
 {"id": "pol-026", "question": "Do extra courses count toward my total credits?", "expected_section": "8.2"}

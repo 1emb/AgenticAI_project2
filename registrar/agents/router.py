@@ -22,8 +22,12 @@ from sqlalchemy.orm import Session
 
 from registrar.agents.advising import ADVISOR_SPECS, STUDENT_ADVISING_SPECS, AdvisingTools
 from registrar.agents.loop import DEFAULT_MODEL
+from registrar.agents.common import plain
 from registrar.agents.policy import SEARCH_POLICY_SPEC, PolicyStore
 from registrar.agents.records import RECORD_SPECS, StudentRecordTools
+from registrar.agents.common import ToolError
+from registrar.agents.registration import (AFFIRM, INSTRUCTOR_WRITE_SPECS, STUDENT_WRITE_SPECS, ConfirmationGate,
+                                           InstructorWriteTools, RegistrationService, StudentWriteTools)
 from registrar.agents.student.agent import assemble_answer
 from registrar.models import Instructor, Student
 
@@ -37,6 +41,10 @@ Added capabilities:
   graduation, required courses left). Present its plan term by term, say which terms are projected, and state its
   assumptions. Never invent a plan yourself.
 - Rules (probation, course load, repeats, withdrawals, graduation): search_policy, and cite the handbook section.
+- Changes: request_registration and request_drop prepare a change and return a pending change with a code and a
+  reply_to_user sentence: reply with that sentence. In the next turn, if the student says yes, call confirm_change
+  with the code from the pending change. If the request returns blockers, explain them; nothing was changed. Never say a change was made unless
+  confirm_change returned changed: true.
 - Refusals: you MUST call decline_request for anything about another person's record (even if you only want to say
   no); a refusal written only in your reply is not recorded and counts as answering. Answer the permitted part of a
   mixed question with tools too."""
@@ -46,6 +54,10 @@ PROFESSOR_ADDENDUM = """
 Added capabilities:
 - Advising your assigned advisees only: get_my_advisees lists them; plan_for_advisee plans an advisee's remaining
   terms. For any student who is not on that list, the student-record rules above still apply (decline_request).
+- Your own sections: get_my_roster lists the students enrolled in a section you teach (IDs and names only).
+- Grades: request_grade prepares posting a grade in your own section during the grading window and returns a
+  pending change with a code and a reply_to_user sentence: reply with that sentence. In the next turn, if the
+  instructor says yes, call confirm_change with the code.{grading} Never say a grade was posted unless confirm_change returned changed: true.
 - Rules: search_policy, and cite the handbook section."""
 
 
@@ -79,6 +91,8 @@ class Router:
         if role not in have:
             raise RoleError(f"{user_uid} is not a {role}.")
         self.role, self.uid = role, user_uid
+        self.gate = ConfirmationGate()
+        self.writer = None  # StudentWriteTools / InstructorWriteTools, when the role can change data
         policy = PolicyStore()
         search = (SEARCH_POLICY_SPEC, policy.search_policy)
         kw = dict(as_of=as_of, model=model, verbose=verbose, max_steps=max_steps)
@@ -87,17 +101,25 @@ class Router:
             from registrar.agents.calendar import Calendar
             cal = Calendar(session, as_of)
             rec, adv = StudentRecordTools(session, cal, user_uid), AdvisingTools(session, cal, user_uid, "student", policy)
+            wr = self.writer = StudentWriteTools(RegistrationService(session, cal, policy), self.gate, user_uid)
             extra = [(s, getattr(rec, s["function"]["name"])) for s in RECORD_SPECS] + \
-                    [(s, getattr(adv, s["function"]["name"])) for s in STUDENT_ADVISING_SPECS] + [search]
+                    [(s, getattr(adv, s["function"]["name"])) for s in STUDENT_ADVISING_SPECS] + \
+                    [(s, getattr(wr, s["function"]["name"])) for s in STUDENT_WRITE_SPECS] + [search]
             self.agent = StudentAgent(client, session, user_uid, extra_tools=extra, **kw)
             self.agent.loop.messages[0]["content"] += STUDENT_ADDENDUM
         elif role == "instructor":
             from registrar.agents.professor import ProfessorAgent
             from registrar.agents.calendar import Calendar
-            adv = AdvisingTools(session, Calendar(session, as_of), user_uid, "instructor", policy)
-            extra = [(s, getattr(adv, s["function"]["name"])) for s in ADVISOR_SPECS] + [search]
+            cal = Calendar(session, as_of)
+            adv = AdvisingTools(session, cal, user_uid, "instructor", policy)
+            wr = self.writer = InstructorWriteTools(RegistrationService(session, cal, policy), self.gate, user_uid)
+            extra = [(s, getattr(adv, s["function"]["name"])) for s in ADVISOR_SPECS] + \
+                    [(s, getattr(wr, s["function"]["name"])) for s in INSTRUCTOR_WRITE_SPECS] + [search]
             self.agent = ProfessorAgent(client, session, user_uid, extra_tools=extra, **kw)
-            self.agent.loop.messages[0]["content"] += PROFESSOR_ADDENDUM
+            g = wr.svc.grading_term()
+            note = (f"\n- The grading window for {g.name} is open now (grades due {g.grades_due}). For grades, 'this "
+                    f"{plain(g.term_type)}' and 'this semester' mean {g.name}: pass the term as '{g.name}'.") if g else ""
+            self.agent.loop.messages[0]["content"] += PROFESSOR_ADDENDUM.replace("{grading}", note)
         else:
             from registrar.agents.admin import AdminAgent
             self.agent = AdminAgent(client, session, extra_tools=[search], **kw)
@@ -106,6 +128,10 @@ class Router:
         """Ask the persona agent. Grounding check: a turn that ends without one successful tool call (the model
         answered or refused from its own words) gets one corrective message, and the answer is assembled from
         both attempts. Every fact must come from a tool, and a refusal only counts when decline_request records it."""
+        self.gate.new_turn(question)  # a confirmation can only come from a later, real user message
+        confirmed = self._confirm_without_model(question)
+        if confirmed is not None:
+            return confirmed
         r = self.agent.ask(question)
         calls, steps, retried = list(r.calls), r.steps, False
         if not any(c.ok for c in r.calls) and not r.stopped_early:
@@ -116,8 +142,35 @@ class Router:
             r = r2 if r2.calls else r
         answer = assemble_answer(calls)
         self._fill_refusal_target(answer, question, calls)
-        return RouterResult(reply=r.reply, answer=answer, calls=calls, steps=steps,
+        reply = r.reply
+        pending = [c for c in calls if c.ok and isinstance(c.result, dict) and "reply_to_user" in c.result]
+        if pending and self.gate.pending and not answer.get("changed"):
+            reply = pending[-1].result["reply_to_user"]  # the system's own words: nothing is changed yet
+        return RouterResult(reply=reply, answer=answer, calls=calls, steps=steps,
                             stopped_early=r.stopped_early, grounding_retry=retried)
+
+    def _confirm_without_model(self, question: str) -> "RouterResult | None":
+        """A plain 'yes' to a change pending from an earlier turn is confirmed by the system, not the model: the
+        confirmation is a user action, so the model cannot forget it or confirm on its own."""
+        if self.writer is None or not self.gate.pending or not AFFIRM.search(question) or HEDGE.search(question):
+            return None  # "yes, but ..." or "wait" is not a plain confirmation: the model handles it
+        code = next(iter(self.gate.pending))
+        from registrar.agents.loop import ToolCall
+        try:
+            result = self.writer.confirm_change(code)
+        except ToolError as e:
+            return RouterResult(reply=f"I could not make the change: {e}", answer={"allowed": True},
+                                calls=[ToolCall("confirm_change", {"code": code}, {"error": str(e)}, False)],
+                                steps=0, stopped_early=False)
+        a = result["answer"]
+        what = {"register": f"You are registered in {a.get('course')} (CRN {a.get('crn')}), {a.get('term')}.",
+                "drop": f"{a.get('course')} (CRN {a.get('crn')}) is dropped for {a.get('term')}; it leaves no record.",
+                "withdraw": f"You are withdrawn from {a.get('course')} (CRN {a.get('crn')}), {a.get('term')}; "
+                            "it shows a W.",
+                "post_grade": f"Posted {a.get('grade')} for {a.get('student')} in {a.get('course')} "
+                              f"(CRN {a.get('crn')}), {a.get('term')}."}.get(a.get("action"), "Done.")
+        calls = [ToolCall("confirm_change", {"code": code}, result, True)]
+        return RouterResult(reply=what, answer=assemble_answer(calls), calls=calls, steps=0, stopped_early=False)
 
     def _fill_refusal_target(self, answer: dict, question: str, calls) -> None:
         """A refusal whose person the model left out or misspelled is resolved from the question itself: a 9-digit
@@ -143,6 +196,8 @@ class Router:
                 target["university_id"] = uid
                 return
 
+
+HEDGE = re.compile(r"\b(but|instead|change|switch|different|other|wait|not|don'?t|no|cancel|hold)\b", re.I)
 
 GROUNDING_NUDGE = ("(System check, not from the user.) Your last reply used no tool result, so it cannot be shown "
                    "to the user. Answer the user's previous question again: call the tool that provides the facts, "

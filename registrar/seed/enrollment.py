@@ -5,7 +5,8 @@ admit term:
 - Courses come from the student's degree plan in suggested-term order, then category courses until each category
   minimum is met, then free electives (any active undergraduate course whose prerequisites are met) up to the program total.
 - A course is taken only when every prerequisite group is met by an earlier grade at or above its minimum, and, in
-  terms with lecture rows (Fall 2024 on), only in a non-cancelled section with a free seat. Earlier terms have no
+  terms with lecture rows (Fall 2024 on), only in a non-cancelled section with a free seat that does not
+  overlap the student's other sections that term. Earlier terms have no
   sections (crn null).
 - Grades come from a per-student ability, the student's status, the course level, and an occasional bad
   outcome in one course (more often for weak students). A grade below a prerequisite
@@ -35,6 +36,16 @@ ABILITY = {"graduated": 0.6, "active": 0.0, "suspended": -1.6, "dismissed": -2.0
 
 def _read(d: Path, name: str) -> list[dict]:
     return list(csv.DictReader((d / f"{name}.csv").open()))
+
+
+def _minutes(t: str) -> int:
+    h, m = t.split(":")[:2]
+    return int(h) * 60 + int(m)
+
+
+def _overlap(a: dict, b: dict) -> bool:
+    return bool(set(a["days"]) & set(b["days"])) and _minutes(a["start_time"]) < _minutes(b["end_time"]) \
+        and _minutes(b["start_time"]) < _minutes(a["end_time"])
 
 
 def _letter(p: float) -> str:
@@ -127,6 +138,7 @@ def generate(seed_dir: Path, seed: int = 7) -> tuple[list[dict], list[dict]]:
                 return True
 
             pick: list[str] = []
+            chosen: list[dict] = []  # sections already taken this term: no two may meet at the same time (7.5)
             load = 0.0
             if status == "graduated":  # finish by Spring 2026: spread what is left over the graded terms left
                 left = sum(1 for x in terms if seq[code] <= seq[x["code"]] <= seq[LAST_GRADED])
@@ -146,10 +158,13 @@ def generate(seed_dir: Path, seed: int = 7) -> tuple[list[dict], list[dict]]:
                     continue
                 crn = None
                 if code in lecture_terms:
-                    open_secs = [l for l in lectures.get((code, c), []) if seats[(code, l["crn"])] < int(l["capacity"])]
+                    open_secs = [l for l in lectures.get((code, c), []) if seats[(code, l["crn"])] < int(l["capacity"])
+                                 and not any(_overlap(l, o) for o in chosen)]
                     if not open_secs:
                         continue
-                    crn = rnd.choice(open_secs)["crn"]
+                    sec = rnd.choice(open_secs)
+                    crn = sec["crn"]
+                    chosen.append(sec)
                     seats[(code, crn)] += 1
                 pick.append(c)
                 load += credit[c]

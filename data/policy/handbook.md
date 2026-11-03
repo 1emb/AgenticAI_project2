@@ -65,7 +65,23 @@ Registration for a term opens on the date in the academic calendar and closes at
 by the drop deadline leaves no record. A course dropped after the drop deadline and by the withdraw deadline receives
 a W. After the withdraw deadline a student cannot leave a course and receives the grade earned.
 
-## 7.2 Section capacity
+## 7.2 Registration checks
+A student may register only while active, between the registration opening date and the add deadline, and only for
+one section of a course in a term. Every prerequisite must be met; a course in progress in the current term counts
+toward a prerequisite for the next term. A student may not register for a course at a level their program does not
+allow, or repeat a course that section 2.1 does not allow to be repeated, or go above the course load limit of
+section 3.2.
+
+## 7.3 Grade posting
+The instructor of a section posts its grades. Grades for a term may be posted from the last day of classes until the
+grade due date in the academic calendar. A posted grade is one of the letter grades of section 1.1 or I; W is
+recorded only by withdrawal.
+
+## 7.4 Changes made through the registrar assistant
+The registrar assistant shows every change (registration, drop, withdrawal, grade) before making it, and makes it
+only after the user confirms in a separate message. Every change is recorded in the registrar's change log.
+
+## 7.5 Section capacity
 A section is full when its enrolled students reach its capacity. Students may not register for a full section or for
 a cancelled section, or for two sections that meet at the same time.
 

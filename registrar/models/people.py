@@ -1,7 +1,7 @@
 """People: one person row per human, keyed by university id, with student and instructor profiles."""
 from datetime import date
 
-from sqlalchemy import Boolean, CheckConstraint, Date, ForeignKey, String, text
+from sqlalchemy import Boolean, CheckConstraint, Date, ForeignKey, Integer, String, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
@@ -50,6 +50,7 @@ class Instructor(Base):
     rank: Mapped[str] = mapped_column(String(40))  # professor, associate, assistant, lecturer, adjunct, ta
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, server_default=text("true"))
     hire_date: Mapped[date | None] = mapped_column(Date)
+    salary: Mapped[int] = mapped_column(Integer)  # annual, whole US dollars (TA: stipend; adjunct: annual equivalent). Own record only.
 
     person: Mapped[Person] = relationship(back_populates="instructor")
     department: Mapped["Department"] = relationship()

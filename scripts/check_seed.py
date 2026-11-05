@@ -150,8 +150,44 @@ def main() -> int:
                     problems.append(f"{uid}: graduated {exp} but has rows after it")
             if status in ("suspended", "dismissed") and gpa is not None and gpa >= float(prog["min_gpa"]):
                 problems.append(f"{uid}: {status} with gpa {gpa:.2f}")
+        # 2026-11-05: salary, section staff, grade submission (registrar/seed/staff.py)
+        instructors = {i["university_id"]: i for i in rows(cur, "SELECT * FROM instructor")}
+        for uid, i in instructors.items():
+            if not i["salary"] or i["salary"] <= 0:
+                problems.append(f"{uid}: instructor without a salary")
+        staff = rows(cur, "SELECT * FROM lecture_staff")
+        of_record = {(s["term_code"], s["crn"]): s["university_id"] for s in staff if s["role"] == "instructor"}
+        for key, l in lectures.items():
+            if of_record.get(key) != l["instructor_university_id"]:
+                problems.append(f"CRN {key[1]} in {key[0]}: lecture_staff instructor {of_record.get(key)} is not the lecture's {l['instructor_university_id']}")
+        ta_busy = defaultdict(list)
+        for s in staff:
+            if s["role"] != "ta":
+                continue
+            l = lectures[(s["term_code"], s["crn"])]
+            if instructors[s["university_id"]]["rank"] != "ta":
+                problems.append(f"{s['university_id']}: role ta but rank {instructors[s['university_id']]['rank']}")
+            if l["is_cancelled"]:
+                problems.append(f"{s['university_id']}: TA on cancelled CRN {s['crn']} ({s['term_code']})")
+            ta_busy[(s["university_id"], s["term_code"])].append((l["days"], l["start_time"], l["end_time"]))
+        for (uid, t), slots in ta_busy.items():
+            own = taught.get((uid, t), []) + [(e["days"], e["start_time"], e["end_time"]) for e in by_student.get(uid, {}).get(t, []) if e["status"] != "withdrawn"]
+            all_slots = slots + own
+            if any(overlaps(all_slots[i], all_slots[j]) for i in range(len(all_slots)) for j in range(i + 1, len(all_slots))):
+                problems.append(f"{uid}: TA sections clash with their own teaching or classes in {t}")
+        graded_sections = {(e["term_code"], e["crn"]) for e in enr if e["term_code"] < CURRENT}
+        submitted = {(g["term_code"], g["crn"]): g for g in rows(cur, "SELECT * FROM grade_submission")}
+        for key, g in submitted.items():
+            if key[0] >= CURRENT:
+                problems.append(f"CRN {key[1]} in {key[0]}: grades submitted for a term not yet graded")
+            if g["submitted_by"] != lectures[key]["instructor_university_id"]:
+                problems.append(f"CRN {key[1]} in {key[0]}: grades submitted by someone other than the instructor of record")
+        for key in graded_sections - set(submitted):
+            problems.append(f"CRN {key[1]} in {key[0]}: graded students but no grade submission")
         # profile
         print(f"students {len(students)}, enrollment rows {len(enr)}, transfer rows {sum(len(v) for v in transfer.values())}")
+        late = sum(1 for (t, _), g in submitted.items() if g["submitted_at"].date() > terms[t]["grades_due"])
+        print(f"instructors {len(instructors)}, TA assignments {sum(len(v) for v in ta_busy.values())}, grade submissions {len(submitted)} ({late} late)")
         print("status:", dict(statuses))
         g = sorted(v for v in gpas.values() if v is not None)
         print(f"GPA: n {len(g)}, min {g[0]:.2f}, median {g[len(g)//2]:.2f}, max {g[-1]:.2f}; below 2.0: {sum(v < 2 for v in g)}")

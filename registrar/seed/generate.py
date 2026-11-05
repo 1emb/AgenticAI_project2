@@ -15,6 +15,7 @@ from datetime import date, time, timedelta
 
 from . import catalog as C
 from .records import generate_records, overlaps
+from .staff import salaries, staff_rows, submission_rows
 
 LECTURE_TERMS = ["202480", "202510", "202580", "202610", "202680", "202710"]
 EARLIER_LECTURE_TERMS = ["202180", "202210", "202280", "202310", "202380", "202410"]   # added 2026-11-02 for the enrollment history
@@ -62,6 +63,10 @@ SECTION_COUNTS = {"CS 1110": 4, "CS 1120": 2, "CS 2210": 3, "CS 2215": 2, "CS 22
                   "MATH 1511": 4, "MATH 1521": 3, "PHYS 2110": 3, "PHYS 2120": 2,
                   "ENGL 1110": 4, "ENGL 1120": 3, "COMM 1130": 3, "PSY 1110": 3}
 FALL_ONLY = {"CS 5110", "CS 5410", "CS 5720", "ENG 5110", "ENG 5510"}
+# 2026-11-05 (owner): classes held a median of 4 to 7 students; three more cohorts bring the total to 1,200 students
+EXTRA_STUDENTS = {"BSCS": 450, "BSENG": 360, "MSCS": 45, "MSENG": 45}
+DEGREE_OF = {code: deg for code, _, _, deg, _, _ in C.PROGRAMS}
+SEAT_HEADROOM = 1.15        # added sections leave this much room over the measured demand
 SPRING_ONLY = {"CS 5320", "CS 5710", "CS 5810", "ENG 5310", "ENG 5610"}
 
 
@@ -160,45 +165,53 @@ def generate(seed: int = 42) -> dict[str, list[dict]]:
     # undergraduates: admit term weighted toward recent years; status depends on how long ago they entered
     undergrad_admits = ["202180"] * 20 + ["202210"] * 5 + ["202280"] * 25 + ["202310"] * 5 + ["202380"] * 30 + ["202410"] * 6 \
         + ["202480"] * 35 + ["202510"] * 8 + ["202580"] * 45 + ["202610"] * 10 + ["202680"] * 60
+
+    def undergrad(prog: str, out: list[dict]) -> None:
+        admit = rng.choice(undergrad_admits)
+        admit_seq = term_by_code[admit]["sequence"]
+        entry = rng.choices(["first_time", "transfer", "readmit"], weights=[80, 15, 5])[0]
+        age = rng.choice([18, 18, 18, 19, 19, 20]) + (rng.randint(1, 4) if entry != "first_time" else 0)
+        p = people.add(sex(), int(admit[:4]) - age)
+        terms_in = current_seq - admit_seq  # 0 for this fall's new students
+        expected_seq = admit_seq + 7 - (2 if entry == "transfer" else 0)
+        r = rng.random()
+        # 2026-11-02: graduation needs seven completed terms (the prerequisite chains take seven; six for a transfer student,
+        # who brings two semesters), and a graduate's expected term is the term they finished, which is over. Before, six-term
+        # entrants could be "graduated" with the in-progress term as their expected term: nine students moved to active and
+        # one graduate's term moved back one; no other row changed.
+        if terms_in >= 8 and r < 0.70:
+            status = "graduated"
+            expected_seq = min(expected_seq, current_seq - 1)
+        elif terms_in >= (6 if entry == "transfer" else 7) and r < 0.35:
+            status = "graduated"
+            expected_seq = min(expected_seq, current_seq - 1)
+        elif r > 0.92:
+            status = rng.choice(["withdrawn", "withdrawn", "leave_of_absence", "suspended", "dismissed"])
+        else:
+            status = "active"
+            if expected_seq < current_seq + 1:
+                expected_seq = current_seq + rng.choice([1, 1, 2])  # delayed graduation, still active
+        residency = rng.choices(["resident", "nonresident", "international"], weights=[60, 28, 12])[0]
+        out.append(dict(university_id=p["university_id"], program_code=prog, status=status, entry_type=entry, residency=residency,
+                        admit_term_code=admit, expected_graduation_term_code=seq_to_code.get(expected_seq)))
+
+    def graduate(prog: str, admit: str, out: list[dict]) -> dict:
+        p = people.add(sex(), int(admit[:4]) - rng.randint(22, 30))
+        residency = rng.choices(["resident", "nonresident", "international"], weights=[35, 20, 45])[0]
+        out.append(dict(university_id=p["university_id"], program_code=prog, status="active", entry_type="first_time", residency=residency,
+                        admit_term_code=admit, expected_graduation_term_code=seq_to_code[term_by_code[admit]["sequence"] + 3]))
+        return p
+
     for prog, n in (("BSCS", 150), ("BSENG", 120)):
         for _ in range(n):
-            admit = rng.choice(undergrad_admits)
-            admit_seq = term_by_code[admit]["sequence"]
-            entry = rng.choices(["first_time", "transfer", "readmit"], weights=[80, 15, 5])[0]
-            age = rng.choice([18, 18, 18, 19, 19, 20]) + (rng.randint(1, 4) if entry != "first_time" else 0)
-            p = people.add(sex(), int(admit[:4]) - age)
-            terms_in = current_seq - admit_seq  # 0 for this fall's new students
-            expected_seq = admit_seq + 7 - (2 if entry == "transfer" else 0)
-            r = rng.random()
-            # 2026-11-02: graduation needs seven completed terms (the prerequisite chains take seven; six for a transfer student,
-            # who brings two semesters), and a graduate's expected term is the term they finished, which is over. Before, six-term
-            # entrants could be "graduated" with the in-progress term as their expected term: nine students moved to active and
-            # one graduate's term moved back one; no other row changed.
-            if terms_in >= 8 and r < 0.70:
-                status = "graduated"
-                expected_seq = min(expected_seq, current_seq - 1)
-            elif terms_in >= (6 if entry == "transfer" else 7) and r < 0.35:
-                status = "graduated"
-                expected_seq = min(expected_seq, current_seq - 1)
-            elif r > 0.92:
-                status = rng.choice(["withdrawn", "withdrawn", "leave_of_absence", "suspended", "dismissed"])
-            else:
-                status = "active"
-                if expected_seq < current_seq + 1:
-                    expected_seq = current_seq + rng.choice([1, 1, 2])  # delayed graduation, still active
-            residency = rng.choices(["resident", "nonresident", "international"], weights=[60, 28, 12])[0]
-            students.append(dict(university_id=p["university_id"], program_code=prog, status=status, entry_type=entry, residency=residency,
-                                 admit_term_code=admit, expected_graduation_term_code=seq_to_code.get(expected_seq)))
+            undergrad(prog, students)
 
     # graduate students: half entered Fall 2025, half Fall 2026; three of each program's Fall 2025 entrants are teaching assistants
     tas: list[tuple[dict, str]] = []
     for prog, dept in (("MSCS", "CS"), ("MSENG", "ENG")):
         for i in range(15):
             admit = "202580" if i < 8 else "202680"
-            p = people.add(sex(), int(admit[:4]) - rng.randint(22, 30))
-            residency = rng.choices(["resident", "nonresident", "international"], weights=[35, 20, 45])[0]
-            students.append(dict(university_id=p["university_id"], program_code=prog, status="active", entry_type="first_time", residency=residency,
-                                 admit_term_code=admit, expected_graduation_term_code=seq_to_code[term_by_code[admit]["sequence"] + 3]))
+            p = graduate(prog, admit, students)
             if i < 3:
                 tas.append((p, dept))
                 instructors.append(dict(university_id=p["university_id"], department_code=dept, rank="ta", is_active=True,
@@ -229,15 +242,154 @@ def generate(seed: int = 42) -> dict[str, list[dict]]:
     lectures += lecture_rows(rng, EARLIER_LECTURE_TERMS, instructors, term_by_code)
     lectures.sort(key=lambda l: (l["term_code"], int(l["crn"])))
 
+    # 2026-11-05: three more cohorts of each program, drawn after everything above so no earlier row moves; their records are
+    # simulated after the original students', who keep their sections and grades and fill first
+    added: list[dict] = []
+    for prog, n in EXTRA_STUDENTS.items():
+        for i in range(n):
+            if DEGREE_OF[prog] == "BS":
+                undergrad(prog, added)
+            else:
+                graduate(prog, "202580" if i < n * 8 // 15 else "202680", added)
+
     people.rows.sort(key=lambda r: r["university_id"])
     students.sort(key=lambda r: r["university_id"])
+    added.sort(key=lambda r: r["university_id"])
     instructors.sort(key=lambda r: r["university_id"])
-    enrollment, transfer_credit = generate_records(seed, terms, students, lectures)
+
+    # the added students need more seats than the frozen sections hold: a dry run with unlimited seats measures each term's demand
+    # for each course, and new sections (higher CRNs, own random stream) cover the shortfall with SEAT_HEADROOM to spare
+    loose = [dict(l, capacity=100_000) for l in lectures]
+    dry, _ = generate_records(seed, terms, students + added, loose)
+    by_crn = {(l["term_code"], l["crn"]): l["course_code"] for l in lectures}
+    demand: dict[tuple[str, str], int] = {}
+    for e in dry:
+        key = (e["term_code"], by_crn[(e["term_code"], e["crn"])])
+        demand[key] = demand.get(key, 0) + 1
+    have: dict[tuple[str, str], int] = {}
+    for l in lectures:
+        if not l["is_cancelled"]:
+            have[(l["term_code"], l["course_code"])] = have.get((l["term_code"], l["course_code"]), 0) + l["capacity"]
+    need = {k: int(v * SEAT_HEADROOM) + 1 for k, v in demand.items() if v * SEAT_HEADROOM > have.get(k, 0)}
+    hire_rng = random.Random(f"{seed}-hires")
+
+    def hire(dept: str) -> dict:
+        rank = hire_rng.choice(["lecturer", "lecturer", "adjunct", "assistant"])
+        year = hire_rng.randint(2014, 2020)
+        p = people.add(sex(), year - hire_rng.randint(28, 40), phone_rate=0.8)
+        row = dict(university_id=p["university_id"], department_code=dept, rank=rank, is_active=True, hire_date=date(year, 8, 16))
+        instructors.append(row)
+        return row
+
+    lectures += added_sections(random.Random(f"{seed}-sections"), lectures, instructors, term_by_code, need, hire)
+    lectures.sort(key=lambda l: (l["term_code"], int(l["crn"])))
+    people.rows.sort(key=lambda r: r["university_id"])
+    instructors.sort(key=lambda r: r["university_id"])
+    enrollment, transfer_credit = generate_records(seed, terms, students + added, lectures)
+    students = sorted(students + added, key=lambda r: r["university_id"])
+    salaries(seed, instructors)
+    lecture_staff = staff_rows(seed, lectures, instructors, enrollment, terms)
+    grade_submission = submission_rows(seed, lectures, enrollment, terms)
     return {
         "department": departments, "program": programs, "academic_term": terms, "person": people.rows, "student": students,
         "instructor": instructors, "course": courses, "course_prerequisite": prereqs, "degree_requirement": degree_req,
         "program_category_requirement": category_req, "lecture": lectures, "enrollment": enrollment, "transfer_credit": transfer_credit,
+        "lecture_staff": lecture_staff, "grade_submission": grade_submission,
     }
+
+
+def capacity_range(code: str) -> tuple[int, int]:
+    subject, number = code.split()
+    level = C.course_level(code)
+    if level == "graduate":
+        return (15, 25)
+    if level == "upper_division":
+        return (30, 40)
+    if subject in ("CS", "ENG", "MATH", "PHYS") and number[0] == "2":
+        return (45, 60)
+    if subject in ("CS", "ENG", "MATH", "PHYS"):
+        return (80, 120)
+    return (60, 100)
+
+
+def meeting_patterns(code: str, cr: int) -> list[tuple]:
+    if cr >= 6:
+        return list(THESIS)
+    if C.course_level(code) == "graduate":
+        return TR75[4:] + MW75_EVE
+    if cr == 4:
+        return list(MTWR50)
+    return MWF50 + TR75 + MW75_EVE
+
+
+def added_sections(rng: random.Random, lectures: list[dict], instructors: list[dict], term_by_code: dict,
+                   need: dict[tuple[str, str], int], hire) -> list[dict]:
+    """New sections (2026-11-05) appended after a term's existing CRNs until each (term, course) has `need` seats: the same rules
+    as lecture_rows (department, hired by the term's start, active or up to Spring 2025, TAs only on 1000-level courses, at most
+    MAX_SECTIONS_PER_INSTRUCTOR, no overlapping sections for an instructor or a room). When nobody in the department is free,
+    `hire(department)` adds an instructor (appended to `instructors`). Existing rows are never touched."""
+    by_dept: dict[str, list[dict]] = {}
+    for ins in instructors:
+        by_dept.setdefault(ins["department_code"], []).append(ins)
+    credits = {code: cr for code, _, cr, _ in C.COURSES}
+    out: list[dict] = []
+    for term_code in sorted({t for t, _ in need}):
+        term = term_by_code[term_code]
+        mine = [l for l in lectures if l["term_code"] == term_code]
+        crn = max(int(l["crn"]) for l in mine) + 1
+        load: dict[str, int] = {}
+        busy: dict[str, list[tuple]] = {}
+        room_busy: dict[str, list[tuple]] = {}
+        seats: dict[str, int] = {}
+        count: dict[str, int] = {}
+        for l in mine:
+            s = (l["days"], l["start_time"], l["end_time"])
+            load[l["instructor_university_id"]] = load.get(l["instructor_university_id"], 0) + 1
+            busy.setdefault(l["instructor_university_id"], []).append(s)
+            room_busy.setdefault(l["room"], []).append(s)
+            count[l["course_code"]] = count.get(l["course_code"], 0) + 1
+            if not l["is_cancelled"]:
+                seats[l["course_code"]] = seats.get(l["course_code"], 0) + l["capacity"]
+        for code in sorted(c for t, c in need if t == term_code):
+            subject, number = code.split()
+            building = BUILDING.get(subject, "BH")
+            lo, hi = capacity_range(code)
+            while seats.get(code, 0) < need[(term_code, code)]:
+                candidates = [i for i in by_dept[subject]
+                              if i["hire_date"] <= term["start_date"]
+                              and (i["is_active"] or term_code <= "202510")
+                              and (i["rank"] != "ta" or number[0] == "1")]
+                chosen = None
+                patterns = meeting_patterns(code, credits[code])
+                for attempt in range(2):
+                    for pat in rng.sample(patterns, len(patterns)):
+                        slot = (pat[0], pat[1], add_minutes(pat[1], pat[2]))
+                        free = [i for i in candidates if load.get(i["university_id"], 0) < MAX_SECTIONS_PER_INSTRUCTOR
+                                and not any(overlaps(slot, b) for b in busy.get(i["university_id"], []))]
+                        rooms = [f"{building} {r}" for r in ROOMS[building] if not any(overlaps(slot, b) for b in room_busy.get(f"{building} {r}", []))]
+                        if free and rooms:
+                            least = min(load.get(i["university_id"], 0) for i in free)
+                            chosen = (rng.choice([i for i in free if load.get(i["university_id"], 0) == least]), slot, rng.choice(rooms))
+                            break
+                    if chosen is not None or attempt == 1:
+                        break
+                    new = hire(subject)                     # nobody free: the department hires
+                    by_dept[subject].append(new)
+                    candidates.append(new)
+                if chosen is None:
+                    raise RuntimeError(f"no room for an added section of {code} in {term_code}")
+                ins, slot, room = chosen
+                load[ins["university_id"]] = load.get(ins["university_id"], 0) + 1
+                busy.setdefault(ins["university_id"], []).append(slot)
+                room_busy.setdefault(room, []).append(slot)
+                count[code] = count.get(code, 0) + 1
+                cap = rng.randrange(lo, hi + 1, 5)
+                seats[code] = seats.get(code, 0) + cap
+                out.append(dict(term_code=term_code, crn=str(crn), course_code=code, section_number=f"M{count[code]:02d}",
+                                instructor_university_id=ins["university_id"], days=slot[0], start_time=slot[1], end_time=slot[2],
+                                room=room, capacity=cap, is_cancelled=False))
+                crn += 1
+    return out
 
 
 def lecture_rows(rng: random.Random, term_codes: list[str], instructors: list[dict], term_by_code: dict) -> list[dict]:

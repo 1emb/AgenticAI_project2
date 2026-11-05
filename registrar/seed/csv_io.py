@@ -14,7 +14,7 @@ TABLES: dict[str, list[str]] = {
                       "add_deadline", "drop_deadline", "withdraw_deadline", "grades_due", "sequence"],
     "person": ["university_id", "first_name", "last_name", "date_of_birth", "sex", "ssn", "phone", "email"],
     "student": ["university_id", "program_code", "status", "entry_type", "residency", "admit_term_code", "expected_graduation_term_code"],
-    "instructor": ["university_id", "department_code", "rank", "is_active", "hire_date"],
+    "instructor": ["university_id", "department_code", "rank", "is_active", "hire_date", "salary"],
     "course": ["code", "subject", "number", "title", "description", "credit_hours", "level", "is_active"],
     "course_prerequisite": ["course_code", "required_course_code", "min_grade", "group_number"],
     "degree_requirement": ["program_code", "course_code", "category", "is_required", "suggested_term_number"],
@@ -23,6 +23,8 @@ TABLES: dict[str, list[str]] = {
                 "end_time", "room", "capacity", "is_cancelled"],
     "enrollment": ["term_code", "crn", "student_university_id", "status", "grade"],
     "transfer_credit": ["student_university_id", "course_code", "credit_hours", "accepted_term_code"],
+    "lecture_staff": ["term_code", "crn", "university_id", "role"],
+    "grade_submission": ["term_code", "crn", "submitted_by", "submitted_at"],
 }
 
 
@@ -49,7 +51,7 @@ def write_all(out_dir: Path, data: dict[str, list[dict]]) -> dict[str, int]:
 
 
 def load_all(dsn: str, in_dir: Path) -> dict[str, int]:
-    """Empty the thirteen tables and COPY the CSVs in, in foreign-key order. Foreign keys and CHECKs are enforced by Postgres."""
+    """Empty the fifteen tables and COPY the CSVs in, in foreign-key order. Foreign keys and CHECKs are enforced by Postgres."""
     counts = {}
     with psycopg.connect(dsn) as conn:
         with conn.cursor() as cur:

@@ -29,6 +29,12 @@ RANK_TITLE = {"professor": "Professor", "associate": "Associate Professor", "ass
               "ta": "Teaching Assistant"}
 
 
+# 2026-11-05: with 1,255 people, 100 full names are shared. A question that names a person must name exactly one, so every
+# builder draws people only from those whose full name is unique (append to a WHERE on the person's university_id column).
+UNIQUE_NAME = """NOT EXISTS (SELECT 1 FROM person p1 JOIN person p2 ON p2.first_name = p1.first_name AND p2.last_name = p1.last_name
+                                 AND p2.university_id <> p1.university_id WHERE p1.university_id = {col})"""
+
+
 def connect(dsn: str) -> psycopg.Connection:
     """Client-side cursor so every executed statement can be captured with literal values."""
     return psycopg.connect(dsn, cursor_factory=psycopg.ClientCursor, options="-c TimeZone=UTC")

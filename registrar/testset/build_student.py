@@ -7,7 +7,7 @@ from collections import Counter
 from psycopg.rows import dict_row
 
 from . import queries as Q
-from .common import AS_OF_BREAK, AS_OF_LATE, AS_OF_SPRING, CURRENT, DEFAULT_AS_OF, FUTURE, PREVIOUS, SNAPSHOT
+from .common import AS_OF_BREAK, AS_OF_LATE, AS_OF_SPRING, CURRENT, DEFAULT_AS_OF, FUTURE, PREVIOUS, SNAPSHOT, UNIQUE_NAME
 from .student_access import AccessBuilder
 
 QUOTA = {
@@ -35,7 +35,8 @@ def generate(conn, seed: int = 7) -> list[dict]:
     rng = random.Random(seed)
     b = AccessBuilder(conn, rng)
 
-    students = fetch(conn, "SELECT university_id AS uid, program_code, status FROM student ORDER BY university_id")
+    students = fetch(conn, "SELECT university_id AS uid, program_code, status FROM student WHERE "
+                     + UNIQUE_NAME.format(col="student.university_id") + " ORDER BY university_id")
     rng.shuffle(students)
     active = [s for s in students if s["status"] == "active"]
     courses = fetch(conn, "SELECT code, level, is_active, (SELECT COUNT(DISTINCT group_number) FROM course_prerequisite cp WHERE cp.course_code = c.code) AS n_groups FROM course c ORDER BY code")
@@ -48,9 +49,11 @@ def generate(conn, seed: int = 7) -> list[dict]:
     offered = {t: sorted({l["course_code"] for l in by_term[t] if not l["is_cancelled"]}) for t in by_term}
     multi = {t: sorted(c for c, n in Counter(l["course_code"] for l in by_term[t] if not l["is_cancelled"]).items() if n > 1) for t in by_term}
     cancelled = [l for l in lectures if l["is_cancelled"]]
-    instructors = fetch(conn, "SELECT university_id AS uid FROM instructor WHERE is_active ORDER BY university_id")
+    instructors = fetch(conn, "SELECT university_id AS uid FROM instructor WHERE is_active AND "
+                        + UNIQUE_NAME.format(col="instructor.university_id") + " ORDER BY university_id")
     rng.shuffle(instructors)
-    tas = fetch(conn, "SELECT i.university_id AS uid FROM instructor i JOIN student s USING (university_id) ORDER BY 1")
+    tas = fetch(conn, "SELECT i.university_id AS uid FROM instructor i JOIN student s USING (university_id) WHERE "
+                + UNIQUE_NAME.format(col="i.university_id") + " ORDER BY 1")
     pure_instructors = [i for i in instructors if i["uid"] not in {t["uid"] for t in tas}]
 
     def student(i: int) -> str:
@@ -211,8 +214,10 @@ def generate(conn, seed: int = 7) -> list[dict]:
     cases.append(b.my_transcript(history[3]["uid"], term_code=CURRENT))
     taken = next(r["course_code"] for r in records[history[4]["uid"]] if r["grade"] not in (None, "W"))
     cases.append(b.my_transcript(history[4]["uid"], course=taken))
-    not_taken = next(c for c in plan_courses[history[5]["program_code"]] if c not in {r["course_code"] for r in records[history[5]["uid"]]})
-    cases.append(b.my_transcript(history[5]["uid"], course=not_taken))
+    # the first student from history[5] on with a plan course not on their record (a student near graduation may have them all)
+    st5, not_taken = next((st, c) for st in history[5:] for c in plan_courses[st["program_code"]]
+                          if c not in {r["course_code"] for r in records[st["uid"]]})
+    cases.append(b.my_transcript(st5["uid"], course=not_taken))
     in_progress = next(r["course_code"] for r in records[history[6]["uid"]] if r["term_code"] == CURRENT)
     cases.append(b.my_transcript(history[6]["uid"], course=in_progress))
 

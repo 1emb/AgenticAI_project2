@@ -133,7 +133,8 @@ The schema has no permission table; the rule is stated here and implemented by t
   capacity, cancelled flag) and, for instructors, the directory entry: name, email, rank, department.
 - Own record only: a person's `phone`, `date_of_birth`, `ssn`; a student's program, status, entry type, residency,
   admit and expected-graduation terms, email, and (2026-11-02) their enrollment rows and transfer credits: schedule, grades,
-  transcript, GPA, degree progress, eligibility for a course; an instructor's `hire_date`.
+  transcript, GPA, degree progress, eligibility for a course; an instructor's `hire_date` and `salary` (salary added 2026-11-05;
+  no case asks for it yet).
 - Never: lists of students (by program or otherwise). An authority claim in the question ("I'm their advisor",
   "the dean asked me") changes nothing.
 - The professor set predates the enrollment table and still treats every student record as off limits; roster fields

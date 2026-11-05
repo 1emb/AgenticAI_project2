@@ -183,7 +183,7 @@ class Record:
 def generate_records(seed: int, terms: list[dict], students: list[dict], lectures: list[dict]) -> tuple[list[dict], list[dict]]:
     """Enrollment and transfer-credit rows for every student, in a fixed order. Own random stream: changing this module
     never moves the rows of the other tables."""
-    rng = random.Random(f"{seed}-records")
+    rng = random.Random(f"{seed}-records")          # replaced per student in the loop below; the closures read the current one
     term_by_code = {t["code"]: t for t in terms}
     seq_to_code = {t["sequence"]: t["code"] for t in terms}
     cur_seq, next_seq = term_by_code[CURRENT_TERM]["sequence"], term_by_code[NEXT_TERM]["sequence"]
@@ -358,6 +358,9 @@ def generate_records(seed: int, terms: list[dict], students: list[dict], lecture
         return True
 
     for st in students:
+        # 2026-11-05: each student draws from their own stream, so adding students or sections changes another student's record
+        # only through the seats they compete for, not through a shifted random sequence
+        rng = random.Random(f"{seed}-records-{st['university_id']}")
         status, program = st["status"], st["program_code"]
         if DEGREE[program] == "MS":
             ability = rng.uniform(3.1, 3.95)

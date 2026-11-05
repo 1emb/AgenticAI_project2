@@ -6,7 +6,7 @@ from collections import Counter
 
 from psycopg.rows import dict_row
 
-from .common import AS_OF_BREAK, AS_OF_LATE, AS_OF_SPRING, CURRENT, DEFAULT_AS_OF, FUTURE, PREVIOUS, SNAPSHOT
+from .common import AS_OF_BREAK, AS_OF_LATE, AS_OF_SPRING, CURRENT, DEFAULT_AS_OF, FUTURE, PREVIOUS, SNAPSHOT, UNIQUE_NAME
 from .professor_access import ProfAccess
 
 QUOTA = {"teach_current": 10, "teach_term": 8, "teach_week": 6, "teach_day": 6, "section_meeting": 6, "teach_load": 6, "term_dates": 8,
@@ -32,10 +32,12 @@ def generate(conn, seed: int = 11) -> list[dict]:
                COUNT(*) FILTER (WHERE l.term_code = %(c)s AND NOT l.is_cancelled) AS n_current,
                COUNT(*) FILTER (WHERE l.term_code = %(f)s AND NOT l.is_cancelled) AS n_future
         FROM instructor i LEFT JOIN lecture l ON l.instructor_university_id = i.university_id
-        WHERE i.is_active GROUP BY i.university_id, i.department_code, i.rank ORDER BY i.university_id""", c=CURRENT, f=FUTURE)
+        WHERE i.is_active AND """ + UNIQUE_NAME.format(col="i.university_id") + """
+        GROUP BY i.university_id, i.department_code, i.rank ORDER BY i.university_id""", c=CURRENT, f=FUTURE)
     rng.shuffle(profs)
     teaching = [p for p in profs if p["n_current"] > 0]
-    students = fetch(conn, "SELECT university_id AS uid FROM student ORDER BY university_id")
+    students = fetch(conn, "SELECT university_id AS uid FROM student WHERE " + UNIQUE_NAME.format(col="student.university_id")
+                     + " ORDER BY university_id")
     rng.shuffle(students)
     courses = fetch(conn, "SELECT code FROM course ORDER BY code")
     all_codes = [c["code"] for c in courses]

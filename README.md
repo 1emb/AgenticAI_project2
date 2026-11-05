@@ -5,13 +5,13 @@ definition, the PostgreSQL schema, the test sets, and the agent itself (`registr
 
 The schema was rebuilt on 2026-10-28 around natural keys and a two-major scope (BS Computer Science and BS
 Engineering, plus an MS in each for graduate students). The dataset is a static snapshot committed as one CSV per
-table under `data/seed/` (8,826 rows, written by the deterministic generator in `registrar/seed/`); the agents only
-read it. The test sets under `data/testset/` are regenerated from it (student set extended 2026-11-01, and 2026-11-02 with
-the enrollment table).
+table under `data/seed/` (33,947 rows, written by the deterministic generator in `registrar/seed/`); the agents only
+read it. The test sets under `data/testset/` are regenerated from it (student set extended 2026-11-01, 2026-11-02 with
+the enrollment table, and 2026-11-05 with four times the students, salaries, section staff and grade submissions).
 
 ## Layout
 ```
-registrar/models/   SQLAlchemy 2.0 models (14 tables)       docs/domain.md    what the registrar does, data, users
+registrar/models/   SQLAlchemy 2.0 models (16 tables)       docs/domain.md    what the registrar does, data, users
 registrar/db.py     engine / session (reads .env)            docs/schema.html  visual schema reference with example rows
 registrar/seed/     dataset generator; catalog.py holds the  data/seed/        the dataset, one CSV per table
                     courses and plans, records.py enrollment scripts/          seed.py, load_seed.py, check_seed.py, make_testset.py, init_db.py
@@ -31,25 +31,27 @@ Not in git: `pgdata/` and `.env` (copy `.env.example`).
 Visual reference, one section per table with example rows that follow the same people across tables:
 https://claude.ai/artifact/8XjEo8BMjePpb2vcKgHUye (the same page is saved as [docs/schema.html](docs/schema.html)).
 
-PostgreSQL 18, SQLAlchemy 2.0 models in `registrar/models/`. 14 tables. Natural keys throughout: a human is identified
+PostgreSQL 18, SQLAlchemy 2.0 models in `registrar/models/`. 16 tables. Natural keys throughout: a human is identified
 by `university_id`, a course by its catalog code, a term by its six-digit code, a lecture by term plus CRN.
 Enums are VARCHAR with CHECK constraints (see `registrar/models/enums.py`); adding a value needs an Alembic migration.
 Enrollment (student x lecture with status and grade) and transfer credit were added on 2026-11-02 (`records.py`, Alembic
-revision `64244b3c17e8`).
+revision `64244b3c17e8`); instructor salary, section staff and grade submission on 2026-11-05 (revision `9d2f5b7c41a0`).
 
 In one paragraph: `person` (keyed by `university_id`) carries name, DOB, sex, SSN, phone, email. `student` and
 `instructor` share that key and add their profiles; a student points at one `program`, an instructor at one
 `department`. `course` and `course_prerequisite` are the catalog; `degree_requirement` and
 `program_category_requirement` say what each program needs; `lecture` is a course offered in an `academic_term` by one
 instructor with its meeting pattern. `grade_scale` maps letter grades to grade points. `enrollment` is one student in one
-lecture with a status and a grade; `transfer_credit` is a course accepted from another institution.
+lecture with a status and a grade; `transfer_credit` is a course accepted from another institution. `lecture_staff` lists
+who works on each section (its instructor of record and any TAs); `grade_submission` records when a section's final grades
+were submitted.
 
 ### People (`people.py`)
 | Table | Key | Columns |
 |---|---|---|
 | `person` | `university_id` (9 chars) | `first_name`, `last_name`, `date_of_birth`, `sex` (M/F/X, CHECK), `ssn` (raw, synthetic, unique), `phone`, `email` (unique) |
 | `student` | `university_id` = FK `person` | `program_code` FK, `status` (active, leave_of_absence, withdrawn, suspended, dismissed, graduated), `entry_type` (first_time, transfer, readmit), `residency` (resident, nonresident, international), `admit_term_code` FK, `expected_graduation_term_code` FK nullable |
-| `instructor` | `university_id` = FK `person` | `department_code` FK, `rank` (free text: professor, associate, assistant, lecturer, adjunct, ta), `is_active`, `hire_date` |
+| `instructor` | `university_id` = FK `person` | `department_code` FK, `rank` (free text: professor, associate, assistant, lecturer, adjunct, ta), `is_active`, `hire_date`, `salary` (annual whole dollars; a TA's stipend, an adjunct's annual equivalent; own record only) |
 
 One `person` row per human. A graduate teaching assistant has one `person`, one `student` and one `instructor` row
 sharing the same `university_id`. Whether a student is undergraduate or graduate follows from `program.degree`.
@@ -88,6 +90,8 @@ rows with points; a grade earns credit when points > 0, so F, W and I earn nothi
 |---|---|---|
 | `enrollment` | (`term_code`, `crn`, `student_university_id`); (`term_code`, `crn`) FK `lecture`, the student FK `student` | `status` (enrolled, completed, withdrawn), `grade` FK `grade_scale`, nullable. CHECK `status_grade`: enrolled has no grade, withdrawn has W, completed has any other grade. |
 | `transfer_credit` | (`student_university_id`, `course_code`) | `credit_hours`, `accepted_term_code` FK `academic_term`. A course accepted from another institution: it meets prerequisites and earns credit, has no grade and stays outside the GPA. |
+| `lecture_staff` | (`term_code`, `crn`, `university_id`); (`term_code`, `crn`) FK `lecture`, the person FK `instructor` | `role` (instructor, ta; CHECK). Every section has its instructor of record here (the same person as `lecture.instructor_university_id`); each TA assists two lower-division sections of their department per term from Fall 2025, never one they teach and never at a time they teach or sit in class. |
+| `grade_submission` | (`term_code`, `crn`) FK `lecture` | `submitted_by` FK `instructor` (the instructor of record), `submitted_at` (timestamptz, UTC). One row per section with students in a graded term (up to Spring 2026); about 8% arrive one to three days after `grades_due`. No row = not submitted (every Fall 2026 and Spring 2027 section) or no students. |
 
 Added 2026-11-02. One row per student per section: `enrolled` while the term is in progress or still ahead (Fall 2026 and the
 Spring 2027 registrations), `completed` with a letter grade or I once posted, `withdrawn` with W. A student who repeats a course
@@ -114,7 +118,7 @@ conda activate /home/sheshnagnobackup/mnguyen/envs/registrar
 ./db/start.sh                     # starts Postgres on localhost:5433 (TCP only, no unix socket)
 ./db/psql.sh                      # psql into the registrar database
 alembic upgrade head              # create the tables and the grade_scale rows
-python scripts/load_seed.py       # load data/seed/*.csv (empties the thirteen data tables first)
+python scripts/load_seed.py       # load data/seed/*.csv (empties the fifteen data tables first)
 ```
 Connection string: `postgresql+psycopg://registrar@localhost:5433/registrar` (in `.env` as `DATABASE_URL`).
 To rebuild from scratch: `dropdb -h localhost -p 5433 -U registrar registrar && createdb -h localhost -p 5433 -U registrar registrar`,
@@ -122,11 +126,21 @@ then `alembic upgrade head`. `python scripts/init_db.py --drop` creates the tabl
 and without the grade_scale rows.
 
 ## Dataset
-`data/seed/` is the whole dataset: 10 departments, 4 programs, 20 terms (Fall 2021 to Spring 2031), 349 people
-(300 students: 150 BSCS, 120 BSENG, 15 MSCS, 15 MSENG; 55 instructors, six of them MS students working as TAs and ten
-former instructors who only taught before Fall 2024), 72 courses (two retired), 73 prerequisite rows, 97 degree-plan
-rows, 6 category minimums, 1,402 lectures over Fall 2021 to Spring 2027, 6,155 enrollment rows and 283 transfer
-credits. Every value is synthetic. `python scripts/seed.py` regenerates the CSVs byte for byte from `registrar/seed/`
+`data/seed/` is the whole dataset: 10 departments, 4 programs, 20 terms (Fall 2021 to Spring 2031), 1,255 people
+(1,200 students: 600 BSCS, 480 BSENG, 60 MSCS, 60 MSENG; 61 instructors, six of them MS students working as TAs, ten
+former instructors who only taught before Fall 2024 and six hired for the added sections), 72 courses (two retired), 73
+prerequisite rows, 97 degree-plan rows, 6 category minimums, 1,558 lectures over Fall 2021 to Spring 2027, 25,960
+enrollment rows, 1,194 transfer credits, 1,606 section-staff rows (48 of them TAs) and 831 grade submissions. Every value
+is synthetic. 100 full names are shared by two or three people; the test-set builders only pick people whose full name is
+unique (`registrar/testset/common.py`, `UNIQUE_NAME`).
+
+Scale-up (2026-11-05, owner): with 300 students a section held a median of 4 to 7 students. Three more cohorts of each
+program (900 students) are drawn after everything else, so the original 300 students, 55 instructors and 1,402 lectures
+are byte-identical. A dry run with unlimited seats measures each term's demand per course, and 152 sections are appended
+(higher CRNs, own random stream) until capacity covers demand plus 15%; six instructors are hired where a department had
+no one free. Fall 2026 now has 154 sections with a median of 26 students (53% of seats). Each student's record draws
+from its own random stream, but records still change when the seats they compete for change: all enrollment rows were
+regenerated. `python scripts/seed.py` regenerates the CSVs byte for byte from `registrar/seed/`
 (seed 42; `--load` also loads them); `python scripts/check_seed.py` checks the loaded records against the rules in
 `registrar/seed/records.py` (prerequisites, capacities, time clashes, graduation, status against GPA) and prints a
 profile. The data and the test sets are frozen together: regenerating with a different seed or catalog changes the
@@ -215,7 +229,7 @@ The grader scores each question three times: the intent, the resolved slots agai
 under the verification contract. With `--reply` the English reply is written too and scanned for `must_not_mention` values.
 
 ### Web chat (`scripts/ui.py`)
-A single page served by FastAPI (`registrar/ui/`): choose the student from the 300 in the database (filter by name, ID or
+A single page served by FastAPI (`registrar/ui/`): choose the student from the 1,200 in the database (filter by name, ID or
 program), choose the clock (the five test-set clocks, or any UTC datetime), ask, and read the reply. Each reply expands to show
 how it was produced: intent and confidence, the mentions, each resolution with its status, the graded answer, the SQL and the
 per-stage timings. Refusals are marked. In the question box, Up recalls earlier questions (this session first, then the

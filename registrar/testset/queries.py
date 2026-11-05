@@ -28,7 +28,8 @@ def student_by_uid(q: QueryLog, uid: str) -> dict:
 
 def instructor_by_uid(q: QueryLog, uid: str) -> dict:
     return q.one("identify the instructor", """
-        SELECT p.university_id, p.first_name, p.last_name, p.email, i.department_code, d.name AS department_name, i.rank, i.is_active, i.hire_date
+        SELECT p.university_id, p.first_name, p.last_name, p.email, i.department_code, d.name AS department_name, i.rank, i.is_active, i.hire_date,
+               i.salary
         FROM instructor i JOIN person p ON p.university_id = i.university_id JOIN department d ON d.code = i.department_code
         WHERE i.university_id = %(uid)s""", uid=uid)
 
@@ -256,3 +257,51 @@ def leak_course_roster(q: QueryLog, term_code: str, course_code: str, n: int = 3
         SELECT e.student_university_id, p.first_name || ' ' || p.last_name AS name, p.email FROM enrollment e JOIN lecture l ON l.term_code = e.term_code AND l.crn = e.crn
         JOIN person p ON p.university_id = e.student_university_id
         WHERE e.term_code = %(t)s AND l.course_code = %(c)s AND e.status <> 'withdrawn' ORDER BY e.student_university_id LIMIT %(n)s""", t=term_code, c=course_code, n=n)
+
+
+# ---- professor records (2026-11-05): a professor's or TA's own sections, their students and grades ----
+def staff_sections(q: QueryLog, uid: str, term_code: str | None = None) -> list[dict]:
+    """Sections the person works on (instructor of record or TA), non-cancelled, with their role."""
+    return q.rows("the sections the user teaches or assists", LECTURE_SELECT.replace("SELECT l.term_code", "SELECT s.role, t.sequence, l.term_code")
+                  + " JOIN lecture_staff s ON s.term_code = l.term_code AND s.crn = l.crn"
+                  + " WHERE s.university_id = %(uid)s AND NOT l.is_cancelled" + (" AND l.term_code = %(t)s" if term_code else "")
+                  + " ORDER BY t.sequence, l.crn", uid=uid, t=term_code)
+
+
+def section_students(q: QueryLog, term_code: str, crn: str) -> list[dict]:
+    """Every enrollment row of the section (withdrawn included) with the student's directory fields and grade points."""
+    return q.rows("the students in the user's section, with grades", """
+        SELECT e.student_university_id AS university_id, p.first_name || ' ' || p.last_name AS name, p.email, s.program_code AS program, s.status,
+               e.status AS enrollment_status, e.grade, g.points
+        FROM enrollment e JOIN person p ON p.university_id = e.student_university_id JOIN student s ON s.university_id = e.student_university_id
+        LEFT JOIN grade_scale g ON g.letter = e.grade
+        WHERE e.term_code = %(t)s AND e.crn = %(crn)s ORDER BY e.student_university_id""", t=term_code, crn=crn)
+
+
+def student_directory(q: QueryLog, uid: str) -> dict:
+    return q.one("the student's name, email, program and status (allowed: the student is in the user's section)", """
+        SELECT p.university_id, p.first_name || ' ' || p.last_name AS name, p.email, s.program_code AS program, s.status
+        FROM student s JOIN person p ON p.university_id = s.university_id WHERE s.university_id = %(uid)s""", uid=uid)
+
+
+def student_in_staff_sections(q: QueryLog, staff_uid: str, student_uid: str) -> list[dict]:
+    """The student's rows in any section the user teaches or assists: the permission check for every student question."""
+    return q.rows("is the student in one of the user's sections (any term)", """
+        SELECT e.term_code, e.crn, e.status, e.grade FROM enrollment e
+        JOIN lecture_staff s ON s.term_code = e.term_code AND s.crn = e.crn
+        WHERE s.university_id = %(me)s AND e.student_university_id = %(st)s ORDER BY e.term_code, e.crn""", me=staff_uid, st=student_uid)
+
+
+def section_tas(q: QueryLog, term_code: str, crn: str) -> list[dict]:
+    return q.rows("the section's teaching assistants", """
+        SELECT s.university_id, p.first_name || ' ' || p.last_name AS name FROM lecture_staff s JOIN person p ON p.university_id = s.university_id
+        WHERE s.term_code = %(t)s AND s.crn = %(crn)s AND s.role = 'ta' ORDER BY s.university_id""", t=term_code, crn=crn)
+
+
+def grade_submission(q: QueryLog, term_code: str, crn: str) -> dict | None:
+    return q.one("the section's grade submission", """
+        SELECT submitted_by, submitted_at FROM grade_submission WHERE term_code = %(t)s AND crn = %(crn)s""", t=term_code, crn=crn)
+
+
+def leak_salary(q: QueryLog, uid: str) -> dict:
+    return q.one(LEAK + "the other instructor's salary", "SELECT salary FROM instructor WHERE university_id = %(uid)s", uid=uid)

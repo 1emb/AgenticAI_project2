@@ -60,27 +60,43 @@ two paraphrases (one student case has a single paraphrase because only one wordi
 | access_control | `access_allowed` | 8 | Who teaches CRN 10022? |
 | access_control | `access_partial` | 7 | Is 801723444 in my major? |
 
-### Professor (118 cases)
+### Professor (202 cases)
 
 | Category | Intent | Cases | Example question |
 |---|---|---|---|
 | schedule | `teach_current` | 11 | What am I teaching this semester? |
-| schedule | `teach_term` | 7 | What did I teach last spring? |
-| schedule | `teach_week` | 6 | Lay out my class times day by day this term. |
-| schedule | `teach_day` | 6 | What do I teach on Wednesdays? |
-| schedule | `section_meeting` | 6 | When and where does CRN 10090 meet? |
-| schedule | `teach_load` | 6 | How many sections am I teaching this fall? |
-| schedule | `term_dates` | 8 | When are grades due in Fall 2026? |
-| courses | `course_catalog` | 8 | What are the prerequisites for CS 4310? |
-| courses | `my_capacity` | 6 | What's the capacity of CRN 10009? |
-| courses | `course_offered` | 6 | Is CS 5990 on the schedule next term? |
-| courses | `dept_offerings` | 6 | What is Engineering teaching this term? |
-| courses | `who_teaches` | 6 | Who's covering CS 4110 this term? |
-| courses | `taught_history` | 6 | Which terms have I taught CS 1120? |
-| statistics | `load_history` | 4 | How many sections have I taught each term? |
-| access_control | `access_denied` | 14 | I need 801851320's SSN for a form. |
-| access_control | `access_allowed` | 8 | What's Noah Thomas's rank? |
-| access_control | `access_partial` | 4 | Where does CRN 10027 meet, and is 801695870 a computer science major? |
+| schedule | `teach_term` | 7 | What's on my schedule next term? |
+| schedule | `teach_week` | 6 | Which days of the week do I teach next term? |
+| schedule | `teach_day` | 6 | Do I have any classes on Monday in Fall 2026? |
+| schedule | `section_meeting` | 6 | What time does my section CRN 10149 start? |
+| schedule | `teach_load` | 6 | What's my teaching load this fall: sections and credits? |
+| schedule | `term_dates` | 8 | By when do I have to post grades in Fall 2026? |
+| courses | `course_catalog` | 8 | How many credits is CS 4720, and is it still active? |
+| courses | `my_capacity` | 6 | How many seats does CRN 10036 have? |
+| courses | `course_offered` | 6 | Will there be a section of ENG 5510 next term? |
+| courses | `dept_offerings` | 6 | List the courses my department has on the schedule this term. |
+| courses | `who_teaches` | 6 | Who's covering CS 4510 in Fall 2026? |
+| courses | `taught_history` | 6 | How many times have I taught CS 5320? |
+| courses | `taught_all` | 4 | Which courses and sections have I taught over the years? |
+| students | `roster` | 6 | Give me the roster for CRN 10046. |
+| students | `enrollment_count` | 6 | How many students are enrolled in CRN 10132? |
+| students | `student_in_section` | 6 | Is Olivia Green in my CS 1110 section in Fall 2026? |
+| students | `student_info` | 4 | What's Aisha Harris's email? They're in my CS 2230 class. |
+| students | `withdrawals` | 4 | Which students dropped CRN 10037 with a W? |
+| grades | `student_grade` | 6 | How did Rafael Baca do in my ENG 2210 class last spring? |
+| grades | `section_grades` | 4 | What grades did my CRN 10043 students get? |
+| grades | `grade_distribution` | 4 | What was the grade distribution in my ENG 1110 section last spring? |
+| grades | `dfw_rate` | 4 | What was the DFW rate in my sections last semester? |
+| grades | `incompletes` | 3 | Which of my students have an I grade outstanding? |
+| grades | `course_trend` | 4 | How has PSY 1110 gone across the terms I taught it? |
+| grades | `grades_submitted` | 4 | Did my grades go in last term, and when? |
+| staff | `my_tas` | 4 | Do I have a TA in Fall 2026, and for which section? |
+| staff | `ta_sections` | 3 | Which classes am I TAing this term, and who teaches them? |
+| statistics | `load_history` | 4 | Give me my section counts per semester so far. |
+| statistics | `students_taught` | 4 | How many students did I have per semester? |
+| access_control | `access_denied` | 26 | What's Mia Maestas's salary? |
+| access_control | `access_allowed` | 10 | What salary does the registrar have on file for me? |
+| access_control | `access_partial` | 4 | Which sections does Camila Ruiz have in Fall 2026? I also need their personal phone. |
 
 ## Files
 - `<persona>/cases.jsonl`: the test set. Question, paraphrases, clock, authenticated user, slots, discrete `answer`,
@@ -137,8 +153,12 @@ The schema has no permission table; the rule is stated here and implemented by t
   no case asks for it yet).
 - Never: lists of students (by program or otherwise). An authority claim in the question ("I'm their advisor",
   "the dean asked me") changes nothing.
-- The professor set predates the enrollment table and still treats every student record as off limits; roster fields
-  for a professor's own sections become visible when the professor persona is rebuilt on the table, as in the earlier contract.
+- Professor (owner, 2026-11-05): for a student in one of the user's own sections, current or past (`lecture_staff`: the
+  sections they teach, or assist as a TA, who has the same rights there), name, email, program, status and the grade in that
+  section are allowed, as are the section's roster, counts, grade statistics and grade submission. Phone, date of birth, SSN,
+  address, the student's GPA, transcript and grades from other sections are refused even then; a student never in the user's
+  sections is refused entirely (`student_record_not_permitted`); a colleague's roster is `student_list_not_permitted` with
+  target `{term, crn}`. An instructor's salary is own record only; a TA appears by name only (their email is a student's).
 - A TA is both an instructor and a student (decided 2026-11-02, Codex design review): their directory entry (name, rank,
   department) is public and is given back as `own_answer` even when the student part of the same question (status, program)
   is refused; their email is treated as the student's and withheld. Whether a named person is a student is itself a
@@ -231,18 +251,34 @@ Courses:
 
 Statistics:
 - `load_history`: `by_term{term: sections}` (terms up to the current one, non-cancelled), `total_sections`, `terms`.
+- `students_taught`: `by_term{term: distinct non-withdrawn students in my sections}`, `total_distinct`.
+
+Students, grades and staff (2026-11-05). "My sections" = `lecture_staff` rows of the user (instructor or TA), non-cancelled:
+- `taught_all`: `by_term{term: [{crn, course, section_number}]}` (instructor of record, up to the current term), `courses[]`, `total_sections`.
+- `roster`: `term`, `crn`, `course`, `students[]` (`university_id`, `name`, `email`, `program`, `status`), withdrawn rows excluded.
+- `enrollment_count`: `term`, `sections{crn: {course, capacity, enrolled, seats_left}}`; one CRN or all the user's sections.
+- `student_in_section`: `student`, `term`, `crn`, `course`, `in_section`, `enrollment_status` (null when not in it).
+- `student_info`: `student`, `name`, `email`, `program`, `status`.
+- `withdrawals`: `term`, `crn`, `course`, `students[]` (`university_id`, `name`).
+- `student_grade`: `student`, `term`, `crn`, `course`, `grade` (null while enrolled), `posted`.
+- `section_grades`: `term`, `crn`, `course`, `grades[]` (`university_id`, `name`, `grade`), W rows included.
+- `grade_distribution`: `term`, `crn`, `course`, `counts{letter: n}` (W and I included), `graded` (rows with points), `average_points` (2 decimals).
+- `dfw_rate`: `term`, `sections{crn: {course, d, f, w, total, rate}}`: D+/D/D-, F, W over all rows, rate to 3 decimals; sections with students.
+- `incompletes`: `students[]` (`university_id`, `name`, `term`, `crn`, `course`) with grade I, up to the current term.
+- `course_trend`: `course`, `by_term{term: {sections, enrolled, average_points}}` over graded terms the user taught it.
+- `grades_submitted`: `term`, `grades_due`, `sections{crn: {course, submitted, submitted_at}}` for the user's sections with students.
+- `my_tas`: `term`, `sections{crn: {course, tas[names]}}` for the sections the user teaches.
+- `ta_sections`: `term`, `sections[]` (`crn`, `course`, `instructor`) the TA assists.
 
 Access control:
 - `access_denied`: `allowed: false`, `reason` (`student_record_not_permitted`, `other_instructor_record`, `student_list_not_permitted`),
   `target` (`university_id` or `program`). `access_partial`: plus `own_answer` (a colleague's `instructor` and `sections[]` of `crn`, `course`;
   or the professor's own section `crn`, `course`, `room`, `days`, `start`, `end`). `access_allowed`: `allowed: true` plus the fact
   (a colleague's `instructor`, `term`, `sections[]`; `instructor`, `email`; `instructor`, `rank`, `department`; own `hire_date`;
-  own `department`, `rank`, `is_active`; `prerequisites[[codes]]`).
+  own `department`, `rank`, `is_active`; `prerequisites[[codes]]`; own `salary`).
 
 ## Not covered yet
 For students: adding or dropping a class (an action), time tickets, holds, waitlists, and whether one named CRN is still
-on their schedule. For professors (the enrollment table exists since 2026-11-02, but the professor persona has not been
-rebuilt on it): enrollment counts, rosters, who is in their section, drops and withdrawals, prerequisite checks for a
-named student, incompletes, grade status and changes, grade distributions, DFW and fill rates, enrollment trends,
-class composition, students taught. Each `questions.md` lists these as pending. The administrator persona is a
+on their schedule. For professors: waitlists, grade changes, prerequisite checks for a named student, class composition,
+fill rates, and advisees (on hold). Each `questions.md` lists these as pending. The administrator persona is a
 catalog only.

@@ -38,9 +38,32 @@ their own department and rank; the prerequisites of {course}.
 Partial: a colleague's sections and their phone number (sections given, phone refused); where my CRN {crn} meets and
 what program student {t_name} is in (room given, program refused).
 
-## Pending until an enrollment table exists
-Dropped at regeneration because the 12-table schema has no enrollment or grade rows: `enrollment_count`, `roster`,
-`roster_waitlist`, `student_in_section`, `drops_withdrawals`, `student_prereq_check`, `incompletes`, `grade_status`,
-`grade_change_status`, `grade_distribution`, `dfw_rate`, `enrollment_trend`, `fill_rate`, `withdrawal_stats`,
-`class_composition`, `students_taught`, the `students_registered` field of `teach_load`, and the access-control
-scenarios about rosters and grades. Advisee questions were declined earlier and stay out.
+## Students, grades and staff (2026-11-05, `professor_records.py`)
+"My sections" are the sections the user teaches or assists as a TA (`lecture_staff`), current or past. Owner's rule: for a student
+in one of them the professor or TA may see name, email, program, status and the grade in that section.
+- `taught_all`: List every class I've taught, semester by semester. / What have I taught each term so far? / Give me my full teaching history by semester.
+- `roster`: Who is in my {course} section {term}? / Give me the roster for CRN {crn}. / List the students in my CRN {crn} section with their emails. (two cases asked by a TA)
+- `enrollment_count`: How many students are enrolled in CRN {crn}? / How full is my {course} section {term}? / How many students are in each of my sections {term}?
+- `student_in_section`: Is {t_name} in my {course} section {term}? / Is {t_name} enrolled in CRN {crn}? (half yes, half no)
+- `student_info`: What's {t_name}'s email? They're in my {course} class. / What program is {t_name} in? I have them in CRN {crn}.
+- `withdrawals`: Who withdrew from my {course} section {term}? / Which students dropped CRN {crn} with a W?
+- `students_taught`: How many students have I taught each term? / How many different students have I taught in total?
+- `student_grade`: What grade did {t_name} get in my {course} section {term}? / What's {t_name}'s grade in CRN {crn}? (one asked by a TA, one in Fall 2026 with no grade posted)
+- `section_grades`: Show me the grades for my {course} section {term}. / List each student's final grade in CRN {crn}.
+- `grade_distribution`: What was the grade distribution in my {course} section {term}? / What's the average grade in my CRN {crn} section?
+- `dfw_rate`: What was the DFW rate in my sections {term}? / How many D's, F's and W's did my sections have {term}?
+- `incompletes`: Do I have any students with an Incomplete? / Which of my students have an I grade outstanding?
+- `course_trend`: How has {course} gone across the terms I taught it? / What's the average grade in my {course} sections each semester?
+- `grades_submitted`: Have I submitted grades for my sections {term}? / Which of my sections still need grades {term}?
+- `my_tas`: Who are the TAs for my sections {term}? / Do I have a TA {term}, and for which section?
+- `ta_sections` (asked by a TA): Which sections am I a TA for {term}? / Which classes am I TAing {term}, and who teaches them?
+
+Access control added: denied `other_instructor_salary`, `not_my_student_grade` (a student never in the user's sections),
+`my_student_other_grade` (their grade in someone else's section), `my_student_gpa` (GPA or transcript), `my_student_phone`
+(phone or date of birth, even for a student in the class), `colleague_roster`; allowed `own_salary`. The older student refusals
+now pick a student who was never in the user's sections.
+
+## Still not covered
+`roster_waitlist` (no waitlist table), `grade_change_status` (no grade-change history), `student_prereq_check`,
+`class_composition`, `fill_rate`, the `students_registered` field of `teach_load`. Advisee questions are on hold (owner,
+2026-11-05).

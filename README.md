@@ -8,6 +8,7 @@ Engineering, plus an MS in each for graduate students). The dataset is a static 
 table under `data/seed/` (33,947 rows, written by the deterministic generator in `registrar/seed/`); the agents only
 read it. The test sets under `data/testset/` are regenerated from it (student set extended 2026-11-01, 2026-11-02 with
 the enrollment table, and 2026-11-05 with four times the students, salaries, section staff and grade submissions).
+**Building or testing a system against the data: start with [data/README.md](data/README.md).**
 
 ## Layout
 ```

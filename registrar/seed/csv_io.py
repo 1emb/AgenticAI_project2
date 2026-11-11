@@ -57,6 +57,9 @@ def load_all(dsn: str, in_dir: Path) -> dict[str, int]:
     with psycopg.connect(dsn) as conn:
         with conn.cursor() as cur:
             cur.execute("TRUNCATE " + ", ".join(TABLES) + " CASCADE")
+            cur.execute("SELECT to_regclass('change_log')")  # the write path's log: a reload starts from a clean record
+            if cur.fetchone()[0]:
+                cur.execute("TRUNCATE change_log RESTART IDENTITY")
             for table, cols in TABLES.items():
                 path = in_dir / f"{table}.csv"
                 with open(path, "rb") as f, cur.copy(

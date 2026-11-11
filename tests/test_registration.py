@@ -504,3 +504,88 @@ def test_real_clock_is_read_again_and_a_test_clock_is_not(ws):
     fixed = Calendar(ws, DEFAULT)
     fixed.refresh()
     assert not fixed.live and fixed.as_of.isoformat() == "2026-11-20T18:00:00+00:00"
+
+
+# ------------------------------------------------------------------ the multi-agent coordinator on the real router
+def _plan(agent, question):
+    import json
+    return json.dumps({"tasks": [{"agent": agent, "question": question}]})
+
+
+def test_coordinator_writes_only_on_the_exact_yes(ws):
+    """Mason's coordinator in front of the real Router and database: the registration specialist prepares the change,
+    a hedged yes goes back to it and writes nothing, the exact yes is confirmed in code with no model call."""
+    from registrar.agents.multi import Coordinator
+    from registrar.agents.multi.agents import REGISTRATION
+    from registrar.agents.router import Router
+    uid = active_bs_student(ws)
+    probe, _ = student_tools(ws, uid)
+    lec = addable(ws, probe)
+    ask = f"Register me for CRN {lec.crn} next spring"
+    client = FakeClient([_plan(REGISTRATION, ask), [call("request_registration", {"crn": lec.crn, "term": "Spring 2027"})],
+                         "Shall I?",
+                         _plan(REGISTRATION, "yes later"), [call("confirm_change", {"code": "GUESS1"})],
+                         "You are registered!"])
+    r = Router(client, ws, uid, as_of=DEFAULT, model="fake")
+    co = Coordinator(r)
+    assert "confirm_change" not in co.runtime.tools_of(REGISTRATION)  # no specialist can confirm
+    assert {"request_registration", "request_drop", "cancel_change"} <= set(co.runtime.tools_of(REGISTRATION))
+    first = co.ask(ask)
+    assert first.route == "multi" and first.reply.endswith("Please answer yes or no.") and r.gate.pending
+    hedged = co.ask("yes later")  # not the exact word: planned and sent to the specialist, which cannot confirm
+    assert hedged.route == "multi" and not hedged.answer.get("changed") and "registered" not in hedged.reply.lower()
+    assert enr(ws, uid, "202710", lec.crn) is None and r.gate.pending
+    n = len(client.requests)
+    done = co.ask("yes")
+    assert done.route == "confirm" and done.answer["changed"] is True and len(client.requests) == n
+    assert enr(ws, uid, "202710", lec.crn).status.value == "enrolled"
+    assert "no pending change" in co.ask("yes").reply and len(client.requests) == n  # nothing left to confirm
+
+
+def test_coordinator_exact_no_discards(ws):
+    from registrar.agents.multi import Coordinator
+    from registrar.agents.multi.agents import REGISTRATION
+    from registrar.agents.router import Router
+    uid = active_bs_student(ws)
+    probe, _ = student_tools(ws, uid)
+    lec = addable(ws, probe)
+    ask = f"Register me for CRN {lec.crn} next spring"
+    client = FakeClient([_plan(REGISTRATION, ask), [call("request_registration", {"crn": lec.crn, "term": "Spring 2027"})],
+                         "Shall I?"])
+    r = Router(client, ws, uid, as_of=DEFAULT, model="fake")
+    co = Coordinator(r)
+    co.ask(ask)
+    n = len(client.requests)
+    res = co.ask("no")
+    assert res.route == "confirm" and res.reply == "Nothing was changed." and not r.gate.pending
+    assert len(client.requests) == n and enr(ws, uid, "202710", lec.crn) is None
+
+
+def test_coordinator_registers_by_course_code(ws):
+    """request_registration_for_course (Mason): course -> section -> pending change, on main's student tools."""
+    from registrar.agents.multi import Coordinator
+    from registrar.agents.multi.agents import REGISTER_FOR_COURSE, REGISTRATION
+    from registrar.agents.router import Router
+    single = [l for l in ws.scalars(select(Lecture).where(Lecture.term_code == "202710", Lecture.is_cancelled.is_(False))
+                                    .order_by(Lecture.crn))
+              if ws.scalar(select(func.count()).select_from(Lecture).where(
+                  Lecture.term_code == "202710", Lecture.course_code == l.course_code,
+                  Lecture.is_cancelled.is_(False))) == 1]
+    uid = lec = None
+    for cand in ws.scalars(select(Student.university_id).where(Student.status == "active")
+                           .order_by(Student.university_id).limit(60)):  # a student who can add a one-section course
+        probe, _ = student_tools(ws, cand)
+        lec = next((l for l in single if probe.check_registration(l.crn, "Spring 2027")["answer"]["can_add"]), None)
+        if lec is not None:
+            uid = cand
+            break
+    assert uid is not None
+    ask = f"Register me for {lec.course_code} next spring"
+    client = FakeClient([_plan(REGISTRATION, ask),
+                         [call(REGISTER_FOR_COURSE, {"course": lec.course_code, "term": "Spring 2027"})], "Shall I?"])
+    r = Router(client, ws, uid, as_of=DEFAULT, model="fake")
+    co = Coordinator(r)
+    first = co.ask(ask)
+    assert lec.crn in first.reply and first.reply.endswith("Please answer yes or no.")
+    assert co.ask("Yes.").answer["changed"] is True
+    assert enr(ws, uid, "202710", lec.crn).status.value == "enrolled"

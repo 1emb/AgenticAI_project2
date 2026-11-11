@@ -4,7 +4,8 @@
     python scripts/registrar_chat.py --user 801408626                 # an instructor (Professor agent + advising)
     python scripts/registrar_chat.py --user 900000001                 # the registrar administrator
     python scripts/registrar_chat.py --user <TA id> --role student    # a person with two roles picks one
-Options: --as-of 2026-11-20T18:00:00Z, --model, --base-url, --verbose, --show-answer. Set LLM_BACKEND=ollama-native
+Options: --as-of 2026-11-20T18:00:00Z, --model, --base-url, --verbose, --show-answer, --multi (specialist
+agents behind a planning coordinator; --show-answer then also prints the plan and the agent trace). Set LLM_BACKEND=ollama-native
 to use Ollama's native API (honors think=false for reasoning models).
 """
 import argparse
@@ -29,16 +30,25 @@ def main():
     ap.add_argument("--base-url", default=DEFAULT_BASE_URL)
     ap.add_argument("--verbose", action="store_true")
     ap.add_argument("--show-answer", action="store_true")
+    ap.add_argument("--multi", action="store_true", help="use the multi-agent coordinator instead of the single persona agent")
     ap.add_argument("--question", help="ask one question and exit")
     a = ap.parse_args()
     router = Router(make_client(a.base_url), get_session(), a.user, a.role, a.as_of, a.model, a.verbose)
-    print(f"Logged in as {a.user} ({router.role}). Type 'quit' to exit.")
+    ask = router.ask
+    if a.multi:
+        from registrar.agents.multi import Coordinator  # noqa: E402
+        ask = Coordinator(router, model=a.model).ask
+    print(f"Logged in as {a.user} ({router.role}{', multi-agent' if a.multi else ''}). Type 'quit' to exit.")
     questions = [a.question] if a.question else iter(lambda: input("\nYou: "), "quit")
     for q in questions:
-        r = router.ask(q)
+        r = ask(q)
         print(f"\nAgent: {r.reply}")
         if a.show_answer:
             print("answer:", json.dumps(r.answer, default=str))
+            if a.multi:
+                print("route:", r.route, "| plan:", json.dumps(r.plan))
+                for t in r.trace:
+                    print(f"  {'  ' * t['depth']}[{t['agent']}] {t['status']} tools={t['tools']}")
 
 
 if __name__ == "__main__":

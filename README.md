@@ -264,7 +264,8 @@ python scripts/review.py --csv runs/chat.csv # one row per question, for a sprea
 `runs/` is git-ignored, so the log stays on this machine.
 
 ## Merged system (2026-11-11)
-Duong's branch `advising-agent` (af41cf6) merged into main's agents (a846c19), with main as the base:
+Duong's branch `advising-agent` (af41cf6) and then Mason's branch `mason` (fdf81d8, the coordinator and RAG on top of
+Duong's) merged into main's agents (a846c19), with main as the base:
 
 | Part | Where | From |
 |---|---|---|
@@ -272,6 +273,8 @@ Duong's branch `advising-agent` (af41cf6) merged into main's agents (a846c19), w
 | Router (role from the login), Administrator agent | `registrar/agents/router.py`, `admin/` | Duong |
 | Own transcript and GPA, degree planner (clingo), handbook search | `registrar/agents/records.py`, `advising.py` + `advising_agent/`, `policy.py` + `data/policy/` | Duong, reading main's `enrollment` and `transfer_credit` |
 | Writes: register, drop / withdraw, post a grade | `registrar/agents/registration.py` | Duong, rewritten for main's table |
+| Multi-agent coordinator: planner, four specialists (data, policy, advising, registration), composer | `registrar/agents/multi/` | Mason (fdf81d8); `scripts/registrar_chat.py --multi` |
+| Retrieval over the handbook and the course catalog (BM25, plus embeddings when `EMBED_MODEL` is set), `search_catalog` tool | `registrar/rag/`, `data/testset/rag/` | Mason; details in [README3.md](README3.md) |
 
 Duong's own enrollment table and data (`data/seed_enrollment/`) are gone; everything reads `data/seed/`. The administrator
 cases (`data/testset/administrator/cases.jsonl`, 35) were regenerated on this dataset by `registrar/testset/administrator.py`.

@@ -41,6 +41,7 @@ class TermNotFound(ValueError):
 
 class Calendar:
     def __init__(self, session: Session, as_of: str | datetime | None = None):
+        self.live = as_of is None  # no clock given: the real time, re-read by refresh()
         self.as_of = parse_as_of(as_of)
         self.today: date = self.as_of.date()
         self.terms: list[AcademicTerm] = list(session.scalars(select(AcademicTerm).order_by(AcademicTerm.sequence)))
@@ -49,6 +50,13 @@ class Calendar:
         self._by_seq = {t.sequence: t for t in self.terms}
         self._by_code = {t.code: t for t in self.terms}
         self._by_name = {t.name.lower(): t for t in self.terms}
+
+    def refresh(self) -> None:
+        """Re-read the real time when no clock was given, so a chat left open over midnight does not keep yesterday's
+        date. A given clock (as_of, tests) stays where it is. The write path calls this before every check."""
+        if self.live:
+            self.as_of = parse_as_of(None)
+            self.today = self.as_of.date()
 
     # ------------------------------------------------------------ anchors
     def current(self) -> AcademicTerm:

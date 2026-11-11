@@ -133,18 +133,25 @@ class ProfessorTools:
         return self.s.get(LectureStaff, (term_code, crn, self.uid)) is not None
 
     def _rows(self, term_code: str, crn: str):
-        """Every enrollment row of a section, withdrawn included: (Enrollment, Person, Student)."""
+        """Every enrollment row of a section, withdrawn included: (Enrollment, Person, Student). A dropped row
+        (left by the drop deadline, 2026-11-11) is not on any record, so it is left out here and everywhere below."""
         return self.s.execute(
             select(Enrollment, Person, Student)
             .join(Person, Person.university_id == Enrollment.student_university_id)
             .join(Student, Student.university_id == Enrollment.student_university_id)
-            .where(Enrollment.term_code == term_code, Enrollment.crn == crn)
+            .where(Enrollment.term_code == term_code, Enrollment.crn == crn,
+                   Enrollment.status != EnrollmentStatus.DROPPED)
             .order_by(Enrollment.student_university_id)).all()
+
+    def _enrollment(self, term_code: str, crn: str, student_uid: str) -> Enrollment | None:
+        """One student's row in a section, or None when there is none or it was dropped."""
+        e = self.s.get(Enrollment, (term_code, crn, student_uid))
+        return None if e is None or e.status == EnrollmentStatus.DROPPED else e
 
     def _seats(self, term_code: str, crn: str) -> int:
         return self.s.scalar(select(func.count()).select_from(Enrollment).where(
             Enrollment.term_code == term_code, Enrollment.crn == crn,
-            Enrollment.status != EnrollmentStatus.WITHDRAWN)) or 0
+            Enrollment.status.not_in((EnrollmentStatus.WITHDRAWN, EnrollmentStatus.DROPPED)))) or 0
 
     def _submitted(self, term_code: str, crn: str) -> GradeSubmission | None:
         return self.s.get(GradeSubmission, (term_code, crn))
@@ -186,7 +193,8 @@ class ProfessorTools:
     def _ever_my_student(self, student_uid: str) -> bool:
         return self.s.scalar(select(func.count()).select_from(Enrollment).join(
             LectureStaff, (LectureStaff.term_code == Enrollment.term_code) & (LectureStaff.crn == Enrollment.crn))
-            .where(LectureStaff.university_id == self.uid, Enrollment.student_university_id == student_uid)) > 0
+            .where(LectureStaff.university_id == self.uid, Enrollment.student_university_id == student_uid,
+                   Enrollment.status != EnrollmentStatus.DROPPED)) > 0
 
     # ================================================================ which section?
     def _section(self, crn: str | None, course: str | None, term: str | None, mode: str,
@@ -239,8 +247,8 @@ class ProfessorTools:
         now = [r for r in mine if r[3].sequence == cur.sequence]
         pick = None
         if student_uid:
-            with_student = [r for r in mine if r[3].sequence <= cur.sequence and self.s.get(
-                Enrollment, (r[0].term_code, r[0].crn, student_uid)) is not None]
+            with_student = [r for r in mine if r[3].sequence <= cur.sequence and self._enrollment(
+                r[0].term_code, r[0].crn, student_uid) is not None]
             pick = (sorted(with_student, key=lambda r: (r[3].sequence != cur.sequence, -r[3].sequence)) or [None])[0]
         elif mode == "graded":
             graded = [r for r in mine if r[3].sequence <= cur.sequence and self._submitted(r[0].term_code, r[0].crn)]
@@ -464,7 +472,7 @@ class ProfessorTools:
         l, _, c, t, note = self._section(crn, course, term, "roster")
         if not self._is_mine(l.term_code, l.crn):
             return refusal("student_record_not_permitted", {"university_id": p.university_id}, NOT_MINE)
-        e = self.s.get(Enrollment, (l.term_code, l.crn, p.university_id))
+        e = self._enrollment(l.term_code, l.crn, p.university_id)
         return self._with_note({"answer": {"student": p.university_id, "name": full_name(p), "term": t.name,
                                            "crn": l.crn, "course": l.course_code, "in_section": e is not None,
                                            "enrollment_status": plain(e.status) if e else None}}, note)
@@ -513,7 +521,7 @@ class ProfessorTools:
             return refusal("student_record_not_permitted", target, "You can see grades only for your own sections.")
         if not self._is_mine(l.term_code, l.crn):
             return refusal("student_record_not_permitted", target, "You can see grades only for your own sections.")
-        e = self.s.get(Enrollment, (l.term_code, l.crn, p.university_id))
+        e = self._enrollment(l.term_code, l.crn, p.university_id)
         return self._with_note({"answer": {"student": p.university_id, "name": full_name(p), "term": t.name,
                                            "crn": l.crn, "course": l.course_code, "in_section": e is not None,
                                            "grade": e.grade if e else None,

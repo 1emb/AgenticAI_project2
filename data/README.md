@@ -11,7 +11,7 @@ State as of 2026-11-05, branch `Minh` (commits `e42ce61`, `e786872`, `bede07c`).
 ```bash
 # a Postgres 18 database, then from the repository root:
 export DATABASE_URL=postgresql+psycopg://registrar@localhost:5433/registrar
-alembic upgrade head              # 16 tables + the 14 grade_scale rows
+alembic upgrade head              # 18 tables + the 14 grade_scale rows
 python scripts/load_seed.py       # empties the 15 data tables and loads data/seed/*.csv
 python scripts/check_seed.py      # checks the data's rules; prints "0 problems"
 ```
@@ -27,7 +27,7 @@ g.passed, g.problems, g.leaked
 
 ## The dataset (`seed/`)
 
-One CSV per table, 33,947 rows, all synthetic. Visual reference with real example rows:
+One CSV per table, 35,147 rows, all synthetic. Visual reference with real example rows:
 https://claude.ai/artifact/8XjEo8BMjePpb2vcKgHUye (same page as `docs/schema.html`).
 
 | Table | Rows | What it is |
@@ -44,10 +44,11 @@ https://claude.ai/artifact/8XjEo8BMjePpb2vcKgHUye (same page as `docs/schema.htm
 | `program_category_requirement` | 6 | Credits needed per category |
 | `lecture` | 1,558 | A section: term + CRN, course, instructor of record, meeting pattern, room, capacity, cancelled flag |
 | `grade_scale` | 14 | Letters and points (inserted by the migration, not a CSV) |
-| `enrollment` | 25,960 | One student in one section: enrolled / completed / withdrawn, with the grade |
+| `enrollment` | 25,960 | One student in one section: enrolled / completed / withdrawn, with the grade (`dropped` exists since 2026-11-11, no seed row has it) |
 | `transfer_credit` | 1,194 | Courses accepted from another school |
 | `lecture_staff` | 1,606 | Who works on each section: the instructor of record, plus 48 TA assignments |
 | `grade_submission` | 831 | When a section's final grades were submitted (none for Fall 2026 or Spring 2027) |
+| `advisor_assignment` | 1,200 | The instructor who advises each student (added 2026-11-11) |
 
 Facts the system has to get right:
 - **The data is a snapshot taken in Fall 2026.** Fall 2026 (code `202680`) is in progress and Spring 2027 (`202710`)
@@ -137,6 +138,15 @@ like "I'm their advisor" or "the dean asked me" change nothing.
 Refusal reasons:
 - student cases: `other_student_record`, `student_list_not_permitted`, `instructor_private_record`;
 - professor cases: `student_record_not_permitted`, `other_instructor_record`, `student_list_not_permitted`.
+
+## Added with the merged system (2026-11-11)
+
+- `advisor_assignment.csv` (1,200 rows): one advisor per student, generated without any random draw, so no other
+  CSV changed. Loaded by `scripts/load_seed.py` like the rest.
+- `enrollment.status` can now be `dropped` (migration `b7e4a1c9d2f3`). No seed row has it; the write path sets it
+  when a student drops by the drop deadline. Treat a dropped row as not there: no seat, no roster, no transcript.
+- `change_log`: a table, not a CSV. The write path adds one row per change.
+- The test sets here are unchanged. They contain no dropped rows and no write cases yet.
 
 ## What changed since your Student Agent (b473fc9)
 

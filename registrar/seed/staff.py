@@ -87,3 +87,22 @@ def submission_rows(seed: int, lectures: list[dict], enrollment: list[dict], ter
         rows.append(dict(term_code=l["term_code"], crn=l["crn"], submitted_by=l["instructor_university_id"],
                          submitted_at=(local + timedelta(hours=offset)).replace(tzinfo=timezone.utc).isoformat()))
     return rows
+
+
+def advisor_rows(students: list[dict], instructors: list[dict], programs: list[dict]) -> list[dict]:
+    """One advisor per student (2026-11-11, from Duong's advising-agent branch): the active instructors of the
+    department that runs the student's program, TAs left out, handed out in turn in university-ID order. No random
+    draw, so adding this table changes no other row."""
+    dept_of = {p["code"]: p["department_code"] for p in programs}
+    pool: dict[str, list[str]] = {}
+    for i in sorted(instructors, key=lambda i: i["university_id"]):
+        if i["is_active"] and i["rank"] != "ta":
+            pool.setdefault(i["department_code"], []).append(i["university_id"])
+    turn: dict[str, int] = {}
+    out = []
+    for st in sorted(students, key=lambda s: s["university_id"]):
+        dept = dept_of[st["program_code"]]
+        n = turn.get(dept, 0)
+        out.append({"student_university_id": st["university_id"], "advisor_university_id": pool[dept][n % len(pool[dept])]})
+        turn[dept] = n + 1
+    return out

@@ -27,6 +27,9 @@ DEFAULT_MODEL = os.environ.get("LLM_MODEL", "qwen3-coder:30b")
 
 
 def make_client(base_url: str | None = None, api_key: str | None = None):
+    if os.environ.get("LLM_BACKEND", "openai") == "ollama-native":  # honors think=false; see ollama_native.py
+        from registrar.agents.ollama_native import OllamaNativeClient
+        return OllamaNativeClient(base_url)
     from openai import OpenAI
     return OpenAI(base_url=base_url or DEFAULT_BASE_URL, api_key=api_key or os.environ.get("LLM_API_KEY", "ollama"))
 
@@ -54,6 +57,8 @@ class ToolLoop:
         self.client, self.model = client, model
         self.tool_specs = tool_specs
         self.tool_names = {t["function"]["name"] for t in tool_specs}
+        self.tool_params = {t["function"]["name"]: set(t["function"].get("parameters", {}).get("properties", {}))
+                            for t in tool_specs}
         self.dispatch = dispatch
         self.max_steps, self.temperature, self.verbose = max_steps, temperature, verbose
         self.messages: list[dict] = [{"role": "system", "content": system_prompt}]
@@ -95,8 +100,15 @@ class ToolLoop:
             return self._log(ToolCall(name, raw_args, {"error": "Tool arguments were not valid JSON."}, False))
         if name not in self.tool_names:
             return self._log(ToolCall(name, args, {"error": f"There is no tool named {name!r}."}, False))
+        # Small models often add arguments a tool does not declare (e.g. a course to a no-argument tool). Drop them;
+        # a call that still lacks a required argument fails below as before.
+        ignored = sorted(set(args) - self.tool_params.get(name, set()))
+        args = {k: v for k, v in args.items() if k not in ignored}
         try:
-            return self._log(ToolCall(name, args, self.dispatch(name, args), True))
+            result = self.dispatch(name, args)
+            if ignored and isinstance(result, dict):
+                result = {**result, "ignored_arguments": ignored}
+            return self._log(ToolCall(name, args, result, True))
         except ToolError as e:
             return self._log(ToolCall(name, args, {"error": str(e)}, False))
         except TypeError as e:                       # wrong or missing argument names

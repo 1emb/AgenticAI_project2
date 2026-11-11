@@ -15,7 +15,7 @@ from datetime import date, time, timedelta
 
 from . import catalog as C
 from .records import generate_records, overlaps
-from .staff import salaries, staff_rows, submission_rows
+from .staff import advisor_rows, salaries, staff_rows, submission_rows
 
 LECTURE_TERMS = ["202480", "202510", "202580", "202610", "202680", "202710"]
 EARLIER_LECTURE_TERMS = ["202180", "202210", "202280", "202310", "202380", "202410"]   # added 2026-11-02 for the enrollment history
@@ -295,6 +295,7 @@ def generate(seed: int = 42) -> dict[str, list[dict]]:
         "instructor": instructors, "course": courses, "course_prerequisite": prereqs, "degree_requirement": degree_req,
         "program_category_requirement": category_req, "lecture": lectures, "enrollment": enrollment, "transfer_credit": transfer_credit,
         "lecture_staff": lecture_staff, "grade_submission": grade_submission,
+        "advisor_assignment": advisor_rows(students, instructors, programs),
     }
 
 

@@ -1,0 +1,30 @@
+{"id": "pol-001", "question": "How many grade points is a B-?", "expected_section": "1.1"}
+{"id": "pol-002", "question": "Does an F earn credit?", "expected_section": "1.1"}
+{"id": "pol-003", "question": "Does a W count in my GPA?", "expected_section": "1.1"}
+{"id": "pol-004", "question": "How is the cumulative GPA calculated?", "expected_section": "1.2"}
+{"id": "pol-005", "question": "If I retake a course, do both attempts count in my GPA?", "expected_section": "1.2"}
+{"id": "pol-006", "question": "What does an incomplete grade mean?", "expected_section": "1.3"}
+{"id": "pol-007", "question": "Can I repeat a course where I got a D?", "expected_section": "2.1"}
+{"id": "pol-008", "question": "Can I retake a class I passed with a B to raise my grade?", "expected_section": "2.1"}
+{"id": "pol-009", "question": "How many credits do I need to be full-time as an undergraduate?", "expected_section": "3.1"}
+{"id": "pol-010", "question": "What counts as full-time for a graduate student?", "expected_section": "3.1"}
+{"id": "pol-011", "question": "What is the maximum number of credit hours I can take in a semester?", "expected_section": "3.2"}
+{"id": "pol-012", "question": "How many credits can a student on probation register for?", "expected_section": "3.2"}
+{"id": "pol-013", "question": "When is an undergraduate placed on academic probation?", "expected_section": "4.1"}
+{"id": "pol-014", "question": "What happens after three terms on probation?", "expected_section": "4.1"}
+{"id": "pol-015", "question": "Which students are at risk of suspension?", "expected_section": "4.1"}
+{"id": "pol-016", "question": "What GPA do master's students need to stay in good standing?", "expected_section": "4.2"}
+{"id": "pol-017", "question": "What minimum grade do I need in a prerequisite?", "expected_section": "5.1"}
+{"id": "pol-018", "question": "If a course lists two alternative prerequisites, do I need both?", "expected_section": "5.1"}
+{"id": "pol-019", "question": "As an MS student, do I need the undergraduate prerequisites?", "expected_section": "5.2"}
+{"id": "pol-020", "question": "Can a bachelor's student take a graduate course?", "expected_section": "6.1"}
+{"id": "pol-021", "question": "What is the difference between dropping a class and withdrawing?", "expected_section": "7.1"}
+{"id": "pol-022", "question": "When does registration close?", "expected_section": "7.1"}
+{"id": "pol-023", "question": "Can I register for a full section?", "expected_section": "7.5"}
+{"id": "pol-024", "question": "Do required gen-ed courses count toward the general education minimum?", "expected_section": "8.1"}
+{"id": "pol-025", "question": "What does a degree require?", "expected_section": "8.1"}
+{"id": "pol-026", "question": "Do extra courses count toward my total credits?", "expected_section": "8.2"}
+{"id": "pol-027", "question": "What do I need to graduate?", "expected_section": "9.1"}
+{"id": "pol-028", "question": "Can an advisor see a student's grades?", "expected_section": "10.1"}
+{"id": "pol-029", "question": "Who can see my academic record?", "expected_section": "10.1"}
+{"id": "pol-030", "question": "Is a professor's phone number public?", "expected_section": "10.2"}

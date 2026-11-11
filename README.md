@@ -5,14 +5,14 @@ definition, the PostgreSQL schema, the test sets, and the agent itself (`registr
 
 The schema was rebuilt on 2026-10-28 around natural keys and a two-major scope (BS Computer Science and BS
 Engineering, plus an MS in each for graduate students). The dataset is a static snapshot committed as one CSV per
-table under `data/seed/` (33,947 rows, written by the deterministic generator in `registrar/seed/`); the agents only
+table under `data/seed/` (35,147 rows, written by the deterministic generator in `registrar/seed/`); the agents only
 read it. The test sets under `data/testset/` are regenerated from it (student set extended 2026-11-01, 2026-11-02 with
 the enrollment table, and 2026-11-05 with four times the students, salaries, section staff and grade submissions).
 **Building or testing a system against the data: start with [data/README.md](data/README.md).**
 
 ## Layout
 ```
-registrar/models/   SQLAlchemy 2.0 models (16 tables)       docs/domain.md    what the registrar does, data, users
+registrar/models/   SQLAlchemy 2.0 models (18 tables)       docs/domain.md    what the registrar does, data, users
 registrar/db.py     engine / session (reads .env)            docs/schema.html  visual schema reference with example rows
 registrar/seed/     dataset generator; catalog.py holds the  data/seed/        the dataset, one CSV per table
                     courses and plans, records.py enrollment scripts/          seed.py, load_seed.py, check_seed.py, make_testset.py, init_db.py
@@ -32,7 +32,7 @@ Not in git: `pgdata/` and `.env` (copy `.env.example`).
 Visual reference, one section per table with example rows that follow the same people across tables:
 https://claude.ai/artifact/8XjEo8BMjePpb2vcKgHUye (the same page is saved as [docs/schema.html](docs/schema.html)).
 
-PostgreSQL 18, SQLAlchemy 2.0 models in `registrar/models/`. 16 tables. Natural keys throughout: a human is identified
+PostgreSQL 18, SQLAlchemy 2.0 models in `registrar/models/`. 18 tables. Natural keys throughout: a human is identified
 by `university_id`, a course by its catalog code, a term by its six-digit code, a lecture by term plus CRN.
 Enums are VARCHAR with CHECK constraints (see `registrar/models/enums.py`); adding a value needs an Alembic migration.
 Enrollment (student x lecture with status and grade) and transfer credit were added on 2026-11-02 (`records.py`, Alembic
@@ -89,10 +89,18 @@ rows with points; a grade earns credit when points > 0, so F, W and I earn nothi
 ### Records (`records.py`)
 | Table | Key | Columns |
 |---|---|---|
-| `enrollment` | (`term_code`, `crn`, `student_university_id`); (`term_code`, `crn`) FK `lecture`, the student FK `student` | `status` (enrolled, completed, withdrawn), `grade` FK `grade_scale`, nullable. CHECK `status_grade`: enrolled has no grade, withdrawn has W, completed has any other grade. |
+| `enrollment` | (`term_code`, `crn`, `student_university_id`); (`term_code`, `crn`) FK `lecture`, the student FK `student` | `status` (enrolled, completed, withdrawn, dropped), `grade` FK `grade_scale`, nullable. CHECK `status_grade`: enrolled has no grade, withdrawn has W, completed has any other grade, dropped has no grade. |
 | `transfer_credit` | (`student_university_id`, `course_code`) | `credit_hours`, `accepted_term_code` FK `academic_term`. A course accepted from another institution: it meets prerequisites and earns credit, has no grade and stays outside the GPA. |
 | `lecture_staff` | (`term_code`, `crn`, `university_id`); (`term_code`, `crn`) FK `lecture`, the person FK `instructor` | `role` (instructor, ta; CHECK). Every section has its instructor of record here (the same person as `lecture.instructor_university_id`); each TA assists two lower-division sections of their department per term from Fall 2025, never one they teach and never at a time they teach or sit in class. |
 | `grade_submission` | (`term_code`, `crn`) FK `lecture` | `submitted_by` FK `instructor` (the instructor of record), `submitted_at` (timestamptz, UTC). One row per section with students in a graded term (up to Spring 2026); about 8% arrive one to three days after `grades_due`. No row = not submitted (every Fall 2026 and Spring 2027 section) or no students. |
+
+| `advisor_assignment` (`advising.py`) | `student_university_id` FK `student` | `advisor_university_id` FK `instructor`. One advisor per student: the active non-TA instructors of the department that runs the student's program, handed out in turn (1,200 rows, 25 advisors). Added 2026-11-11. |
+| `change_log` (`audit.py`) | `id` | `at`, `clock` (the agent's clock at the change), `actor_university_id`, `role`, `action` (register, drop, withdraw, post_grade), `detail` (JSONB). Written only by the write path; empty in the seed. Added 2026-11-11. |
+
+`dropped` (2026-11-11, Alembic `b7e4a1c9d2f3`): a student who leaves a section by the drop deadline keeps the row with status
+`dropped` and no grade. A dropped row is on no record and holds no seat, so every count, roster and transcript query leaves it
+out. The seed has no dropped rows; they only appear when the write path runs. The agents under `registrar/agents/` skip them;
+the test-set builders and `registrar/agent/programs.py` (through `registrar/testset/queries.py`) do not yet.
 
 Added 2026-11-02. One row per student per section: `enrolled` while the term is in progress or still ahead (Fall 2026 and the
 Spring 2027 registrations), `completed` with a letter grade or I once posted, `withdrawn` with W. A student who repeats a course
@@ -119,7 +127,7 @@ conda activate /home/sheshnagnobackup/mnguyen/envs/registrar
 ./db/start.sh                     # starts Postgres on localhost:5433 (TCP only, no unix socket)
 ./db/psql.sh                      # psql into the registrar database
 alembic upgrade head              # create the tables and the grade_scale rows
-python scripts/load_seed.py       # load data/seed/*.csv (empties the fifteen data tables first)
+python scripts/load_seed.py       # load data/seed/*.csv (empties the sixteen data tables first)
 ```
 Connection string: `postgresql+psycopg://registrar@localhost:5433/registrar` (in `.env` as `DATABASE_URL`).
 To rebuild from scratch: `dropdb -h localhost -p 5433 -U registrar registrar && createdb -h localhost -p 5433 -U registrar registrar`,
@@ -254,6 +262,36 @@ python scripts/review.py --list unjudged     # or: wrong | should_refuse | shoul
 python scripts/review.py --csv runs/chat.csv # one row per question, for a spreadsheet
 ```
 `runs/` is git-ignored, so the log stays on this machine.
+
+## Merged system (2026-11-11)
+Duong's branch `advising-agent` (af41cf6) merged into main's agents (a846c19), with main as the base:
+
+| Part | Where | From |
+|---|---|---|
+| Student and Professor agents, eval runner | `registrar/agents/student/`, `professor/`, `registrar/eval/` | main, unchanged except that the Professor agent accepts extra tools and its queries skip dropped rows |
+| Router (role from the login), Administrator agent | `registrar/agents/router.py`, `admin/` | Duong |
+| Own transcript and GPA, degree planner (clingo), handbook search | `registrar/agents/records.py`, `advising.py` + `advising_agent/`, `policy.py` + `data/policy/` | Duong, reading main's `enrollment` and `transfer_credit` |
+| Writes: register, drop / withdraw, post a grade | `registrar/agents/registration.py` | Duong, rewritten for main's table |
+
+Duong's own enrollment table and data (`data/seed_enrollment/`) are gone; everything reads `data/seed/`. The administrator
+cases (`data/testset/administrator/cases.jsonl`, 35) were regenerated on this dataset by `registrar/testset/administrator.py`.
+
+How a write works: the request tool checks the rules and shows a preview; nothing is written. The change is made only when
+the user's next message is exactly "yes" ("no" discards it); the model has no tool that confirms. At the yes the date and
+the rows are read again under row locks and the change is worked out afresh: if it is no longer what was shown (a drop
+that became a withdrawal, a section that moved), nothing is written and the user is asked again.
+
+```bash
+alembic upgrade head && python scripts/load_seed.py     # adds advisor_assignment, change_log and the dropped status
+pip install clingo                                      # the degree planner
+python scripts/registrar_chat.py --user 801930214       # student; instructors and 900000001 (admin) work too
+pytest -q                                               # no model needed
+```
+Older write-up of Duong's branch before the merge: [docs/system.html](docs/system.html). Not done yet: the student test set's
+own-record intents still fail on main's Student agent (its 60 known failures); the write path has unit tests
+(`tests/test_registration.py`) but no test set; of the 2026-11-10 review of the write path, still open are the master's
+program rules (5.2, 6.1), a grade for a student whose full name is shared, an explicit future term moved to the open grading
+term, and a change log that cannot undo a change by itself.
 
 ## Next steps
 1. The professor persona (same pipeline, its own intents), then a persona switch in the web chat.

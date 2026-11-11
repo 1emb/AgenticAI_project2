@@ -1,22 +1,30 @@
 """Student records: which student sits in which lecture with what grade, and credit accepted from another institution."""
 from datetime import datetime
 
-from sqlalchemy import CheckConstraint, DateTime, ForeignKey, ForeignKeyConstraint, Numeric, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import CheckConstraint, DateTime, ForeignKey, ForeignKeyConstraint, Numeric, String, select
+from sqlalchemy.orm import Mapped, column_property, mapped_column, relationship
 
 from .base import Base
+from .catalog import Lecture
 from .enums import EnrollmentStatus, db_enum
 
 
 class Enrollment(Base):
     """One student in one lecture. The grade is null while the course is in progress or registered for a coming term,
-    W when the student withdrew, and a letter grade or I once graded; `status` says which of the three it is."""
+    W when the student withdrew, and a letter grade or I once graded; `status` says which of the three it is.
+
+    `dropped` (2026-11-11, with the write path): the student left by the drop deadline. The row stays, with no grade; it
+    is not on the transcript and holds no seat, so every count, roster and record query must leave dropped rows out.
+
+    `course_code` is not a column: it is read from the lecture (term_code, crn) so code written for a per-course
+    enrollment table can filter and group by course without its own join."""
 
     __tablename__ = "enrollment"
     __table_args__ = (
         ForeignKeyConstraint(["term_code", "crn"], ["lecture.term_code", "lecture.crn"]),
         CheckConstraint("(status = 'enrolled' AND grade IS NULL) OR (status = 'withdrawn' AND grade = 'W') "
-                        "OR (status = 'completed' AND grade IS NOT NULL AND grade <> 'W')", name="status_grade"),
+                        "OR (status = 'completed' AND grade IS NOT NULL AND grade <> 'W') "
+                        "OR (status = 'dropped' AND grade IS NULL)", name="status_grade"),
     )
 
     term_code: Mapped[str] = mapped_column(String(6), primary_key=True)
@@ -27,6 +35,11 @@ class Enrollment(Base):
 
     lecture: Mapped["Lecture"] = relationship()
     student: Mapped["Student"] = relationship()
+
+
+Enrollment.course_code = column_property(
+    select(Lecture.course_code).where(Lecture.term_code == Enrollment.term_code, Lecture.crn == Enrollment.crn)
+    .correlate_except(Lecture).scalar_subquery())
 
 
 class TransferCredit(Base):

@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Agentic Registrar Mindmap</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: radial-style mindmap. Center node in the middle column, five branches per side, curved connectors drawn in SVG. Stacks to one column on phones. */
+:root {
+  --bg: #eef1ec;          /* transcript security-paper tint */
+  --paper: #fbfcf9;
+  --ink: #1f2a28;
+  --muted: #5b6863;
+  --rule: #cfd6cf;
+  --slides: #8a2d3b;      /* registrar oxblood: stated on the slides */
+  --inferred: #9a6512;    /* amber: requirement we inferred */
+  --proposed: #2c6a6e;    /* teal ink: our proposed design */
+  --open: #5a4f8f;        /* violet: open decision */
+  --decided: #4a7526;     /* olive: team decision */
+  --chip: #e6ebe5;
+  --f-display: "Spectral", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c;
+    --slides: #e07f8d; --inferred: #e0a94a; --proposed: #6cc3c6; --open: #ada3e6; --decided: #9fcf6a; --chip: #26302d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c;
+  --slides: #e07f8d; --inferred: #e0a94a; --proposed: #6cc3c6; --open: #ada3e6; --decided: #9fcf6a; --chip: #26302d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 14px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+}
+.page { max-width: 1440px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 14px; }
+.top h1 { font-family: var(--f-display); font-weight: 600; font-size: 28px; margin: 0; text-wrap: balance; }
+.top p { margin: 4px 0 0; color: var(--muted); max-width: 62ch; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px; }
+.legend button {
+  font: 500 12px var(--f-body); letter-spacing: .02em;
+  border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+  padding: 5px 10px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+}
+.legend button .sw { width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--muted)); }
+.legend button[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.legend button:focus-visible, .flow:focus-visible { outline: 2px solid var(--proposed); outline-offset: 2px; }
+
+/* Map */
+.map { position: relative; display: grid; grid-template-columns: minmax(0,1fr) 250px minmax(0,1fr); gap: 0 64px; align-items: center; }
+.map svg.links { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.links path { fill: none; stroke-width: 1.6; opacity: .75; transition: opacity .2s; }
+.links circle { stroke: none; }
+.links .slides { stroke: var(--slides); fill: var(--slides); }
+.links .inferred { stroke: var(--inferred); fill: var(--inferred); }
+.links .proposed { stroke: var(--proposed); fill: var(--proposed); }
+.links .open { stroke: var(--open); fill: var(--open); }
+.links .decided { stroke: var(--decided); fill: var(--decided); }
+.links path.slides, .links path.inferred, .links path.proposed, .links path.open, .links path.decided { fill: none; }
+.links .dim { opacity: .12; }
+
+.side { display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 1; min-width: 0; }
+
+.hub {
+  position: relative; z-index: 1;
+  background: var(--ink); color: var(--paper);
+  border-radius: 50% / 38%;
+  padding: 34px 22px; text-align: center;
+  display: flex; flex-direction: column; gap: 8px; align-items: center;
+}
+.hub .eyebrow { font: 500 10.5px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
+.hub h2 { font-family: var(--f-display); font-weight: 700; font-size: 22px; line-height: 1.15; margin: 0; text-wrap: balance; }
+.hub p { margin: 0; font-size: 12.5px; opacity: .85; text-wrap: balance; }
+
+.branch {
+  --c: var(--muted);
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 10px;
+  padding: 12px 14px 13px; min-width: 0; transition: opacity .2s;
+}
+.branch[data-cat="slides"] { --c: var(--slides); }
+.branch[data-cat="inferred"] { --c: var(--inferred); }
+.branch[data-cat="proposed"] { --c: var(--proposed); }
+.branch[data-cat="open"] { --c: var(--open); }
+.branch[data-cat="decided"] { --c: var(--decided); }
+.branch.dim { opacity: .22; }
+.branch header { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.branch h3 { font-family: var(--f-display); font-weight: 600; font-size: 17px; margin: 0; color: var(--c); }
+.tag { font: 500 10px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--c); border: 1px solid currentColor; border-radius: 4px; padding: 1px 5px; margin-left: auto; }
+
+.leaves { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.leaves > li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; }
+.leaves > li > b { font-weight: 600; min-width: 0; }
+.leaves > li > b::after { content: ":"; color: var(--muted); }
+.leaves > li.plain > span { color: var(--ink); }
+.chips { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.chips i { font-style: normal; font-size: 12.5px; background: var(--chip); padding: 1px 7px; border-radius: 4px; }
+.mono { font-family: var(--f-mono); font-size: 12px; }
+.leaves code { font-family: var(--f-mono); font-size: 12px; background: var(--chip); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.sub { color: var(--muted); font-size: 12.5px; }
+.divider { border-top: 1px dashed var(--rule); padding-top: 7px; }
+
+/* Flow strip */
+.flowwrap { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.flowwrap h2 { font-family: var(--f-display); font-weight: 600; font-size: 18px; margin: 0; }
+.flowwrap > p { margin: 0; color: var(--muted); }
+.flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 10px; counter-reset: s; }
+.flow li { counter-increment: s; border-top: 3px solid var(--c, var(--muted)); padding-top: 8px; min-width: 0; }
+.flow li::before { content: "Step " counter(s); display: block; font: 500 10.5px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.flow li b { display: block; }
+.flow li span { color: var(--muted); font-size: 12.5px; }
+
+.foot { color: var(--muted); font-size: 12.5px; }
+
+@media (max-width: 1080px) {
+  .map { grid-template-columns: minmax(0,1fr); gap: 14px; }
+  .hub { order: -1; border-radius: 14px; padding: 20px; }
+  .map svg.links { display: none; }
+  .branch { border-left: 4px solid var(--c); }
+  .flow { grid-template-columns: minmax(0,1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="page">
+  <div class="top">
+    <div>
+      <h1>Agentic AI Registrar Office: the whole problem</h1>
+      <p>One map of what the project asks for, what it implies, and how we propose to solve it with a multi-agent system and LLM-based RAG. Colors show where each node comes from.</p>
+    </div>
+    <div class="legend" role="group" aria-label="Filter by source">
+      <button type="button" id="f-all" data-f="all" aria-pressed="true">All</button>
+      <button type="button" id="f-slides" data-f="slides" aria-pressed="false" style="--c: var(--slides)"><span class="sw"></span>From slides</button>
+      <button type="button" id="f-inferred" data-f="inferred" aria-pressed="false" style="--c: var(--inferred)"><span class="sw"></span>Inferred requirement</button>
+      <button type="button" id="f-proposed" data-f="proposed" aria-pressed="false" style="--c: var(--proposed)"><span class="sw"></span>Our proposal</button>
+      <button type="button" id="f-decided" data-f="decided" aria-pressed="false" style="--c: var(--decided)"><span class="sw"></span>Decided</button>
+    </div>
+  </div>
+
+  <div class="map" id="map">
+    <svg class="links" id="links" aria-hidden="true"></svg>
+
+    <!-- LEFT: the solution side -->
+    <div class="side" data-side="left">
+      <section class="branch" data-cat="proposed">
+        <header><h3>Agents (5)</h3><span class="tag">Proposal</span></header>
+        <ul class="leaves">
+          <li><b>Router</b><span>checks the role, classifies the intent, dispatches, writes the final answer with citations</span></li>
+          <li><b>Data agent</b><span>Records + Analytics merged: transcript, schedule, roster, statistics (same tools, same read permission)</span></li>
+          <li><b>Policy agent</b><span>RAG over the handbook, with citations; no database access</span></li>
+          <li><b>Advising agent</b><span>multi-step course plans from Policy + Data results</span></li>
+          <li><b>Registration agent</b><span>the only agent with write tools (register, drop, enter grade); never sees retrieved policy text, so injected text cannot trigger a write</span></li>
+          <li class="divider"><b>Plain code, not agents</b><span class="chips"><i>registration validator</i><i>access control</i><i>SQL execution</i><i>GPA / statistics</i></span></li>
+          <li class="plain"><span class="sub">Split by capability or permission boundary, not by step.</span></li>
+        </ul>
+      </section>
+
+      <section class="branch" data-cat="proposed">
+        <header><h3>Retrieval (the RAG part)</h3><span class="tag">Proposal</span></header>
+        <ul class="leaves">
+          <li><b>Structured</b><span>parameterized tools, e.g. <code>get_transcript(sid)</code>, <code>grade_distribution(course, sem)</code></span></li>
+          <li><b>Text-to-SQL</b><span>fallback for ad hoc admin questions; schema + example retrieval; SELECT only, validated, read-only views</span></li>
+          <li><b>Documents</b><span class="chips"><i>chunk by section</i><i>BM25 + dense</i><i>rerank</i><i>cite sources</i></span></li>
+          <li class="divider plain"><span class="sub">Rule: SQL/Python computes numbers; the LLM only explains them.</span></li>
+        </ul>
+      </section>
+
+      <section class="branch" data-cat="decided">
+        <header><h3>Synthetic data</h3><span class="tag">Decided</span></header>
+        <ul class="leaves">
+          <li><b>Database</b><span>5 slide tables + prerequisites, degree requirements, enrollment, advisors, capacity</span></li>
+          <li><b>Handbook</b><span>synthetic, modeled on the real NMSU catalog policies (catalogs.nmsu.edu): academic standing, degree requirements, registration, grading</span></li>
+          <li><b>Gold answers</b><span>computed by the generator's code</span></li>
+          <li><b>Realism</b><span class="chips"><i>student ability</i><i>course difficulty</i><i>fixed seed</i></span></li>
+          <li><b>Scale</b><span class="chips"><i>~500 students</i><i>60 courses</i><i>25 professors</i><i>8 semesters</i><i>~15k grade rows</i></span></li>
+          <li><b>Planted cases</b><span class="chips"><i>dismissal, and just above</i><i>120 credits, 1 core missing</i><i>repeats, W / I</i><i>high-F course</i><i>missing prerequisite</i></span></li>
+          <li><b>RAG checks</b><span>NMSU text is public, so the LLM may already know it: change a few thresholds from the NMSU values, and run a closed-book baseline; grad vs. undergrad distractors</span></li>
+          <li class="divider plain"><span class="sub">Limit: shows the pipeline is correct, not performance on real registrar data.</span></li>
+        </ul>
+      </section>
+
+      <section class="branch" data-cat="proposed">
+        <header><h3>Tools / stack</h3><span class="tag">Proposal</span></header>
+        <ul class="leaves">
+          <li><b>LLM</b><span class="chips"><i>local via Ollama</i><i>Qwen / Llama</i></span></li>
+          <li><b>Orchestration</b><span class="chips"><i>LangGraph</i></span></li>
+          <li><b>Database</b><span class="chips"><i>SQLite</i><i>PostgreSQL</i></span></li>
+          <li><b>Sample data</b><span class="chips"><i>Faker</i></span></li>
+          <li><b>SQL guard</b><span class="chips"><i>sqlglot</i></span></li>
+          <li><b>RAG</b><span class="chips"><i>bge / e5 embeddings (local)</i><i>Chroma / FAISS</i><i>rank_bm25</i><i>reranker</i></span></li>
+          <li><b>Stats</b><span class="chips"><i>pandas</i><i>SQL aggregates</i></span></li>
+          <li><b>UI</b><span class="chips"><i>Streamlit / Gradio</i></span></li>
+        </ul>
+      </section>
+
+      <section class="branch" data-cat="proposed">
+        <header><h3>Evaluation</h3><span class="tag">Proposal</span></header>
+        <ul class="leaves">
+          <li><b>Test set</b><span>50 to 100 questions per role, each with a gold answer</span></li>
+          <li><b>Metrics</b><span class="chips"><i>SQL execution accuracy</i><i>retrieval recall@k</i><i>faithfulness</i><i>citation correctness</i></span></li>
+          <li><b>Security</b><span>access-violation rate must be 0; prompt-injection tests</span></li>
+          <li><b>Baseline</b><span>single agent with the same tools, same test set; report accuracy, safety, latency</span></li>
+          <li><b>Prior check</b><span>answers that use the original NMSU or common default values instead of our modified ones show RAG failure</span></li>
+        </ul>
+      </section>
+
+      <section class="branch" data-cat="decided">
+        <header><h3>Decisions</h3><span class="tag">Decided</span></header>
+        <ul class="leaves">
+          <li><b>Write access</b><span>read + write: registration and grade entry, checked by the validator, confirmed by the user before commit</span></li>
+          <li><b>LLM</b><span>local model (e.g. Qwen or Llama via Ollama; size set by available GPU)</span></li>
+          <li><b>Framework</b><span>our choice: LangGraph</span></li>
+          <li><b>Deliverables</b><span>no fixed requirement given</span></li>
+          <li class="divider plain"><span class="sub">Local model means: JSON-schema structured output for tool calls, few tools per agent, local embeddings.</span></li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- HUB -->
+    <div class="hub" id="hub">
+      <span class="eyebrow">Project 1</span>
+      <h2>Agentic AI Registrar Office</h2>
+      <p>Multi-agent system + LLM-based RAG</p>
+      <p>Answer each role's questions correctly, from the database and the rules, within that role's access.</p>
+    </div>
+
+    <!-- RIGHT: the problem side -->
+    <div class="side" data-side="right">
+      <section class="branch" data-cat="slides">
+        <header><h3>Goal</h3><span class="tag">Slides</span></header>
+        <ul class="leaves">
+          <li class="plain"><span>Design a multi-agent AI system that functions like a registrar office</span></li>
+          <li><b>Job 1</b><span>maintain the databases</span></li>
+          <li><b>Job 2</b><span>give each type of user the information they need</span></li>
+        </ul>
+      </section>
+
+      <section class="branch" data-cat="slides">
+        <header><h3>Users and needs</h3><span class="tag">Slides</span></header>
+        <ul class="leaves">
+          <li><b>Students</b><span class="chips"><i>Schedule</i><i>Registration</i><i>Transcript</i></span></li>
+          <li><b>Professors</b><span class="chips"><i>Schedule</i><i>Courses</i><i>Statistics</i></span></li>
+          <li><b>Administrators</b><span class="chips"><i>Course-group stats: grade spread, many As / Fs</i><i>Student-group stats: will graduate, near dismissal</i></span></li>
+          <li><b>Advisors</b><span class="chips"><i>Advising courses</i></span></li>
+          <li><b>"..."</b><span class="sub">open-ended; we may add roles or tasks</span></li>
+        </ul>
+      </section>
+
+      <section class="branch" data-cat="slides">
+        <header><h3>Data (sample schema)</h3><span class="tag">Slides</span></header>
+        <ul class="leaves mono">
+          <li class="plain"><span>Students(ID, Name)</span></li>
+          <li class="plain"><span>Grades(Student, Course, Semester, Grade)</span></li>
+          <li class="plain"><span>Schedule(Course, Semester, Professor)</span></li>
+          <li class="plain"><span>Courses(Course, Title, #Credits)</span></li>
+          <li class="plain"><span>Professors(ID, Name)</span></li>
+          <li class="divider plain"><span class="sub" style="font-family: var(--f-body)">Missing (inferred): prerequisites, degree requirements, capacity and time slots, current enrollment, advisor-to-student mapping. Added as synthetic tables.</span></li>
+        </ul>
+      </section>
+
+      <section class="branch" data-cat="inferred">
+        <header><h3>Policies (rules not in the tables)</h3><span class="tag">Inferred</span></header>
+        <ul class="leaves">
+          <li><b>Academic standing</b><span>probation and dismissal thresholds</span></li>
+          <li><b>Degree requirements</b><span>credits, core courses, minimum GPA</span></li>
+          <li><b>Registration rules</b><span>prerequisites, credit cap, deadlines</span></li>
+          <li><b>Grading scale</b><span>points per grade, repeats, W / I / P-F</span></li>
+          <li><b>Catalog</b><span>course descriptions, degree plan</span></li>
+          <li class="divider plain"><span class="sub">Source (decided): synthetic handbook based on NMSU policies, consistent with the synthetic database.</span></li>
+        </ul>
+      </section>
+
+      <section class="branch" data-cat="inferred">
+        <header><h3>Core challenges</h3><span class="tag">Inferred</span></header>
+        <ul class="leaves">
+          <li><b>Understanding</b><span>natural-language question to the correct data</span></li>
+          <li><b>Rules</b><span>"will graduate" and "near dismissal" are defined in policies, not tables</span></li>
+          <li><b>Exactness</b><span>statistics must be computed, not guessed</span></li>
+          <li><b>Access control</b><span>each role sees only its own data</span></li>
+          <li><b>Safe writes</b><span>registration and grade changes must be validated</span></li>
+          <li><b>Grounding</b><span>answers cite the rule or query they used</span></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <section class="flowwrap" aria-labelledby="flow-h">
+    <h2 id="flow-h">How the branches connect: one example</h2>
+    <p>An administrator asks: "Which students are near dismissal?"</p>
+    <ol class="flow" tabindex="-1">
+      <li style="--c: var(--proposed)"><b>Router</b><span>verifies the admin role, routes the question</span></li>
+      <li style="--c: var(--inferred)"><b>Policy agent</b><span>retrieves the dismissal rule from the handbook (RAG)</span></li>
+      <li style="--c: var(--proposed)"><b>Data agent</b><span>turns the rule into a tool call or a validated SQL query</span></li>
+      <li style="--c: var(--decided)"><b>Synthetic database</b><span>Grades + Courses give GPA per student per semester (computed in SQL)</span></li>
+      <li style="--c: var(--proposed)"><b>Router</b><span>returns the list, the cited rule, and the query used; checked against the gold answer</span></li>
+    </ol>
+  </section>
+
+  <p class="foot">Red nodes come from the two project slides. Amber nodes are requirements we inferred from them. Teal nodes are our proposed design. Green nodes are team decisions.</p>
+</div>
+
+<script>
+(function () {
+  const map = document.getElementById('map');
+  const hub = document.getElementById('hub');
+  const svg = document.getElementById('links');
+  const branches = Array.from(document.querySelectorAll('.branch'));
+  const NS = 'http://www.w3.org/2000/svg';
+  let filter = 'all';
+
+  function draw() {
+    svg.innerHTML = '';
+    if (getComputedStyle(svg).display === 'none') return;
+    const m = map.getBoundingClientRect();
+    const h = hub.getBoundingClientRect();
+    const cy = h.top + h.height / 2 - m.top;
+    branches.forEach(b => {
+      const r = b.getBoundingClientRect();
+      const right = b.closest('.side').dataset.side === 'right';
+      const x1 = right ? h.right - m.left : h.left - m.left;
+      const x2 = right ? r.left - m.left : r.right - m.left;
+      const y2 = r.top - m.top + 22;
+      const mx = (x1 + x2) / 2;
+      const cat = b.dataset.cat;
+      const dim = filter !== 'all' && filter !== cat ? ' dim' : '';
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', `M ${x1} ${cy} C ${mx} ${cy}, ${mx} ${y2}, ${x2} ${y2}`);
+      p.setAttribute('class', cat + dim);
+      svg.appendChild(p);
+      const c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', x2); c.setAttribute('cy', y2); c.setAttribute('r', 3.5);
+      c.setAttribute('class', cat + dim);
+      svg.appendChild(c);
+    });
+  }
+
+  function applyFilter(f) {
+    filter = f;
+    document.querySelectorAll('.legend button').forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.f === f)));
+    branches.forEach(b => b.classList.toggle('dim', f !== 'all' && b.dataset.cat !== f));
+    draw();
+  }
+
+  document.querySelectorAll('.legend button').forEach(btn => btn.addEventListener('click', () => applyFilter(btn.dataset.f)));
+  if ('ResizeObserver' in window) new ResizeObserver(draw).observe(map);
+  window.addEventListener('resize', draw);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  draw();
+})();
+</script>
+
+</body>
+</html>

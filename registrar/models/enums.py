@@ -58,3 +58,4 @@ class EnrollmentStatus(str, enum.Enum):
     ENROLLED = "enrolled"      # in progress or registered, no grade yet
     COMPLETED = "completed"    # graded (a letter grade, or I)
     WITHDRAWN = "withdrawn"    # left the section after the drop deadline: grade W
+    DROPPED = "dropped"        # left the section by the drop deadline: no grade, not on the transcript, no seat

@@ -57,10 +57,15 @@ class StudentResult:
 
 class StudentAgent:
     def __init__(self, client, session: Session, student_uid: str, as_of: str | datetime | None = None,
-                 model: str = DEFAULT_MODEL, max_steps: int = 8, verbose: bool = False):
+                 model: str = DEFAULT_MODEL, max_steps: int = 8, verbose: bool = False, extra_tools=None):
+        """extra_tools: (spec, callable) pairs added by the router (advising, records, policy search)."""
         self.calendar = Calendar(session, as_of)
         self.tools = StudentTools(session, student_uid, self.calendar)
-        self.loop = ToolLoop(client, model, self._system_prompt(), TOOL_SPECS, self._dispatch,
+        specs, self.extra = list(TOOL_SPECS), {}
+        for spec, fn in (extra_tools or []):
+            specs.append(spec)
+            self.extra[spec["function"]["name"]] = fn
+        self.loop = ToolLoop(client, model, self._system_prompt(), specs, self._dispatch,
                              max_steps=max_steps, verbose=verbose)
 
     def _system_prompt(self) -> str:
@@ -73,6 +78,8 @@ class StudentAgent:
             next=nxt.name if nxt else "none", prev=prev.name if prev else "none")
 
     def _dispatch(self, name: str, args: dict) -> dict:
+        if name in self.extra:
+            return self.extra[name](**args)
         return getattr(self.tools, name)(**args)
 
     def ask(self, question: str) -> StudentResult:

@@ -25,6 +25,7 @@ TABLES: dict[str, list[str]] = {
     "transfer_credit": ["student_university_id", "course_code", "credit_hours", "accepted_term_code"],
     "lecture_staff": ["term_code", "crn", "university_id", "role"],
     "grade_submission": ["term_code", "crn", "submitted_by", "submitted_at"],
+    "advisor_assignment": ["student_university_id", "advisor_university_id"],
 }
 
 
@@ -51,7 +52,7 @@ def write_all(out_dir: Path, data: dict[str, list[dict]]) -> dict[str, int]:
 
 
 def load_all(dsn: str, in_dir: Path) -> dict[str, int]:
-    """Empty the fifteen tables and COPY the CSVs in, in foreign-key order. Foreign keys and CHECKs are enforced by Postgres."""
+    """Empty the sixteen data tables and COPY the CSVs in, in foreign-key order. Foreign keys and CHECKs are enforced by Postgres."""
     counts = {}
     with psycopg.connect(dsn) as conn:
         with conn.cursor() as cur:

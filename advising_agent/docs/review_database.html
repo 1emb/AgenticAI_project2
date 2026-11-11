@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Registrar Database Review</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; severity-ranked findings as rows with a severity stripe. Palette shared with the project's design pages. */
+:root {
+  --bg: #eef1ec; --paper: #fbfcf9; --ink: #1f2a28; --muted: #5b6863; --rule: #cfd6cf; --chip: #e6ebe5;
+  --crit: #8a2d3b; --high: #b4532a; --med: #9a6512; --low: #5b6863; --ok: #4a7526; --accent: #2c6a6e;
+  --f-display: "Spectral", Georgia, "Times New Roman", serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c; --chip: #26302d;
+    --crit: #e07f8d; --high: #e8916a; --med: #e0a94a; --low: #9aa8a2; --ok: #9fcf6a; --accent: #6cc3c6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151b1a; --paper: #1d2523; --ink: #e4ebe7; --muted: #9aa8a2; --rule: #33403c; --chip: #26302d;
+  --crit: #e07f8d; --high: #e8916a; --med: #e0a94a; --low: #9aa8a2; --ok: #9fcf6a; --accent: #6cc3c6;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font: 14.5px/1.55 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+main { max-width: 920px; margin: 0 auto; display: flex; flex-direction: column; gap: 26px; }
+h1 { font: 600 30px/1.2 var(--f-display); margin: 0; text-wrap: balance; }
+h2 { font: 600 20px/1.25 var(--f-display); margin: 0 0 10px; text-wrap: balance; }
+p { margin: 0 0 8px; max-width: 72ch; }
+ul { margin: 0; padding-left: 20px; max-width: 76ch; }
+li { margin: 3px 0; }
+code { font-family: var(--f-mono); font-size: 12.5px; background: var(--chip); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.lede { color: var(--muted); }
+.verdict { background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; }
+.verdict p:last-child { margin: 0; }
+.findings { display: flex; flex-direction: column; gap: 10px; }
+.f { --c: var(--low); background: var(--paper); border: 1px solid var(--rule); border-left: 5px solid var(--c); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+.f[data-s="critical"] { --c: var(--crit); } .f[data-s="high"] { --c: var(--high); } .f[data-s="medium"] { --c: var(--med); }
+.f header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin-bottom: 6px; }
+.f h3 { font: 600 15.5px/1.35 var(--f-body); margin: 0; }
+.sev { font: 500 10.5px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--c); border: 1px solid currentColor; border-radius: 999px; padding: 1px 8px; }
+.f p { margin: 0 0 6px; }
+.f p:last-child { margin: 0; }
+.f .fix { color: var(--muted); }
+.f .fix b { color: var(--ink); font-weight: 600; }
+.scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; font-size: 12px; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.yes { color: var(--ok); font-weight: 600; } .no { color: var(--crit); font-weight: 600; } .part { color: var(--med); font-weight: 600; }
+.checks { columns: 2 280px; column-gap: 28px; }
+.checks li { break-inside: avoid; }
+</style>
+
+<main>
+<header>
+  <h1>Registrar database review</h1>
+  <p class="lede">Review of the data layer in <code>1emb/AgenticAI_project2</code> at commit <code>5ab1cda</code>: the 12-table schema, its documentation (the schema page and README), and the seed dataset in <code>data/seed/</code>. Written from the Advising agent side, 2026-10-29.</p>
+</header>
+
+<section class="verdict" aria-labelledby="v">
+  <h2 id="v">Verdict</h2>
+  <p>The schema is clean and well documented, and the seed data passed every integrity check I ran. The main problem is scope, not quality. Without an enrollment (grades) table, most of what the project slides ask for cannot be answered, and the README now declares the schema frozen for the agents. I recommend adding <code>enrollment</code> before agent work goes further. The README already proposes its shape, and the generator is deterministic, so the test sets can be rebuilt.</p>
+</section>
+
+<section aria-labelledby="method">
+  <h2 id="method">What I checked</h2>
+  <ul>
+    <li>Models, the initial migration, README, <code>docs/domain.md</code> and the schema page.</li>
+    <li>About 30 automated checks over all 11 seed CSVs (1,660 rows).</li>
+    <li>An end-to-end run: the Advising agent planned one active student in each of the 4 programs, straight from the seed data, and an independent validator re-checked every plan.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="cov">
+  <h2 id="cov">Coverage of the project slides</h2>
+  <p>User needs from the slides against what the current tables can answer.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>User</th><th>Need (slides)</th><th>Answerable now</th><th>Missing</th></tr></thead>
+    <tbody>
+      <tr><td>Student</td><td>Schedule</td><td class="no">No</td><td>which lectures the student is in (enrollment)</td></tr>
+      <tr><td>Student</td><td>Registration</td><td class="no">No</td><td>current registrations, seats taken, prerequisite history</td></tr>
+      <tr><td>Student</td><td>Transcript</td><td class="no">No</td><td>grades</td></tr>
+      <tr><td>Professor</td><td>Schedule, courses</td><td class="yes">Yes</td><td></td></tr>
+      <tr><td>Professor</td><td>Statistics</td><td class="no">No</td><td>grades and enrollment counts</td></tr>
+      <tr><td>Administrator</td><td>Course-group statistics (grade spread, many As or Fs)</td><td class="no">No</td><td>grades</td></tr>
+      <tr><td>Administrator</td><td>Student-group statistics (will graduate, near dismissal)</td><td class="no">No</td><td>grades, credits earned</td></tr>
+      <tr><td>Advisor</td><td>Advising courses</td><td class="part">Partly</td><td>student history (plans assume a new student); advisor assignment</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:8px">The slides' sample design has five tables, and one of them is <b>Grades (student, course, semester, grade)</b>. The current schema has no equivalent.</p>
+</section>
+
+<section aria-labelledby="find">
+  <h2 id="find">Findings, most severe first</h2>
+  <div class="findings">
+
+    <article class="f" data-s="critical">
+      <header><span class="sev">Critical</span><h3>No enrollment or grade table, and the schema is frozen</h3></header>
+      <p>Without it there is no transcript, GPA, standing, "can I add", roster, grade statistics, graduation check or dismissal check, and the advisor cannot see what a student has taken. The README lists these as pending. About two thirds of the slide needs depend on this one table.</p>
+      <p class="fix"><b>Fix:</b> add <code>enrollment(term_code, crn, student_university_id, status, grade FK grade_scale)</code> as proposed in the README, seed it from the generator, and regenerate <code>data/testset</code>. Freezing the schema before this table exists locks in a system that cannot meet the assignment.</p>
+    </article>
+
+    <article class="f" data-s="high">
+      <header><span class="sev">High</span><h3>No advisor-to-student assignment</h3></header>
+      <p>Advisors are a user type in the slides, and the professor question catalog mentions advisees. Nothing in the schema says who advises whom, so "show my advisees" or an advisor viewing a student's plan cannot be permitted or refused correctly.</p>
+      <p class="fix"><b>Fix:</b> a column <code>student.advisor_university_id</code> (FK <code>instructor</code>), or a table <code>advisor_assignment(student_university_id, advisor_university_id, start_term_code)</code> if history matters.</p>
+    </article>
+
+    <article class="f" data-s="high">
+      <header><span class="sev">High</span><h3>MS prerequisites point outside the MS degree plans</h3></header>
+      <p>MSCS has a required course whose prerequisite is <code>CS 3310</code>, and MSENG one whose prerequisite is <code>ENG 3110</code>. Neither course is in the MS plan, and there is no record of a student's prior degree or transfer credit. Any prerequisite check for an MS student will be wrong: either "prerequisite not met" for every MS student, or the check silently skipped. The Advising agent found this on the real data: both MS programs came out infeasible until I added a policy switch.</p>
+      <p class="fix"><b>Fix:</b> decide and document one rule, either "admission to an MS program satisfies undergraduate prerequisites" or a <code>prior_credit</code> table. The Advising agent currently uses the first, as an explicit policy parameter.</p>
+    </article>
+
+    <article class="f" data-s="medium">
+      <header><span class="sev">Medium</span><h3>Category-minimum semantics are not written down</h3></header>
+      <p>BSCS needs 25 general-education credits, and 7 of its required courses (<code>ENGL 1110</code>, <code>ENGL 1120</code>) are general education. Does the 25 include those 7, or come on top of them? The difference is 7 credits in every graduation check. The README defines core but not this case.</p>
+      <p class="fix"><b>Fix:</b> one sentence in the README, plus an example. The Advising agent counts all rows of the category, required ones included.</p>
+    </article>
+
+    <article class="f" data-s="medium">
+      <header><span class="sev">Medium</span><h3>Agents can read SSNs</h3></header>
+      <p><code>person.ssn</code> is stored raw, which is fine as a synthetic leak marker for the test sets. But nothing at the database level stops an agent's SQL from selecting it, so protection rests entirely on prompts and code. The same applies to date of birth and sex, which no agent use case needs.</p>
+      <p class="fix"><b>Fix:</b> a database role for the agents with <code>REVOKE SELECT (ssn, date_of_birth, sex) ON person</code>, or a view <code>person_public</code> without those columns that the agents use. This is cheap, and it makes the access-control test cases hold even when a prompt fails.</p>
+    </article>
+
+    <article class="f" data-s="medium">
+      <header><span class="sev">Medium</span><h3>No catalog year on degree plans</h3></header>
+      <p><code>docs/domain.md</code> says degree audits run "by catalog year", but <code>degree_requirement</code> has one plan per program. A student admitted in Fall 2021 is audited against today's plan. That's acceptable for frozen synthetic data, but it should be stated as an assumption so the agents don't claim catalog-year behavior.</p>
+    </article>
+
+    <article class="f" data-s="low">
+      <header><span class="sev">Low</span><h3>Constraints the data obeys but the schema does not enforce</h3></header>
+      <ul>
+        <li>Policy dates in order (registration opens &lt; start &lt; add &lt; drop &lt; withdraw &lt; end &lt; grades due).</li>
+        <li><code>lecture.start_time &lt; end_time</code>, <code>capacity &gt; 0</code>, <code>credit_hours &gt; 0</code>.</li>
+        <li><code>suggested_term_number BETWEEN 1 AND 8</code> (documented, not checked).</li>
+        <li><code>course_prerequisite.min_grade</code> is a foreign key to <code>grade_scale</code>, so <code>W</code> or <code>I</code> would be accepted as a minimum grade.</li>
+      </ul>
+      <p class="fix" style="margin-top:6px"><b>Fix:</b> CHECK constraints in a new Alembic revision. They protect the next regeneration, not today's data.</p>
+    </article>
+
+    <article class="f" data-s="low">
+      <header><span class="sev">Low</span><h3>Summer is in the enum but not in the data</h3></header>
+      <p>All 20 terms are fall or spring, and the summer term code is still undefined. Either define the code (for example a <code>60</code> suffix) or remove <code>summer</code> from the enum, so that agents do not offer summer plans the data cannot support.</p>
+    </article>
+
+    <article class="f" data-s="low">
+      <header><span class="sev">Low</span><h3>Lectures stop at Spring 2027, terms run to Spring 2031</h3></header>
+      <p>This is reasonable, since future schedules are not published. Agents must then treat later terms as projected from the offering history and must not cite CRNs for them. Worth one line in the README.</p>
+    </article>
+
+  </div>
+</section>
+
+<section aria-labelledby="pass">
+  <h2 id="pass">Checks that passed</h2>
+  <ul class="checks">
+    <li>No prerequisite cycles; every prerequisite references an existing course.</li>
+    <li>No lower-division course requires a higher-level one.</li>
+    <li>Course level matches course number in every row.</li>
+    <li>Term sequence contiguous; dates ordered; no overlapping terms.</li>
+    <li>No instructor and no room double-booked in any term.</li>
+    <li>No duplicate (term, course, section); every <code>days</code> value valid.</li>
+    <li>Inactive courses (2) and inactive instructors only in past terms.</li>
+    <li>Every active course has lectures; every BS required course runs in fall and spring.</li>
+    <li>No inactive or graduate-level course in a BS plan.</li>
+    <li>Suggested terms always come after their prerequisites.</li>
+    <li>Every category minimum can be met from the listed courses (MSENG exactly: 21 of 21, no slack).</li>
+    <li>IDs, SSN format, unique emails; every person has a role.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="adv">
+  <h2 id="adv">End-to-end result on the seed data</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Program</th><th>Result</th><th>Time</th><th>Validator</th></tr></thead>
+    <tbody>
+      <tr><td>BSCS</td><td>8-term plan found; earliest term not proven within the time limit</td><td class="n">14 s</td><td class="yes">0 violations</td></tr>
+      <tr><td>BSENG</td><td>8-term plan, graduation Fall 2030, proven earliest</td><td class="n">17 s</td><td class="yes">0 violations</td></tr>
+      <tr><td>MSCS</td><td>3-term plan, Spring 2028, optimal (with the MS prerequisite rule)</td><td class="n">0.04 s</td><td class="yes">0 violations</td></tr>
+      <tr><td>MSENG</td><td>3-term plan, Spring 2028, optimal (with the MS prerequisite rule)</td><td class="n">0.01 s</td><td class="yes">0 violations</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:8px">All four students were planned as if they had taken nothing, because there is no enrollment table. That makes the results a compatibility test of the catalog, degree plans and lectures, not real advice.</p>
+</section>
+</main>
+
+</body>
+</html>

@@ -8,3 +8,6 @@ data/seed_csv/
 data/*.log
 # agent evaluation runs (scripts/eval_student_agent.py, scripts/eval_agents.py)
 runs/
+
+# RAG embedding cache (registrar/rag)
+.rag_cache/

@@ -84,3 +84,11 @@ def test_prompt_carries_the_clock(session):
     _, _, client = run(session, "stu-register_when-007", ["ok"])       # winter break clock
     system = client.requests[0]["messages"][0]["content"]
     assert "2026-12-20" in system and "current term is Spring 2027" in system and "break" in system
+
+
+def test_refusal_target_is_never_sent_to_the_model(session):
+    _, r, client = run(session, "stu-access_denied-001", [
+        [call("decline_request", {"reason": "other_student_record", "person": "Raj Martinez"})], "Sorry, I can't."])
+    assert r.answer["target"] == {"university_id": "800260544"}
+    tool_message = client.requests[1]["messages"][-1]
+    assert tool_message["role"] == "tool" and "800260544" not in tool_message["content"]

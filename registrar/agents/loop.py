@@ -2,7 +2,8 @@
 
 The loop: send the conversation and tool list to the model; run every tool it asks for; send the results back; repeat
 until the model answers in plain text or max_steps is reached. Tools are plain Python callables; a tool that raises
-returns {"error": ...} to the model instead of crashing the loop.
+returns {"error": ...} to the model instead of crashing the loop. Result keys starting with "_" are kept for the
+caller and never sent to the model.
 """
 from __future__ import annotations
 
@@ -11,10 +12,16 @@ import os
 import re
 import uuid
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Callable
+
+from dotenv import load_dotenv
 
 from registrar.agents.common import ToolError, plain
 
+# Read LLM_BASE_URL / LLM_MODEL from .env before taking the defaults (registrar/db.py loads it too, but may be
+# imported later). Values already set in the environment win.
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 DEFAULT_BASE_URL = os.environ.get("LLM_BASE_URL", "http://127.0.0.1:11434/v1")
 DEFAULT_MODEL = os.environ.get("LLM_MODEL", "qwen3-coder:30b")
 
@@ -73,7 +80,7 @@ class ToolLoop:
                 call = self._run_one(name, args)
                 result.calls.append(call)
                 self.messages.append({"role": "tool", "tool_call_id": cid,
-                                      "content": json.dumps(call.result, default=plain)})
+                                      "content": json.dumps(model_view(call.result), default=plain)})
         result.stopped_early = True
         result.reply = "Sorry, I could not finish answering that. Please try rephrasing the question."
         self.messages.append({"role": "assistant", "content": result.reply})
@@ -98,7 +105,7 @@ class ToolLoop:
     def _log(self, call: ToolCall) -> ToolCall:
         if self.verbose:
             print(f"  [tool] {call.name}({json.dumps(call.arguments, default=str)}) -> "
-                  f"{json.dumps(call.result, default=plain)[:300]}")
+                  f"{json.dumps(model_view(call.result), default=plain)[:300]}")
         return call
 
     def _calls_written_as_text(self, content: str | None) -> list[tuple]:
@@ -116,6 +123,11 @@ class ToolLoop:
             return []
         args = obj.get("arguments", obj.get("parameters", {}))
         return [(f"call_{uuid.uuid4().hex[:8]}", obj["name"], args)]
+
+
+def model_view(result: dict) -> dict:
+    """What the model sees of a tool result: keys starting with "_" stay on the Python side."""
+    return {k: v for k, v in result.items() if not k.startswith("_")}
 
 
 def strip_think(text: str | None) -> str:

@@ -66,12 +66,12 @@ def test_input_is_normalized_or_rejected(session):
 
 def test_refusal_targets(session):
     t = tools(session)
-    assert t.decline_request("other_student_record", person="801247891")["declined"]["target"] == {"university_id": "801247891"}
-    assert t.decline_request("other_student_record", person="Layla Morales")["declined"]["target"] == {"university_id": "801247891"}
+    assert t.decline_request("other_student_record", person="801247891")["_declined"]["target"] == {"university_id": "801247891"}
+    assert t.decline_request("other_student_record", person="Layla Morales")["_declined"]["target"] == {"university_id": "801247891"}
     # Two students share this name, so the target cannot be named.
-    assert t.decline_request("other_student_record", person="Chen Miller")["declined"]["target"] == {"university_id": None}
-    assert t.decline_request("student_list_not_permitted")["declined"]["target"] == {"program": "BSENG"}
-    assert t.decline_request("student_list_not_permitted", program="Bachelor of Science in Computer Science")["declined"]["target"] == {"program": "BSCS"}
+    assert t.decline_request("other_student_record", person="Chen Miller")["_declined"]["target"] == {"university_id": None}
+    assert t.decline_request("student_list_not_permitted")["_declined"]["target"] == {"program": "BSENG"}
+    assert t.decline_request("student_list_not_permitted", program="Bachelor of Science in Computer Science")["_declined"]["target"] == {"program": "BSCS"}
     with pytest.raises(ToolError):
         t.decline_request("other_student_record", person=ME)       # your own record is not a refusal
     with pytest.raises(ToolError):

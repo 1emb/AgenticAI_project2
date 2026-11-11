@@ -7,6 +7,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
 STUDENT_CASES = [json.loads(line) for line in open(ROOT / "data/testset/student/cases.jsonl")]
+PROFESSOR_CASES = [json.loads(line) for line in open(ROOT / "data/testset/professor/cases.jsonl")]
 
 
 @pytest.fixture(scope="session")

@@ -15,7 +15,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from registrar.agents.calendar import Calendar, TermNotFound
-from registrar.agents.common import ToolError, plain
+from registrar.agents.common import ToolError, full_name, normalize_course, plain
 from registrar.models import (AcademicTerm, Course, CoursePrerequisite, DegreeRequirement, Department, Instructor, Lecture,
                               Person, Program, ProgramCategoryRequirement, Student)
 
@@ -23,17 +23,6 @@ EVENTS = {"classes_begin": "start_date", "classes_end": "end_date", "registratio
           "add_deadline": "add_deadline", "drop_deadline": "drop_deadline", "withdraw_deadline": "withdraw_deadline",
           "grades_due": "grades_due"}
 DECLINE_REASONS = ("other_student_record", "student_list_not_permitted", "instructor_private_record")
-
-
-def normalize_course(code: str) -> str:
-    m = re.fullmatch(r"\s*([A-Za-z]{2,5})\s*-?\s*(\d{3,4}[A-Za-z]?)\s*", str(code or ""))
-    if not m:
-        raise ToolError(f"{code!r} is not a course code. Use the form 'CS 2210'.")
-    return f"{m.group(1).upper()} {m.group(2).upper()}"
-
-
-def full_name(p: Person) -> str:
-    return f"{p.first_name} {p.last_name}"
 
 
 class StudentTools:
@@ -226,7 +215,7 @@ class StudentTools:
             target = {"program": self._program_code(program)}
         else:
             target = {"university_id": self._person_uid(person, instructor=reason == "instructor_private_record")}
-        return {"declined": {"reason": reason, "target": target},
+        return {"_declined": {"reason": reason, "target": target}, "declined": True,
                 "message": "Refusal recorded. Tell the user briefly that you cannot share this, without repeating "
                            "any private detail, and still answer any permitted part of the question."}
 

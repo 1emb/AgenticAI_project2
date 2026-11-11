@@ -1,10 +1,7 @@
 """The Student agent: one authenticated student, one clock, the tools in tools.py, and the loop in loop.py.
 
-ask() returns the prose reply plus the discrete JSON `answer` the test set grades (data/testset/README.md, Verification
-contract). The answer is assembled from the tool results of that turn:
-  - no refusal:   {"allowed": true, **facts from the data tools}
-  - refusal:      {"allowed": false, "reason", "target", "own_answer": facts from data tools (if any)}
-Later tool results override earlier ones on the same key.
+ask() returns the prose reply plus the discrete JSON `answer` the test set grades, assembled from that turn's tool
+results by registrar/agents/answer.py.
 """
 from __future__ import annotations
 
@@ -13,6 +10,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import Session
 
+from registrar.agents.answer import assemble_answer  # noqa: F401  (re-exported for tests)
 from registrar.agents.calendar import Calendar
 from registrar.agents.loop import DEFAULT_MODEL, ToolCall, ToolLoop
 
@@ -57,24 +55,6 @@ class StudentResult:
     stopped_early: bool
 
 
-def assemble_answer(calls: list[ToolCall]) -> dict:
-    facts: dict = {}
-    refusal: dict | None = None
-    for call in calls:
-        if not call.ok:
-            continue
-        if "answer" in call.result:
-            facts.update(call.result["answer"])
-        if "declined" in call.result:
-            refusal = call.result["declined"]
-    if refusal is None:
-        return {"allowed": True, **facts}
-    out = {"allowed": False, "reason": refusal["reason"], "target": refusal["target"]}
-    if facts:
-        out["own_answer"] = facts
-    return out
-
-
 class StudentAgent:
     def __init__(self, client, session: Session, student_uid: str, as_of: str | datetime | None = None,
                  model: str = DEFAULT_MODEL, max_steps: int = 8, verbose: bool = False):
@@ -85,7 +65,7 @@ class StudentAgent:
 
     def _system_prompt(self) -> str:
         cal, t = self.calendar, self.tools
-        nxt, prev = cal.offset(1), cal.offset(-1)
+        nxt, prev = cal.resolve("next semester"), cal.offset(-1)
         return SYSTEM_PROMPT.format(
             name=f"{t.person.first_name} {t.person.last_name}", program_code=t.program.code, program_name=t.program.name,
             today=cal.as_of.strftime("%A %Y-%m-%d %H:%M"), current=cal.current().name,

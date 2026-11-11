@@ -1,8 +1,9 @@
 """The agent's clock and term arithmetic.
 
 The current term is never stored (README, Conventions): it is the term whose start_date..end_date contains the clock's
-date, and during a break the next term by start date. "Next" and "last" semester are the terms with sequence one higher
-and one lower. Phrases such as "this fall" or "next spring" are resolved here in Python, so the model never has to do
+date, and during a break the next term by start date. "Last semester" is the term with sequence one lower. "Next
+semester" is the term with sequence one higher while classes are in session; during a break it is the coming term
+itself, the same as the current one (owner, 2026-11-02; data/testset/README.md, Case format). Phrases such as "this fall" or "next spring" are resolved here in Python, so the model never has to do
 date arithmetic.
 """
 from __future__ import annotations
@@ -87,9 +88,12 @@ class Calendar:
         else:
             raise TermNotFound(f"I can't tell which term {phrase!r} means. Use e.g. 'this semester', 'next spring' "
                                f"or 'Fall 2026'.")
+        step = direction
+        if direction == 1 and not self.in_session():
+            step = 0                                   # break: "next" is the coming term
         if season is None:
-            return self._offset_or_fail(direction)
-        return self._season(season, direction)
+            return self._offset_or_fail(step)
+        return self._season(season, direction, step)
 
     def _offset_or_fail(self, n: int) -> AcademicTerm:
         term = self.offset(n)
@@ -97,12 +101,14 @@ class Calendar:
             raise TermNotFound("That term is outside the calendar.")
         return term
 
-    def _season(self, season: str, direction: int) -> AcademicTerm:
+    def _season(self, season: str, direction: int, first_step: int) -> AcademicTerm:
+        """'this fall' = the current term if it is a fall, else the coming fall; 'next spring' = the first spring from
+        `first_step` terms ahead (0 during a break); 'last fall' = the most recent earlier fall."""
         cur = self.current()
         if direction == 0 and cur.term_type.value == season:
             return cur
         step = -1 if direction < 0 else 1
-        seq = cur.sequence + step
+        seq = cur.sequence + (first_step if direction > 0 else step)
         while seq in self._by_seq:
             if self._by_seq[seq].term_type.value == season:
                 return self._by_seq[seq]

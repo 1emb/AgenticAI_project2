@@ -1,0 +1,32 @@
+{"id": "cat-001", "question": "which course teaches SQL and normalization", "expected_courses": ["CS 3410"], "kind": "topic"}
+{"id": "cat-002", "question": "classes about neural networks", "expected_courses": ["CS 4710", "CS 5710"], "kind": "topic"}
+{"id": "cat-003", "question": "is there a course on encryption and authentication", "expected_courses": ["CS 4510"], "kind": "topic"}
+{"id": "cat-004", "question": "where do I learn about processors and assembly language", "expected_courses": ["CS 2230"], "kind": "topic"}
+{"id": "cat-005", "question": "courses on parsing and generating machine code", "expected_courses": ["CS 4110"], "kind": "topic"}
+{"id": "cat-006", "question": "is there a class about robots", "expected_courses": ["ENG 4510"], "kind": "topic"}
+{"id": "cat-007", "question": "finite element methods", "expected_courses": ["ENG 5610"], "kind": "topic"}
+{"id": "cat-008", "question": "a course about moral theories", "expected_courses": ["PHIL 2110"], "kind": "topic"}
+{"id": "cat-009", "question": "how do I learn to write technical reports", "expected_courses": ["ENGL 2210"], "kind": "topic"}
+{"id": "cat-010", "question": "thermodynamic cycles", "expected_courses": ["ENG 2310"], "kind": "topic"}
+{"id": "cat-011", "question": "cloud containers and kubernetes", "expected_courses": ["CS 5810"], "kind": "topic"}
+{"id": "cat-012", "question": "chatbots and language models", "expected_courses": ["CS 5720"], "kind": "topic"}
+{"id": "cat-013", "question": "how do computers talk to each other over the internet", "expected_courses": ["CS 3510"], "kind": "topic"}
+{"id": "cat-014", "question": "3D graphics and rendering", "expected_courses": ["CS 4750"], "kind": "topic"}
+{"id": "cat-015", "question": "hypothesis testing and statistics", "expected_courses": ["MATH 3110"], "kind": "topic"}
+{"id": "cat-016", "question": "intro class about how people think and behave", "expected_courses": ["PSY 1110"], "kind": "topic"}
+{"id": "cat-017", "question": "public speaking", "expected_courses": ["COMM 1130"], "kind": "topic"}
+{"id": "cat-018", "question": "engineering capstone project", "expected_courses": ["ENG 4910", "ENG 4920"], "kind": "topic"}
+{"id": "cat-019", "question": "AI planning and reasoning under uncertainty", "expected_courses": ["CS 4720"], "kind": "topic"}
+{"id": "cat-020", "question": "thesis course for a masters in computer science", "expected_courses": ["CS 5990"], "kind": "topic"}
+{"id": "cat-021", "question": "history of the United States", "expected_courses": ["HIST 2110"], "kind": "topic"}
+{"id": "cat-022", "question": "eigenvalues and vector spaces", "expected_courses": ["MATH 2530"], "kind": "topic"}
+{"id": "cat-023", "question": "how do operating systems schedule processes", "expected_courses": ["CS 3320"], "kind": "topic"}
+{"id": "cat-024", "question": "a class on microeconomics and markets", "expected_courses": ["ECON 2110"], "kind": "topic"}
+{"id": "cat-025", "question": "learning to program for the first time in Python", "expected_courses": ["CS 1110"], "kind": "topic"}
+{"id": "cat-026", "question": "designing control systems and transfer functions", "expected_courses": ["ENG 3510"], "kind": "topic"}
+{"id": "cat-027", "question": "replication and consensus across servers", "expected_courses": ["CS 4810"], "kind": "topic"}
+{"id": "cat-028", "question": "is there a course on surveying", "expected_courses": [], "kind": "retired"}
+{"id": "off-001", "question": "best pizza near campus", "expected_courses": [], "kind": "off_topic"}
+{"id": "off-002", "question": "what is the weather today", "expected_courses": [], "kind": "off_topic"}
+{"id": "off-003", "question": "who won the football game last night", "expected_courses": [], "kind": "off_topic"}
+{"id": "off-004", "question": "how do I fix my bike", "expected_courses": [], "kind": "off_topic"}

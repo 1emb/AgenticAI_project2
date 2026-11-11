@@ -272,6 +272,7 @@ Duong's branch `advising-agent` (af41cf6) merged into main's agents (a846c19), w
 | Router (role from the login), Administrator agent | `registrar/agents/router.py`, `admin/` | Duong |
 | Own transcript and GPA, degree planner (clingo), handbook search | `registrar/agents/records.py`, `advising.py` + `advising_agent/`, `policy.py` + `data/policy/` | Duong, reading main's `enrollment` and `transfer_credit` |
 | Writes: register, drop / withdraw, post a grade | `registrar/agents/registration.py` | Duong, rewritten for main's table |
+| Retrieval over the handbook and the course catalog (BM25, plus embeddings when `EMBED_MODEL` is set), `search_catalog` tool for every role | `registrar/rag/`, `data/testset/rag/`, `scripts/eval_rag.py` | Mason (fdf81d8), RAG only: his multi-agent coordinator is not on this branch (it is on `merge-all-three`) |
 
 Duong's own enrollment table and data (`data/seed_enrollment/`) are gone; everything reads `data/seed/`. The administrator
 cases (`data/testset/administrator/cases.jsonl`, 35) were regenerated on this dataset by `registrar/testset/administrator.py`.

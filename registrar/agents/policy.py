@@ -62,7 +62,11 @@ def load_sections(path: Path = HANDBOOK) -> list[Section]:
 
 
 class PolicyStore:
-    def __init__(self, handbook: Path = HANDBOOK, params: Path = PARAMS, k1: float = 1.4, b: float = 0.6):
+    def __init__(self, handbook: Path = HANDBOOK, params: Path = PARAMS, k1: float = 1.4, b: float = 0.6,
+                 retriever=None, role: str = "student"):
+        # retriever: an optional registrar.rag.HybridRetriever with dense embeddings; search_policy then ranks the
+        # handbook with BM25 + embeddings fused. Left None, behaviour is exactly the BM25 below.
+        self.retriever, self.role = retriever, role
         self.sections = load_sections(handbook)
         self.params = json.loads(params.read_text())
         self.k1, self.b = k1, b
@@ -106,7 +110,11 @@ class PolicyStore:
 
     # ---------------------------------------------------------------- tool for the persona agents
     def search_policy(self, question: str) -> dict:
-        hits = self.search(question)
+        if self.retriever is not None:
+            hits = [{"section": h["section"], "title": h["title"].split(" ", 2)[2], "text": h["text"]}
+                    for h in self.retriever.search(question, k=3, sources={"handbook"}, role=self.role)]
+        else:
+            hits = self.search(question)
         if not hits:
             return {"answer": {"policy_sections": []}, "note": "No handbook section matches; say the handbook does "
                                                                "not cover it."}

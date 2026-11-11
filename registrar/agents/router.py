@@ -30,6 +30,7 @@ from registrar.agents.common import ToolError
 from registrar.agents.registration import (INSTRUCTOR_WRITE_SPECS, NO, STUDENT_WRITE_SPECS, YES, ConfirmationGate,
                                            InstructorWriteTools, RegistrationService, StudentWriteTools)
 from registrar.agents.student.agent import assemble_answer
+from registrar.rag import SEARCH_CATALOG_SPEC, CatalogTools, get_retriever
 from registrar.models import Instructor, Student
 
 ROLES_FILE = Path(__file__).resolve().parents[2] / "data/policy/roles.json"
@@ -42,6 +43,7 @@ Added capabilities:
   graduation, required courses left). Present its plan term by term, say which terms are projected, and state its
   assumptions. Never invent a plan yourself.
 - Rules (probation, course load, repeats, withdrawals, graduation): search_policy, and cite the handbook section.
+- Courses by topic ("which course covers databases"): search_catalog; recommend only courses it returns.
 - Changes: request_registration and request_drop prepare a change and return a pending change with a
   reply_to_user sentence: reply with that sentence. You cannot make the change yourself: the system makes it when
   the student's next message is exactly "yes", and discards it on "no". If the student answers anything else, tell
@@ -60,7 +62,8 @@ Added capabilities:
   grading window, and returns a pending change with a reply_to_user sentence: reply with that sentence. You cannot
   post it yourself: the system posts it when the instructor's next message is exactly "yes", and discards it on
   "no". If they answer anything else, tell them to answer yes or no.{grading} Never say a grade was posted.
-- Rules: search_policy, and cite the handbook section."""
+- Rules: search_policy, and cite the handbook section.
+- Courses by topic: search_catalog; recommend only courses it returns."""
 
 
 class RoleError(ValueError):
@@ -95,8 +98,10 @@ class Router:
         self.role, self.uid = role, user_uid
         self.gate = ConfirmationGate()
         self.writer = None  # StudentWriteTools / InstructorWriteTools, when the role can change data
-        policy = PolicyStore()
+        rag = get_retriever(session)
+        policy = PolicyStore(retriever=rag if rag.has_dense else None, role=role)  # hybrid handbook search only with embeddings
         search = (SEARCH_POLICY_SPEC, policy.search_policy)
+        find_course = (SEARCH_CATALOG_SPEC, CatalogTools(rag, role).search_catalog)
         kw = dict(as_of=as_of, model=model, verbose=verbose, max_steps=max_steps)
         if role == "student":
             from registrar.agents.student import StudentAgent
@@ -106,7 +111,7 @@ class Router:
             wr = self.writer = StudentWriteTools(RegistrationService(session, cal, policy), self.gate, user_uid)
             extra = [(s, getattr(rec, s["function"]["name"])) for s in RECORD_SPECS] + \
                     [(s, getattr(adv, s["function"]["name"])) for s in STUDENT_ADVISING_SPECS] + \
-                    [(s, getattr(wr, s["function"]["name"])) for s in STUDENT_WRITE_SPECS] + [search]
+                    [(s, getattr(wr, s["function"]["name"])) for s in STUDENT_WRITE_SPECS] + [search, find_course]
             self.agent = StudentAgent(client, session, user_uid, extra_tools=extra, **kw)
             self.agent.loop.messages[0]["content"] += STUDENT_ADDENDUM
         elif role == "instructor":
@@ -116,7 +121,7 @@ class Router:
             adv = AdvisingTools(session, cal, user_uid, "instructor", policy)
             wr = self.writer = InstructorWriteTools(RegistrationService(session, cal, policy), self.gate, user_uid)
             extra = [(s, getattr(adv, s["function"]["name"])) for s in ADVISOR_SPECS] + \
-                    [(s, getattr(wr, s["function"]["name"])) for s in INSTRUCTOR_WRITE_SPECS] + [search]
+                    [(s, getattr(wr, s["function"]["name"])) for s in INSTRUCTOR_WRITE_SPECS] + [search, find_course]
             self.agent = ProfessorAgent(client, session, user_uid, extra_tools=extra, **kw)
             g = wr.svc.grading_term()
             note = (f"\n- The grading window for {g.name} is open now (grades due {g.grades_due}). For grades, 'this "
@@ -124,7 +129,7 @@ class Router:
             self.agent.loop.messages[0]["content"] += PROFESSOR_ADDENDUM.replace("{grading}", note)
         else:
             from registrar.agents.admin import AdminAgent
-            self.agent = AdminAgent(client, session, extra_tools=[search], **kw)
+            self.agent = AdminAgent(client, session, extra_tools=[search, find_course], **kw)
 
     def ask(self, question: str) -> "RouterResult":
         """Ask the persona agent. Grounding check: a turn that ends without one successful tool call (the model

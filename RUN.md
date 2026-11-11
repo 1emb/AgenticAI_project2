@@ -128,9 +128,9 @@ As the student, with `--as-of 2026-11-20T18:00:00Z`:
 
 | Type this | What should happen |
 |---|---|
-| `What is my GPA?` | GPA from the record |
+| `What is my GPA?` | Cumulative GPA 3.43, last term (Spring 2026) 3.2 |
 | `What classes have I taken?` | Transcript: completed, withdrawn, in progress |
-| `What should I take next semester?` | A plan from the degree planner |
+| `What should I take next semester?` | A plan from the degree planner: CS 4510 and CS 5710 in Spring 2027 |
 | `How many credits can I take on probation?` | An answer that cites the handbook (section 3.2, 13 credits) |
 | `Which courses cover databases?` | Courses found by topic (CS 3410, CS 5410) |
 | `What is Jose Wilson's phone number?` | A refusal |
@@ -138,6 +138,9 @@ As the student, with `--as-of 2026-11-20T18:00:00Z`:
 | then `yes` | "You are registered in CS 3320 (CRN 10016), Spring 2027." |
 | `Register me for CRN 10022 next spring` | Refused: the section is full |
 | `Drop CRN 10016 for Spring 2027`, then `yes` | Dropped, no record |
+
+The numbers in these tables come from the tools on a freshly loaded database, so the model's wording will differ but
+the facts should match.
 
 How confirmation works: a change is made only when your **next message is exactly `yes`**. `no` discards it. Anything
 else ("yes please", "ok", "yes later") does not confirm; you are asked to answer yes or no.
@@ -147,16 +150,16 @@ As the professor, with `--as-of 2026-12-12T18:00:00Z` (the Fall 2026 grading win
 | Type this | What should happen |
 |---|---|
 | `Who is in my CRN 10005?` | The roster of his own section |
-| `Show my advisees` | His 44 advisees |
+| `Show my advisees` | His 35 active advisees |
 | `Post a B+ for Chen Williams in CRN 10005` | A preview; then `yes` posts it |
-| `Post an A for Chen Williams in CRN 10001` | Refused: not his section |
+| `Post an A for Chen Williams in CRN 10001` | Refused: he does not teach CRN 10001 |
 
 As the administrator:
 
 | Type this | What should happen |
 |---|---|
-| `How many students are on probation?` | A count by program |
-| `What was the grade distribution in CS courses in Fall 2025?` | Counts per grade |
+| `How many students are on probation?` | 15 (BSCS 7, BSENG 3, MSCS 3, MSENG 2) |
+| `What was the grade distribution in CS courses in Fall 2025?` | Counts per grade over 1,024 graded enrollments |
 
 **(all-three only)** With `--multi`, also try a message with two parts, for example
 `What is my GPA and what should I take next semester?`. `--show-answer` then prints the plan, for example two tasks,
@@ -208,6 +211,7 @@ correctly empty 1.00.
 | What you see | Cause | Fix |
 |---|---|---|
 | `Connection refused` on port 5433 | The database is not running | `./db/start.sh` |
+| `./db/start.sh` prints `pg_ctl: another server might be running` and `Examine the log output` | It is already running | Nothing to do |
 | `column "..." does not exist`, `relation "advisor_assignment" does not exist` | The database is still at `main`'s schema | `alembic upgrade head`, then `python scripts/load_seed.py` |
 | `violates check constraint "ck_enrollment_enrollment_status"` | Same | Same |
 | `ModuleNotFoundError: No module named 'clingo'` | The planner's solver is missing | `pip install clingo` |

@@ -46,8 +46,7 @@ Added capabilities:
 - Courses by topic ("which course covers databases"): search_catalog; recommend only courses it returns.
 - Changes: request_registration and request_drop prepare a change and return a pending change with a
   reply_to_user sentence: reply with that sentence. You cannot make the change yourself: the system makes it when
-  the student's next message is exactly "yes", and discards it on "no". If the student answers anything else, tell
-  them to answer yes or no; if they want something different, call the request tool again for the new change. If
+  the student's next message is exactly "yes", and discards it on "no"; it handles that message itself. If
   the request returns blockers, explain them; nothing was changed. Never say a change was made.
 - Refusals: you MUST call decline_request for anything about another person's record (even if you only want to say
   no); a refusal written only in your reply is not recorded and counts as answering. Answer the permitted part of a
@@ -61,7 +60,7 @@ Added capabilities:
 - Grades: request_grade prepares posting a grade in a section you are the instructor of record for, during the
   grading window, and returns a pending change with a reply_to_user sentence: reply with that sentence. You cannot
   post it yourself: the system posts it when the instructor's next message is exactly "yes", and discards it on
-  "no". If they answer anything else, tell them to answer yes or no.{grading} Never say a grade was posted.
+  "no"; it handles that message itself.{grading} Never say a grade was posted.
 - Rules: search_policy, and cite the handbook section.
 - Courses by topic: search_catalog; recommend only courses it returns."""
 
@@ -162,7 +161,9 @@ class Router:
     def _confirm_without_model(self, question: str) -> "RouterResult | None":
         """With a change pending, the user's exact "yes" makes it and their exact "no" discards it, both in code:
         the confirmation is a user action, so the model cannot forget it, guess it or confirm on its own. Any other
-        message goes to the model, which has no tool that confirms (owner, 2026-11-11: exact wording only)."""
+        message is answered here too, with a fixed sentence and the preview again, and never reaches the model
+        (owner, 2026-11-11: tell the user they can only answer yes or no). A live run showed why: after "yes
+        please" the model wrote "You are registered" although nothing had been written."""
         if self.writer is None or not self.gate.pending:
             return None
         from registrar.agents.loop import ToolCall
@@ -172,7 +173,11 @@ class Router:
             return RouterResult(reply="Nothing was changed.", answer=assemble_answer(calls), calls=calls, steps=0,
                                 stopped_early=False)
         if not YES.match(question):
-            return None
+            pending = next(iter(self.gate.pending.values()))
+            return RouterResult(reply=("A change is waiting for your answer, and nothing has been changed yet. "
+                                       "I can only take yes or no right now. " + pending.preview).strip(),
+                                answer={"allowed": True, "changed": False, "needs_confirmation": True}, calls=[],
+                                steps=0, stopped_early=False)
         code = next(iter(self.gate.pending))
         try:
             result = self.writer.confirm_change(code)

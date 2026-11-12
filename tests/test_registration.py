@@ -373,32 +373,25 @@ def test_pending_turn_reply_cannot_claim_the_change_was_made(ws):
     assert r.reply.endswith("Please answer yes or no.") and "registered!" not in r.reply
 
 
-def test_non_affirmative_reply_goes_to_the_model(ws):
+def test_while_a_change_waits_only_yes_or_no_is_taken(ws):
+    """Any other message gets the fixed sentence and the preview again; the model is not asked and nothing is written."""
     from registrar.agents.router import Router
     uid = active_bs_student(ws)
     probe, _ = student_tools(ws, uid)
     lec = addable(ws, probe)
-    client = FakeClient([[call("request_registration", {"crn": lec.crn, "term": "Spring 2027"})], "Shall I?",
-                         [call("cancel_change", {})], "Cancelled."])
+    client = FakeClient([[call("request_registration", {"crn": lec.crn, "term": "Spring 2027"})], "Shall I?"])
     r = Router(client, ws, uid, as_of=DEFAULT, model="fake")
-    r.ask(f"Register me for CRN {lec.crn} next spring")
-    res = r.ask("Actually no, cancel that.")
-    assert res.calls[0].name == "cancel_change" and not r.gate.pending
-    assert enr(ws, uid, "202710", lec.crn) is None
-
-
-def test_hedged_yes_is_not_auto_confirmed(ws):
-    from registrar.agents.router import Router
-    uid = active_bs_student(ws)
-    probe, _ = student_tools(ws, uid)
-    lec = addable(ws, probe)
-    client = FakeClient([[call("request_registration", {"crn": lec.crn, "term": "Spring 2027"})], "Shall I?",
-                         "Which section would you like instead?"])
-    r = Router(client, ws, uid, as_of=DEFAULT, model="fake")
-    r.ask(f"Register me for CRN {lec.crn} next spring")
-    res = r.ask("yes, but switch me to the other section")
-    assert all(c.name != "confirm_change" for c in res.calls) and r.gate.pending  # the model was asked; nothing confirmed
-    assert enr(ws, uid, "202710", lec.crn) is None
+    first = r.ask(f"Register me for CRN {lec.crn} next spring")
+    n = len(client.requests)
+    for text_ in ("yes please", "yes, but switch me to the other section", "Actually no, cancel that.", "ok",
+                  "what time is it at?", "yes later"):
+        res = r.ask(text_)
+        assert res.reply.startswith("A change is waiting for your answer, and nothing has been changed yet.")
+        assert "I can only take yes or no right now." in res.reply and res.reply.endswith(first.reply)
+        assert res.answer["changed"] is False and res.calls == [] and len(client.requests) == n, text_
+        assert r.gate.pending and enr(ws, uid, "202710", lec.crn) is None, text_
+    assert r.ask("yes").answer["changed"] is True and len(client.requests) == n
+    assert enr(ws, uid, "202710", lec.crn).status.value == "enrolled"
 
 
 def test_exact_no_discards_the_pending_change_without_the_model(ws):

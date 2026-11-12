@@ -38,12 +38,14 @@ This is the first version that writes to the database. The rules it is meant to 
 1. **Nothing is written when you ask.** The system checks the rules and shows a preview that ends with
    "Please answer yes or no."
 2. **Only the exact word `yes` makes the change**, as your next message. `no` discards it. "yes please", "ok",
-   "sure", "yes later", "yes?", "yes, but switch me to the other section" must all write nothing.
+   "sure", "yes later", "yes?", "yes, but switch me to the other section" must all write nothing. While a change
+   is waiting, the system answers every such message itself: it says it can only take yes or no and repeats the
+   preview. The model is not asked, so it cannot claim the change was made.
 3. **The change is worked out again at the moment of the yes**, with the date and the data as they are then. If the
    result is no longer what the preview said, nothing is written and you are asked again with the new preview.
    Example: a drop previewed at 23:59 on the last drop day and confirmed at 00:01 would now be a withdrawal with a W,
    so the system must ask again instead of writing the W.
-4. **A new request replaces the old one**, also when the new one is refused. A later `yes` must not bring the old one back.
+4. **One change at a time.** While one is waiting, nothing else is answered until you say `yes` or `no`.
 5. **Every change is logged** in the table `change_log` (who, when, what).
 
 What each change does to the data:
@@ -60,8 +62,8 @@ Registration is refused with one or more of these reasons: `student_not_active`,
 `level_not_allowed`, `repeat_not_permitted`, `time_conflict`, `section_cancelled`, `section_full`,
 `credit_limit_exceeded`.
 
-Good things to try to break: confirming with other words, confirming after a long pause or after asking something
-else in between, two chat windows for the same student at once, registering for a full or cancelled section, a
+Good things to try to break: confirming with other words, confirming after a long pause, asking something else
+while a change is waiting, two chat windows for the same student at once, registering for a full or cancelled section, a
 time clash, more than 18 credits, posting a grade outside the grading window or for someone else's section.
 
 Because writes change the data, reload it before each test session: `python scripts/load_seed.py`.
@@ -128,6 +130,14 @@ Checked, without a model:
 - Every example in RUN.md section 5, by calling the same tools the model would call.
 - The search on its test questions (32 catalog, 30 handbook), keywords only.
 
-**Not checked: anything with a real model.** No chat and no evaluation run has been done on either branch. Whether
-the model picks the right tool, how often it answers correctly, and how the coordinator compares with the single
-agent are all unknown.
+Checked with a real model (`qwen3-coder:30b` in Ollama, 2026-11-11), following RUN.md exactly from an empty folder on
+each branch: setup, chat, and the short evaluation (67 questions, one of each type).
+
+| Version | Student | Professor | Administrator | Seconds per question |
+|---|---|---|---|---|
+| single agent (`merge-fuad-duong-rag`) | 16 of 23 | 31 of 33 | 11 of 11 | 5.0 |
+| coordinator (`merge-all-three`, `--multi`) | 9 of 23 | 30 of 33 | 11 of 11 | 5.5 |
+
+A register / confirm / drop / cancel conversation was also run on both.
+
+**Not checked:** the full evaluation (445 questions), paraphrases, two-part questions, and any other model.

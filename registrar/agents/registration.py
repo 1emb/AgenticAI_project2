@@ -4,7 +4,8 @@ Every change goes through three steps (handbook 7.4):
   1. request_*  : validator code checks every rule and returns a pending change with the preview shown to the user.
                   Nothing is written.
   2. the user answers in a LATER message with exactly "yes" (or "no"). The ConfirmationGate checks this in code; the
-                  model has no tool that confirms.
+                  model has no tool that confirms. While a change is waiting, the Router answers every other
+                  message itself with "answer yes or no" and the preview; the model is not asked.
   3. confirm_change : reads the clock and the rows again, locks them, works the change out afresh and compares it with
                   the preview. Same result: it writes the change and its change_log row in one transaction. Different
                   result (the drop became a withdrawal, the section moved): nothing is written, the new preview
@@ -54,6 +55,7 @@ class Pending:
     action: str
     detail: dict
     turn: int
+    preview: str = ""  # the sentence shown to the user; repeated when they answer something other than yes or no
 
 
 @dataclass
@@ -67,8 +69,8 @@ class ConfirmationGate:
         self.turn += 1
         self.last_user_text = text
 
-    def add(self, action: str, detail: dict) -> Pending:
-        p = Pending(secrets.token_hex(3).upper(), action, detail, self.turn)
+    def add(self, action: str, detail: dict, preview: str = "") -> Pending:
+        p = Pending(secrets.token_hex(3).upper(), action, detail, self.turn, preview)
         self.pending = {p.code: p}  # one pending change at a time; a new request replaces the old one
         return p
 
@@ -333,7 +335,7 @@ class RegistrationService:
 
 def _ask_again(gate: ConfirmationGate, action: str, plan: dict, shown: dict, say: str) -> dict:
     """The change worked out at the yes is not the one that was shown: write nothing, make the new one pending."""
-    p = gate.add(action, plan)
+    p = gate.add(action, plan, say)
     return {"answer": {"changed": False, "needs_confirmation": True}, "pending_change": {"code": p.code, **shown},
             "reply_to_user": say, "status": "the change differs from what was shown; waiting for a new confirmation; "
                                             "nothing changed"}
@@ -374,7 +376,7 @@ class StudentWriteTools:
             return {"answer": {"term": plan["term"], "crn": plan["crn"], "course": plan["course"], "can_add": False,
                                "blockers": plan["blockers"]}, "note": "Not allowed; explain the blockers. Nothing was changed."}
         del plan["blockers"]
-        p = self.gate.add("register", plan)
+        p = self.gate.add("register", plan, self._say_add(plan))
         return {"pending_change": {"code": p.code, **{k: v for k, v in plan.items() if k != "term_code"}},
                 "reply_to_user": self._say_add(plan), "status": "waiting for the user's confirmation; nothing changed yet"}
 
@@ -382,7 +384,7 @@ class StudentWriteTools:
         self.gate.clear()
         self.svc.fresh()
         plan = self.svc.drop_plan(self.uid, self.svc._term(term), crn)
-        p = self.gate.add(plan["action"], plan)
+        p = self.gate.add(plan["action"], plan, self._say_drop(plan))
         return {"pending_change": {"code": p.code, **{k: v for k, v in plan.items() if k != "term_code"}},
                 "reply_to_user": self._say_drop(plan), "status": "waiting for the user's confirmation; nothing changed yet"}
 
@@ -446,7 +448,7 @@ class InstructorWriteTools:
         if g is not None and t.start_date > self.svc.cal.today:  # grades are never posted for a future term
             moved, t = t.name, g
         plan = self.svc.grade_plan(self.uid, t, crn, student, grade)
-        p = self.gate.add("post_grade", plan)
+        p = self.gate.add("post_grade", plan, self._say(plan))
         return {"pending_change": {"code": p.code, "action": "post_grade", **self._shown(plan)},
                 "reply_to_user": self._say(plan), "status": "waiting for the user's confirmation; nothing changed yet",
                 **({"note": f"{moved} has not started, so this uses {t.name}, whose grading window is open."}

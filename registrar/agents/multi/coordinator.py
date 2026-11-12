@@ -3,8 +3,9 @@
     Coordinator(router, client, model).ask(question) -> MultiResult   (a RouterResult plus .route, .plan, .trace)
 
 Per message:
-  1. The Router's confirmation gate runs first, in code: with a change pending, the user's exact "yes" makes it and
-     their exact "no" discards it. No model can confirm (owner rule, 2026-11-11: exact wording only).
+  1. The Router's confirmation gate runs first, in code: with a change pending, the user's exact "yes" makes it,
+     their exact "no" discards it, and any other message gets "answer yes or no" with the preview again. No model
+     is called and none can confirm (owner rule, 2026-11-11: exact wording only).
   2. Otherwise the planner splits the message into tasks and assigns each to a specialist (data, policy, advising,
      registration). Tasks run in order; each gets the facts earlier agents verified.
   3. The composer builds one reply.

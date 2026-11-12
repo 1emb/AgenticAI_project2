@@ -97,9 +97,8 @@ PROMPTS = {
                    "only when the user gave a 5-digit CRN. request_registration, request_registration_for_course, "
                    "request_drop and request_grade prepare a change and return a pending change with a "
                    "reply_to_user sentence: reply with that sentence. You cannot make the change yourself: the system "
-                   "makes it when the user's next message is exactly 'yes' and discards it on 'no'. If the user answers "
-                   "anything else to a pending change, tell them to answer yes or no; if they want something different, "
-                   "prepare the new change. If a request returns blockers, explain them; nothing was changed. Never say "
+                   "makes it when the user's next message is exactly 'yes' and discards it on 'no'; it handles that "
+                   "message itself. If a request returns blockers, explain them; nothing was changed. Never say "
                    "a change was made. You may also consult policy (a rule) or advising (does it fit the plan) first."),
 }
 

@@ -221,16 +221,23 @@ def test_plain_yes_is_confirmed_by_the_system_with_no_model_call():
     assert res.route == "confirm" and "registered in CS 3410" in res.reply and client.requests == []
 
 
-def test_pending_change_is_told_to_the_planner_and_registration_keeps_its_history():
-    r, client, _ = make_router(results={"request_registration": lambda a: (r.gate.add("register", {"c": 1}) and
+def test_with_a_change_pending_only_yes_or_no_is_taken_and_registration_keeps_its_history():
+    """While a change waits, any message other than yes or no is answered by the Router in code: no planner, no
+    specialist (owner rule, 2026-11-11). After the user's 'no', the registration specialist still has the first turn."""
+    r, client, _ = make_router(results={"request_registration": lambda a: (r.gate.add("register", {"c": 1}, "Confirm?") and
                                                                            {"answer": {}, "reply_to_user": "Confirm?"})},
                                script=[plan((REGISTRATION, "Register me for CS 3410")), [call("request_registration")], "x",
-                                       plan((REGISTRATION, "Actually cancel that")), [call("cancel_change", {"x": "1"})], "Cancelled."])
+                                       plan((REGISTRATION, "Register me for CS 3320 instead")), [call("request_registration")], "y"])
+    r.writer = NS(cancel_change=lambda: (r.gate.clear() or {"answer": {"changed": False, "cancelled": True}}))
     co = Coordinator(r)
     co.ask("Register me for CS 3410")
-    co.ask("wait, cancel that")
-    assert "waiting for the user's confirmation" in client.requests[3]["messages"][0]["content"]
-    msgs = client.requests[4]["messages"]                                 # second registration turn sees the first
+    n = len(client.requests)
+    res = co.ask("wait, cancel that")
+    assert res.route == "confirm" and "I can only take yes or no right now. Confirm?" in res.reply
+    assert len(client.requests) == n and r.gate.pending                   # no model call, the change still waits
+    assert co.ask("no").reply == "Nothing was changed." and not r.gate.pending and len(client.requests) == n
+    co.ask("Register me for CS 3320 instead")
+    msgs = client.requests[-1]["messages"]                                # second registration turn sees the first
     assert any("Register me for CS 3410" in (m.get("content") or "") for m in msgs)
 
 

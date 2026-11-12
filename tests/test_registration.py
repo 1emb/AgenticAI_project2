@@ -507,7 +507,7 @@ def _plan(agent, question):
 
 def test_coordinator_writes_only_on_the_exact_yes(ws):
     """Mason's coordinator in front of the real Router and database: the registration specialist prepares the change,
-    a hedged yes goes back to it and writes nothing, the exact yes is confirmed in code with no model call."""
+    a hedged yes is answered in code and writes nothing, the exact yes is confirmed in code with no model call."""
     from registrar.agents.multi import Coordinator
     from registrar.agents.multi.agents import REGISTRATION
     from registrar.agents.router import Router
@@ -516,19 +516,18 @@ def test_coordinator_writes_only_on_the_exact_yes(ws):
     lec = addable(ws, probe)
     ask = f"Register me for CRN {lec.crn} next spring"
     client = FakeClient([_plan(REGISTRATION, ask), [call("request_registration", {"crn": lec.crn, "term": "Spring 2027"})],
-                         "Shall I?",
-                         _plan(REGISTRATION, "yes later"), [call("confirm_change", {"code": "GUESS1"})],
-                         "You are registered!"])
+                         "Shall I?"])
     r = Router(client, ws, uid, as_of=DEFAULT, model="fake")
     co = Coordinator(r)
     assert "confirm_change" not in co.runtime.tools_of(REGISTRATION)  # no specialist can confirm
     assert {"request_registration", "request_drop", "cancel_change"} <= set(co.runtime.tools_of(REGISTRATION))
     first = co.ask(ask)
     assert first.route == "multi" and first.reply.endswith("Please answer yes or no.") and r.gate.pending
-    hedged = co.ask("yes later")  # not the exact word: planned and sent to the specialist, which cannot confirm
-    assert hedged.route == "multi" and not hedged.answer.get("changed") and "registered" not in hedged.reply.lower()
-    assert enr(ws, uid, "202710", lec.crn) is None and r.gate.pending
     n = len(client.requests)
+    hedged = co.ask("yes later")  # not the exact word: answered in code, no planner and no specialist
+    assert hedged.route == "confirm" and hedged.answer["changed"] is False and len(client.requests) == n
+    assert "I can only take yes or no right now." in hedged.reply and hedged.reply.endswith(first.reply)
+    assert enr(ws, uid, "202710", lec.crn) is None and r.gate.pending
     done = co.ask("yes")
     assert done.route == "confirm" and done.answer["changed"] is True and len(client.requests) == n
     assert enr(ws, uid, "202710", lec.crn).status.value == "enrolled"

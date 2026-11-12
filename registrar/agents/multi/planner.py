@@ -77,7 +77,7 @@ class Planner:
             "at most once and always last.\n"
             "4b. A request to register for, add or drop a named course is ONE registration task. Do not add a policy or "
             "data task to look the course up first: the registration agent finds the course itself.\n"
-            "5. Any reply to a pending change that is not exactly 'yes' or 'no' goes to the registration agent.\n"
+            "5. Replies to a pending change never reach you: the system handles them itself.\n"
             "6. If unsure which agent owns a need, use the data agent.\n\n"
             "EXAMPLES (student):\n"
             'User: What is my GPA?\n{"tasks":[{"agent":"data","question":"What is my GPA?"}]}\n'
